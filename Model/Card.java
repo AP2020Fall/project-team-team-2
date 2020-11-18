@@ -1,3 +1,4 @@
+package Model;
 public class Card {
     String name;
     public static void main(String[] args) {}
