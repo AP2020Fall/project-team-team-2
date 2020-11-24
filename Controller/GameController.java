@@ -1,9 +1,7 @@
-package Controller;
-import Model.Player;
+package controller;
+import model.Player;
 public class GameController {
-    private static Player playingUser;
-    /* Status Of player : Drafting - Attacking - Fortifing */
-    private static String playerStatus;
+    
     public static void main(String[] args) {}
     public void startGame(){}
     public void chooseMap(){}
@@ -13,6 +11,11 @@ public class GameController {
     public void fog(){}
     public void durationTime(){}
     public void setPlayersNumber(){}
+    /* Me - Amirhossein Kiani */
+    public void createGame(){
+
+    }
+
     /* Draft */
     public void placeSoldier(){}
     public void attack(){}
@@ -23,16 +26,4 @@ public class GameController {
     public void changeTurn(){}
     public void matchCards(){}
     
-    public static void setPlayerStatus(String playerStatus) {
-        GameController.playerStatus = playerStatus;
-    }
-    public static String getPlayerStatus() {
-        return playerStatus;
-    }
-    public static void setPlayingUser(Player playingUser) {
-        GameController.playingUser = playingUser;
-    }
-    public static Player getPlayingUser() {
-        return playingUser;
-    }
 }

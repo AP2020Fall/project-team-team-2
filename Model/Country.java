@@ -1,11 +1,12 @@
-package Model;
+package model;
 import java.util.List;
 public class Country {
     private String name;
     private Player Owner;
     private int soldiers;
     
-    public static void main(String[] args) {}
+    public static void main(String[] args) {
+    }
     public void setName(String name) {
         this.name = name;
     }

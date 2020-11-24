@@ -1,24 +1,11 @@
-package Model;
+package model;
 
 public class Game {
-    private Player turn;
-    private String status;
-    public void main(String[] args) {}
-    public void createGame(){}
-    public void endGame(){}
-    
+    public Game(String name, String gameId) {
+        this.name = name;
+        this.gameId = gameId;
+    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public String getStatus() {
-        return status;
-    }
-    public void setTurn(Player turn) {
-        this.turn = turn;
-    }
-    public Player getTurn() {
-        return turn;
-    }
-    
+    private String name;
+    private String gameId;
 }

@@ -1,12 +1,18 @@
-package Model;
+package model;
 import java.util.List;
 public class Map{
-    private List<List<Country>> countries;
+    private static List<List<Country>> countries;
     public static void main(String[] args) {}
-    public void setCountries(List<List<Country>> countries) {
-        this.countries = countries;
+    public static void addCountry(int row , int column , Country country) {
+        Map.countries.get(row-1).set(column-1 , country);
     }
-    public List<List<Country>> getCountries() {
+    public static List<List<Country>> getCountries() {
         return countries;
+    }
+    public static Country getCountry(int row,int column){
+        return Map.countries.get(row-1).get(column-1);
+    }
+    public void setMap(){
+
     }
 }
