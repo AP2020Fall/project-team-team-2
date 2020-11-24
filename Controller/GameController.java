@@ -12,16 +12,15 @@ public class GameController {
     private static String playerStatus;
     public static void main(String[] args) {
 
-
+        /* write variables to get commands */
         Scanner inputCommand = new Scanner(System.in);
         String inputLine = new String();
         boolean check = false;
-
         int mapNumber = 0;
         int turnDuration = 0;
         int playerNumbers = 0;
 
-
+        /* Different patterns of valid commands */
         Pattern startGameCommand = Pattern.compile("(^)start risk game");
         Pattern chooseMapCommand = Pattern.compile("(^)choose map\\s+(?<mapNumber>\\d+)");
         Pattern placementManualTypeCommand = Pattern.compile("(^)manual placement on");
@@ -37,8 +36,10 @@ public class GameController {
 
 
         while(true) {
+            /* get input command */
             inputLine = inputCommand.nextLine().trim();
 
+            /* check out which command is published */
             Matcher startGameMatcher = startGameCommand.matcher(inputLine);
             check = startGameMatcher.matches();
             if(check == true){
