@@ -1,3 +1,5 @@
+package View;
+
 public class GameView {
     public static void main(String[] args) {}
     public void printStartGame(){}

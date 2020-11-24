@@ -1,3 +1,4 @@
+package Model;
 public class Card {
     String name;
     int soldiers;
