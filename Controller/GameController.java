@@ -1,10 +1,35 @@
 package Controller;
 import Model.Player;
+
+import java.util.Scanner;
+
 public class GameController {
     private static Player playingUser;
     /* Status Of player : Drafting - Attacking - Fortifing */
     private static String playerStatus;
-    public static void main(String[] args) {}
+    public static void main(String[] args) {
+
+        Scanner inputCommand = new Scanner();
+        String inputLine = new String();
+        boolean check = false;
+
+        inputLine = inputCommand.nextline().trim();
+
+        Pattern startGameCommand = Pattern.compile("(^)start//s+risk//s+game");
+/*        Pattern chooseMapCommand = Pattern.compile("(^)choose map ");
+        Pattern placementTypeCommand = Pattern.compile("(^)start risk game");
+        Pattern alliancementCommand = Pattern.compile("(^)start risk game");
+        Pattern blizardsCommand = Pattern.compile("(^)start risk game");
+        Pattern durationTimeCommand = Pattern.compile("(^)start risk game");
+        Pattern setPlayersNumberCommand = Pattern.compile("(^)start risk game");
+*/
+        Matcher startGameMatcher = startGameCommand.matcher(inputLine);
+        check = startGameMatcher.matches();
+        if(check == true){
+            System.out.println("OK!");
+        }
+
+    }
     public void startGame(){}
     public void chooseMap(){}
     public void placementType(){}
