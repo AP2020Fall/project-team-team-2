@@ -9,7 +9,12 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
+target
+setting
+.project
+.xml
+.prefs
+.classpath
 # Package Files #
 *.jar
 *.war

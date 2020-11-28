@@ -1,6 +1,5 @@
 package model;
 
-import com.sun.source.tree.CompilationUnitTree;
 
 import java.util.*;
 
@@ -46,6 +45,8 @@ enum Countries{
     COUNTRY_7("Stanrea Ntarcmoblic" , new Country("Stanrea Ntarcmoblic", "Africa")
             , "Africa"),
     COUNTRY_8("Isle of Hongemi" , new Country("Isle of Hongemi", "Africa"), "Africa"),
+
+
     COUNTRY_9("Cona Ribhutic" , new Country("Cona Ribhutic","Europe"),"Europe"),
     COUNTRY_10("Guiliewe" , new Country("Guiliewe","Europe"),"Europe"),
     COUNTRY_11("Togha" , new Country("Togha","Europe"),"Europe"),
@@ -59,6 +60,8 @@ enum Countries{
     COUNTRY_18("Liane Panavir" , new Country("Liane Panavir","Europe"),"Europe"),
     COUNTRY_19("Iland Moara" , new Country("Iland Moara","Europe"),"Europe"),
     COUNTRY_20("Danmau" , new Country("Danmau","Europe"),"Europe"),
+
+
     COUNTRY_21("Southern Jathea" , new Country("Southern Jathea","Asia"),"Asia"),
     COUNTRY_22("Myanniji Territories" , new Country("Myanniji Territories","Asia"),"Asia"),
     COUNTRY_23("Sriu Verdenistern Island" , new Country("Sriu Verdenistern Island","Asia")
@@ -72,6 +75,9 @@ enum Countries{
     COUNTRY_30("Republic of Bulta" , new Country("Republic of Bulta","Asia"),"Asia"),
     COUNTRY_31("Costa Nasy" , new Country("Costa Nasy","Asia"),"Asia"),
     COUNTRY_32("Gileonedi" , new Country("Gileonedi","Asia"),"Asia"),
+
+
+
     COUNTRY_33("Coi Ginu" , new Country("Coi Ginu","Australia"),"Australia"),
     COUNTRY_34("Theti" , new Country("Theti","Australia"),"Australia"),
     COUNTRY_35("Liland" , new Country("Liland","Australia"),"Australia"),
@@ -79,6 +85,8 @@ enum Countries{
     COUNTRY_37("Chaddia" , new Country("Chaddia","Australia"),"Australia"),
     COUNTRY_38("Mithio" , new Country("Mithio","Australia"),"Australia"),
     COUNTRY_39("Ofmoami" , new Country("Ofmoami","Australia"),"Australia"),
+
+
     COUNTRY_40("Corsey" , new Country("Corsey","America"),"America"),
     COUNTRY_41("Nibutu" , new Country("Nibutu","America"),"America"),
     COUNTRY_42("Tosaint" , new Country("Tosaint","America"),"America"),
@@ -114,6 +122,11 @@ enum Countries{
         }
         return providedCountries;
     }
+
+    public String getContinent() {
+        return continent;
+    }
+
     public static int countryNumberContinent(List<Country> countries , String continentName){
         int number = 0;
         for(Country country : countries){
