@@ -9,7 +9,7 @@ public class StartGameView {
     private Scanner scanner = View.getScanner();
 
     public static void main(String[] args) {
-
+        System.out.println("Hi");
     }
     public void startGameView(){
         /* write variables to get commands */
