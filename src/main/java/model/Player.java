@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Player extends Account {
 
@@ -18,6 +19,7 @@ public class Player extends Account {
     private ArrayList<GameLog> gameLogs;
     private ArrayList<Account> friends;
     private ArrayList<FriendRequest> friendRequests;
+    private ArrayList<Card> cards;
 
     public static ArrayList<Player> getAllPlayers() {
         return allPlayers;
@@ -61,5 +63,20 @@ public class Player extends Account {
 
     public static Player getPlayerById(int id) {
         return null;
+    }
+    public void addCard(Card card) {
+        this.cards.add(card);
+    }
+    public void removeCard(Card card){
+        Iterator iterate = this.cards.iterator(); 
+        while(iterate.hasNext()){
+            if(iterate.next().equals(card)){
+                iterate.remove();
+                break;
+            }
+        }
+    }
+    public ArrayList<Card> getCards() {
+        return cards;
     }
 }

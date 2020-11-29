@@ -135,23 +135,14 @@ public class StartGameView {
                 changePlayersNumber(strNumber);
                 check = false;
             }
-        }
+             /* Check match cards */
 
-        /* Check match cards */
-
-        /* Different patterns of valid match cards commands */
-        Pattern matchCardsCommand = Pattern.compile("(^)match cards($)");
-        Pattern type1MatchCommand = Pattern.compile("(^)1-type1,type1,type1 score:4($)");
-        Pattern type2MatchCommand = Pattern.compile("(^)2-type2,type2,type2 score:6($)");
-        Pattern type3MatchCommand = Pattern.compile("(^)3-type3,type3,type3 score:8($)");
-        Pattern diffrentTypeMatchCommand = Pattern.compile("(^)4-type1,type2,type3 score:10($)");
-
-        /* get input command */
-        inputLine = inputCommand.nextLine().trim();
-
-        while(inputCommand.hasNextLine()){
-            /* get input command */
-            inputLine = inputCommand.nextLine().trim();
+            /* Different patterns of valid match cards commands */
+            Pattern matchCardsCommand = Pattern.compile("(^)match cards($)");
+            Pattern type1MatchCommand = Pattern.compile("(^)1-type1,type1,type1 score:4($)");
+            Pattern type2MatchCommand = Pattern.compile("(^)2-type2,type2,type2 score:6($)");
+            Pattern type3MatchCommand = Pattern.compile("(^)3-type3,type3,type3 score:8($)");
+            Pattern diffrentTypeMatchCommand = Pattern.compile("(^)4-type1,type2,type3 score:10($)");
 
             /* check out which command is published */
             Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
