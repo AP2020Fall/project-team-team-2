@@ -1,11 +1,11 @@
 package view;
 
-import controller.AccountController;
+import model.Account;
 
 import java.util.regex.Matcher;
 
 public class AdminMainMenu extends Menu {
-    public AdminMainMenu(AccountController account) {
+    public AdminMainMenu(Account account) {
         super(account);
         adminMainMenu();
     }
