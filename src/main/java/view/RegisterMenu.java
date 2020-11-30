@@ -1,11 +1,11 @@
 package view;
 
-import controller.AccountController;
+import model.Account;
 
 import java.util.regex.Matcher;
 
 public class RegisterMenu extends Menu {
-    public RegisterMenu(AccountController account) {
+    public RegisterMenu(Account account) {
         super(account);
         registerMenu();
     }
@@ -16,10 +16,10 @@ public class RegisterMenu extends Menu {
             Matcher matcher;
             if (getMatcher(input, "^help$").find()) {
                 help();
-            } else if (getMatcher(input, "^back$").find()) {
-                return;
             } else if ((matcher = getMatcher(input, "^register (\\S+), (\\S+)$")).find()) {
                 register(matcher.group(1), matcher.group(2));
+            } else if (getMatcher(input, "^back$").find()) {
+                return;
             }
         }
     }

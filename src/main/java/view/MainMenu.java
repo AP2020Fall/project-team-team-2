@@ -1,9 +1,9 @@
 package view;
 
-import controller.AccountController;
+import model.Account;
 
 public class MainMenu extends Menu{
-    public MainMenu(AccountController account) {
+    public MainMenu(Account account) {
         super(account);
         mainMenu();
 
@@ -33,9 +33,11 @@ public class MainMenu extends Menu{
     }
 
     private void openLoginMenu() {
+        new LoginMenu(null);
     }
 
     private void openRegisterMenu() {
+        new RegisterMenu(null);
     }
 
 }
