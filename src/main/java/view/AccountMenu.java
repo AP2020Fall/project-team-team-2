@@ -1,6 +1,5 @@
 package view;
 
-import javafx.scene.control.cell.CheckBoxListCell;
 import model.Account;
 
 import java.util.regex.Matcher;
@@ -29,9 +28,9 @@ public class AccountMenu extends Menu {
                 gameHistory();
             } else if ((matcher = getMatcher(input, "^Game statistics (\\S+)$")).find()) {
                 gameStatistics(matcher.group(1));
-            } else if (getMatcher(input , "^Logout$").find()){
+            } else if (getMatcher(input, "^Logout$").find()) {
                 logout();
-            }else if (getMatcher(input , "^back$").find()){
+            } else if (getMatcher(input, "^back$").find()) {
                 return;
             }
         }

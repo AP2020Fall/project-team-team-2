@@ -1,6 +1,7 @@
 package view;
 
 import model.Account;
+
 import java.util.regex.Matcher;
 
 public class FriendsMenu extends Menu {

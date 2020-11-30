@@ -3,7 +3,7 @@ package view;
 
 import model.Account;
 
-public class GameMenu extends Menu{
+public class GameMenu extends Menu {
 
     public GameMenu(Account account) {
         super(account);
@@ -11,30 +11,36 @@ public class GameMenu extends Menu{
     }
 
     private void gameMenu() {
-        while (true){
+        while (true) {
             String input = scanner.nextLine();
-            if (getMatcher(input , "^help$").find()){
+            if (getMatcher(input, "^help$").find()) {
                 help();
-            }else if (getMatcher(input ,"View account menu").find()){
+            } else if (getMatcher(input, "View account menu").find()) {
                 viewAccountMenu();
-            }else if (getMatcher(input ,"^Show scoreboard$").find()){
+            } else if (getMatcher(input, "^Show scoreboard$").find()) {
                 showScoreboard();
-            }else if (getMatcher(input ,"^Details$").find()){
+            } else if (getMatcher(input, "^Details$").find()) {
                 details();
-            }else if (getMatcher(input ,"^Show log$").find()){
+            } else if (getMatcher(input, "^Show log$").find()) {
                 showLog();
-            }else if (getMatcher(input, "^Show wins count$").find()){
+            } else if (getMatcher(input, "^Show wins count$").find()) {
                 showWinsCount();
-            }else if (getMatcher(input ,"^Show played count$").find()){
+            } else if (getMatcher(input, "^Show played count$").find()) {
                 showPlayedCount();
-            }else if (getMatcher(input ,"^Add to favorites$").find()){
+            } else if (getMatcher(input, "^Add to favorites$").find()) {
                 addToFavorites();
-            }else if (getMatcher(input ,"^Run game$").find()){
+            } else if (getMatcher(input, "^Run game$").find()) {
                 runGame();
-            }else if (getMatcher(input , "^back$").find()){
+            } else if (getMatcher(input ,"^Show points$").find()) {
+                showPoints();
+            } else if (getMatcher(input, "^back$").find()) {
                 return;
             }
         }
+    }
+
+    private void showPoints() {
+
     }
 
     private void runGame() {
@@ -69,6 +75,7 @@ public class GameMenu extends Menu{
                 "Show played count\n" +
                 "Add to favorites\n" +
                 "Run game\n" +
+                "Show points\n" +
                 "help\n" +
                 "back");
     }

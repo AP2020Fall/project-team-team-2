@@ -40,11 +40,11 @@ public class Map{
         String filename = "src/main/java/files/maps/map_7.txt";
         Path path = Paths.get(filename);
 
-        try {
-            Files.writeString(path, newGson.toJson(map_11), StandardCharsets.UTF_8);
-        } catch (IOException ex) {
-            // Handle exception
-        }
+//        try {
+//         //   Files.writeString(path, newGson.toJson(map_11), StandardCharsets.UTF_8);
+//        } catch (IOException ex) {
+//            // Handle exception
+//        }
         JsonReader reader = new JsonReader(new FileReader(filename));
         int[][] newPath = newGson.fromJson(reader,int[][].class);
         String[][] newString = new String[newPath.length][newPath[0].length];
