@@ -55,6 +55,7 @@ public class StartGameView {
             inputLine = inputCommand.nextLine().trim();
             if (inputLine.equals("data")) {
                 System.out.println(StartGameController.getPrimitiveSettings());
+                continue;
             }
             /* check out which command is published */
 
@@ -65,6 +66,7 @@ public class StartGameView {
                 chooseMapNumber(strNumber);
                 System.out.println("Map Choosen");
                 check = false;
+                continue;
             }
 
             Matcher placementManualTypeMatcher = placementManualTypeCommand.matcher(inputLine);
@@ -72,6 +74,7 @@ public class StartGameView {
             if (check == true) {
                 placementType("on");
                 check = false;
+                continue;
             }
 
             Matcher placementNonManualTypeMatcher = placementNonManualTypeCommand.matcher(inputLine);
@@ -79,6 +82,7 @@ public class StartGameView {
             if (check == true) {
                 placementType("off");
                 check = false;
+                continue;
             }
 
             Matcher alliancementOnMatcher = alliancementOnCommand.matcher(inputLine);
@@ -86,6 +90,7 @@ public class StartGameView {
             if (check == true) {
                 alliencementType("on");
                 check = false;
+                continue;
             }
 
             Matcher alliancementOffMatcher = alliancementOffCommand.matcher(inputLine);
@@ -93,6 +98,7 @@ public class StartGameView {
             if (check == true) {
                 alliencementType("off");
                 check = false;
+                continue;
             }
 
             Matcher blizardsOnMatcher = blizardsOnCommand.matcher(inputLine);
@@ -100,6 +106,7 @@ public class StartGameView {
             if (check == true) {
                 blizzardsType("on");
                 check = false;
+                continue;
             }
 
             Matcher blizardsOffMatcher = blizardsOffCommand.matcher(inputLine);
@@ -107,6 +114,7 @@ public class StartGameView {
             if (check == true) {
                 blizzardsType("off");
                 check = false;
+                continue;
             }
 
             Matcher fogOnMatcher = fogOnCommand.matcher(inputLine);
@@ -114,6 +122,7 @@ public class StartGameView {
             if (check == true) {
                 fogsType("on");
                 check = false;
+                continue;
             }
 
             Matcher fogOffMatcher = fogOffCommand.matcher(inputLine);
@@ -121,6 +130,7 @@ public class StartGameView {
             if (check == true) {
                 fogsType("off");
                 check = false;
+                continue;
             }
 
             Matcher durationTimeMatcher = durationTimeCommand.matcher(inputLine);
@@ -129,6 +139,7 @@ public class StartGameView {
                 String strNumber = durationTimeMatcher.group("turnDuration");
                 changeDurationTime(strNumber);
                 check = false;
+                continue;
             }
 
             Matcher setPlayersNumberMatcher = setPlayersNumberCommand.matcher(inputLine);
@@ -137,6 +148,7 @@ public class StartGameView {
                 String strNumber = setPlayersNumberMatcher.group("playerNumbers");
                 changePlayersNumber(strNumber);
                 check = false;
+                continue;
             }
             /* Check match cards */
 
@@ -146,6 +158,7 @@ public class StartGameView {
             if (check == true) {
                 System.out.println("Command1!");
                 check = false;
+                continue;
             }
 
             Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
@@ -153,6 +166,7 @@ public class StartGameView {
             if (check == true) {
                 System.out.println("Command2!");
                 check = false;
+                continue;
             }
 
             Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
@@ -160,6 +174,7 @@ public class StartGameView {
             if (check == true) {
                 System.out.println("Command3!");
                 check = false;
+                continue;
             }
 
             Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
@@ -167,6 +182,7 @@ public class StartGameView {
             if (check == true) {
                 System.out.println("Command4!");
                 check = false;
+                continue;
             }
 
             Matcher diffrentTypeMatchMatcher = diffrentTypeMatchCommand.matcher(inputLine);
@@ -174,17 +190,18 @@ public class StartGameView {
             if (check == true) {
                 System.out.println("Command5!");
                 check = false;
+                continue;
             }
+
             Matcher startGameMatcher = startGameCommand.matcher(inputLine);
             check = startGameMatcher.matches();
             if (check == true) {
-
                 System.out.println("Game Started");
-
                 check = false;
                 break;
             }
-            if (check == true) {
+
+            if (check == false) {
                 System.out.println("Invalid Command!");
             }
         }
