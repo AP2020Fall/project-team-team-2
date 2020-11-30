@@ -1,21 +1,21 @@
 package view;
 
 
-import controller.AccountController;
+import model.Account;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Menu {
-    protected AccountController account;
+    protected Account account;
     protected static Scanner scanner = new Scanner(System.in);
 
     public static Scanner getScanner() {
         return scanner;
     }
 
-    public Menu(AccountController account) {
+    public Menu(Account account) {
         this.account = account;
     }
 
