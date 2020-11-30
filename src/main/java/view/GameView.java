@@ -1,17 +1,15 @@
 package view;
 import model.Player;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class GameView {
-    private Scanner scanner = View.getScanner();
+
     private Player currentPlayer;
     public static void main(String[] args) {
 
     }
     public void currentGame(){
-        Scanner inputCommand = View.getScanner();
+       // Scanner inputCommand = Menu.getScanner();
     }
     /* Me - Amirhossein Kian */
     public void printCreateGame(){}
