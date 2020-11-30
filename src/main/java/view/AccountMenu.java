@@ -1,8 +1,9 @@
 package view;
 
-import java.util.Scanner;
+import controller.AccountController;
 
-public class AccountMenu extends View{
-    private Scanner scanner = View.getScanner();
-
+public class AccountMenu extends Menu {
+    public AccountMenu(AccountController account) {
+        super(account);
+    }
 }

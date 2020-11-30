@@ -1,6 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+
 public abstract class Account {
+    protected static ArrayList<Account> allAccounts = new ArrayList<>();
     private String firstName;
     private String lastName;
     private String accountName;
@@ -17,6 +20,7 @@ public abstract class Account {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        allAccounts.add(this);
     }
 
     public String getFirstName() {

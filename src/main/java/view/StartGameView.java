@@ -1,20 +1,21 @@
 package view;
+
 import controller.StartGameController;
-import java.util.HashMap;
+
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StartGameView {
-    private Scanner scanner = View.getScanner();
 
     public static void main(String[] args) {
         System.out.println("Hi");
     }
-    public void startGame(){
+
+    public void startGame() {
         /* write variables to get commands */
-        Scanner inputCommand = View.getScanner();
+        Scanner inputCommand = Menu.getScanner();
         String inputLine = new String();
         boolean check = false;
         int mapNumber = 0;
@@ -44,11 +45,11 @@ public class StartGameView {
         while (inputCommand.hasNextLine()) {
             /* get input command */
             inputLine = inputCommand.nextLine().trim();
-            if(inputLine.equals("data")){
+            if (inputLine.equals("data")) {
                 System.out.println(StartGameController.getPrimitiveSettings());
             }
             /* check out which command is published */
-            
+
             Matcher chooseMapMatcher = chooseMapCommand.matcher(inputLine);
             check = chooseMapMatcher.matches();
             if (check == true) {
@@ -178,76 +179,84 @@ public class StartGameView {
             if (check == true) {
 
                 System.out.println("Game Started");
-                
+
                 check = false;
                 break;
             }
-            if(check == true){
+            if (check == true) {
                 System.out.println("Invalid Command!");
             }
         }
 
     }
-    public static void changePlayersNumber(String strNumber){
+
+    public static void changePlayersNumber(String strNumber) {
         int number = Integer.parseInt(strNumber);
-        StartGameController.setPrimitiveSettings("PlayersNum" , number);
+        StartGameController.setPrimitiveSettings("PlayersNum", number);
         System.out.println("Player Number Changes To : " + strNumber);
     }
-    public static void chooseMapNumber(String strNumber){
+
+    public static void chooseMapNumber(String strNumber) {
         int number = Integer.parseInt(strNumber);
-        StartGameController.setPrimitiveSettings("Map Number" , number);
+        StartGameController.setPrimitiveSettings("Map Number", number);
         System.out.println("Map Number Changes To : " + strNumber);
     }
-    public static void changeDurationTime(String strNumber){
+
+    public static void changeDurationTime(String strNumber) {
         int number = Integer.parseInt(strNumber);
-        StartGameController.setPrimitiveSettings("Duration" , number);
+        StartGameController.setPrimitiveSettings("Duration", number);
         System.out.println("Duration Number Changes To : " + strNumber);
     }
-    public static void placementType(String type){
-        switch (type){
+
+    public static void placementType(String type) {
+        switch (type) {
             case "on":
-                StartGameController.setPrimitiveSettings("Placement" , true);
+                StartGameController.setPrimitiveSettings("Placement", true);
                 break;
             case "off":
-                StartGameController.setPrimitiveSettings("Placement" , false);
+                StartGameController.setPrimitiveSettings("Placement", false);
                 break;
         }
         System.out.println("Placement Type changed To : " + type.toUpperCase());
     }
-    public static void alliencementType(String type){
-        switch (type){
+
+    public static void alliencementType(String type) {
+        switch (type) {
             case "on":
-                StartGameController.setPrimitiveSettings("Alliance" , true);
+                StartGameController.setPrimitiveSettings("Alliance", true);
                 break;
             case "off":
-                StartGameController.setPrimitiveSettings("Alliance" , false);
+                StartGameController.setPrimitiveSettings("Alliance", false);
                 break;
         }
         System.out.println("Alliance Type changed To : " + type.toUpperCase());
     }
-    public static void blizzardsType(String type){
-        switch (type){
+
+    public static void blizzardsType(String type) {
+        switch (type) {
             case "on":
-                StartGameController.setPrimitiveSettings("Blizzards" , true);
+                StartGameController.setPrimitiveSettings("Blizzards", true);
                 break;
             case "off":
-                StartGameController.setPrimitiveSettings("Blizzards" , false);
+                StartGameController.setPrimitiveSettings("Blizzards", false);
                 break;
         }
         System.out.println("Blizzards Type changed To : " + type.toUpperCase());
     }
-    public static void fogsType(String type){
-        switch (type){
+
+    public static void fogsType(String type) {
+        switch (type) {
             case "on":
-                StartGameController.setPrimitiveSettings("Fog Of War" , true);
+                StartGameController.setPrimitiveSettings("Fog Of War", true);
                 break;
             case "off":
-                StartGameController.setPrimitiveSettings("Fog Of War" , false);
+                StartGameController.setPrimitiveSettings("Fog Of War", false);
                 break;
         }
         System.out.println("Fog Of War Type changed To : " + type.toUpperCase());
     }
-    public static String generateGameId(){
-            return UUID.randomUUID().toString();
+
+    public static String generateGameId() {
+        return UUID.randomUUID().toString();
     }
 }
