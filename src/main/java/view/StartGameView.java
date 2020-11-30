@@ -150,48 +150,6 @@ public class StartGameView {
                 check = false;
                 continue;
             }
-            /* Check match cards */
-
-            /* check out which command is published */
-            Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
-            check = matchCardsMatcher.matches();
-            if (check == true) {
-                System.out.println("Command1!");
-                check = false;
-                continue;
-            }
-
-            Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
-            check = type1MatchMatcher.matches();
-            if (check == true) {
-                System.out.println("Command2!");
-                check = false;
-                continue;
-            }
-
-            Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
-            check = type2MatchMatcher.matches();
-            if (check == true) {
-                System.out.println("Command3!");
-                check = false;
-                continue;
-            }
-
-            Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
-            check = type3MatchMatcher.matches();
-            if (check == true) {
-                System.out.println("Command4!");
-                check = false;
-                continue;
-            }
-
-            Matcher diffrentTypeMatchMatcher = diffrentTypeMatchCommand.matcher(inputLine);
-            check = diffrentTypeMatchMatcher.matches();
-            if (check == true) {
-                System.out.println("Command5!");
-                check = false;
-                continue;
-            }
 
             Matcher startGameMatcher = startGameCommand.matcher(inputLine);
             check = startGameMatcher.matches();
@@ -204,6 +162,7 @@ public class StartGameView {
             if (check == false) {
                 System.out.println("Invalid Command!");
             }
+
         }
 
     }
