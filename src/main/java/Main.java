@@ -1,7 +1,7 @@
-import view.MainMenu;
+import view.WelcomeMenu;
 
 public class Main {
     public static void main(String[] args) {
-        new MainMenu(null);
+        new WelcomeMenu(null);
     }
 }

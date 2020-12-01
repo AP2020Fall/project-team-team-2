@@ -8,6 +8,7 @@ public class PlayerMainMenu extends Menu {
 
     public PlayerMainMenu(Account account) {
         super(account);
+        System.out.println("Player MainMenu");
         playerMainMenu();
     }
 
@@ -33,6 +34,8 @@ public class PlayerMainMenu extends Menu {
                 addFriend();
             } else if (getMatcher(input, "View account menu").find()) {
                 viewAccountMenu();
+            } else {
+                System.out.println("invalid command!");
             }
         }
     }

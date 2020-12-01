@@ -1,12 +1,14 @@
 package view;
 
 import model.Account;
+import model.Admin;
 
 import java.util.regex.Matcher;
 
 public class AdminMainMenu extends Menu {
     public AdminMainMenu(Account account) {
         super(account);
+        System.out.println("Admin MainMenu");
         adminMainMenu();
     }
 
@@ -16,7 +18,7 @@ public class AdminMainMenu extends Menu {
             Matcher matcher;
             if (getMatcher(input, "^help$").find()) {
                 help();
-            } else if ((matcher = getMatcher(input, "^Add event (\\S+), (\\d{4)/\\d{2}/\\d{2}), (\\d{4)/\\d{2}/\\d{2}), (\\d+)$")).find()) {
+            } else if ((matcher = getMatcher(input, "^Add event (\\S+), (\\d{4}\\/\\d{2}\\/\\d{2}), (\\d{4}\\/\\d{2}\\/\\d{2}), (\\d+)$")).find()) {
                 addEvent(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
             } else if (getMatcher(input, "^View events$").find()) {
                 viewEvents();
@@ -36,6 +38,8 @@ public class AdminMainMenu extends Menu {
                 viewUserProfile(matcher.group(1));
             } else if (getMatcher(input, "View account menu").find()) {
                 viewAccountMenu();
+            } else {
+                System.out.println("invalid command!");
             }
         }
     }

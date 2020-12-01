@@ -6,7 +6,7 @@ public abstract class Account {
     protected static ArrayList<Account> allAccounts = new ArrayList<>();
     private String firstName;
     private String lastName;
-    private String accountName;
+    private String username;
     private String accountId;
     private String password;
     private String email;
@@ -15,7 +15,7 @@ public abstract class Account {
     public Account(String firstName, String lastName, String accountName, String accountId, String password, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.accountName = accountName;
+        this.username = accountName;
         this.accountId = accountId;
         this.password = password;
         this.email = email;
@@ -27,6 +27,15 @@ public abstract class Account {
         return allAccounts;
     }
 
+    public static Account getAccountByUsername(String username) {
+        for (Account account : allAccounts) {
+            if (account.username.equals(username)) {
+                return account;
+            }
+        }
+        return null;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -35,8 +44,8 @@ public abstract class Account {
         return lastName;
     }
 
-    public String getAccountName() {
-        return accountName;
+    public String getUsername() {
+        return username;
     }
 
     public String getAccountId() {
@@ -75,7 +84,7 @@ public abstract class Account {
         this.lastName = lastName;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

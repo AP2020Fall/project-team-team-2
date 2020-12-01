@@ -29,6 +29,7 @@ public class AccountMenuController {
 
     public void logOut() {
     }
+
     public void setAccount(Account account) {
         this.account = account;
     }

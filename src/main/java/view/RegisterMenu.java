@@ -13,6 +13,7 @@ public class RegisterMenu extends Menu {
 
     public RegisterMenu(Account account) {
         super(account);
+        System.out.println("Register Menu");
         controller = new RegisterController();
         registerMenu();
     }
@@ -61,7 +62,7 @@ public class RegisterMenu extends Menu {
             }
             inputs.add(input);
             if (Admin.isAdminExist()) {
-                System.out.println("money");
+                System.out.println("money:");
                 inputs.add(scanner.nextLine());
             }
             break;
@@ -72,6 +73,7 @@ public class RegisterMenu extends Menu {
     private void register(String username, String password) {
         if (!controller.isUsernameExist(username)) {
             controller.createAccount(username, password, getAdditionalInfo());
+            System.out.println(username + " registered successfully");
         } else {
             System.out.println("username exists!");
         }
