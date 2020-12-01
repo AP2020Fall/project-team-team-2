@@ -7,12 +7,12 @@ public abstract class Account {
     private String firstName;
     private String lastName;
     private String accountName;
-    private int accountId;
+    private String accountId;
     private String password;
     private String email;
     private String phoneNumber;
 
-    public Account(String firstName, String lastName, String accountName, int accountId, String password, String email, String phoneNumber) {
+    public Account(String firstName, String lastName, String accountName, String accountId, String password, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.accountName = accountName;
@@ -21,6 +21,10 @@ public abstract class Account {
         this.email = email;
         this.phoneNumber = phoneNumber;
         allAccounts.add(this);
+    }
+
+    public static ArrayList<Account> getAllAccounts() {
+        return allAccounts;
     }
 
     public String getFirstName() {
@@ -35,7 +39,7 @@ public abstract class Account {
         return accountName;
     }
 
-    public int getAccountId() {
+    public String getAccountId() {
         return accountId;
     }
 

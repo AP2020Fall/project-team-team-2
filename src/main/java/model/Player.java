@@ -5,8 +5,8 @@ import java.util.Iterator;
 
 public class Player extends Account {
 
-    public Player(String firstName, String lastName, String accountName, int accountId, String password, String email, String phoneNumber, int dayOfRegister, double money, int score) {
-        super(firstName, lastName, accountName, accountId, password, email, phoneNumber);
+    public Player(String firstName, String lastName, String username, String accountId, String password, String email, String phoneNumber, int dayOfRegister, double money, int score) {
+        super(firstName, lastName, username, accountId, password, email, phoneNumber);
         this.dayOfRegister = dayOfRegister;
         this.money = money;
         this.score = score;
@@ -64,18 +64,21 @@ public class Player extends Account {
     public static Player getPlayerById(int id) {
         return null;
     }
+
     public void addCard(Card card) {
         this.cards.add(card);
     }
-    public void removeCard(Card card){
-        Iterator iterate = this.cards.iterator(); 
-        while(iterate.hasNext()){
-            if(iterate.next().equals(card)){
+
+    public void removeCard(Card card) {
+        Iterator iterate = this.cards.iterator();
+        while (iterate.hasNext()) {
+            if (iterate.next().equals(card)) {
                 iterate.remove();
                 break;
             }
         }
     }
+
     public ArrayList<Card> getCards() {
         return cards;
     }
