@@ -36,6 +36,8 @@ public class AccountMenu extends Menu {
                 logout();
             } else if (getMatcher(input, "^back$").find()) {
                 return;
+            } else {
+                System.out.println("invalid command!");
             }
         }
     }

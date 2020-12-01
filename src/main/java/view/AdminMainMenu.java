@@ -37,7 +37,7 @@ public class AdminMainMenu extends Menu {
             } else if ((matcher = getMatcher(input, "View user profile (\\S+)")).find()) {
                 viewUserProfile(matcher.group(1));
             } else if (getMatcher(input, "View account menu").find()) {
-                viewAccountMenu();
+                viewAccountMenu(account);
             } else {
                 System.out.println("invalid command!");
             }
@@ -82,6 +82,7 @@ public class AdminMainMenu extends Menu {
     }
 
     private void addEvent(String gameName, String startDate, String endDate, String score) {
+
     }
 
 

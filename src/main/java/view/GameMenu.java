@@ -16,7 +16,7 @@ public class GameMenu extends Menu {
             if (getMatcher(input, "^help$").find()) {
                 help();
             } else if (getMatcher(input, "View account menu").find()) {
-                viewAccountMenu();
+                viewAccountMenu(account);
             } else if (getMatcher(input, "^Show scoreboard$").find()) {
                 showScoreboard();
             } else if (getMatcher(input, "^Details$").find()) {

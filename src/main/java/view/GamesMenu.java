@@ -20,7 +20,7 @@ public class GamesMenu extends Menu {
             if (getMatcher(input, "^help$").find()) {
                 help();
             } else if (getMatcher(input, "^View account menu$").find()) {
-                viewAccountMenu();
+                viewAccountMenu(account);
             } else if ((matcher = getMatcher(input, "^Open (\\S+)$")).find()) {
                 openGame(matcher.group(1));
             } else if (getMatcher(input, "^back$").find()) {

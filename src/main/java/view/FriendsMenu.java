@@ -18,7 +18,7 @@ public class FriendsMenu extends Menu {
             if (getMatcher(input, "help").find()) {
                 help();
             } else if (getMatcher(input, "View account menu").find()) {
-                viewAccountMenu();
+                viewAccountMenu(account);
             } else if (getMatcher(input, "Show friends").find()) {
                 showFriends();
             } else if ((matcher = getMatcher(input, "Remove (\\S+)")).find()) {
@@ -35,6 +35,8 @@ public class FriendsMenu extends Menu {
                 decline(matcher.group(1));
             } else if (getMatcher(input, "back").find()) {
                 return;
+            } else {
+                System.out.println("invalid command!");
             }
         }
     }
