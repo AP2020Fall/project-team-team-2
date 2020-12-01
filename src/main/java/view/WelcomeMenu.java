@@ -2,25 +2,28 @@ package view;
 
 import model.Account;
 
-public class MainMenu extends Menu{
-    public MainMenu(Account account) {
+public class WelcomeMenu extends Menu {
+    public WelcomeMenu(Account account) {
         super(account);
-        mainMenu();
+        System.out.println("Welcome Menu");
+        welcomeMenu();
 
     }
 
-    private void mainMenu() {
-        while (true){
+    private void welcomeMenu() {
+        while (true) {
             String input = scanner.nextLine();
 
-            if (getMatcher(input , "^register$").find()){
+            if (getMatcher(input, "^register$").find()) {
                 openRegisterMenu();
-            }else if (getMatcher(input,"^login$").find()){
+            } else if (getMatcher(input, "^login$").find()) {
                 openLoginMenu();
-            }else if (getMatcher(input,"^help$").find()){
+            } else if (getMatcher(input, "^help$").find()) {
                 help();
-            }else if (getMatcher(input , "^exit$").find()){
+            } else if (getMatcher(input, "^exit$").find()) {
                 return;
+            } else {
+                System.out.println("invalid command!");
             }
         }
     }

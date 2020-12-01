@@ -31,10 +31,12 @@ public class GameMenu extends Menu {
                 addToFavorites();
             } else if (getMatcher(input, "^Run game$").find()) {
                 runGame();
-            } else if (getMatcher(input ,"^Show points$").find()) {
+            } else if (getMatcher(input, "^Show points$").find()) {
                 showPoints();
             } else if (getMatcher(input, "^back$").find()) {
                 return;
+            } else {
+                System.out.println("invalid command!");
             }
         }
     }

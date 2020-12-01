@@ -7,9 +7,9 @@ public class Admin extends Account {
         super(firstName, lastName, username, accountId, password, email, phoneNumber);
     }
 
-    public static boolean isAdminExist(){
+    public static boolean isAdminExist() {
         for (Account account : Account.getAllAccounts()) {
-            if (account instanceof Admin){
+            if (account instanceof Admin) {
                 return true;
             }
         }

@@ -1,4 +1,5 @@
 package model;
+
 import java.io.*;
 
 import com.google.gson.*;
@@ -11,8 +12,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-public class Map{
+
+public class Map {
     private static List<List<Country>> countries;
+
     public static void main(String[] args) throws FileNotFoundException {
         int[][] map_11 = new int[4][4];
         map_11[0][0] = 40;
@@ -33,9 +36,6 @@ public class Map{
         map_11[3][3] = 33;
 
 
-
-
-
         Gson newGson = new Gson();
         String filename = "src/main/java/files/maps/map_7.txt";
         Path path = Paths.get(filename);
@@ -46,27 +46,31 @@ public class Map{
 //            // Handle exception
 //        }
         JsonReader reader = new JsonReader(new FileReader(filename));
-        int[][] newPath = newGson.fromJson(reader,int[][].class);
+        int[][] newPath = newGson.fromJson(reader, int[][].class);
         String[][] newString = new String[newPath.length][newPath[0].length];
         System.out.println(newPath[0].length);
-        for(int i = 0 ; i < newPath.length ; i++){
-            for(int j = 0 ; j< newPath[i].length ; j++){
-                newString[i][j] = Countries.values()[newPath[i][j]-1].getContinent();
+        for (int i = 0; i < newPath.length; i++) {
+            for (int j = 0; j < newPath[i].length; j++) {
+                newString[i][j] = Countries.values()[newPath[i][j] - 1].getContinent();
             }
         }
         System.out.println(Arrays.deepToString(newString));
     }
-    public static void addCountry(int row , int column , Country country) {
-        countries.get(row-1).remove(column-1);
+
+    public static void addCountry(int row, int column, Country country) {
+        countries.get(row - 1).remove(column - 1);
     }
+
     public static List<List<Country>> getCountries() {
         return countries;
     }
-    public static Country getCountry(int row,int column){
-        return countries.get(row-1).get(column-1);
+
+    public static Country getCountry(int row, int column) {
+        return countries.get(row - 1).get(column - 1);
     }
 
 }
-enum Maps{
+
+enum Maps {
 
 }

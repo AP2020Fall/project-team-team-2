@@ -1,6 +1,7 @@
 package view;
 
 import model.Account;
+
 import java.util.regex.Matcher;
 
 public class GamesMenu extends Menu {
@@ -24,6 +25,8 @@ public class GamesMenu extends Menu {
                 openGame(matcher.group(1));
             } else if (getMatcher(input, "^back$").find()) {
                 return;
+            } else {
+                System.out.println("invalid command!");
             }
         }
     }
