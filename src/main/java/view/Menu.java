@@ -19,12 +19,26 @@ public abstract class Menu {
         this.account = account;
     }
 
+    protected boolean checkEmail(String email){
+        if (email.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")){
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean checkPhoneNumber(String phoneNumber){
+        if (phoneNumber.matches("09\\d{9}")){
+            return true;
+        }
+        return false;
+    }
+
     protected Matcher getMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }
 
-    protected void viewAccountMenu() {
-
+    protected void viewAccountMenu(Account account) {
+        new AccountMenu(account);
     }
 }
