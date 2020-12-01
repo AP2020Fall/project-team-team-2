@@ -2,20 +2,32 @@ package controller;
 
 import model.Account;
 
-public class AccountMenuController {
+public class AccountMenuController extends Controller {
     private Account account;
 
-    public void AccountMenuController(Account account) {
+    public AccountMenuController(Account account) {
         this.account = account;
     }
 
     public void changePassword(String currentPass, String newPass) {
+        account.setPassword(newPass);
     }
 
     public void showPersonalInfo() {
     }
 
-    public void edit(String field, String value) {
+    public void editField(String field, String value) {
+        if (field.equals("firstName")) {
+            account.setFirstName(value);
+        } else if (field.equals("lastName")) {
+            account.setLastName(value);
+        } else if (field.equals("email")) {
+            account.setEmail(value);
+        } else if (field.equals("phoneNumber")) {
+            account.setPhoneNumber(value);
+        } else if (field.equals("username")) {
+            account.setUsername(value);
+        }
     }
 
     public void viewPlatoStatistics() {

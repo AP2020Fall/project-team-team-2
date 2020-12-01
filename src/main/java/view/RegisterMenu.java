@@ -43,20 +43,20 @@ public class RegisterMenu extends Menu {
         ArrayList<String> inputs = new ArrayList<>();
         while (true) {
             String input;
-            System.out.println("first name: ");
+            System.out.println("firstName: ");
             inputs.add(scanner.nextLine());
-            System.out.println("last name: ");
+            System.out.println("lastName: ");
             inputs.add(scanner.nextLine());
-            System.out.println("Email: ");
+            System.out.println("email: ");
             input = scanner.nextLine();
-            if (!input.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")) {
+            if (!checkEmail(input)) {
                 System.out.println("invalid email");
                 continue;
             }
             inputs.add(input);
-            System.out.println("phone number:(09121234567)");
+            System.out.println("phoneNumber:(09121234567)");
             input = scanner.nextLine();
-            if (!input.matches("09\\d{9}")) {
+            if (!checkPhoneNumber(input)) {
                 System.out.println("invalid phone number");
                 continue;
             }

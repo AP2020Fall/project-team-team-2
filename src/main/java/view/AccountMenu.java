@@ -1,12 +1,16 @@
 package view;
 
+import controller.AccountMenuController;
 import model.Account;
 
 import java.util.regex.Matcher;
 
 public class AccountMenu extends Menu {
+    AccountMenuController controller;
+
     public AccountMenu(Account account) {
         super(account);
+        controller = new AccountMenuController(account);
         accountMenu();
     }
 
@@ -37,6 +41,7 @@ public class AccountMenu extends Menu {
     }
 
     private void logout() {
+        new WelcomeMenu(null);
     }
 
     private void gameStatistics(String gameName) {
@@ -51,7 +56,32 @@ public class AccountMenu extends Menu {
     }
 
     private void editField(String field, String newValue) {
+        if (!isFieldCanChange(field)) {
+            System.out.println("invalid field or this field is not changeable");
+            return;
+        }
+        if (field.equals("email") && !checkEmail(newValue)) {
+            System.out.println("invalid email");
+            return;
+        }
+        if (field.equals("phoneNumber") && !checkPhoneNumber(newValue)) {
+            System.out.println("invalid phone number");
+            return;
+        }
+        if (field.equals("username") && controller.isUsernameExist(newValue)) {
+            System.out.println("this username exists");
+            return;
+        }
+        controller.editField(field, newValue);
 
+    }
+
+    private boolean isFieldCanChange(String field) {
+        if (field.equals("firstName") || field.equals("lastName") || field.equals("email") || field.equals("phoneNumber") || field.equals("username")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void help() {
@@ -66,8 +96,15 @@ public class AccountMenu extends Menu {
     }
 
     private void changePassword(String currentPassword, String newPassword) {
+        if (!account.getPassword().equals(currentPassword)) {
+            System.out.println("password is not correct");
+        } else {
+            controller.changePassword(currentPassword, newPassword);
+            System.out.println("password changed successfully");
+        }
     }
 
     private void viewPersonalInfo() {
+
     }
 }
