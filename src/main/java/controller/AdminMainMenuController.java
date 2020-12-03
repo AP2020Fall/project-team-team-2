@@ -47,4 +47,12 @@ public class AdminMainMenuController {
             usernames.add(player.getUsername());
         return usernames;
     }
+
+    public Player getUser(String username) {
+       Account account =  Account.getAccountByUsername(username);
+       if (!(account instanceof Player))
+           return null;
+       else
+           return (Player)account;
+    }
 }

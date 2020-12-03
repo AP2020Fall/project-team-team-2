@@ -4,6 +4,7 @@ import controller.AdminMainMenuController;
 import controller.Controller;
 import model.Account;
 import model.Admin;
+import model.Player;
 
 import java.util.regex.Matcher;
 
@@ -49,6 +50,8 @@ public class AdminMainMenu extends Menu {
     }
 
     private void viewUserProfile(String username) {
+        Player player = controller.getUser(username);
+        //printing the info
     }
 
     private void viewUsers() {
