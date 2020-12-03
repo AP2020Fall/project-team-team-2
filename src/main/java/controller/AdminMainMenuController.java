@@ -1,8 +1,11 @@
 package controller;
 
+import model.Account;
 import model.Admin;
+import model.Player;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class AdminMainMenuController {
     private Admin admin;
@@ -36,5 +39,12 @@ public class AdminMainMenuController {
     }
 
     public void showUserProfile(String username) {
+    }
+
+    public ArrayList<String> getAllUsernames() {
+        ArrayList<String> usernames = new ArrayList<>();
+        for(Player player : Account.getAllPlayers())
+            usernames.add(player.getUsername());
+        return usernames;
     }
 }

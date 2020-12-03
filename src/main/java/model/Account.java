@@ -35,7 +35,14 @@ public abstract class Account {
         }
         return null;
     }
-
+    public static ArrayList<Player> getAllPlayers()
+    {
+        ArrayList<Player> players = new ArrayList<>();
+        for(Account account: allAccounts)
+            if(account instanceof Player)
+                players.add((Player) account);
+            return players;
+    }
     public String getFirstName() {
         return firstName;
     }
