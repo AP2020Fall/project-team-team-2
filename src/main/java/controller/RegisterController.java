@@ -4,6 +4,7 @@ package controller;
 import model.Account;
 import model.Admin;
 import model.Player;
+import view.AdminMainMenu;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ public class RegisterController extends Controller {
             createPlayer(username, password, additionalInfo);
             //go to player account menu
         }
+        //LoginController.login(username); maybe make login static
     }
 
     private void createPlayer(String username, String password, ArrayList<String> additionalInfo) {
