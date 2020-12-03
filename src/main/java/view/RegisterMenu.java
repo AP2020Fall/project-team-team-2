@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 
 public class RegisterMenu extends Menu {
 
-    private RegisterController controller;
+    private final RegisterController controller;
 
     public RegisterMenu(Account account) {
         super(account);
