@@ -41,32 +41,34 @@ public class RegisterMenu extends Menu {
 
     private ArrayList<String> getAdditionalInfo() {
         ArrayList<String> inputs = new ArrayList<>();
-        while (true) {
+        //while (true) {
             String input;
             System.out.println("firstName: ");
             inputs.add(scanner.nextLine());
             System.out.println("lastName: ");
             inputs.add(scanner.nextLine());
-            System.out.println("email: ");
-            input = scanner.nextLine();
-            if (!checkEmail(input)) {
-                System.out.println("invalid email");
-                continue;
-            }
+            do {
+                System.out.println("email: ");
+                input = scanner.nextLine();
+                if (!checkEmail(input)) {
+                    System.out.println("invalid email");
+                }
+            }while(checkEmail(input));
             inputs.add(input);
-            System.out.println("phoneNumber:(09121234567)");
-            input = scanner.nextLine();
-            if (!checkPhoneNumber(input)) {
-                System.out.println("invalid phone number");
-                continue;
-            }
+            do {
+                System.out.println("phoneNumber:(09121234567)");
+                input = scanner.nextLine();
+                if (!checkPhoneNumber(input)) {
+                    System.out.println("invalid phone number");
+                }
+            }while(checkPhoneNumber(input));
             inputs.add(input);
             if (Admin.isAdminExist()) {
                 System.out.println("money:");
                 inputs.add(scanner.nextLine());
             }
-            break;
-        }
+            //break;
+        //}
         return inputs;
     }
 
