@@ -13,8 +13,10 @@ public class RegisterController extends Controller {
     public void createAccount(String username, String password, ArrayList<String> additionalInfo) {
         if (!Admin.isAdminExist()) {
             createAdmin(username, password, additionalInfo);
+            //go to admin account menu
         } else {
             createPlayer(username, password, additionalInfo);
+            //go to player account menu
         }
     }
 
