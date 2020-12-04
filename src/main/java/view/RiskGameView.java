@@ -20,7 +20,7 @@ public class RiskGameView {
         this.gameID = gameID;
     }
     public static void main(String[] args) {
-
+        String check = "hi";
     }
     public void riskGameView(){
         /* write variables to get commands */
