@@ -8,12 +8,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StartGameView {
-
+    private StartGameController startGameController = new StartGameController();
     public static void main(String[] args) {
+        StartGameView newStart = new StartGameView();
+        newStart.startGameView();
         System.out.println("Hi");
     }
 
-    public void startGame() {
+    public void startGameView() {
         /* write variables to get commands */
         Scanner inputCommand = Menu.getScanner();
         String inputLine = new String();
@@ -39,33 +41,24 @@ public class StartGameView {
         Pattern setPlayersNumberCommand = Pattern.compile("(^)number of players are\\s+(?<playerNumbers>\\d+)($)");
 
 
-        /* Different patterns of valid match cards commands */
-        Pattern matchCardsCommand = Pattern.compile("(^)match cards($)");
-        Pattern type1MatchCommand = Pattern.compile("(^)1-type1,type1,type1 score:4($)");
-        Pattern type2MatchCommand = Pattern.compile("(^)2-type2,type2,type2 score:6($)");
-        Pattern type3MatchCommand = Pattern.compile("(^)3-type3,type3,type3 score:8($)");
-        Pattern diffrentTypeMatchCommand = Pattern.compile("(^)4-type1,type2,type3 score:10($)");
-
-
-        /* get input command */
-        inputLine = inputCommand.nextLine().trim();
 
         while (inputCommand.hasNextLine()) {
+            boolean foundCommand = false;
             /* get input command */
             inputLine = inputCommand.nextLine().trim();
             if (inputLine.equals("data")) {
-                System.out.println(StartGameController.getPrimitiveSettings());
+                foundCommand = true;
+                System.out.println(startGameController.getPrimitiveSettings());
                 continue;
             }
             /* check out which command is published */
-
             Matcher chooseMapMatcher = chooseMapCommand.matcher(inputLine);
             check = chooseMapMatcher.matches();
             if (check == true) {
                 String strNumber = chooseMapMatcher.group("mapNumber");
-                chooseMapNumber(strNumber);
-                System.out.println("Map Choosen");
+                this.chooseMapNumber(strNumber);
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
@@ -74,6 +67,7 @@ public class StartGameView {
             if (check == true) {
                 placementType("on");
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
@@ -82,22 +76,25 @@ public class StartGameView {
             if (check == true) {
                 placementType("off");
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
             Matcher alliancementOnMatcher = alliancementOnCommand.matcher(inputLine);
             check = alliancementOnMatcher.matches();
             if (check == true) {
-                alliencementType("on");
+                allianceType("on");
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
             Matcher alliancementOffMatcher = alliancementOffCommand.matcher(inputLine);
             check = alliancementOffMatcher.matches();
             if (check == true) {
-                alliencementType("off");
+                allianceType("off");
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
@@ -106,6 +103,7 @@ public class StartGameView {
             if (check == true) {
                 blizzardsType("on");
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
@@ -114,6 +112,7 @@ public class StartGameView {
             if (check == true) {
                 blizzardsType("off");
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
@@ -122,6 +121,7 @@ public class StartGameView {
             if (check == true) {
                 fogsType("on");
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
@@ -130,6 +130,7 @@ public class StartGameView {
             if (check == true) {
                 fogsType("off");
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
@@ -139,6 +140,7 @@ public class StartGameView {
                 String strNumber = durationTimeMatcher.group("turnDuration");
                 changeDurationTime(strNumber);
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
@@ -148,18 +150,20 @@ public class StartGameView {
                 String strNumber = setPlayersNumberMatcher.group("playerNumbers");
                 changePlayersNumber(strNumber);
                 check = false;
+                foundCommand = true;
                 continue;
             }
 
             Matcher startGameMatcher = startGameCommand.matcher(inputLine);
             check = startGameMatcher.matches();
             if (check == true) {
-                System.out.println("Game Started");
+                startGameController.startGame();
                 check = false;
+                foundCommand = true;
                 break;
             }
 
-            if (check == false) {
+            if (foundCommand == false) {
                 System.out.println("Invalid Command!");
             }
 
@@ -167,73 +171,44 @@ public class StartGameView {
 
     }
 
-    public static void changePlayersNumber(String strNumber) {
+    public void changePlayersNumber(String strNumber) {
+        int playerNumber = Integer.parseInt(strNumber);
+        String callback = startGameController.setPlayerNumber(playerNumber);
+        System.out.println(callback);
+
+    }
+
+    public void chooseMapNumber(String strNumber) {
+        int mapNumber = Integer.parseInt(strNumber);
+        String callback = startGameController.setMapNumber(mapNumber);
+        System.out.println(callback);
+    }
+
+    public void changeDurationTime(String strNumber) {
         int number = Integer.parseInt(strNumber);
-        StartGameController.setPrimitiveSettings("PlayersNum", number);
-        System.out.println("Player Number Changes To : " + strNumber);
+        String callback = startGameController.setDurationTime(number);
+        System.out.println(callback);
     }
 
-    public static void chooseMapNumber(String strNumber) {
-        int number = Integer.parseInt(strNumber);
-        StartGameController.setPrimitiveSettings("Map Number", number);
-        System.out.println("Map Number Changes To : " + strNumber);
+    public void placementType(String type) {
+        String callback = startGameController.setPlacementType(type);
+        System.out.println(callback);
     }
 
-    public static void changeDurationTime(String strNumber) {
-        int number = Integer.parseInt(strNumber);
-        StartGameController.setPrimitiveSettings("Duration", number);
-        System.out.println("Duration Number Changes To : " + strNumber);
+    public void allianceType(String type) {
+        String callback = startGameController.setAllianceType(type);
+        System.out.println(callback);
     }
 
-    public static void placementType(String type) {
-        switch (type) {
-            case "on":
-                StartGameController.setPrimitiveSettings("Placement", true);
-                break;
-            case "off":
-                StartGameController.setPrimitiveSettings("Placement", false);
-                break;
-        }
-        System.out.println("Placement Type changed To : " + type.toUpperCase());
+    public void blizzardsType(String type) {
+        String callback = startGameController.setBlizzardsType(type);
+        System.out.println(callback);
     }
 
-    public static void alliencementType(String type) {
-        switch (type) {
-            case "on":
-                StartGameController.setPrimitiveSettings("Alliance", true);
-                break;
-            case "off":
-                StartGameController.setPrimitiveSettings("Alliance", false);
-                break;
-        }
-        System.out.println("Alliance Type changed To : " + type.toUpperCase());
+    public void fogsType(String type) {
+        String callback = startGameController.setFogType(type);
+        System.out.println(callback);
     }
 
-    public static void blizzardsType(String type) {
-        switch (type) {
-            case "on":
-                StartGameController.setPrimitiveSettings("Blizzards", true);
-                break;
-            case "off":
-                StartGameController.setPrimitiveSettings("Blizzards", false);
-                break;
-        }
-        System.out.println("Blizzards Type changed To : " + type.toUpperCase());
-    }
 
-    public static void fogsType(String type) {
-        switch (type) {
-            case "on":
-                StartGameController.setPrimitiveSettings("Fog Of War", true);
-                break;
-            case "off":
-                StartGameController.setPrimitiveSettings("Fog Of War", false);
-                break;
-        }
-        System.out.println("Fog Of War Type changed To : " + type.toUpperCase());
-    }
-
-    public static String generateGameId() {
-        return UUID.randomUUID().toString();
-    }
 }

@@ -37,7 +37,7 @@ public class Map {
 
 
         Gson newGson = new Gson();
-        String filename = "src/main/java/files/maps/map_7.txt";
+        String filename = "src/main/resources/maps/map_7.txt";
         Path path = Paths.get(filename);
 
 //        try {
@@ -60,7 +60,15 @@ public class Map {
     public static void addCountry(int row, int column, Country country) {
         countries.get(row - 1).remove(column - 1);
     }
-
+    public static boolean checkMapExists(int mapNumber){
+        String mapAddressName = "src/main/resources/maps/map_" + mapNumber + ".txt";
+        File file = new File(mapAddressName);
+        boolean existence = false;
+        if(file.exists()){
+            existence = true;
+        }
+        return existence;
+    }
     public static List<List<Country>> getCountries() {
         return countries;
     }

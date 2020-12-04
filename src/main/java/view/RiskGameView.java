@@ -1,12 +1,28 @@
 package view;
 
+import controller.RiskGameController;
+import controller.StartGameController;
+import model.Player;
+
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MatchCardView {
+public class RiskGameView {
+    private Map<String, Object> primitiveSettings;
+    private Player playerTurn;
+    private List<Player> allPlayers;
+    private String gameID;
+    public RiskGameView(Map<String, Object> primitiveSettings , String gameID){
+        this.primitiveSettings = primitiveSettings;
+        this.gameID = gameID;
+    }
+    public static void main(String[] args) {
 
-    public MatchCardView() {
+    }
+    public void riskGameView(){
         /* write variables to get commands */
         Scanner inputCommand = Menu.getScanner();
         String inputLine = new String();
@@ -21,8 +37,9 @@ public class MatchCardView {
         Pattern diffrentTypeMatchCommand = Pattern.compile("(^)4-type1,type2,type3 score:10($)");
 
 
+
+
         /* get input command */
-        inputLine = inputCommand.nextLine().trim();
 
         while (inputCommand.hasNextLine()) {
             /* get input command */
@@ -76,7 +93,5 @@ public class MatchCardView {
             }
 
         }
-
     }
-
 }

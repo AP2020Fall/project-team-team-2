@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class Event {
     private String gameName;
+
     private LocalDateTime start;
     private LocalDateTime end;
     private int score;
