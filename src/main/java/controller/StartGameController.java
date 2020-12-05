@@ -29,11 +29,11 @@ public class StartGameController {
         String filename = "src/main/resources/gameIDs/"+gameId+".txt";
         System.out.println("Game Started with ID " + gameId);
         Path path = Paths.get(filename);
-        try {
+        /*try {
             Files.writeString(path, "start", StandardCharsets.UTF_8);
         } catch (IOException ex) {
             // Handle exception
-        }
+        }*/
         RiskGameView riskGame = new RiskGameView(this.primitiveSettings , generateGameId());
         riskGame.riskGameView();
     }
