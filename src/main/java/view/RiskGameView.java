@@ -1,9 +1,14 @@
 package view;
-
-import controller.RiskGameController;
-import controller.StartGameController;
+import com.google.gson.stream.JsonReader;
+import model.Countries;
+import model.Country;
+import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 import model.Player;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -15,9 +20,47 @@ public class RiskGameView {
     private Player playerTurn;
     private List<Player> allPlayers;
     private String gameID;
+    private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
     public RiskGameView(Map<String, Object> primitiveSettings , String gameID){
         this.primitiveSettings = primitiveSettings;
         this.gameID = gameID;
+        /* Getting Map */
+        this.shapeMap();
+    }
+    public void shapeMap(){
+        String mapNumber =(String) primitiveSettings.get("Map Number");
+        String mapFileAddress = "src/main/resources/maps/map_" + mapNumber + ".txt";
+        Gson newGson = new Gson();
+        JsonReader reader = null;
+        try {
+            reader = new JsonReader(new FileReader(mapFileAddress));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int europeNumber = 0;
+        int africaNumber = 0;
+        int asiaNumber = 0;
+        int americaNumber = 0;
+        int australiaNumber = 0;
+        int[][] newPath = newGson.fromJson(reader, int[][].class);
+        for (int i = 0; i < newPath.length; i++) {
+            for (int j = 0; j < newPath[i].length; j++) {
+                Countries countryDetails = Countries.values()[newPath[i][j] - 1];
+                String countryName = countryDetails.getName();
+                String countryContinent = countryDetails.getContinent();
+                int setNumberContinentCountry = 0;
+                switch (countryContinent){
+                    case "Africa":africaNumber++;setNumberContinentCountry = africaNumber;break;
+                    case "Europe":europeNumber++;setNumberContinentCountry = europeNumber;break;
+                    case "Asia":asiaNumber++;setNumberContinentCountry = asiaNumber;break;
+                    case "America":americaNumber++;setNumberContinentCountry = americaNumber;break;
+                    case "Australia":australiaNumber++;setNumberContinentCountry = australiaNumber;break;
+                }
+                Country country = new Country(countryName , countryContinent);
+                country.setNumberOfContinentCountry(setNumberContinentCountry);
+                gameCountries.get(i).set(j , country);
+            }
+        }
     }
     public static void main(String[] args) {
         String check = "hi";
@@ -91,7 +134,9 @@ public class RiskGameView {
             if (check == false) {
                 System.out.println("Invalid Command!");
             }
-
         }
+    }
+    public void showMap(){
+
     }
 }

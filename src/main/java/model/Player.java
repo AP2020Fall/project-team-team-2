@@ -20,6 +20,7 @@ public class Player extends Account {
     private ArrayList<Account> friends;
     private ArrayList<FriendRequest> friendRequests;
     private ArrayList<Card> cards;
+    private int playerNumber;
 
     public static ArrayList<Player> getAllPlayers() {
         return allPlayers;
@@ -77,6 +78,14 @@ public class Player extends Account {
                 break;
             }
         }
+    }
+
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+
+    public int getPlayerNumber() {
+        return playerNumber;
     }
 
     public ArrayList<Card> getCards() {

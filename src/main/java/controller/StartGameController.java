@@ -15,7 +15,7 @@ import java.util.UUID;
 public class StartGameController {
     private java.util.Map<String, Object> primitiveSettings = new HashMap<String, Object>();
     {
-        primitiveSettings.put("Map Number", 0);
+        primitiveSettings.put("Map Number", 1);
         primitiveSettings.put("Placement", false);
         primitiveSettings.put("Alliance", false);
         primitiveSettings.put("Blizzards", false);
