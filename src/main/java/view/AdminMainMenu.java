@@ -1,14 +1,19 @@
 package view;
 
+import controller.AdminMainMenuController;
+import controller.Controller;
 import model.Account;
 import model.Admin;
+import model.Player;
 
 import java.util.regex.Matcher;
 
 public class AdminMainMenu extends Menu {
+    private final AdminMainMenuController controller;
     public AdminMainMenu(Account account) {
         super(account);
         System.out.println("Admin MainMenu");
+        controller = new AdminMainMenuController((Admin) account);
         adminMainMenu();
     }
 
@@ -45,9 +50,13 @@ public class AdminMainMenu extends Menu {
     }
 
     private void viewUserProfile(String username) {
+        Player player = controller.getUser(username);
+        //printing the info
     }
 
     private void viewUsers() {
+        for(String username: controller.getAllUsernames())
+            System.out.println(username);
     }
 
     private void help() {
