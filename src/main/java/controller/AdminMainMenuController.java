@@ -2,10 +2,13 @@ package controller;
 
 import model.Account;
 import model.Admin;
+import model.Event;
 import model.Player;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import static controller.Controller.generateId;
 
 public class AdminMainMenuController {
     private Admin admin;
@@ -15,15 +18,18 @@ public class AdminMainMenuController {
     }
 
     public void addEvent(String gameName, LocalDateTime start, LocalDateTime end, int score) {
+        Event event = new Event(gameName,start,end,score,generateId());
+        Event.addEvent(event);
     }
 
-    public void showEvents() {
+    public ArrayList<Event> showEvents() {
+        return Event.getEvents();
     }
 
-    public void editEvent(int eventId, String field, String value) {
+    public void editEvent(String eventId, String field, String value) {
     }
 
-    public void removeEvent(int eventId) {
+    public void removeEvent(String eventId) {
     }
 
     public void addSuggestion(String username, String gameName) {

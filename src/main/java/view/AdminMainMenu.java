@@ -91,7 +91,11 @@ public class AdminMainMenu extends Menu {
     }
 
     private void addEvent(String gameName, String startDate, String endDate, String score) {
-
+        //check the name and the dates + score greater than zero
+        if(!gameName.equals("Risk"))
+            System.out.println("Invalid Game!");
+        //else if()
+        //controller.addEvent(gameName,startDate,endDate,score);
     }
 
 
