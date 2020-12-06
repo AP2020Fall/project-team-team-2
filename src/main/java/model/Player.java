@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Player extends Account {
-
-    public Player(String firstName, String lastName, String username, String accountId, String password, String email, String phoneNumber, int dayOfRegister, double money, int score) {
+    public Player(String firstName, String lastName, String username, String accountId,
+                  String password, String email, String phoneNumber, int dayOfRegister, double money, int score) {
         super(firstName, lastName, username, accountId, password, email, phoneNumber);
         this.dayOfRegister = dayOfRegister;
         this.money = money;
         this.score = score;
+        suggestions = new ArrayList<>();
     }
 
-    private static ArrayList<Player> allPlayers = new ArrayList<>();
+    private static final ArrayList<Player> allPlayers = new ArrayList<>();
     private int dayOfRegister;
     private double money;
     private int score;
@@ -20,6 +21,7 @@ public class Player extends Account {
     private ArrayList<Account> friends;
     private ArrayList<FriendRequest> friendRequests;
     private ArrayList<Card> cards;
+    private final ArrayList<String> suggestions;
     private int playerNumber;
 
     public static ArrayList<Player> getAllPlayers() {
@@ -62,7 +64,10 @@ public class Player extends Account {
         this.score = score;
     }
 
-    public static Player getPlayerById(int id) {
+    public static Player getPlayerById(String id) {
+        for(Player player: allPlayers)
+            if(player.getAccountId().equals(id))
+                return player;
         return null;
     }
 
@@ -90,5 +95,12 @@ public class Player extends Account {
 
     public ArrayList<Card> getCards() {
         return cards;
+    }
+    public Player getPlayerByUsername(String username)
+    {
+        for(Player player: allPlayers)
+            if(player.getAccountId().equals(username))
+                return player;
+        return null;
     }
 }
