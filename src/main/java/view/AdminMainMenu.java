@@ -50,12 +50,12 @@ public class AdminMainMenu extends Menu {
     }
 
     private void viewUserProfile(String username) {
-        Player player = controller.getUser(username);
+        Player player = controller.showUserProfile(username);
         //printing the info
     }
 
     private void viewUsers() {
-        for(String username: controller.getAllUsernames())
+        for(String username: controller.showUsers())
             System.out.println(username);
     }
 
@@ -91,7 +91,11 @@ public class AdminMainMenu extends Menu {
     }
 
     private void addEvent(String gameName, String startDate, String endDate, String score) {
-
+        //check the name and the dates + score greater than zero
+        if(!gameName.equals("Risk"))
+            System.out.println("Invalid Game!");
+        //else if()
+        //controller.addEvent(gameName,startDate,endDate,score);
     }
 
 

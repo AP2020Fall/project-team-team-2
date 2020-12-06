@@ -35,6 +35,14 @@ public abstract class Account {
         }
         return null;
     }
+    public static Account getAccountById(String id) {
+        for (Account account : allAccounts) {
+            if (account.accountId.equals(id)) {
+                return account;
+            }
+        }
+        return null;
+    }
     public static ArrayList<Player> getAllPlayers()
     {
         ArrayList<Player> players = new ArrayList<>();
