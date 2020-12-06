@@ -73,6 +73,6 @@ public class PlayerMainMenu extends Menu {
                 "View admin's suggestions\n" +
                 "Choose suggested game\n" +
                 "Add friend\n" +
-                "View account menu");
+                "View account menu\n");
     }
 }

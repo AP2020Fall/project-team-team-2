@@ -41,7 +41,6 @@ public class RegisterMenu extends Menu {
 
     private ArrayList<String> getAdditionalInfo() {
         ArrayList<String> inputs = new ArrayList<>();
-        //while (true) {
             String input;
             System.out.println("firstName: ");
             inputs.add(scanner.nextLine());
@@ -67,8 +66,6 @@ public class RegisterMenu extends Menu {
                 System.out.println("money:");
                 inputs.add(scanner.nextLine());
             }
-            //break;
-        //}
         return inputs;
     }
 
