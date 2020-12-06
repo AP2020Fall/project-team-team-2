@@ -10,7 +10,6 @@ public class Player extends Account {
         this.dayOfRegister = dayOfRegister;
         this.money = money;
         this.score = score;
-        suggestions = new ArrayList<>();
     }
 
     //private static final ArrayList<Player> allPlayers = new ArrayList<>();
@@ -21,7 +20,8 @@ public class Player extends Account {
     private ArrayList<Account> friends;
     private ArrayList<FriendRequest> friendRequests;
     private ArrayList<Card> cards;
-    private final ArrayList<String> suggestions;
+   // private final ArrayList<String> suggestions;
+    private Suggestion suggestion;
     private int playerNumber;
 
     /*public static ArrayList<Player> getAllPlayers() {
@@ -63,7 +63,18 @@ public class Player extends Account {
     public void setScore(int score) {
         this.score = score;
     }
-
+    public void setSuggestion(Suggestion suggestion)
+    {
+        this.suggestion= suggestion;
+    }
+    public boolean suggestionExists()
+    {
+        return suggestion != null;
+    }
+    public void removeSuggestion()
+    {
+        suggestion = null;
+    }
     public static Player getPlayerById(String id) {
         Account account = Account.getAccountById(id);
         if(account instanceof Player)
