@@ -50,12 +50,12 @@ public class AdminMainMenu extends Menu {
     }
 
     private void viewUserProfile(String username) {
-        Player player = controller.getUser(username);
+        Player player = controller.showUserProfile(username);
         //printing the info
     }
 
     private void viewUsers() {
-        for(String username: controller.getAllUsernames())
+        for(String username: controller.showUsers())
             System.out.println(username);
     }
 

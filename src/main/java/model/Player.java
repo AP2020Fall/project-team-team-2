@@ -13,7 +13,7 @@ public class Player extends Account {
         suggestions = new ArrayList<>();
     }
 
-    private static final ArrayList<Player> allPlayers = new ArrayList<>();
+    //private static final ArrayList<Player> allPlayers = new ArrayList<>();
     private int dayOfRegister;
     private double money;
     private int score;
@@ -24,9 +24,9 @@ public class Player extends Account {
     private final ArrayList<String> suggestions;
     private int playerNumber;
 
-    public static ArrayList<Player> getAllPlayers() {
+    /*public static ArrayList<Player> getAllPlayers() {
         return allPlayers;
-    }
+    }*/
 
     public int getDayOfRegister() {
         return dayOfRegister;
@@ -65,12 +65,19 @@ public class Player extends Account {
     }
 
     public static Player getPlayerById(String id) {
-        for(Player player: allPlayers)
-            if(player.getAccountId().equals(id))
-                return player;
+        Account account = Account.getAccountById(id);
+        if(account instanceof Player)
+            return (Player) account;
         return null;
     }
 
+    public static Player getPlayerByUsername(String username)
+    {
+        Account account = Account.getAccountByUsername(username);
+        if(account instanceof Player)
+            return (Player) account;
+        return null;
+    }
     public void addCard(Card card) {
         this.cards.add(card);
     }
@@ -95,12 +102,5 @@ public class Player extends Account {
 
     public ArrayList<Card> getCards() {
         return cards;
-    }
-    public Player getPlayerByUsername(String username)
-    {
-        for(Player player: allPlayers)
-            if(player.getAccountId().equals(username))
-                return player;
-        return null;
     }
 }

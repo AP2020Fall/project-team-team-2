@@ -27,9 +27,11 @@ public class AdminMainMenuController {
     }
 
     public void editEvent(String eventId, String field, String value) {
+
     }
 
     public void removeEvent(String eventId) {
+        Event.getEvents().removeIf(a -> a.getEventId().equals(eventId));
     }
 
     public void addSuggestion(String username, String gameName) {
@@ -38,27 +40,18 @@ public class AdminMainMenuController {
     public void showSuggestions() {
     }
 
-    public void removeSuggestion(int suggestionId) {
+    public void removeSuggestion(String suggestionId) {
     }
 
-    public void showUsers() {
+
+    public Player showUserProfile(String username) {
+        return Player.getPlayerByUsername(username);
     }
 
-    public void showUserProfile(String username) {
-    }
-
-    public ArrayList<String> getAllUsernames() {
+    public ArrayList<String> showUsers() {
         ArrayList<String> usernames = new ArrayList<>();
         for(Player player : Account.getAllPlayers())
             usernames.add(player.getUsername());
         return usernames;
-    }
-
-    public Player getUser(String username) {
-       Account account =  Account.getAccountByUsername(username);
-       if (!(account instanceof Player))
-           return null;
-       else
-           return (Player)account;
     }
 }
