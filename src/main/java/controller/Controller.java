@@ -31,9 +31,7 @@ public class Controller {
     public boolean isUsernameAndPasswordMatch(String username, String password) {
         for (Account account : Account.getAllAccounts()) {
             if (account.getUsername().equals(username)) {
-                if (account.getPassword().equals(password)) {
-                    return true;
-                } else return false;
+                return account.getPassword().equals(password);
             }
         }
         return false;
