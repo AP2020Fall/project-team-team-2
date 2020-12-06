@@ -1,6 +1,7 @@
 package controller;
 
 import model.Player;
+import model.Suggestion;
 
 public class PlayerMainMenuController {
 
@@ -22,10 +23,12 @@ public class PlayerMainMenuController {
     public void showLastPlayed() {
     }
 
-    public void showAdminsSuggestions() {
+    public Suggestion showAdminsSuggestions() {
+        return player.getSuggestion();
     }
 
-    public void showSuggestedGame() {
+    public String showSuggestedGame() {
+        return player.getSuggestion().getGameName();
     }
 
     public void addFriend(String name) {

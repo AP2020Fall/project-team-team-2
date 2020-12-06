@@ -1,9 +1,6 @@
 package controller;
 
-import model.Account;
-import model.Admin;
-import model.Event;
-import model.Player;
+import model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,12 +32,20 @@ public class AdminMainMenuController {
     }
 
     public void addSuggestion(String username, String gameName) {
+        Player player = Player.getPlayerByUsername(username);
+        Suggestion suggestion = new Suggestion(gameName,generateId(),player);
+        player.setSuggestion(suggestion);
+        Suggestion.addSuggestion(suggestion);
     }
 
-    public void showSuggestions() {
+    public ArrayList<Suggestion> showSuggestions() {
+       return Suggestion.getSuggestions();
     }
 
     public void removeSuggestion(String suggestionId) {
+        Suggestion suggestion = Suggestion.getSuggestionById(suggestionId);
+        suggestion.getPlayer().removeSuggestion();
+        Suggestion.getSuggestions().remove(suggestion);
     }
 
 
