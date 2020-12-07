@@ -2,7 +2,7 @@ package controller;
 
 import model.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static controller.Controller.generateId;
@@ -14,7 +14,7 @@ public class AdminMainMenuController {
         this.admin = admin;
     }
 
-    public void addEvent(String gameName, LocalDateTime start, LocalDateTime end, int score) {
+    public void addEvent(String gameName, LocalDate start, LocalDate end, int score) {
         Event event = new Event(gameName, start, end, score, generateId());
         Event.addEvent(event);
     }
@@ -23,10 +23,23 @@ public class AdminMainMenuController {
         return Event.getEvents();
     }
 
-    public void editEvent(String eventId, String field, String value) {
-
+    public void editEventStart(String eventId, LocalDate start) {
+        Event.getEventById(eventId).setStart(start);
+    }
+    public void editEventEnd(String eventId, LocalDate end) {
+        Event.getEventById(eventId).setEnd(end);
+    }
+    public void editEventScore(String eventId, int score) {
+        Event.getEventById(eventId).setScore(score);
+    }
+    public void editEventGameName(String eventId, String gameName) {
+        Event.getEventById(eventId).setGameName(gameName);
     }
 
+    public boolean eventExists(String eventId)
+    {
+        return Event.getEventById(eventId) != null;
+    }
     public void removeEvent(String eventId) {
         Event.getEvents().removeIf(a -> a.getEventId().equals(eventId));
     }
