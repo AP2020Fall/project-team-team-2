@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Suggestion {
-    private static final ArrayList<Suggestion> suggestions = new ArrayList<>();
+    private static  ArrayList<Suggestion> suggestions = new ArrayList<>();
     private final String gameName;
     private final String id;
     private final Player player;
@@ -46,4 +46,12 @@ public class Suggestion {
         return getSuggestionById(id) != null;
     }
 
+    @Override
+    public String toString() {
+        return "Suggestion{" +
+                "gameName='" + gameName + '\'' +
+                ", id='" + id + '\'' +
+                ", player=" + player +
+                '}';
+    }
 }

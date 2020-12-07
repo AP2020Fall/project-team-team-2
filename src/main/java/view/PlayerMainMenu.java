@@ -1,13 +1,18 @@
 package view;
 
+import com.google.gson.internal.$Gson$Preconditions;
+import controller.PlayerMainMenuController;
 import model.Account;
+import model.Player;
 
 import java.util.regex.Matcher;
 
 public class PlayerMainMenu extends Menu {
+    PlayerMainMenuController controller;
 
     public PlayerMainMenu(Account account) {
         super(account);
+        controller = new PlayerMainMenuController((Player) account);
         System.out.println("Player MainMenu");
         playerMainMenu();
     }
@@ -30,8 +35,8 @@ public class PlayerMainMenu extends Menu {
                 viewAdminSuggestion();
             } else if (getMatcher(input, "^Choose suggested game$").find()) {
                 chooseSuggestedGame();
-            } else if (getMatcher(input, "^Add friend$").find()) {
-                addFriend();
+            } else if ((matcher =getMatcher(input, "^Add friend (\\S+)$")).find()) {
+                addFriend(matcher.group(1));
             } else if (getMatcher(input, "^View account menu$").find()) {
                 viewAccountMenu(account);
             } else {
@@ -40,8 +45,8 @@ public class PlayerMainMenu extends Menu {
         }
     }
 
-    private void addFriend() {
-
+    private void addFriend(String username) {
+        controller.addFriend(username);
     }
 
     private void chooseSuggestedGame() {
@@ -63,6 +68,7 @@ public class PlayerMainMenu extends Menu {
     }
 
     private void showPoints() {
+
     }
 
     private void help() {

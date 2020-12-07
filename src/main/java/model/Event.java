@@ -47,4 +47,15 @@ public class Event {
     {
         events.add(event);
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "gameName='" + gameName + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", score=" + score +
+                ", eventId='" + eventId + '\'' +
+                '}';
+    }
 }

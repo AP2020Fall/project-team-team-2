@@ -2,9 +2,7 @@ package view;
 
 import controller.AdminMainMenuController;
 import controller.Controller;
-import model.Account;
-import model.Admin;
-import model.Player;
+import model.*;
 
 import java.util.regex.Matcher;
 
@@ -73,21 +71,31 @@ public class AdminMainMenu extends Menu {
     }
 
     private void removeSuggestion(String suggestionId) {
+        controller.removeSuggestion(suggestionId);
     }
 
     private void viewSuggestions() {
+        for (Suggestion suggestion : controller.showSuggestions()) {
+            System.out.println(suggestion);
+        }
     }
 
     private void addSuggestion(String username, String gameName) {
+        controller.addSuggestion(username ,gameName);
     }
 
     private void removeEvent(String eventId) {
+        controller.removeEvent(eventId);
     }
 
     private void editEvent(String eventId, String field, String value) {
+        controller.editEvent(eventId,field,value);
     }
 
     private void viewEvents() {
+        for (Event event : controller.showEvents()) {
+            System.out.println(event);
+        }
     }
 
     private void addEvent(String gameName, String startDate, String endDate, String score) {
