@@ -4,8 +4,10 @@ public class GameLog {
 
     private int frequency;
     private int wins;
-    private int gameLogId;
+    private String gameLogId;
     private int score;
+
+    private Game game;
 
     public int getFrequency() {
         return frequency;
@@ -15,7 +17,17 @@ public class GameLog {
         return wins;
     }
 
-    public int getGameLogId() {
+    public int getLosses()
+    {
+        return frequency - wins;
+    }
+
+    public Game getGame()
+    {
+        return game;
+    }
+
+    public String getGameLogId() {
         return gameLogId;
     }
 
@@ -35,4 +47,6 @@ public class GameLog {
     public void setScore(int score) {
         this.score = score;
     }
+
+
 }

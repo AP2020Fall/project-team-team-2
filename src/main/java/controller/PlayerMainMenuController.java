@@ -31,7 +31,7 @@ public class PlayerMainMenuController {
         return player.getSuggestion().getGameName();
     }
 
-    public void addFriend(String name) {
+    public void addFriend(String username) {
     }
 
 

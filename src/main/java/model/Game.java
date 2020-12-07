@@ -14,4 +14,9 @@ public class Game {
 
     private String name;
     private String gameId;
+
+    public String getName()
+    {
+        return name;
+    }
 }

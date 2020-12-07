@@ -1,15 +1,13 @@
 package view;
 
 import controller.AdminMainMenuController;
-import controller.Controller;
-import model.Account;
-import model.Admin;
-import model.Player;
+import model.*;
 
 import java.util.regex.Matcher;
 
 public class AdminMainMenu extends Menu {
     private final AdminMainMenuController controller;
+
     public AdminMainMenu(Account account) {
         super(account);
         System.out.println("Admin MainMenu");
@@ -51,16 +49,21 @@ public class AdminMainMenu extends Menu {
 
     private void viewUserProfile(String username) {
         Player player = controller.showUserProfile(username);
-        //printing the info
+        if (player == null) {
+            System.out.println("user does not exists!");
+        } else {
+            System.out.println(player);
+        }
     }
 
     private void viewUsers() {
-        for(String username: controller.showUsers())
+        for (String username : controller.showUsers())
             System.out.println(username);
     }
 
     private void help() {
-        System.out.println("Add event <game_name>, <start_date>, <end_date>, <score>\n" +
+        System.out.println("View account menu\n" +
+                "Add event <game_name>, <start_date>, <end_date>, <score>\n" +
                 "View events\n" +
                 "Edit event <event_id>, <field>, <new_value>\n" +
                 "Remove event <event_id>\n" +
@@ -73,26 +76,36 @@ public class AdminMainMenu extends Menu {
     }
 
     private void removeSuggestion(String suggestionId) {
+        controller.removeSuggestion(suggestionId);
     }
 
     private void viewSuggestions() {
+        for (Suggestion suggestion : controller.showSuggestions()) {
+            System.out.println(suggestion);
+        }
     }
 
     private void addSuggestion(String username, String gameName) {
+        controller.addSuggestion(username, gameName);
     }
 
     private void removeEvent(String eventId) {
+        controller.removeEvent(eventId);
     }
 
     private void editEvent(String eventId, String field, String value) {
+        controller.editEvent(eventId, field, value);
     }
 
     private void viewEvents() {
+        for (Event event : controller.showEvents()) {
+            System.out.println(event);
+        }
     }
 
     private void addEvent(String gameName, String startDate, String endDate, String score) {
         //check the name and the dates + score greater than zero
-        if(!gameName.equals("Risk"))
+        if (!gameName.equals("Risk"))
             System.out.println("Invalid Game!");
         //else if()
         //controller.addEvent(gameName,startDate,endDate,score);
