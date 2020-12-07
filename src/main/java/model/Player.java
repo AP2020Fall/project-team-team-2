@@ -21,7 +21,7 @@ public class Player extends Account {
     private double money;
     private int score;
     private ArrayList<GameLog> gameLogs;
-    private ArrayList<Account> friends;
+    private ArrayList<Player> friends;
     private ArrayList<FriendRequest> friendRequests;
     private ArrayList<Card> cards;
     // private final ArrayList<String> suggestions;
@@ -48,7 +48,7 @@ public class Player extends Account {
         return gameLogs;
     }
 
-    public ArrayList<Account> getFriends() {
+    public ArrayList<Player> getFriends() {
         return friends;
     }
 
@@ -84,7 +84,25 @@ public class Player extends Account {
         suggestion = null;
     }
 
+    public Player getFriendByUsername(String username)
+    {
+        //if username is friend of player, return the Player object of username else null.
+        for(Player friend: friends)
+            if(friend.getUsername().equals(username))
+                return friend;
+            return null;
+    }
+
+    public FriendRequest getFriendRequestByUsername(String username)
+    {
+        //if username sent a FriendRequest to player, return the FriendRequest else null.
+        for (FriendRequest friendRequest: friendRequests)
+            if(friendRequest.getPlayer().getUsername().equals(username))
+                return friendRequest;
+            return null;
+    }
     public static Player getPlayerById(String id) {
+        //if a player with id exists returns player else null.
         Account account = Account.getAccountById(id);
         if (account instanceof Player)
             return (Player) account;
