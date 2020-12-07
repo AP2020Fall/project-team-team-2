@@ -10,6 +10,10 @@ public class Player extends Account {
         this.dayOfRegister = dayOfRegister;
         this.money = money;
         this.score = score;
+        gameLogs = new ArrayList<>();
+        friends = new ArrayList<>();
+        friendRequests = new ArrayList<>();
+        cards = new ArrayList<>();
     }
 
     //private static final ArrayList<Player> allPlayers = new ArrayList<>();
@@ -107,7 +111,20 @@ public class Player extends Account {
             }
         }
     }
+    public int getNumberOfWins()
+    {
+        int wins = 0;
+        for(GameLog gameLog: gameLogs)
+            wins += gameLog.getWins();
+        return wins;
+    }
 
+    public GameLog GameHistory(String gameName)
+    {
+        //for(GameLog gameLog : gameLogs)
+           // if(gameLog.)
+        return null;
+    }
     public void setPlayerNumber(int playerNumber) {
         this.playerNumber = playerNumber;
     }
