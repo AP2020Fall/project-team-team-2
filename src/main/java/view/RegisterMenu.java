@@ -71,8 +71,9 @@ public class RegisterMenu extends Menu {
 
     private void register(String username, String password) {
         if (!controller.isUsernameExist(username)) {
-            controller.createAccount(username, password, getAdditionalInfo());
+            ArrayList<String> additionalInfo = getAdditionalInfo();
             System.out.println(username + " registered successfully");
+            controller.createAccount(username, password, additionalInfo);
         } else {
             System.out.println("username exists!");
         }

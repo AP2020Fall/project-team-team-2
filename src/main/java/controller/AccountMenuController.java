@@ -1,6 +1,9 @@
 package controller;
 
 import model.Account;
+import view.WelcomeMenu;
+
+import java.util.ArrayList;
 
 public class AccountMenuController extends Controller {
     private Account account;
@@ -13,7 +16,16 @@ public class AccountMenuController extends Controller {
         account.setPassword(newPass);
     }
 
-    public void showPersonalInfo() {
+    public ArrayList<String> showPersonalInfo() {
+        //returns array of string in the following order, first name, last name,username,email,phone number, accountId
+        ArrayList<String> result = new ArrayList<>();
+        result.add(account.getFirstName());
+        result.add(account.getLastName());
+        result.add(account.getUsername());
+        result.add(account.getEmail());
+        result.add(account.getPhoneNumber());
+        result.add(account.getAccountId());
+        return result;
     }
 
     public void editField(String field, String value) {
@@ -40,6 +52,7 @@ public class AccountMenuController extends Controller {
     }
 
     public void logOut() {
+        new WelcomeMenu(null);
     }
 
     public void setAccount(Account account) {
