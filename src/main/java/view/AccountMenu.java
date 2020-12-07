@@ -2,6 +2,7 @@ package view;
 
 import controller.AccountMenuController;
 import model.Account;
+import model.Player;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -48,14 +49,28 @@ public class AccountMenu extends Menu {
     }
 
     private void gameStatistics(String gameName) {
-
+        if (!gameName.equals("RiskGame")) {
+            System.out.println("Game dose not exists!");
+        } else {
+            ArrayList<String> results = controller.showGameStatistics(gameName);
+            System.out.println("frequency: " + results.get(0) +
+                    "\nwins: " + results.get(1) +
+                    "\nlosses: " + results.get(2));
+        }
     }
 
     private void gameHistory() {
     }
 
     private void viewPlatoStatistics() {
-
+        if (account instanceof Player) {
+            ArrayList<Integer> results = controller.viewPlatoStatistics();
+            System.out.println("number of friends: " + results.get(0) +
+                    "\nnumber of wins: " + results.get(1) +
+                    "\nnumber of day passed: " + results.get(2));
+        } else {
+            System.out.println("you are not a player!");
+        }
     }
 
     private void editField(String field, String newValue) {
