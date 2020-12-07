@@ -3,6 +3,7 @@ package view;
 import controller.AccountMenuController;
 import model.Account;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class AccountMenu extends Menu {
@@ -107,6 +108,11 @@ public class AccountMenu extends Menu {
     }
 
     private void viewPersonalInfo() {
-
+        ArrayList<String> infos = controller.showPersonalInfo();
+        System.out.println("firstName: " + infos.get(0) +
+                "\nlastName: " + infos.get(1) +
+                "\nusername: " + infos.get(2) +
+                "\nEmail: " + infos.get(3) +
+                "\nPhoneNumber: " + infos.get(4));
     }
 }

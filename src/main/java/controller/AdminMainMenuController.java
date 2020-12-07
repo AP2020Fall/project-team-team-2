@@ -15,7 +15,7 @@ public class AdminMainMenuController {
     }
 
     public void addEvent(String gameName, LocalDateTime start, LocalDateTime end, int score) {
-        Event event = new Event(gameName,start,end,score,generateId());
+        Event event = new Event(gameName, start, end, score, generateId());
         Event.addEvent(event);
     }
 
@@ -33,13 +33,13 @@ public class AdminMainMenuController {
 
     public void addSuggestion(String username, String gameName) {
         Player player = Player.getPlayerByUsername(username);
-        Suggestion suggestion = new Suggestion(gameName,generateId(),player);
+        Suggestion suggestion = new Suggestion(gameName, generateId(), player);
         player.setSuggestion(suggestion);
         Suggestion.addSuggestion(suggestion);
     }
 
     public ArrayList<Suggestion> showSuggestions() {
-       return Suggestion.getSuggestions();
+        return Suggestion.getSuggestions();
     }
 
     public void removeSuggestion(String suggestionId) {
@@ -55,7 +55,7 @@ public class AdminMainMenuController {
 
     public ArrayList<String> showUsers() {
         ArrayList<String> usernames = new ArrayList<>();
-        for(Player player : Account.getAllPlayers())
+        for (Player player : Account.getAllPlayers())
             usernames.add(player.getUsername());
         return usernames;
     }
