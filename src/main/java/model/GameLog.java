@@ -17,6 +17,16 @@ public class GameLog {
         return wins;
     }
 
+    public int getLosses()
+    {
+        return frequency - wins;
+    }
+
+    public Game getGame()
+    {
+        return game;
+    }
+
     public String getGameLogId() {
         return gameLogId;
     }
@@ -37,4 +47,6 @@ public class GameLog {
     public void setScore(int score) {
         this.score = score;
     }
+
+
 }

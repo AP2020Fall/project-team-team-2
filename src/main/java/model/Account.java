@@ -20,7 +20,7 @@ public abstract class Account {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        allAccounts.add(this);
+        //allAccounts.add(this);
     }
 
     public static ArrayList<Account> getAllAccounts() {
