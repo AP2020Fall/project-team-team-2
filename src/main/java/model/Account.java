@@ -35,6 +35,7 @@ public abstract class Account {
         }
         return null;
     }
+
     public static Account getAccountById(String id) {
         for (Account account : allAccounts) {
             if (account.accountId.equals(id)) {
@@ -43,14 +44,15 @@ public abstract class Account {
         }
         return null;
     }
-    public static ArrayList<Player> getAllPlayers()
-    {
+
+    public static ArrayList<Player> getAllPlayers() {
         ArrayList<Player> players = new ArrayList<>();
-        for(Account account: allAccounts)
-            if(account instanceof Player)
+        for (Account account : allAccounts)
+            if (account instanceof Player)
                 players.add((Player) account);
-            return players;
+        return players;
     }
+
     public String getFirstName() {
         return firstName;
     }
@@ -101,5 +103,16 @@ public abstract class Account {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "firstName: " + firstName +
+                        "\nlastName: " + lastName +
+                        "\nusername: " + username +
+                        "\nemail: " + email +
+                        "\nphoneNumber: " + phoneNumber + "\n"
+                ;
     }
 }
