@@ -1,4 +1,5 @@
 package controller;
+
 import model.Map;
 import model.Country;
 import view.RiskGameView;
@@ -14,7 +15,7 @@ import java.util.UUID;
 
 
 public class StartGameController {
-    private java.util.Map<String, Object> primitiveSettings = new HashMap<String, Object>();
+    private static java.util.Map<String, Object> primitiveSettings = new HashMap<String, Object>();
     {
         primitiveSettings.put("Map Number", 1);
         primitiveSettings.put("Placement", false);
@@ -25,7 +26,14 @@ public class StartGameController {
         primitiveSettings.put("PlayersNum", 0);
     }
 
+    private static Map mainMap;
+
     public static void main(String[] args) {
+        mainMap = new Map();
+
+        while(getPrimitiveSettings().get("Placement").equals(true)){
+
+        }
     }
 
     public void startGame() {
@@ -42,7 +50,7 @@ public class StartGameController {
         riskGame.riskGameView();
     }
 
-    public java.util.Map<String, Object> getPrimitiveSettings() {
+    public static java.util.Map<String, Object> getPrimitiveSettings() {
         return primitiveSettings;
     }
     public String setMapNumber(int mapNumber){
