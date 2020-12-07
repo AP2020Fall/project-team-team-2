@@ -6,21 +6,23 @@ import model.Player;
 import view.WelcomeMenu;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AccountMenuController extends Controller {
     private Account account;
 
     public AccountMenuController(Account account) {
-        this.account = account;
+
+        this.account = Objects.requireNonNull(account,"Account passed to AccountMenuController is null.");
     }
 
-    public void changePassword(String currentPass, String newPass) {
+    public void changePassword(String newPass) {
         account.setPassword(newPass);
     }
 
     public ArrayList<String> showPersonalInfo() {
-        //returns array of string in the following order, first name, last name,username,email,phone number,
-        // day passed since registration if the account is Player
+        //returns array of string in the following order, first name, last name,username,email,phone number
+        //and day passed since registration if the account is Player.
         ArrayList<String> result = new ArrayList<>();
         result.add(account.getFirstName());
         result.add(account.getLastName());
@@ -33,6 +35,7 @@ public class AccountMenuController extends Controller {
     }
 
     public void editField(String field, String value) {
+        //sets field to value.
         if (field.equals("firstName")) {
             account.setFirstName(value);
         } else if (field.equals("lastName")) {
@@ -47,7 +50,7 @@ public class AccountMenuController extends Controller {
     }
 
     public ArrayList<Integer> viewPlatoStatistics() {
-        //returns an arraylist of Integer including number of friends,number of wins,number of days passed in that order
+        //returns an arraylist of Integer including number of friends,number of wins,number of days passed in that order.
         ArrayList<Integer> result = new ArrayList<>();
         if(account instanceof Player) //must be checked in view
         {
@@ -64,12 +67,13 @@ public class AccountMenuController extends Controller {
     }
 
     public ArrayList<String> showGameStatistics(String gameName) {
-        //check in view that the game exist otherwise NullPointerException will occur
         //returns arraylist of String, frequency, wins, losses
+        //throws NullPointerException if players hasn't played gameName
         ArrayList<String> result = new ArrayList<>();
         if(account instanceof Player)//must be checked in view
         {
-            GameLog gameLog = ((Player) account).getGameHistory(gameName);
+            GameLog gameLog = Objects.requireNonNull(((Player) account).getGameHistory(gameName),
+                    "Game passed to AccountMenuController.showGameStatistics hasn't been played.");
             result.add(String.valueOf(gameLog.getFrequency()));
             result.add(String.valueOf(gameLog.getWins()));
             result.add(String.valueOf(gameLog.getLosses()));
@@ -80,6 +84,7 @@ public class AccountMenuController extends Controller {
     }
     public boolean playerHasGame(String gameName)
     {
+        //returns true if player has played gameName, false otherwise.
         if(account instanceof Player)//must be checked in view
            return ((Player) account).getGameHistory(gameName) != null;
         return false;

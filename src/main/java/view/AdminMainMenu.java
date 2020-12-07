@@ -94,7 +94,7 @@ public class AdminMainMenu extends Menu {
     }
 
     private void editEvent(String eventId, String field, String value) {
-        controller.editEvent(eventId, field, value);
+       // controller.editEvent(eventId, field, value);
     }
 
     private void viewEvents() {

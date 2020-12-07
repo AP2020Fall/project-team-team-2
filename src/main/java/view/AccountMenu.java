@@ -117,7 +117,7 @@ public class AccountMenu extends Menu {
         if (!account.getPassword().equals(currentPassword)) {
             System.out.println("password is not correct");
         } else {
-            controller.changePassword(currentPassword, newPassword);
+            controller.changePassword(newPassword);
             System.out.println("password changed successfully");
         }
     }
