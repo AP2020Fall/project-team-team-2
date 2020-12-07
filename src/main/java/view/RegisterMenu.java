@@ -52,7 +52,7 @@ public class RegisterMenu extends Menu {
                 if (!checkEmail(input)) {
                     System.out.println("invalid email");
                 }
-            }while(checkEmail(input));
+            }while(!checkEmail(input));
             inputs.add(input);
             do {
                 System.out.println("phoneNumber:(09121234567)");
@@ -60,7 +60,7 @@ public class RegisterMenu extends Menu {
                 if (!checkPhoneNumber(input)) {
                     System.out.println("invalid phone number");
                 }
-            }while(checkPhoneNumber(input));
+            }while(!checkPhoneNumber(input));
             inputs.add(input);
             if (Admin.isAdminExist()) {
                 System.out.println("money:");
