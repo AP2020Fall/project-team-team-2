@@ -10,7 +10,8 @@ public class FriendsMenuController {
     private Player player;
 
     public FriendsMenuController(Player player) {
-        this.player = Objects.requireNonNull( player, "Player object passed to FriendsMenuController is null.");
+        this.player = Objects.requireNonNull( player,
+                "Player object passed to FriendsMenuController is null.");
     }
 
     public ArrayList<String> showFriends() {
@@ -26,8 +27,8 @@ public class FriendsMenuController {
     public void removeFriend(String username) {
         //removes username from friends of player and removes the player from the friends of username.
         //throws NullPointerError if username doesn't exist in friends list of player.
-        Player friend = Objects.requireNonNull( player.getFriendByUsername(username),"Username passed to " +
-                        "FriendsMenuController.removeFriend doesn't exist in friends list.");
+        Player friend = Objects.requireNonNull( player.getFriendByUsername(username),
+                "Username passed to FriendsMenuController.removeFriend doesn't exist in friends list.");
         friend.getFriends().removeIf(a->a.getUsername().equals(player.getUsername()));
         player.getFriends().remove(friend);
     }
@@ -46,8 +47,8 @@ public class FriendsMenuController {
     public void addFriend(String username) {
         //sends a FriendRequest to username
         //throws NullPointerError if username doesn't exist.
-        Player friend = Objects.requireNonNull(Player.getPlayerByUsername(username),"Username passed to" +
-                "FriendsMenuController.addFriend doesn't exist.");
+        Player friend = Objects.requireNonNull(Player.getPlayerByUsername(username),
+                "Username passed to FriendsMenuController.addFriend doesn't exist.");
         FriendRequest friendRequest = new FriendRequest(player,friend);
         friendRequest.sendRequest();
     }
