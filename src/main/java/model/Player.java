@@ -119,10 +119,11 @@ public class Player extends Account {
         return wins;
     }
 
-    public GameLog GameHistory(String gameName)
+    public GameLog getGameHistory(String gameName)
     {
-        //for(GameLog gameLog : gameLogs)
-           // if(gameLog.)
+        for(GameLog gameLog : gameLogs)
+            if(gameLog.getGame().getName().equals(gameName))
+                return gameLog;
         return null;
     }
     public void setPlayerNumber(int playerNumber) {

@@ -1,6 +1,7 @@
 package controller;
 
 import model.Account;
+import model.GameLog;
 import model.Player;
 import view.WelcomeMenu;
 
@@ -59,11 +60,30 @@ public class AccountMenuController extends Controller {
 
     public void showGamesHistory() {
 
+
     }
 
-    public void showGameStatistics(String gameName) {
-    }
+    public ArrayList<String> showGameStatistics(String gameName) {
+        //check in view that the game exist otherwise NullPointerException will occur
+        //returns arraylist of String, frequency, wins, losses
+        ArrayList<String> result = new ArrayList<>();
+        if(account instanceof Player)//must be checked in view
+        {
+            GameLog gameLog = ((Player) account).getGameHistory(gameName);
+            result.add(String.valueOf(gameLog.getFrequency()));
+            result.add(String.valueOf(gameLog.getWins()));
+            result.add(String.valueOf(gameLog.getLosses()));
+            return result;
 
+        }
+        return null;
+    }
+    public boolean playerHasGame(String gameName)
+    {
+        if(account instanceof Player)//must be checked in view
+           return ((Player) account).getGameHistory(gameName) != null;
+        return false;
+    }
     public void logOut() {
         new WelcomeMenu(null);
     }
