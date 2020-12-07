@@ -11,7 +11,9 @@ public class Player extends Account {
         this.money = money;
         this.score = score;
     }
-
+    public Player(String botName , String username){
+        super(botName , username);
+    }
     //private static final ArrayList<Player> allPlayers = new ArrayList<>();
     private int dayOfRegister;
     private double money;

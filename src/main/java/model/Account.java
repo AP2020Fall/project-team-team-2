@@ -11,7 +11,10 @@ public abstract class Account {
     private String password;
     private String email;
     private String phoneNumber;
-
+    public Account(String botName , String username){
+        this.firstName = botName;
+        this.username = username;
+    }
     public Account(String firstName, String lastName, String accountName, String accountId, String password, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;

@@ -9,7 +9,7 @@ public class Game {
     }
 
     public void goToGame() {
-        RiskGameController game = new RiskGameController();
+//        RiskGameController game = new RiskGameController();
     }
 
     private String name;

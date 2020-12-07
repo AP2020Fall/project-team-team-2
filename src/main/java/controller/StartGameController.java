@@ -23,7 +23,7 @@ public class StartGameController {
         primitiveSettings.put("Blizzards", false);
         primitiveSettings.put("Fog of War", false);
         primitiveSettings.put("Duration", 0);
-        primitiveSettings.put("PlayersNum", 0);
+        primitiveSettings.put("PlayersNum", 2);
     }
 
     private static Map mainMap;
