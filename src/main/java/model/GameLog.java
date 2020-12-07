@@ -7,6 +7,8 @@ public class GameLog {
     private String gameLogId;
     private int score;
 
+    private Game game;
+
     public int getFrequency() {
         return frequency;
     }
