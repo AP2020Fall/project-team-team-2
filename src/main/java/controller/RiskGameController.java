@@ -2,6 +2,7 @@ package controller;
 
 import model.Player;
 import model.Map;
+import model.Country;
 
 
 import java.util.ArrayList;
@@ -25,8 +26,8 @@ public class RiskGameController {
     }
 
     /* Draft */
-    public void placeSoldier() {
-
+    public void placeSoldier(Country country, int soldierNumber) {
+        country.addSoldiers(soldierNumber);
     }
 
     public void attack() {

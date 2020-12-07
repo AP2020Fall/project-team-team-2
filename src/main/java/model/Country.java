@@ -34,6 +34,10 @@ public class Country {
         this.soldiers += soldiers;
     }
 
+    public void setSoldiers(int soldiers) {
+        this.soldiers = soldiers;
+    }
+
     public int getSoldiers() {
         return soldiers;
     }

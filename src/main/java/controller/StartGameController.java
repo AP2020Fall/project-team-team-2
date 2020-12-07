@@ -1,5 +1,6 @@
 package controller;
 import model.Map;
+import model.Country;
 import view.RiskGameView;
 
 import javax.print.DocFlavor;
@@ -22,6 +23,9 @@ public class StartGameController {
         primitiveSettings.put("Fog of War", false);
         primitiveSettings.put("Duration", 0);
         primitiveSettings.put("PlayersNum", 0);
+    }
+
+    public static void main(String[] args) {
     }
 
     public void startGame() {
@@ -139,5 +143,9 @@ public class StartGameController {
     }
     public String generateGameId() {
         return UUID.randomUUID().toString().replace("-","");
+    }
+
+    public void setMapSoldiers(Country country, int soldiers){
+        country.setSoldiers(soldiers);
     }
 }
