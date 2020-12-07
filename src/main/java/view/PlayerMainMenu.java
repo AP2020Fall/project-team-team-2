@@ -1,6 +1,5 @@
 package view;
 
-import com.google.gson.internal.$Gson$Preconditions;
 import controller.PlayerMainMenuController;
 import model.Account;
 import model.Player;
@@ -35,7 +34,7 @@ public class PlayerMainMenu extends Menu {
                 viewAdminSuggestion();
             } else if (getMatcher(input, "^Choose suggested game$").find()) {
                 chooseSuggestedGame();
-            } else if ((matcher =getMatcher(input, "^Add friend (\\S+)$")).find()) {
+            } else if ((matcher = getMatcher(input, "^Add friend (\\S+)$")).find()) {
                 addFriend(matcher.group(1));
             } else if (getMatcher(input, "^View account menu$").find()) {
                 viewAccountMenu(account);
@@ -50,25 +49,26 @@ public class PlayerMainMenu extends Menu {
     }
 
     private void chooseSuggestedGame() {
-
     }
 
     private void viewAdminSuggestion() {
-
+        System.out.println(controller.showAdminsSuggestions());
     }
 
     private void viewLastPlayed() {
-
+        controller.showLastPlayed();
     }
 
     private void viewPlatoBotMessages() {
+        controller.showPlatoBotsMessages();
     }
 
     private void viewFavoriteGames() {
+        controller.showFavoriteGames();
     }
 
     private void showPoints() {
-
+        controller.showPoints();
     }
 
     private void help() {
