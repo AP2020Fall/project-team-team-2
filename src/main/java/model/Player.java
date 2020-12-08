@@ -1,26 +1,30 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Player extends Account {
     public Player(String firstName, String lastName, String username, String accountId,
-                  String password, String email, String phoneNumber, int dayOfRegister, double money, int score) {
+                  String password, String email, String phoneNumber, double money) {
         super(firstName, lastName, username, accountId, password, email, phoneNumber);
-        this.dayOfRegister = dayOfRegister;
+        registerDay = LocalDate.now();
         this.money = money;
-        this.score = score;
+        this.score = 0;
         gameLogs = new ArrayList<>();
         friends = new ArrayList<>();
         friendRequests = new ArrayList<>();
         cards = new ArrayList<>();
         messages = new ArrayList<>();
     }
-    public Player(String botName , String username){
-        super(botName , username);
+
+    public Player(String botName, String username) {
+        super(botName, username);
     }
+
     //private static final ArrayList<Player> allPlayers = new ArrayList<>();
-    private int dayOfRegister;
+    private LocalDate registerDay;
     private double money;
     private int score;
     private ArrayList<GameLog> gameLogs;
@@ -37,7 +41,7 @@ public class Player extends Account {
     }*/
 
     public int getDayOfRegister() {
-        return dayOfRegister;
+        return (int) ChronoUnit.DAYS.between(LocalDate.now(), registerDay);
     }
 
     public double getMoney() {
@@ -64,14 +68,10 @@ public class Player extends Account {
         return suggestion;
     }
 
-    public ArrayList<Message> getMessages()
-    {
+    public ArrayList<Message> getMessages() {
         return messages;
     }
 
-    public void setDayOfRegister(int dayOfRegister) {
-        this.dayOfRegister = dayOfRegister;
-    }
 
     public void setMoney(double money) {
         this.money = money;
@@ -93,23 +93,22 @@ public class Player extends Account {
         suggestion = null;
     }
 
-    public Player getFriendByUsername(String username)
-    {
+    public Player getFriendByUsername(String username) {
         //if username is friend of player, return the Player object of username else null.
-        for(Player friend: friends)
-            if(friend.getUsername().equals(username))
+        for (Player friend : friends)
+            if (friend.getUsername().equals(username))
                 return friend;
-            return null;
+        return null;
     }
 
-    public FriendRequest getFriendRequestByUsername(String username)
-    {
+    public FriendRequest getFriendRequestByUsername(String username) {
         //if username sent a FriendRequest to player, return the FriendRequest else null.
-        for (FriendRequest friendRequest: friendRequests)
-            if(friendRequest.getPlayer().getUsername().equals(username))
+        for (FriendRequest friendRequest : friendRequests)
+            if (friendRequest.getPlayer().getUsername().equals(username))
                 return friendRequest;
-            return null;
+        return null;
     }
+
     public static Player getPlayerById(String id) {
         //if a player with id exists returns player else null.
         Account account = Account.getAccountById(id);
@@ -138,21 +137,21 @@ public class Player extends Account {
             }
         }
     }
-    public int getNumberOfWins()
-    {
+
+    public int getNumberOfWins() {
         int wins = 0;
-        for(GameLog gameLog: gameLogs)
+        for (GameLog gameLog : gameLogs)
             wins += gameLog.getWins();
         return wins;
     }
 
-    public GameLog getGameHistory(String gameName)
-    {
-        for(GameLog gameLog : gameLogs)
-            if(gameLog.getGame().getName().equals(gameName))
+    public GameLog getGameHistory(String gameName) {
+        for (GameLog gameLog : gameLogs)
+            if (gameLog.getGame().getName().equals(gameName))
                 return gameLog;
         return null;
     }
+
     public void setPlayerNumber(int playerNumber) {
         this.playerNumber = playerNumber;
     }
@@ -166,9 +165,8 @@ public class Player extends Account {
     }
 
 
-
     @Override
     public String toString() {
-        return ((Account) this).toString() + "registered: " + dayOfRegister + " days ago\n" ;
+        return ((Account) this).toString() + "registered: " + getDayOfRegister() + " days ago\n";
     }
 }

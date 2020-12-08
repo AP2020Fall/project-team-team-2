@@ -19,7 +19,7 @@ public class LoginMenu extends Menu {
         while (true) {
             String input = scanner.nextLine();
             Matcher matcher;
-            if (getMatcher(input, "help").find()) {
+            if (getMatcher(input, "^help$").find()) {
                 help();
             } else if ((matcher = getMatcher(input, "^login (\\S+)$")).find()) {
                 loginAccount(matcher.group(1));
