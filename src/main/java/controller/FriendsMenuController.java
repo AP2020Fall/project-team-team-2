@@ -6,19 +6,18 @@ import model.Player;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class FriendsMenuController extends Controller{
+public class FriendsMenuController extends Controller {
     private Player player;
 
     public FriendsMenuController(Player player) {
-        this.player = Objects.requireNonNull( player,
+        this.player = Objects.requireNonNull(player,
                 "Player object passed to FriendsMenuController is null.");
     }
 
     public ArrayList<String> showFriends() {
         //returns the list of player's friends' usernames.
         ArrayList<String> result = new ArrayList<>();
-        for (Player friend: player.getFriends())
-        {
+        for (Player friend : player.getFriends()) {
             result.add(friend.getUsername());
         }
         return result;
@@ -27,24 +26,24 @@ public class FriendsMenuController extends Controller{
     public void removeFriend(String username) {
         //removes username from friends of player and removes the player from the friends of username.
         //throws NullPointerError if username doesn't exist in friends list of player.
-        Player friend = Objects.requireNonNull( player.getFriendByUsername(username),
+        Player friend = Objects.requireNonNull(player.getFriendByUsername(username),
                 "Username passed to FriendsMenuController.removeFriend doesn't exist in friends list.");
-        friend.getFriends().removeIf(a->a.getUsername().equals(player.getUsername()));
+        friend.getFriends().removeIf(a -> a.getUsername().equals(player.getUsername()));
         player.getFriends().remove(friend);
     }
 
-    public boolean friendExists(String username)
-    {
+    public boolean friendExists(String username) {
         //returns true if username is a friend of player.
         for (Player friend : player.getFriends())
             if (friend.getUsername().equals(username))
                 return true;
-            return false;
+        return false;
     }
+
     public String showUserProfile(String username) {
         //returns username.toString().
         //throws NullPointerError if username doesn't exist in friends list of player.
-        return Objects.requireNonNull( player.getFriendByUsername(username),
+        return Objects.requireNonNull(player.getFriendByUsername(username),
                 "Username passed to FriendsMenuController.showUserProfile doesn't exist in friends list.")
                 .toString();
     }
@@ -54,14 +53,14 @@ public class FriendsMenuController extends Controller{
         //throws NullPointerError if username doesn't exist.
         Player friend = Objects.requireNonNull(Player.getPlayerByUsername(username),
                 "Username passed to FriendsMenuController.addFriend doesn't exist.");
-        FriendRequest friendRequest = new FriendRequest(player,friend);
+        FriendRequest friendRequest = new FriendRequest(player, friend);
         friendRequest.sendRequest();
     }
 
     public ArrayList<String> showFriendRequests() {
         //returns the username of those who send a friendRequest to player.
         ArrayList<String> result = new ArrayList<>();
-        for(FriendRequest friendRequest: player.getFriendRequests())
+        for (FriendRequest friendRequest : player.getFriendRequests())
             result.add(friendRequest.getFriend().getUsername());
         return result;
     }
