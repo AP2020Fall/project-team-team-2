@@ -7,7 +7,7 @@ import model.Player;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class PlayerMainMenuController {
+public class PlayerMainMenuController extends Controller {
 
     private final Player player;
 
@@ -24,7 +24,7 @@ public class PlayerMainMenuController {
     public ArrayList<String> showFavoriteGames() {
         //returns the names of player's favourite games.
         ArrayList<String> result = new ArrayList<>();
-        for(Game game : player.getFavouriteGames())
+        for (Game game : player.getFavouriteGames())
             result.add(game.getName());
         return result;
 

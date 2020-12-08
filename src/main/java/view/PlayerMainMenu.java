@@ -34,8 +34,8 @@ public class PlayerMainMenu extends Menu {
                 viewAdminSuggestion();
             } else if (getMatcher(input, "^Choose suggested game$").find()) {
                 chooseSuggestedGame();
-            } else if ((matcher = getMatcher(input, "^Add friend (\\S+)$")).find()) {
-                addFriend(matcher.group(1));
+//            } else if ((matcher = getMatcher(input, "^Add friend (\\S+)$")).find()) {
+//                addFriend(matcher.group(1));
             } else if (getMatcher(input, "^View account menu$").find()) {
                 viewAccountMenu(account);
             } else if (getMatcher(input, "^View friends menu").find()) {
@@ -56,9 +56,9 @@ public class PlayerMainMenu extends Menu {
         new GamesMenu(account);
     }
 
-    private void addFriend(String username) {
-        controller.addFriend(username);
-    }
+//  private void addFriend(String username) {
+//        controller.addFriend(username);
+//    }
 
     private void chooseSuggestedGame() {
     }
@@ -68,19 +68,25 @@ public class PlayerMainMenu extends Menu {
     }
 
     private void viewLastPlayed() {
-        controller.showLastPlayed();
+        String lastPlay = controller.showLastPlayed();
+        System.out.println(lastPlay);
     }
 
     private void viewPlatoBotMessages() {
-        controller.showPlatoBotsMessages();
+        for (String message : controller.showPlatoBotsMessages()) {
+            System.out.println(message);
+        }
     }
 
     private void viewFavoriteGames() {
-        controller.showFavoriteGames();
+        for (String favoriteGame : controller.showFavoriteGames()) {
+            System.out.println(favoriteGame);
+        }
     }
 
     private void showPoints() {
-        controller.showPoints();
+        int points = controller.showPoints();
+        System.out.println("points: " + points);
     }
 
     private void help() {
@@ -90,7 +96,6 @@ public class PlayerMainMenu extends Menu {
                 "View last played\n" +
                 "View admin's suggestions\n" +
                 "Choose suggested game\n" +
-                "Add friend\n" +
                 "View account menu\n" +
                 "View friends menu\n" +
                 "View games menu\n");
