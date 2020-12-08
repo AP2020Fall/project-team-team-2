@@ -13,7 +13,7 @@ public class PlayerMainMenuController {
 
     public PlayerMainMenuController(Player player) {
         this.player = Objects.requireNonNull(player,
-                "Player passed to PlayerMainMenuController.PlayerMainMenuController is null.");
+                "Player passed to PlayerMainMenuController is null.");
     }
 
     public int showPoints() {

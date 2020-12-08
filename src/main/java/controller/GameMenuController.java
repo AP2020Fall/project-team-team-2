@@ -2,11 +2,13 @@ package controller;
 
 import model.Game;
 
+import java.util.Objects;
+
 public class GameMenuController {
     private Game game;
 
     public GameMenuController(Game game) {
-        this.game = game;
+        this.game = Objects.requireNonNull(game,"Game passed to GameMenuController is null.");
     }
 
     public void showScoreBoard() {
