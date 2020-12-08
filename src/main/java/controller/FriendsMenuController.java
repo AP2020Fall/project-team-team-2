@@ -54,7 +54,7 @@ public class FriendsMenuController extends Controller{
         //throws NullPointerError if username doesn't exist.
         Player friend = Objects.requireNonNull(Player.getPlayerByUsername(username),
                 "Username passed to FriendsMenuController.addFriend doesn't exist.");
-        FriendRequest friendRequest = new FriendRequest(player,friend);
+        FriendRequest friendRequest = new FriendRequest(friend,player);
         friendRequest.sendRequest();
     }
 
