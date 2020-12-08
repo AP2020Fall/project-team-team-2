@@ -103,4 +103,14 @@ public class AdminMainMenuController {
             usernames.add(player.getUsername());
         return usernames;
     }
+
+    public void sendMessage(String message,String username)
+    {
+        //sends message to username
+        //throws NullPointerException if username doesn't exist
+        Message message1 = new Message(message,generateId(),
+                Objects.requireNonNull(Player.getPlayerByUsername(username),
+                        "Username passed to AdminMainMenu.sendMessage doesn't exist."),null);
+        message1.sendMessage();
+    }
 }
