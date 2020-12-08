@@ -1,15 +1,15 @@
 package controller;
 
+import model.Game;
 import model.Message;
 import model.Player;
-import model.Suggestion;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerMainMenuController {
 
-    private Player player;
+    private final Player player;
 
     public PlayerMainMenuController(Player player) {
         this.player = Objects.requireNonNull(player,
@@ -17,22 +17,32 @@ public class PlayerMainMenuController {
     }
 
     public int showPoints() {
-        //returns the score of player
+        //returns the score of player.
         return player.getScore();
     }
 
-    public void showFavoriteGames() {
+    public ArrayList<String> showFavoriteGames() {
+        //returns the names of player's favourite games.
+        ArrayList<String> result = new ArrayList<>();
+        for(Game game : player.getFavouriteGames())
+            result.add(game.getName());
+        return result;
+
     }
 
     public ArrayList<String> showPlatoBotsMessages() {
-        //returns the list of messages send to player
+        //returns the list of messages send to player.
         ArrayList<String> result = new ArrayList<>();
         for (Message message : player.getMessages())
             result.add(message.toString());
         return result;
     }
 
-    public void showLastPlayed() {
+    public String showLastPlayed() {
+        //returns the last game played by player.
+        //throws NullPointerException if gameLogs is empty.
+        return Objects.requireNonNull(player.getLastGamePlayed(),
+                "Player hasn't played any games.").getGame().getName();
     }
 
     public String showAdminsSuggestions() {

@@ -20,18 +20,10 @@ public class AccountMenuController extends Controller {
         account.setPassword(newPass);
     }
 
-    public ArrayList<String> showPersonalInfo() {
+    public String showPersonalInfo() {
         //returns array of string in the following order, first name, last name,username,email,phone number
         //and day passed since registration if the account is Player.
-        ArrayList<String> result = new ArrayList<>();
-        result.add(account.getFirstName());
-        result.add(account.getLastName());
-        result.add(account.getUsername());
-        result.add(account.getEmail());
-        result.add(account.getPhoneNumber());
-        if (account instanceof Player)
-            result.add(String.valueOf(((Player) account).getDayOfRegister()));
-        return result;
+       return account.toString();
     }
 
     public void editField(String field, String value) {
