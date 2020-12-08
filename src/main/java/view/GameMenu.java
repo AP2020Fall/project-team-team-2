@@ -1,12 +1,15 @@
 package view;
 
 
+import controller.GameMenuController;
 import model.Account;
 
 public class GameMenu extends Menu {
-
+    GameMenuController controller;
     public GameMenu(Account account) {
         super(account);
+        controller = new GameMenuController(null);
+        //todo change arg
         gameMenu();
     }
 
@@ -42,30 +45,35 @@ public class GameMenu extends Menu {
     }
 
     private void showPoints() {
-
+        controller.showPoints();
     }
 
     private void runGame() {
+        controller.runGame();
     }
 
     private void addToFavorites() {
+        controller.addToFavorites();
     }
 
     private void showPlayedCount() {
+        controller.showPlayedCount();
     }
 
     private void showWinsCount() {
-
+        controller.showWinsCount();
     }
 
     private void showLog() {
+        controller.showLog();
     }
 
     private void details() {
-
+        controller.showDetails();
     }
 
     private void showScoreboard() {
+        controller.showScoreBoard();
     }
 
     private void help() {

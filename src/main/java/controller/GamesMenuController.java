@@ -2,7 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
-public class GamesMenuController {
+public class GamesMenuController extends Controller{
     public ArrayList<String> listOfGames() {
         //returns ArrayList of Game names, currently only Risk
         ArrayList<String> result = new ArrayList<>();

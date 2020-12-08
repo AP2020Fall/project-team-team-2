@@ -49,17 +49,26 @@ public class AccountMenu extends Menu {
     }
 
     private void gameStatistics(String gameName) {
-        if (!gameName.equals("RiskGame")) {
-            System.out.println("Game dose not exists!");
+        if (account instanceof Player) {
+            if (!gameName.equals("RiskGame")) {
+                System.out.println("Game dose not exists!");
+            } else {
+                ArrayList<String> results = controller.showGameStatistics(gameName);
+                System.out.println("frequency: " + results.get(0) +
+                        "\nwins: " + results.get(1) +
+                        "\nlosses: " + results.get(2));
+            }
         } else {
-            ArrayList<String> results = controller.showGameStatistics(gameName);
-            System.out.println("frequency: " + results.get(0) +
-                    "\nwins: " + results.get(1) +
-                    "\nlosses: " + results.get(2));
+            System.out.println("you are not a player!");
         }
     }
 
     private void gameHistory() {
+        if (account instanceof Player) {
+            controller.showGamesHistory();
+        } else {
+            System.out.println("you are not a player!");
+        }
     }
 
     private void viewPlatoStatistics() {
@@ -124,11 +133,6 @@ public class AccountMenu extends Menu {
     }
 
     private void viewPersonalInfo() {
-        /*ArrayList<String> infos = controller.showPersonalInfo();
-        System.out.println("firstName: " + infos.get(0) +
-                "\nlastName: " + infos.get(1) +
-                "\nusername: " + infos.get(2) +
-                "\nEmail: " + infos.get(3) +
-                "\nPhoneNumber: " + infos.get(4));*/
+        System.out.println(controller.showPersonalInfo());
     }
 }

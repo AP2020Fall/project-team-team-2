@@ -1,19 +1,26 @@
 package view;
 
+import controller.GamesMenuController;
 import model.Account;
 
 import java.util.regex.Matcher;
 
 public class GamesMenu extends Menu {
 
+    GamesMenuController controller;
+
     public GamesMenu(Account account) {
         super(account);
+        controller = new GamesMenuController();
         gamesMenu();
     }
 
     private void gamesMenu() {
-        System.out.println("Games:\n" +
-                "1.Risk Game");
+        System.out.println("Games:");
+        for (String gameName : controller.listOfGames()) {
+            System.out.println(gameName);
+        }
+
         while (true) {
             String input = scanner.nextLine();
             Matcher matcher;
@@ -32,7 +39,11 @@ public class GamesMenu extends Menu {
     }
 
     private void openGame(String gameName) {
-
+        if (!controller.gameIsListed(gameName)) {
+            System.out.println("invalid game!");
+        } else {
+            //run the game
+        }
     }
 
     private void help() {
