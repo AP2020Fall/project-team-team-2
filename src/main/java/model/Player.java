@@ -14,6 +14,7 @@ public class Player extends Account {
         friends = new ArrayList<>();
         friendRequests = new ArrayList<>();
         cards = new ArrayList<>();
+        messages = new ArrayList<>();
     }
     public Player(String botName , String username){
         super(botName , username);
@@ -25,6 +26,7 @@ public class Player extends Account {
     private ArrayList<GameLog> gameLogs;
     private ArrayList<Player> friends;
     private ArrayList<FriendRequest> friendRequests;
+    private ArrayList<Message> messages;
     private ArrayList<Card> cards;
     // private final ArrayList<String> suggestions;
     private Suggestion suggestion;
@@ -60,6 +62,11 @@ public class Player extends Account {
 
     public Suggestion getSuggestion() {
         return suggestion;
+    }
+
+    public ArrayList<Message> getMessages()
+    {
+        return messages;
     }
 
     public void setDayOfRegister(int dayOfRegister) {
@@ -156,5 +163,12 @@ public class Player extends Account {
 
     public ArrayList<Card> getCards() {
         return cards;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return ((Account) this).toString() + "registered: " + dayOfRegister + " days ago\n" ;
     }
 }
