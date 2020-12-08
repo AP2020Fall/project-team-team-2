@@ -48,10 +48,7 @@ public class Suggestion {
 
     @Override
     public String toString() {
-        return "Suggestion{" +
-                "gameName='" + gameName + '\'' +
-                ", id='" + id + '\'' +
-                ", player=" + player +
-                '}';
+        return "Game suggested: " + gameName;
+
     }
 }

@@ -18,6 +18,12 @@ public class Message {
     }
     public void sendMessage()
     {
+        player.getMessages().add(this);
+    }
 
+    @Override
+    public String toString() {
+        return "Message:" + message + '\n';
+         //+ time + '\n';
     }
 }

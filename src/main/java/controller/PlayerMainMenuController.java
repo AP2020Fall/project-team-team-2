@@ -1,30 +1,42 @@
 package controller;
 
+import model.Message;
 import model.Player;
 import model.Suggestion;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class PlayerMainMenuController {
 
     private Player player;
 
     public PlayerMainMenuController(Player player) {
-        this.player = player;
+        this.player = Objects.requireNonNull(player,
+                "Player passed to PlayerMainMenuController.PlayerMainMenuController is null.");
     }
 
-    public void showPoints() {
+    public int showPoints() {
+        //returns the score of player
+        return player.getScore();
     }
 
     public void showFavoriteGames() {
     }
 
-    public void showPlatoBotsMessages() {
+    public ArrayList<String> showPlatoBotsMessages() {
+        //returns the list of messages send to player
+        ArrayList<String> result = new ArrayList<>();
+        for(Message message: player.getMessages())
+            result.add(message.toString());
+        return result;
     }
 
     public void showLastPlayed() {
     }
 
-    public Suggestion showAdminsSuggestions() {
-        return player.getSuggestion();
+    public String showAdminsSuggestions() {
+        return player.getSuggestion().toString();
     }
 
     public String showSuggestedGame() {
