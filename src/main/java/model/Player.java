@@ -157,4 +157,9 @@ public class Player extends Account {
     public ArrayList<Card> getCards() {
         return cards;
     }
+
+    @Override
+    public String toString() {
+        return ((Account) this).toString() + "registered: " + dayOfRegister + " days ago\n" ;
+    }
 }

@@ -61,9 +61,8 @@ public class AccountMenuController extends Controller {
         return result;
     }
 
-    public void showGamesHistory() {
-
-
+    public ArrayList<String> showGamesHistory() {
+        return null;
     }
 
     public ArrayList<String> showGameStatistics(String gameName) {

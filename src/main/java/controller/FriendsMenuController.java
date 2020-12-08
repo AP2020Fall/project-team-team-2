@@ -41,7 +41,12 @@ public class FriendsMenuController {
                 return true;
             return false;
     }
-    public void showUserProfile(String username) {
+    public String showUserProfile(String username) {
+        //returns username.toString().
+        //throws NullPointerError if username doesn't exist in friends list of player.
+        return Objects.requireNonNull( player.getFriendByUsername(username),
+                "Username passed to FriendsMenuController.showUserProfile doesn't exist in friends list.")
+                .toString();
     }
 
     public void addFriend(String username) {

@@ -89,9 +89,11 @@ public class AdminMainMenuController {
     }
 
 
-    public Player showUserProfile(String username) {
-        //returns the username and null if it doesn't exist
-        return Player.getPlayerByUsername(username);
+    public String showUserProfile(String username) {
+        //returns the username.toString().
+        //throws NullPointerException if username doesn't exist.
+        return Objects.requireNonNull( Player.getPlayerByUsername(username),
+                "Username passed to AdminMainMenu.showUserProfile doesn't exist.").toString();
     }
 
     public ArrayList<String> showUsers() {
