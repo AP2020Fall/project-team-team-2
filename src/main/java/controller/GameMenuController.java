@@ -1,37 +1,62 @@
 package controller;
 
 import model.Game;
+import model.PlayLog;
+import model.Player;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameMenuController {
     private Game game;
+    private Player player;
 
-    public GameMenuController(Game game) {
+    public GameMenuController(Game game,Player player) {
         this.game = Objects.requireNonNull(game, "Game passed to GameMenuController is null.");
+        this.player = Objects.requireNonNull(player,"Player passed to GameMenuController is null.");
     }
 
     public void showScoreBoard() {
     }
 
-    public void showDetails() {
+    public String showDetails() {
+        //returns game's details.
+        return game.getDetails();
     }
 
-    public void showLog() {
+    public ArrayList<String> showLog() {
+        //returns the game's logs.
+        ArrayList<String> result = new ArrayList<>();
+        for(PlayLog playLog : game.getPlayLogs())
+            result.add(playLog.toString());
+        return result;
     }
 
-    public void showWinsCount() {
+    public int showWinsCount() {
+        //returns the number of times player won the game.
+        //throws NullPointerException if the player hasn't played the game.
+        return Objects.requireNonNull(player.getGameHistory(game.getName()),
+                "Player hasn't played this game.").getWins();
     }
 
-    public void showPlayedCount() {
+    public int showPlayedCount() {
+        //returns the number of times player played the game.
+        //throws NullPointerException if the player hasn't played the game.
+        return Objects.requireNonNull(player.getGameHistory(game.getName()),
+                "Player hasn't played this game.").getFrequency();
     }
 
     public void addToFavorites() {
+        player.getFavouriteGames().add(game);
     }
 
     public void runGame() {
     }
 
-    public void showPoints() {
+    public int showPoints() {
+        //returns the score of player in the game.
+        //throws NullPointerException if the player hasn't played the game.
+        return Objects.requireNonNull(player.getGameHistory(game.getName()),
+                "Player hasn't played this game.").getScore();
     }
 }

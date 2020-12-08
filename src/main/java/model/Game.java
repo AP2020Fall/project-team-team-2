@@ -17,10 +17,13 @@ public class Game {
         this.playLogs = new ArrayList<>();
     }
 
-    public void goToGame() {
-//        RiskGameController game = new RiskGameController();
+    public String getDetails() {
+        return details;
     }
 
+    public ArrayList<PlayLog> getPlayLogs() {
+        return playLogs;
+    }
 
     public String getName() {
         return name;
@@ -30,7 +33,7 @@ public class Game {
         this.details = details;
     }
 
-    public ArrayList<PlayLog> getPlayLogs() {
-        return playLogs;
+    public void goToGame() {
+//        RiskGameController game = new RiskGameController();
     }
 }
