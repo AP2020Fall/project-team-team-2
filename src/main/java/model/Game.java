@@ -10,11 +10,13 @@ public class Game {
     private final String gameId;
     private final ArrayList<PlayLog> playLogs;
     private String details;
+    private final Scoreboard scoreboard;
     public Game(String name, String gameId,String details) {
         this.name = name;
         this.gameId = gameId;
         this.details = details;
         this.playLogs = new ArrayList<>();
+        scoreboard = new Scoreboard();
     }
 
     public String getDetails() {
@@ -27,6 +29,11 @@ public class Game {
 
     public String getName() {
         return name;
+    }
+
+    public Scoreboard getScoreboard()
+    {
+        return scoreboard;
     }
 
     public void setDetails(String details) {
