@@ -3,6 +3,7 @@ package view;
 import controller.AdminMainMenuController;
 import model.*;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 
 public class AdminMainMenu extends Menu {
@@ -48,13 +49,12 @@ public class AdminMainMenu extends Menu {
     }
 
     private void viewUserProfile(String username) {
-
-        /*Player player = controller.showUserProfile(username);
-        if (player == null) {
-            System.out.println("user does not exists!");
+        if (!controller.isUsernameExist(username)) {
+            System.out.println("username does not exists!");
         } else {
-            System.out.println(player);
-        }*/
+            String output = controller.showUserProfile(username);
+            System.out.println(output);
+        }
     }
 
     private void viewUsers() {
@@ -77,7 +77,11 @@ public class AdminMainMenu extends Menu {
     }
 
     private void removeSuggestion(String suggestionId) {
-        controller.removeSuggestion(suggestionId);
+        if (!controller.isSuggestionIdExists(suggestionId)) {
+            System.out.println("invalid suggestion id");
+        } else {
+            controller.removeSuggestion(suggestionId);
+        }
     }
 
     private void viewSuggestions() {
@@ -87,16 +91,36 @@ public class AdminMainMenu extends Menu {
     }
 
     private void addSuggestion(String username, String gameName) {
-        controller.addSuggestion(username, gameName);
+        if (!controller.isUsernameExist(username)) {
+            System.out.println("username does not exists!");
+        } else {
+            controller.addSuggestion(username, gameName);
+        }
     }
 
     private void removeEvent(String eventId) {
-        controller.removeEvent(eventId);
+        if (!controller.isEventIdExists(eventId)) {
+            System.out.println("invalid event id!");
+        } else {
+            controller.removeEvent(eventId);
+        }
     }
 
     private void editEvent(String eventId, String field, String value) {
-        // controller.editEvent(eventId, field, value);
+        if (field.equals("startDate") && controller.checkStartDate(value)) {
+            controller.editEventStart(eventId, value);
+            System.out.println("changed successfully!");
+        } else if (field.equals("endDate") && controller.checkEndDate(value)) {
+            controller.editEventEnd(eventId, value);
+            System.out.println("changed successfully!");
+        } else if (field.equals("score") && !value.equals("0")) {
+            controller.editEventScore(eventId, Integer.parseInt(value));
+            System.out.println("changed successfully!");
+        } else {
+            System.out.println("you cannot change this field!");
+        }
     }
+
 
     private void viewEvents() {
         for (Event event : controller.showEvents()) {
@@ -105,12 +129,15 @@ public class AdminMainMenu extends Menu {
     }
 
     private void addEvent(String gameName, String startDate, String endDate, String score) {
-        //check the name and the dates + score greater than zero
-        if (!gameName.equals("Risk"))
+        if (!controller.checkStartDate(startDate) || !controller.checkEndDate(endDate)) {
+            System.out.println("invalid date!");
+        } else if (score.equals("0")) {
+            System.out.println("score should be positive!");
+        } else if (!gameName.equals("Risk")) {
             System.out.println("Invalid Game!");
-        //else if()
-        //controller.addEvent(gameName,startDate,endDate,score);
+        } else {
+            controller.addEvent(gameName, startDate, endDate, Integer.parseInt(score));
+        }
     }
-
-
+    
 }

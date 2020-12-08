@@ -1,6 +1,8 @@
 package controller;
 
 import model.Account;
+import model.Event;
+import model.Suggestion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ public class Controller {
         return false;
     }
 
-    protected LocalDate createLocalDate(String input) {
+    public LocalDate createLocalDate(String input) {
         String[] splitInput = input.split("\\/");
         int year = Integer.parseInt(splitInput[0]);
         int month = Integer.parseInt(splitInput[1]);
@@ -56,7 +58,7 @@ public class Controller {
         return localDate;
     }
 
-    protected boolean isValidDate(String date) {
+    public boolean isValidDate(String date) {
         String[] splitDate = date.split("\\/");
         int year = Integer.parseInt(splitDate[0]);
         int month = Integer.parseInt(splitDate[1]);
@@ -65,5 +67,43 @@ public class Controller {
             return false;
         }
         return true;
+    }
+
+    public boolean checkStartDate(String date) {
+        if (isValidDate(date)) {
+            LocalDate localDate = createLocalDate(date);
+            if (LocalDate.now().compareTo(localDate) < 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkEndDate(String date) {
+        if (isValidDate(date)) {
+            LocalDate localDate = createLocalDate(date);
+            if (LocalDate.now().compareTo(localDate) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isEventIdExists(String eventId) {
+        for (Event event : Event.getEvents()) {
+            if (event.getEventId().equals(eventId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isSuggestionIdExists(String suggestionId) {
+        for (Suggestion suggestion : Suggestion.getSuggestions()) {
+            if (suggestion.getId().equals(suggestionId)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
