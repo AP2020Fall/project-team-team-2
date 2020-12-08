@@ -15,7 +15,7 @@ public class RegisterController extends Controller {
     public void createAccount(String username, String password, ArrayList<String> additionalInfo) {
         //creates an account and loads either AdminMainMenu or PlayerMainMenu
         if (!Admin.isAdminExist()) {
-           new AdminMainMenu(createAdmin(username, password, additionalInfo));
+            new AdminMainMenu(createAdmin(username, password, additionalInfo));
         } else {
             new PlayerMainMenu(createPlayer(username, password, additionalInfo));
         }

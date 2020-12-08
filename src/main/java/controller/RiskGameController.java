@@ -27,7 +27,8 @@ public class RiskGameController {
     private boolean placementFinished = false;
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
     private Player currentPlayer = players.get(0);
-    public RiskGameController( java.util.Map<String, Object> primitiveSettings , String gameID){
+
+    public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID) {
         this.primitiveSettings = primitiveSettings;
         this.gameID = gameID;
 //        this.players = players;
@@ -36,8 +37,9 @@ public class RiskGameController {
         /* Make Robot Players*/
         this.makeRobotPlayers();
     }
-    public void shapeMap(){
-        String mapNumber =(String) primitiveSettings.get("Map Number");
+
+    public void shapeMap() {
+        String mapNumber = (String) primitiveSettings.get("Map Number");
         String mapFileAddress = "src/main/resources/maps/map_" + mapNumber + ".txt";
         Gson newGson = new Gson();
         JsonReader reader = null;
@@ -58,30 +60,47 @@ public class RiskGameController {
                 String countryName = countryDetails.getName();
                 String countryContinent = countryDetails.getContinent();
                 int setNumberContinentCountry = 0;
-                switch (countryContinent){
-                    case "Africa":africaNumber++;setNumberContinentCountry = africaNumber;break;
-                    case "Europe":europeNumber++;setNumberContinentCountry = europeNumber;break;
-                    case "Asia":asiaNumber++;setNumberContinentCountry = asiaNumber;break;
-                    case "America":americaNumber++;setNumberContinentCountry = americaNumber;break;
-                    case "Australia":australiaNumber++;setNumberContinentCountry = australiaNumber;break;
+                switch (countryContinent) {
+                    case "Africa":
+                        africaNumber++;
+                        setNumberContinentCountry = africaNumber;
+                        break;
+                    case "Europe":
+                        europeNumber++;
+                        setNumberContinentCountry = europeNumber;
+                        break;
+                    case "Asia":
+                        asiaNumber++;
+                        setNumberContinentCountry = asiaNumber;
+                        break;
+                    case "America":
+                        americaNumber++;
+                        setNumberContinentCountry = americaNumber;
+                        break;
+                    case "Australia":
+                        australiaNumber++;
+                        setNumberContinentCountry = australiaNumber;
+                        break;
                 }
-                Country country = new Country(countryName , countryContinent);
+                Country country = new Country(countryName, countryContinent);
                 country.setNumberOfContinentCountry(setNumberContinentCountry);
-                gameCountries.get(i).set(j , country);
+                gameCountries.get(i).set(j, country);
             }
         }
     }
-    public void makeRobotPlayers(){
+
+    public void makeRobotPlayers() {
         String mainBotName = "Robot";
         /*
          * here we will add the Main Player To allPlayers
          *
          */
-        for(int i = 1 ; i < (int)primitiveSettings.get("PlayersNum") ; i++){
-            Player newRobotPlayer = new Player(mainBotName + " " + i , mainBotName + " " + i);
+        for (int i = 1; i < (int) primitiveSettings.get("PlayersNum"); i++) {
+            Player newRobotPlayer = new Player(mainBotName + " " + i, mainBotName + " " + i);
             allPlayers.add(newRobotPlayer);
         }
     }
+
     public static void main(String[] args) {
     }
 
@@ -89,13 +108,14 @@ public class RiskGameController {
     public void createGame(int n, int m) {
 
     }
+
     /* Draft */
     public void placeSoldier(Country country, int soldierNumber) {
         country.addSoldiers(soldierNumber);
         this.draftDone = true;
     }
 
-    public void attack(Country sourceCountry , Country destinyCountry) {
+    public void attack(Country sourceCountry, Country destinyCountry) {
     }
 
     /* Move Soldiers */
@@ -108,9 +128,9 @@ public class RiskGameController {
 
     public void changeTurn() {
         int currentTurnIndex = this.players.indexOf(this.currentPlayer);
-        if(currentTurnIndex != this.players.size() - 1){
-            this.currentPlayer = this.players.get(currentTurnIndex+1);
-        }else{
+        if (currentTurnIndex != this.players.size() - 1) {
+            this.currentPlayer = this.players.get(currentTurnIndex + 1);
+        } else {
             this.currentPlayer = this.players.get(0);
         }
     }
@@ -119,24 +139,27 @@ public class RiskGameController {
         return primitiveSettings;
     }
 
-    public boolean getPlacementFinished(){
+    public boolean getPlacementFinished() {
         return this.placementFinished;
     }
+
     public void matchCards() {
     }
-    public void showMap(){
-        for(List<Country> listCountries : gameCountries){
+
+    public void showMap() {
+        for (List<Country> listCountries : gameCountries) {
             String lineString = "";
-            for(Country country : listCountries){
-                if(!country.equals(listCountries.get(listCountries.size()-1))) {
+            for (Country country : listCountries) {
+                if (!country.equals(listCountries.get(listCountries.size() - 1))) {
                     lineString = lineString + country.toString() + " | ";
-                }else{
+                } else {
                     lineString = lineString + country.toString();
                 }
             }
             System.out.println(lineString);
         }
     }
+
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }

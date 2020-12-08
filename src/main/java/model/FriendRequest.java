@@ -8,26 +8,26 @@ public class FriendRequest {
         this.friend = friend;
         this.player = player;
     }
-    public Player getFriend()
-    {
+
+    public Player getFriend() {
         return friend;
     }
-    public Player getPlayer()
-    {
+
+    public Player getPlayer() {
         return player;
     }
-    public void sendRequest()
-    {
+
+    public void sendRequest() {
         friend.getFriendRequests().add(this);
     }
-    public void acceptRequest()
-    {
+
+    public void acceptRequest() {
         player.getFriends().add(friend);
         friend.getFriends().add(player);
         friend.getFriendRequests().remove(this);
     }
-    public void declineRequest()
-    {
+
+    public void declineRequest() {
         friend.getFriendRequests().remove(this);
     }
 

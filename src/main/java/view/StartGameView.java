@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 public class StartGameView {
     private StartGameController startGameController = new StartGameController();
+
     public static void main(String[] args) {
         StartGameView newStart = new StartGameView();
         newStart.startGameView();
@@ -39,7 +40,6 @@ public class StartGameView {
         Pattern fogOffCommand = Pattern.compile("(^)fog of war off($)");
         Pattern durationTimeCommand = Pattern.compile("(^)turn duration is\\s+(?<turnDuration>\\d+)\\s+seconds($)");
         Pattern setPlayersNumberCommand = Pattern.compile("(^)number of players are\\s+(?<playerNumbers>\\d+)($)");
-
 
 
         while (inputCommand.hasNextLine()) {

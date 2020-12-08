@@ -17,13 +17,11 @@ public class GameLog {
         return wins;
     }
 
-    public int getLosses()
-    {
+    public int getLosses() {
         return frequency - wins;
     }
 
-    public Game getGame()
-    {
+    public Game getGame() {
         return game;
     }
 

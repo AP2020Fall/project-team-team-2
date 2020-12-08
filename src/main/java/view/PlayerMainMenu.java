@@ -38,10 +38,22 @@ public class PlayerMainMenu extends Menu {
                 addFriend(matcher.group(1));
             } else if (getMatcher(input, "^View account menu$").find()) {
                 viewAccountMenu(account);
+            } else if (getMatcher(input, "^View friends menu").find()) {
+                viewFriendsMenu(account);
+            } else if (getMatcher(input, "View Games menu").find()) {
+                ViewGamesMenu(account);
             } else {
                 System.out.println("invalid command!");
             }
         }
+    }
+
+    private void viewFriendsMenu(Account account) {
+        new FriendsMenu(account);
+    }
+
+    private void ViewGamesMenu(Account account) {
+        new GamesMenu(account);
     }
 
     private void addFriend(String username) {
@@ -79,6 +91,8 @@ public class PlayerMainMenu extends Menu {
                 "View admin's suggestions\n" +
                 "Choose suggested game\n" +
                 "Add friend\n" +
-                "View account menu\n");
+                "View account menu\n" +
+                "View friends menu\n" +
+                "View games menu\n");
     }
 }
