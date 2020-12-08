@@ -1,13 +1,18 @@
 package view;
 
+import controller.FriendsMenuController;
 import model.Account;
+import model.FriendRequest;
+import model.Player;
 
 import java.util.regex.Matcher;
 
 public class FriendsMenu extends Menu {
+    FriendsMenuController controller;
 
     public FriendsMenu(Account account) {
         super(account);
+        controller = new FriendsMenuController((Player) account);
         friendsMenu();
     }
 
@@ -27,7 +32,7 @@ public class FriendsMenu extends Menu {
                 viewUserProfile(matcher.group(1));
             } else if ((matcher = getMatcher(input, "Add (\\S+)")).find()) {
                 add(matcher.group(1));
-            } else if (getMatcher(input, "Show friend requests").find()) {
+            } else if (getMatcher(input, "Showl friend requests").find()) {
                 showFriendsRequests();
             } else if ((matcher = getMatcher(input, "Accept (\\S+)")).find()) {
                 accept(matcher.group(1));
@@ -42,30 +47,63 @@ public class FriendsMenu extends Menu {
     }
 
     private void decline(String username) {
-
+        if (!controller.isUsernameExist(username)) {
+            System.out.println("username does not exist!");
+        } else if (controller.friendExists(username)) {
+            System.out.println("this user has already been your friend");
+        } else {
+            controller.declineFriendRequest(username);
+        }
     }
 
     private void accept(String username) {
-
+        if (!controller.isUsernameExist(username)) {
+            System.out.println("username does not exist!");
+        } else if (controller.friendExists(username)) {
+            System.out.println("this user has already been your friend");
+        } else {
+            controller.acceptFriendRequest(username);
+        }
     }
 
     private void showFriendsRequests() {
+        for (String friend : controller.showFriendRequests()) {
+            System.out.println(friend);
+        }
     }
 
     private void add(String username) {
+        if (!controller.isUsernameExist(username)) {
+            System.out.println("username does not exist!");
+        } else if (controller.friendExists(username)) {
+            System.out.println("this user has already been your friend");
 
+        } else {
+            controller.addFriend(username);
+        }
     }
 
     private void viewUserProfile(String username) {
-
+        if (!controller.isUsernameExist(username)) {
+            System.out.println("username does not exist!");
+        } else {
+            controller.showUserProfile(username);
+        }
     }
 
     private void remove(String username) {
-
+        if (!controller.friendExists(username)) {
+            System.out.println(username + " is not your friend!");
+        } else {
+            controller.removeFriend(username);
+            System.out.println("friend removed successfully!");
+        }
     }
 
     private void showFriends() {
-
+        for (String friend : controller.showFriends()) {
+            System.out.println(friend);
+        }
     }
 
     private void help() {

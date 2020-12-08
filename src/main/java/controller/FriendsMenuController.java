@@ -6,7 +6,7 @@ import model.Player;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class FriendsMenuController {
+public class FriendsMenuController extends Controller{
     private Player player;
 
     public FriendsMenuController(Player player) {

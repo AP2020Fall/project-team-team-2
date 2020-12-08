@@ -13,7 +13,7 @@ public class AccountMenuController extends Controller {
 
     public AccountMenuController(Account account) {
 
-        this.account = Objects.requireNonNull(account,"Account passed to AccountMenuController is null.");
+        this.account = Objects.requireNonNull(account, "Account passed to AccountMenuController is null.");
     }
 
     public void changePassword(String newPass) {
@@ -30,7 +30,7 @@ public class AccountMenuController extends Controller {
         result.add(account.getEmail());
         result.add(account.getPhoneNumber());
         if (account instanceof Player)
-        result.add(String.valueOf(((Player) account).getDayOfRegister()));
+            result.add(String.valueOf(((Player) account).getDayOfRegister()));
         return result;
     }
 
@@ -52,7 +52,7 @@ public class AccountMenuController extends Controller {
     public ArrayList<Integer> viewPlatoStatistics() {
         //returns an arraylist of Integer including number of friends,number of wins,number of days passed in that order.
         ArrayList<Integer> result = new ArrayList<>();
-        if(account instanceof Player) //must be checked in view
+        if (account instanceof Player) //must be checked in view
         {
             result.add(((Player) account).getFriends().size());
             result.add(((Player) account).getNumberOfWins());
@@ -69,7 +69,7 @@ public class AccountMenuController extends Controller {
         //returns arraylist of String, frequency, wins, losses
         //throws NullPointerException if players hasn't played gameName
         ArrayList<String> result = new ArrayList<>();
-        if(account instanceof Player)//must be checked in view
+        if (account instanceof Player)//must be checked in view
         {
             GameLog gameLog = Objects.requireNonNull(((Player) account).getGameHistory(gameName),
                     "Game passed to AccountMenuController.showGameStatistics hasn't been played.");
@@ -81,13 +81,14 @@ public class AccountMenuController extends Controller {
         }
         return null;
     }
-    public boolean playerHasGame(String gameName)
-    {
+
+    public boolean playerHasGame(String gameName) {
         //returns true if player has played gameName, false otherwise.
-        if(account instanceof Player)//must be checked in view
-           return ((Player) account).getGameHistory(gameName) != null;
+        if (account instanceof Player)//must be checked in view
+            return ((Player) account).getGameHistory(gameName) != null;
         return false;
     }
+
     public void logOut() {
         new WelcomeMenu(null);
     }
