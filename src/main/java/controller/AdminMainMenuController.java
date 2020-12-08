@@ -15,9 +15,11 @@ public class AdminMainMenuController extends Controller {
         this.admin = Objects.requireNonNull(admin, "Admin passed to AdminMainMenuController is null.");
     }
 
-    public void addEvent(String gameName, LocalDate start, LocalDate end, int score) {
+    public void addEvent(String gameName, String start, String end, int score) {
         //creates a new event and adds it to the list of events.
-        Event event = new Event(gameName, start, end, score, generateId());
+        LocalDate startDate = createLocalDate(start);
+        LocalDate endDate = createLocalDate(end);
+        Event event = new Event(gameName, startDate, endDate, score, generateId());
         Event.addEvent(event);
     }
 
@@ -26,18 +28,20 @@ public class AdminMainMenuController extends Controller {
         return Event.getEvents();
     }
 
-    public void editEventStart(String eventId, LocalDate start) {
+    public void editEventStart(String eventId, String start) {
+        LocalDate startDate = createLocalDate(start);
         //changes the start field of eventId.
         //throws NullPointerException if eventId doesn't exist.
         Objects.requireNonNull(Event.getEventById(eventId), "EventId passed" +
-                " AdminMainMenuController.editEventStart doesn't exist.").setStart(start);
+                " AdminMainMenuController.editEventStart doesn't exist.").setStart(startDate);
     }
 
-    public void editEventEnd(String eventId, LocalDate end) {
+    public void editEventEnd(String eventId, String end) {
+        LocalDate endDate = createLocalDate(end);
         //changes the end field of eventId.
         //throws NullPointerException if eventId doesn't exist.
         Objects.requireNonNull(Event.getEventById(eventId), "EventId passed" +
-                " AdminMainMenuController.editEventEnd doesn't exist.").setEnd(end);
+                " AdminMainMenuController.editEventEnd doesn't exist.").setEnd(endDate);
     }
 
     public void editEventScore(String eventId, int score) {
