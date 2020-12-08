@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import static controller.Controller.generateId;
 
-public class AdminMainMenuController {
+public class AdminMainMenuController extends Controller {
     private Admin admin;
 
     public AdminMainMenuController(Admin admin) {
@@ -67,7 +67,7 @@ public class AdminMainMenuController {
     public void addSuggestion(String username, String gameName) {
         //adds a game suggestion to username
         //throws NullPointerException if username doesn't exist.
-        Player player =Objects.requireNonNull( Player.getPlayerByUsername(username),
+        Player player = Objects.requireNonNull(Player.getPlayerByUsername(username),
                 "Username passed to AdminMainMenuController.addSuggestion doesn't exist.");
         Suggestion suggestion = new Suggestion(gameName, generateId(), player);
         player.setSuggestion(suggestion);
@@ -92,7 +92,7 @@ public class AdminMainMenuController {
     public String showUserProfile(String username) {
         //returns the username.toString().
         //throws NullPointerException if username doesn't exist.
-        return Objects.requireNonNull( Player.getPlayerByUsername(username),
+        return Objects.requireNonNull(Player.getPlayerByUsername(username),
                 "Username passed to AdminMainMenu.showUserProfile doesn't exist.").toString();
     }
 
@@ -104,13 +104,12 @@ public class AdminMainMenuController {
         return usernames;
     }
 
-    public void sendMessage(String message,String username)
-    {
+    public void sendMessage(String message, String username) {
         //sends message to username
         //throws NullPointerException if username doesn't exist
-        Message message1 = new Message(message,generateId(),
+        Message message1 = new Message(message, generateId(),
                 Objects.requireNonNull(Player.getPlayerByUsername(username),
-                        "Username passed to AdminMainMenu.sendMessage doesn't exist."),null);
+                        "Username passed to AdminMainMenu.sendMessage doesn't exist."), null);
         message1.sendMessage();
     }
 }

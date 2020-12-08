@@ -40,9 +40,8 @@ public class Event {
         return eventId;
     }
 
-    public void setGameName(String gameName)
-    {
-        this.gameName= gameName;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
     public void setEnd(LocalDate end) {
@@ -57,18 +56,17 @@ public class Event {
         this.start = start;
     }
 
-    public static ArrayList<Event> getEvents()
-    {
-       return events;
+    public static ArrayList<Event> getEvents() {
+        return events;
     }
-    public static void addEvent(Event event)
-    {
+
+    public static void addEvent(Event event) {
         events.add(event);
     }
-    public static Event getEventById(String eventId)
-    {
-        for(Event event: events)
-            if(event.getEventId().equals(eventId))
+
+    public static Event getEventById(String eventId) {
+        for (Event event : events)
+            if (event.getEventId().equals(eventId))
                 return event;
         return null;
     }

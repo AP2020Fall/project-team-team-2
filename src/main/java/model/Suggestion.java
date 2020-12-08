@@ -3,13 +3,13 @@ package model;
 import java.util.ArrayList;
 
 public class Suggestion {
-    private static  ArrayList<Suggestion> suggestions = new ArrayList<>();
+    private static ArrayList<Suggestion> suggestions = new ArrayList<>();
     private final String gameName;
     private final String id;
     private final Player player;
-    public Suggestion(String gameName,String id,Player player)
-    {
-        this.gameName= gameName;
+
+    public Suggestion(String gameName, String id, Player player) {
+        this.gameName = gameName;
         this.id = id;
         this.player = player;
     }
@@ -33,16 +33,15 @@ public class Suggestion {
     public String getId() {
         return id;
     }
-    public static Suggestion getSuggestionById(String id)
-    {
-        for(Suggestion suggestion: suggestions)
-            if(suggestion.id.equals(id))
+
+    public static Suggestion getSuggestionById(String id) {
+        for (Suggestion suggestion : suggestions)
+            if (suggestion.id.equals(id))
                 return suggestion;
         return null;
     }
 
-    public static boolean searchSuggestionById(String id)
-    {
+    public static boolean searchSuggestionById(String id) {
         return getSuggestionById(id) != null;
     }
 

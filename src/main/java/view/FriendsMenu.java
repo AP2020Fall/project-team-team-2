@@ -32,7 +32,7 @@ public class FriendsMenu extends Menu {
                 viewUserProfile(matcher.group(1));
             } else if ((matcher = getMatcher(input, "Add (\\S+)")).find()) {
                 add(matcher.group(1));
-            } else if (getMatcher(input, "Showl friend requests").find()) {
+            } else if (getMatcher(input, "Show friend requests").find()) {
                 showFriendsRequests();
             } else if ((matcher = getMatcher(input, "Accept (\\S+)")).find()) {
                 accept(matcher.group(1));

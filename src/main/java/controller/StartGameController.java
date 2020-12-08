@@ -16,6 +16,7 @@ import java.util.UUID;
 
 public class StartGameController {
     private static java.util.Map<String, Object> primitiveSettings = new HashMap<String, Object>();
+
     {
         primitiveSettings.put("Map Number", 1);
         primitiveSettings.put("Placement", false);
@@ -31,14 +32,14 @@ public class StartGameController {
     public static void main(String[] args) {
         mainMap = new Map();
 
-        while(getPrimitiveSettings().get("Placement").equals(true)){
+        while (getPrimitiveSettings().get("Placement").equals(true)) {
 
         }
     }
 
     public void startGame() {
         String gameId = generateGameId();
-        String filename = "src/main/resources/gameIDs/"+gameId+".txt";
+        String filename = "src/main/resources/gameIDs/" + gameId + ".txt";
         System.out.println("Game Started with ID " + gameId);
         Path path = Paths.get(filename);
         /*try {
@@ -46,47 +47,51 @@ public class StartGameController {
         } catch (IOException ex) {
             // Handle exception
         }*/
-        RiskGameView riskGame = new RiskGameView(this.primitiveSettings , generateGameId());
+        RiskGameView riskGame = new RiskGameView(this.primitiveSettings, generateGameId());
         riskGame.riskGameView();
     }
 
     public static java.util.Map<String, Object> getPrimitiveSettings() {
         return primitiveSettings;
     }
-    public String setMapNumber(int mapNumber){
+
+    public String setMapNumber(int mapNumber) {
         boolean checkExistence = model.Map.checkMapExists(mapNumber);
         String callback = "";
-        if(checkExistence){
-            setPrimitiveSettings("Map Number" , mapNumber);
+        if (checkExistence) {
+            setPrimitiveSettings("Map Number", mapNumber);
             callback = "Map Number Changed To " + mapNumber;
-        }else{
+        } else {
             callback = "No Map Exists With This Number";
         }
         return callback;
     }
-    public String setPlayerNumber(int playerNumber){
+
+    public String setPlayerNumber(int playerNumber) {
         String callback = "";
-        if(playerNumber > 5){
+        if (playerNumber > 5) {
             callback = "Invalid Number of Player, Please try a number less than 5";
-        }else{
-            setPrimitiveSettings("PlayersNum" , playerNumber);
+        } else {
+            setPrimitiveSettings("PlayersNum", playerNumber);
             callback = "Players Number Set to " + playerNumber;
         }
         return callback;
     }
-    public String setDurationTime(int number){
+
+    public String setDurationTime(int number) {
         String callback = "";
-        if(number <= 0){
+        if (number <= 0) {
             callback = "You should choose a number bigger than zero";
-        }else if (number > 75){
+        } else if (number > 75) {
             callback = "You can't choose a number bigger than 75 seconds";
-        }else{
-            setPrimitiveSettings("Duration" , number);
+        } else {
+            setPrimitiveSettings("Duration", number);
             callback = "Duration changed to " + number;
         }
         return callback;
     }
-    public String setFogType(String type){
+
+    public String setFogType(String type) {
         String callback = "";
         switch (type.toLowerCase()) {
             case "on":
@@ -97,11 +102,14 @@ public class StartGameController {
                 setPrimitiveSettings("Fog of War", false);
                 callback = "Fog type changed to " + type;
                 break;
-            default: callback = "Please choose between 'on' And 'off'";break;
+            default:
+                callback = "Please choose between 'on' And 'off'";
+                break;
         }
         return callback;
     }
-    public String setAllianceType(String type){
+
+    public String setAllianceType(String type) {
         String callback = "";
         switch (type.toLowerCase()) {
             case "on":
@@ -112,11 +120,14 @@ public class StartGameController {
                 setPrimitiveSettings("Alliance", false);
                 callback = "Alliance changed to " + type;
                 break;
-            default:callback = "Please choose between 'on' And 'off'";break;
+            default:
+                callback = "Please choose between 'on' And 'off'";
+                break;
         }
         return callback;
     }
-    public String setBlizzardsType(String type){
+
+    public String setBlizzardsType(String type) {
         String callback = "";
         switch (type) {
             case "on":
@@ -127,11 +138,14 @@ public class StartGameController {
                 setPrimitiveSettings("Blizzards", false);
                 callback = "Blizzards changed to " + type;
                 break;
-            default:callback = "Please choose between 'on' And 'off'";break;
+            default:
+                callback = "Please choose between 'on' And 'off'";
+                break;
         }
         return callback;
     }
-    public String setPlacementType(String type){
+
+    public String setPlacementType(String type) {
         String callback = "";
         switch (type) {
             case "on":
@@ -142,18 +156,22 @@ public class StartGameController {
                 setPrimitiveSettings("Placement", false);
                 callback = "Placement changed to " + type;
                 break;
-            default:callback = "Please choose between 'on' And 'off'";break;
+            default:
+                callback = "Please choose between 'on' And 'off'";
+                break;
         }
         return callback;
     }
+
     public void setPrimitiveSettings(String index, Object value) {
         this.primitiveSettings.put(index, value);
     }
+
     public String generateGameId() {
-        return UUID.randomUUID().toString().replace("-","");
+        return UUID.randomUUID().toString().replace("-", "");
     }
 
-    public void setMapSoldiers(Country country, int soldiers){
+    public void setMapSoldiers(Country country, int soldiers) {
         country.setSoldiers(soldiers);
     }
 }

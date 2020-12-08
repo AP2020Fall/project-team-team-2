@@ -91,6 +91,7 @@ public class AccountMenu extends Menu {
             return;
         }
         controller.editField(field, newValue);
+        System.out.println("edited successfully!");
 
     }
 

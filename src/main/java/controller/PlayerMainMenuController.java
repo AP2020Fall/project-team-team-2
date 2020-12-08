@@ -27,7 +27,7 @@ public class PlayerMainMenuController {
     public ArrayList<String> showPlatoBotsMessages() {
         //returns the list of messages send to player
         ArrayList<String> result = new ArrayList<>();
-        for(Message message: player.getMessages())
+        for (Message message : player.getMessages())
             result.add(message.toString());
         return result;
     }

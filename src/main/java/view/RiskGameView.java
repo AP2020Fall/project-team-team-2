@@ -1,4 +1,5 @@
 package view;
+
 import com.google.gson.stream.JsonReader;
 import controller.RiskGameController;
 import model.Countries;
@@ -7,6 +8,7 @@ import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import model.Player;
 import controller.RiskGameController;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -19,15 +21,16 @@ import java.util.regex.Pattern;
 public class RiskGameView {
     private RiskGameController riskGameController;
 
-    public RiskGameView(Map<String, Object> primitiveSettings , String gameID){
-        this.riskGameController = new RiskGameController(primitiveSettings , gameID);
+    public RiskGameView(Map<String, Object> primitiveSettings, String gameID) {
+        this.riskGameController = new RiskGameController(primitiveSettings, gameID);
     }
 
 
     public static void main(String[] args) {
         String check = "hi";
     }
-    public void riskGameView(){
+
+    public void riskGameView() {
         /* write variables to get commands */
         Scanner inputCommand = Menu.getScanner();
         String inputLine = new String();
@@ -51,10 +54,10 @@ public class RiskGameView {
             inputLine = inputCommand.nextLine().trim();
 
             /* Check match cards */
-            if(riskGameController.getPlacementFinished()){
-                if((boolean)riskGameController.getPrimitiveSettings().get("Placement")){
+            if (riskGameController.getPlacementFinished()) {
+                if ((boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
 
-                }else{
+                } else {
 
                 }
                 continue;
@@ -99,7 +102,7 @@ public class RiskGameView {
                 check = false;
                 continue;
             }
-            if(inputLine.equals("next turn")){
+            if (inputLine.equals("next turn")) {
 
             }
             if (check == false) {
@@ -108,7 +111,7 @@ public class RiskGameView {
         }
     }
 
-    public void manualPlaceSoldier(){
+    public void manualPlaceSoldier() {
 
     }
 

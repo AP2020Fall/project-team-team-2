@@ -60,15 +60,17 @@ public class Map {
     public static void addCountry(int row, int column, Country country) {
         countries.get(row - 1).remove(column - 1);
     }
-    public static boolean checkMapExists(int mapNumber){
+
+    public static boolean checkMapExists(int mapNumber) {
         String mapAddressName = "src/main/resources/maps/map_" + mapNumber + ".txt";
         File file = new File(mapAddressName);
         boolean existence = false;
-        if(file.exists()){
+        if (file.exists()) {
             existence = true;
         }
         return existence;
     }
+
     public static List<List<Country>> getCountries() {
         return countries;
     }
