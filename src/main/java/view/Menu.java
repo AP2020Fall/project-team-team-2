@@ -51,4 +51,15 @@ public abstract class Menu {
         LocalDate localDate = LocalDate.of(year, month, day);
         return localDate;
     }
+
+    protected boolean isValidDate(String date) {
+        String[] splitDate = date.split("\\/");
+        int year = Integer.parseInt(splitDate[0]);
+        int month = Integer.parseInt(splitDate[1]);
+        int day = Integer.parseInt(splitDate[2]);
+        if (month < 1 || month > 12 || day < 1 || day > 31) {
+            return false;
+        }
+        return true;
+    }
 }

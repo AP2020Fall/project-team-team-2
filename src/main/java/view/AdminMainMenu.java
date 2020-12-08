@@ -48,6 +48,7 @@ public class AdminMainMenu extends Menu {
     }
 
     private void viewUserProfile(String username) {
+
         /*Player player = controller.showUserProfile(username);
         if (player == null) {
             System.out.println("user does not exists!");
@@ -94,7 +95,7 @@ public class AdminMainMenu extends Menu {
     }
 
     private void editEvent(String eventId, String field, String value) {
-       // controller.editEvent(eventId, field, value);
+        // controller.editEvent(eventId, field, value);
     }
 
     private void viewEvents() {
