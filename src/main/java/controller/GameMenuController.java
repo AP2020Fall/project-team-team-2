@@ -16,7 +16,9 @@ public class GameMenuController {
         this.player = Objects.requireNonNull(player,"Player passed to GameMenuController is null.");
     }
 
-    public void showScoreBoard() {
+    public String showScoreBoard() {
+        //returns the string of Scoreboard
+        return game.getScoreboard().toString();
     }
 
     public String showDetails() {
