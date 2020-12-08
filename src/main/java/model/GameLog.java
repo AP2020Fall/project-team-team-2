@@ -1,11 +1,14 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class GameLog {
 
     private int frequency;
     private int wins;
     private String gameLogId;
     private int score;
+    private LocalDateTime lastPlay;
 
     private Game game;
 
@@ -33,6 +36,10 @@ public class GameLog {
         return score;
     }
 
+    public LocalDateTime getLastPlay() {
+        return lastPlay;
+    }
+
     public void setFrequency(int frequency) {
         this.frequency = frequency;
     }
@@ -46,5 +53,8 @@ public class GameLog {
         this.score = score;
     }
 
-
+    public void setLastPlay(LocalDateTime lastPlay)
+    {
+        this.lastPlay = lastPlay;
+    }
 }

@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class Player extends Account {
@@ -17,6 +18,7 @@ public class Player extends Account {
         friendRequests = new ArrayList<>();
         cards = new ArrayList<>();
         messages = new ArrayList<>();
+        favouriteGames = new ArrayList<>();
     }
 
     public Player(String botName, String username) {
@@ -32,6 +34,7 @@ public class Player extends Account {
     private ArrayList<FriendRequest> friendRequests;
     private ArrayList<Message> messages;
     private ArrayList<Card> cards;
+    private ArrayList<Game> favouriteGames;
     // private final ArrayList<String> suggestions;
     private Suggestion suggestion;
     private int playerNumber;
@@ -72,6 +75,9 @@ public class Player extends Account {
         return messages;
     }
 
+    public ArrayList<Game> getFavouriteGames() {
+        return favouriteGames;
+    }
 
     public void setMoney(double money) {
         this.money = money;
@@ -164,7 +170,13 @@ public class Player extends Account {
         return cards;
     }
 
-
+    public GameLog getLastGamePlayed()
+    {
+        if(gameLogs.isEmpty())
+            return null;
+        gameLogs.sort((a, b) -> b.getLastPlay().compareTo(a.getLastPlay()));
+        return gameLogs.get(0);
+    }
     @Override
     public String toString() {
         return ((Account) this).toString() + "registered: " + getDayOfRegister() + " days ago\n";
