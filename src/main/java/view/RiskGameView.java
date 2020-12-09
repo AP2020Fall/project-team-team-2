@@ -78,8 +78,10 @@ public class RiskGameView {
             Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
             check = placeSoldierMatcher.matches();
             if(check == true && !placementStatus){
-                String countryDetails = manualPlacementMatcher.group("countryDetails");
-                placeSoldier(countryDetails,1);
+                String countryDetails = placeSoldierMatcher.group("countryDetails");
+                int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
+
+                draft(countryDetails, soldierNumber);
             }
 
             /* Check match cards */
