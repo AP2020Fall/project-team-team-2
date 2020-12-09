@@ -32,8 +32,8 @@ public class PlayerMainMenu extends Menu {
                 viewLastPlayed();
             } else if (getMatcher(input, "^View admin's suggestions$").find()) {
                 viewAdminSuggestion();
-            } else if (getMatcher(input, "^Choose suggested game$").find()) {
-                chooseSuggestedGame();
+            } else if ((matcher = getMatcher(input, "^Choose suggested game (\\S+)")).find()) {
+                chooseSuggestedGame(matcher.group(1));
 //            } else if ((matcher = getMatcher(input, "^Add friend (\\S+)$")).find()) {
 //                addFriend(matcher.group(1));
             } else if (getMatcher(input, "^View account menu$").find()) {
@@ -60,27 +60,46 @@ public class PlayerMainMenu extends Menu {
 //        controller.addFriend(username);
 //    }
 
-    private void chooseSuggestedGame() {
+    private void chooseSuggestedGame(String gameName) {
+        if(!controller.isGameSuggested(gameName))
+            System.out.println("game is not suggested!");
+        else
+            controller.chooseSuggestedGame(gameName);
     }
 
     private void viewAdminSuggestion() {
-        System.out.println(controller.showAdminsSuggestions());
+        if(controller.showAdminsSuggestions().isEmpty())
+            System.out.println("no suggestions!");
+        else {
+            for (String suggestion : controller.showAdminsSuggestions())
+                System.out.println(suggestion);
+        }
     }
 
     private void viewLastPlayed() {
-        String lastPlay = controller.showLastPlayed();
-        System.out.println(lastPlay);
+        if(!controller.hasPlayerPlayed())
+            System.out.println("player has not played a game!");
+        else
+        System.out.println( controller.showLastPlayed());
     }
 
     private void viewPlatoBotMessages() {
-        for (String message : controller.showPlatoBotsMessages()) {
-            System.out.println(message);
+        if(controller.showPlatoBotsMessages().isEmpty())
+            System.out.println("no message!");
+        else {
+            for (String message : controller.showPlatoBotsMessages()) {
+                System.out.println(message);
+            }
         }
     }
 
     private void viewFavoriteGames() {
-        for (String favoriteGame : controller.showFavoriteGames()) {
-            System.out.println(favoriteGame);
+        if(controller.showFavoriteGames().isEmpty())
+            System.out.println("no favorite game!");
+        else {
+            for (String favoriteGame : controller.showFavoriteGames()) {
+                System.out.println(favoriteGame);
+            }
         }
     }
 

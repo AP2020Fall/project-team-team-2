@@ -3,8 +3,11 @@ package controller;
 import model.Game;
 import model.Message;
 import model.Player;
+import model.Suggestion;
+import view.GameMenu;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class PlayerMainMenuController extends Controller {
@@ -35,6 +38,7 @@ public class PlayerMainMenuController extends Controller {
         ArrayList<String> result = new ArrayList<>();
         for (Message message : player.getMessages())
             result.add(message.toString());
+        Collections.reverse(result);
         return result;
     }
 
@@ -45,16 +49,32 @@ public class PlayerMainMenuController extends Controller {
                 "Player hasn't played any games.").getGame().getName();
     }
 
-    public String showAdminsSuggestions() {
-        return player.getSuggestion().toString();
+    public boolean hasPlayerPlayed()
+    {
+        //checks if player has played a game
+        return player.getLastGamePlayed() != null;
     }
 
-    public String showSuggestedGame() {
-        return player.getSuggestion().getGameName();
+    public ArrayList<String> showAdminsSuggestions() {
+        //returns the list of suggested games to player.
+        ArrayList<String> result = new ArrayList<>();
+        for (Suggestion suggestion : player.getSuggestions())
+            result.add(suggestion.toString());
+        return result;
     }
 
-    public void addFriend(String username) {
+    public void chooseSuggestedGame(String gameName) {
+        //goes to the GameMenu of the suggested game.
+        //throws NullPointerException if gameName is not suggested.
+        Suggestion suggestion = Objects.requireNonNull(player.getSuggestionByGameName(gameName),
+                "Game passed to PlayerMainMenuController.chooseSuggestedGame" +
+                        " hasn't been suggested to player.");
+        new GameMenu(player, suggestion.getGame());
     }
 
+    public boolean isGameSuggested(String gameName) {
+        //checks if the gameName is suggested.
+        return player.suggestionExists(gameName);
+    }
 
 }

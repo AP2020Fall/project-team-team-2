@@ -63,17 +63,27 @@ public class AdminMainMenuController extends Controller {
     }
 
     public void addSuggestion(String username, String gameName) {
-        //adds a game suggestion to username
+        //adds gameName suggestion to username
         //throws NullPointerException if username doesn't exist or game doesnt exist.
         Player player = Objects.requireNonNull(Player.getPlayerByUsername(username),
                 "Username passed to AdminMainMenuController.addSuggestion doesn't exist.");
         Game game = Objects.requireNonNull(Game.getGameByGameName(gameName),
                 "Game passed to AdminMainMenuController.addSuggestion doesn't exist.");
         Suggestion suggestion = new Suggestion(game, generateId(), player);
-        player.setSuggestion(suggestion);
+        player.addSuggestion(suggestion);
         Suggestion.addSuggestion(suggestion);
     }
 
+    public boolean playerBeenSuggested(String username,String gameName)
+    {
+        //checks if gameName been suggested to username
+        //throws NullPointerException if username doesn't exist or game doesnt exist.
+        Player player = Objects.requireNonNull(Player.getPlayerByUsername(username),
+                "Username passed to AdminMainMenuController.playerBeenSuggested doesn't exist.");
+        Game game = Objects.requireNonNull(Game.getGameByGameName(gameName),
+                "Game passed to AdminMainMenuController.playerBeenSuggested doesn't exist.");
+       return player.suggestionExists(gameName);
+    }
     public ArrayList<Suggestion> showSuggestions() {
         //returns the list of suggestions
         return Suggestion.getSuggestions();
@@ -84,7 +94,7 @@ public class AdminMainMenuController extends Controller {
         //throws NullPointerException if suggestionId doesn't exist.
         Suggestion suggestion = Objects.requireNonNull(Suggestion.getSuggestionById(suggestionId),
                 "SuggestionId passed to AdminMainMenuController.removeSuggestion doesn't exist.");
-        suggestion.getPlayer().removeSuggestion();
+        suggestion.getPlayer().removeSuggestion(suggestion);
         Suggestion.getSuggestions().remove(suggestion);
     }
 
@@ -113,6 +123,7 @@ public class AdminMainMenuController extends Controller {
     public void removeGame(String gameName) {
         //removes gameName from the list.
         //throws NullPointerException if gameName doesn't exist.
+        /*ToDo: remove all gameLogs and suggestions and events*/
         Game game = Objects.requireNonNull(Game.getGameByGameName(gameName),
                 "Game passed to AdminMainMenuController.removeGame doesn't exist.");
         Game.getGames().remove(game);

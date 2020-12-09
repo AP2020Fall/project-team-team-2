@@ -71,6 +71,10 @@ public class Suggestion {
         return player;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     public String getGameName() {
         return game.getName();
     }

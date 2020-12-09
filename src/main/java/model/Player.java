@@ -19,6 +19,7 @@ public class Player extends Account {
         cards = new ArrayList<>();
         messages = new ArrayList<>();
         favouriteGames = new ArrayList<>();
+        suggestions = new ArrayList<>();
     }
 
     public Player(String botName, String username) {
@@ -36,8 +37,8 @@ public class Player extends Account {
     private ArrayList<Message> messages;
     private ArrayList<Card> cards;
     private ArrayList<Game> favouriteGames;
-    // private final ArrayList<String> suggestions;
-    private Suggestion suggestion;
+    private ArrayList<Suggestion> suggestions;
+   // private Suggestion suggestion;
     private int playerNumber;
     private int draftSoldiers = 0;
 
@@ -71,8 +72,8 @@ public class Player extends Account {
         return friendRequests;
     }
 
-    public Suggestion getSuggestion() {
-        return suggestion;
+    public ArrayList<Suggestion> getSuggestions() {
+        return suggestions;
     }
 
     public ArrayList<Message> getMessages() {
@@ -93,16 +94,23 @@ public class Player extends Account {
 
     public void addNewSoldiers(int soldiers) { newSoldiers = newSoldiers + soldiers; }
 
-    public void setSuggestion(Suggestion suggestion) {
-        this.suggestion = suggestion;
+    public void addSuggestion(Suggestion suggestion) {
+        this.suggestions.add( suggestion);
     }
 
-    public boolean suggestionExists() {
-        return suggestion != null;
+    public Suggestion getSuggestionByGameName(String gameName) {
+        for (Suggestion suggestion : suggestions)
+            if (suggestion.getGameName().equals(gameName))
+                return suggestion;
+        return null;
     }
 
-    public void removeSuggestion() {
-        suggestion = null;
+    public boolean suggestionExists(String gameName)
+    {
+        return getSuggestionByGameName(gameName) != null;
+    }
+    public void removeSuggestion(Suggestion suggestion) {
+        suggestions.remove(suggestion);
     }
 
     public Player getFriendByUsername(String username) {
