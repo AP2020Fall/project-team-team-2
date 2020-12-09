@@ -119,7 +119,7 @@ public class RiskGameController {
         this.draftDone = true;
     }
 
-    public int draft(String sourceCountry, int soldiers, int totalSoldiers){
+    public String draft(String sourceCountry, int soldiers){
         String toPrint = "";
         String[] sourceDetails = sourceCountry.split("\\.");
         String sourceCountryName = sourceDetails[0];
@@ -132,16 +132,16 @@ public class RiskGameController {
         if (!sourceCountryValid) {
             toPrint = "Source country is not valid";
         }
-        else if (sourceCountryValid && (soldiers > totalSoldiers || soldiers < 0)) {
+        else if (sourceCountryValid && (soldiers > currentPlayer.getNewSoldiers() || soldiers < 0)) {
             toPrint = "Soldiers are not enough or not valid";
         }
         else {
             source.addSoldiers(soldiers);
-            totalSoldiers = totalSoldiers - soldiers;
+            currentPlayer.addNewSoldiers(-soldiers);
             toPrint = "Add " + soldiers + " soldiers to " + sourceCountryName ;
         }
 
-        return totalSoldiers;
+        return toPrint;
     }
 
     public String attack(String sourceCountry, String destinyCountry, int soldiers) {
