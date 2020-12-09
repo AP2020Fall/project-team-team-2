@@ -11,12 +11,12 @@ import java.util.Scanner;
 
 public class Suggestion {
     private static ArrayList<Suggestion> suggestions = new ArrayList<>();
-    private final String gameName;
+    private final Game game;
     private final String id;
     private final Player player;
 
-    public Suggestion(String gameName, String id, Player player) {
-        this.gameName = gameName;
+    public Suggestion(Game game, String id, Player player) {
+        this.game = game;
         this.id = id;
         this.player = player;
     }
@@ -72,7 +72,7 @@ public class Suggestion {
     }
 
     public String getGameName() {
-        return gameName;
+        return game.getName();
     }
 
     public String getId() {
@@ -92,7 +92,7 @@ public class Suggestion {
 
     @Override
     public String toString() {
-        return "Game suggested: " + gameName;
+        return "Game suggested: " + game.getName();
 
     }
 }

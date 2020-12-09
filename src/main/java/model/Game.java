@@ -106,4 +106,10 @@ public class Game {
     public static void addGame(Game game) {
         games.add(game);
     }
+
+    @Override
+    public String toString() {
+        return "Game: " + name + '\n'
+                + details + '\n';
+    }
 }
