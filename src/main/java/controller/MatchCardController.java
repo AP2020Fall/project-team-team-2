@@ -8,7 +8,7 @@ public class MatchCardController {
     private int addedSoldiers;
 
     public MatchCardController(Player player){
-        this.player = player();
+        this.player = player;
         addedSoldiers = 0;
     }
 
