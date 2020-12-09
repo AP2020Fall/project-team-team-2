@@ -13,7 +13,7 @@ public class GameMenu extends Menu {
 
     public GameMenu(Player player, Game game) {
         super((Account) player);
-        GameMenuController controller = new GameMenuController(game,player);
+        this.controller = new GameMenuController(game,player);
         gameMenu();
     }
 
@@ -53,34 +53,31 @@ public class GameMenu extends Menu {
     }
 
     private void runGame() {
-        System.out.println("How many players: ");
-        String input = scanner.nextLine();
-        Integer numPlayers = Integer.parseInt(input);
-        ArrayList<String> usernames = new ArrayList<>();
-        usernames.add(account.getUsername());
-        for (int i = 1 ; i < numPlayers ;i++)
-        {
-            System.out.println("Please enter username: ");
-            input = scanner.nextLine();
-            if(!controller.isUsernameExist(input))
-            {
-                System.out.println("Username doesn't exist\n");
-                i--;
-            }
-            else
-            {
-                if(usernames.contains(input)) {
-                    System.out.println(input + "has been already added.");
+        if (!controller.canRunGame())
+            System.out.println("can't run the game: only Risk has been implemented!");
+        else {
+            System.out.println("how many players:");
+            String input = scanner.nextLine();
+            int numPlayers = Integer.parseInt(input);
+            ArrayList<String> usernames = new ArrayList<>();
+            usernames.add(account.getUsername());
+            for (int i = 1; i < numPlayers; i++) {
+                System.out.println("please enter username:");
+                input = scanner.nextLine();
+                if (!controller.isUsernameExist(input)) {
+                    System.out.println("username doesn't exist");
                     i--;
-                }
-                else
-                {
+                } else if (usernames.contains(input)) {
+                    System.out.println(input + " has been already added.");
+                    i--;
+                } else {
                     usernames.add(input);
-                }
-            }
 
+                }
+
+            }
+            controller.runGame(usernames);
         }
-        controller.runGame(usernames);
     }
 
     private void addToFavorites() {
@@ -89,10 +86,16 @@ public class GameMenu extends Menu {
     }
 
     private void showPlayedCount() {
+        if(!controller.hasPlayedGame())
+            System.out.println("player hasn't played the game.");
+        else
         System.out.println(controller.showPlayedCount());
     }
 
     private void showWinsCount() {
+        if(!controller.hasPlayedGame())
+            System.out.println("player hasn't played the game.");
+        else
         System.out.println(controller.showWinsCount());
     }
 

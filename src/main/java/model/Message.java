@@ -20,7 +20,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Message:" + message + '\n';
+        return "Message:" + message;
         //+ time + '\n';
     }
 }

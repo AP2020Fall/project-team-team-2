@@ -110,6 +110,6 @@ public class Game {
     @Override
     public String toString() {
         return "Game: " + name + '\n'
-                + details + '\n';
+                + details ;
     }
 }

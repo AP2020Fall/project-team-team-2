@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameMenuController extends Controller{
-    private Game game;
-    private Player player;
+    private final Game game;
+    private final Player player;
 
     public GameMenuController(Game game,Player player) {
         this.game = Objects.requireNonNull(game, "Game passed to GameMenuController is null.");
@@ -60,7 +60,7 @@ public class GameMenuController extends Controller{
             players.add(Objects.requireNonNull(Player.getPlayerByUsername(username),
                     "Username passed to runGame doesn't exist."));
         }
-        //new StartGameView(players);
+        new StartGameView(players);
     }
 
     public int showPoints() {
@@ -68,5 +68,15 @@ public class GameMenuController extends Controller{
         //throws NullPointerException if the player hasn't played the game.
         return Objects.requireNonNull(player.getGameHistory(game.getName()),
                 "Player hasn't played this game.").getScore();
+    }
+
+    public boolean canRunGame()
+    {
+        return game.getName().equals("Risk");
+    }
+
+    public boolean hasPlayedGame()
+    {
+        return player.getGameHistory(game.getName()) != null;
     }
 }
