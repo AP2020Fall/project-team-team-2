@@ -36,6 +36,7 @@ public class RiskGameView {
         Scanner inputCommand = Menu.getScanner();
         String inputLine = new String();
         boolean check = false;
+        boolean matchCardEnable = false;
 
 
         /* Different patterns of valid match cards commands */
@@ -78,40 +79,51 @@ public class RiskGameView {
             if (check == true && placementStatus) {
                 System.out.println("Command1!");
                 check = false;
+                matchCardEnable = true;
                 continue;
             }
 
-            Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
-            check = type1MatchMatcher.matches();
-            if (check == true && placementStatus) {
-                System.out.println("Command2!");
-                check = false;
-                continue;
+            while(matchCardEnable){
+
+                inputLine = inputCommand.nextLine().trim();
+
+                Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
+                check = type1MatchMatcher.matches();
+                if (check == true && placementStatus) {
+                    System.out.println("Command2!");
+                    check = false;
+                    continue;
+                }
+
+                Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
+                check = type2MatchMatcher.matches();
+                if (check == true && placementStatus) {
+                    System.out.println("Command3!");
+                    check = false;
+                    continue;
+                }
+
+                Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
+                check = type3MatchMatcher.matches();
+                if (check == true && placementStatus) {
+                    System.out.println("Command4!");
+                    check = false;
+                    continue;
+                }
+
+                Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
+                check = diffrentTypeMatchMatcher.matches();
+                if (check == true && placementStatus) {
+                    System.out.println("Command5!");
+                    check = false;
+                    continue;
+                }
+
+                if (check == false) {
+                    System.out.println("Invalid Command!");
+                }
             }
 
-            Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
-            check = type2MatchMatcher.matches();
-            if (check == true && placementStatus) {
-                System.out.println("Command3!");
-                check = false;
-                continue;
-            }
-
-            Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
-            check = type3MatchMatcher.matches();
-            if (check == true && placementStatus) {
-                System.out.println("Command4!");
-                check = false;
-                continue;
-            }
-
-            Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
-            check = diffrentTypeMatchMatcher.matches();
-            if (check == true && placementStatus) {
-                System.out.println("Command5!");
-                check = false;
-                continue;
-            }
             if(inputLine.equals("next")){
 
             }
