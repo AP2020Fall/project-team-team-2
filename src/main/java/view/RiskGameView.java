@@ -73,6 +73,7 @@ public class RiskGameView {
                 String countryDetails = manualPlacementMatcher.group("countryDetails");
                 placeSoldier(countryDetails,1);
             }
+
             /* Check match cards */
             Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
             check = matchCardsMatcher.matches();
@@ -91,7 +92,7 @@ public class RiskGameView {
                 if (check == true && placementStatus) {
                     riskGameController.matchCardAddSoldiers(4);
                     check = false;
-                    continue;
+                    break;
                 }
 
                 Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
@@ -99,7 +100,7 @@ public class RiskGameView {
                 if (check == true && placementStatus) {
                     riskGameController.matchCardAddSoldiers(6);
                     check = false;
-                    continue;
+                    break;
                 }
 
                 Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
@@ -107,7 +108,7 @@ public class RiskGameView {
                 if (check == true && placementStatus) {
                     riskGameController.matchCardAddSoldiers(8);
                     check = false;
-                    continue;
+                    break;
                 }
 
                 Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
@@ -115,7 +116,7 @@ public class RiskGameView {
                 if (check == true && placementStatus) {
                     riskGameController.matchCardAddSoldiers(10);
                     check = false;
-                    continue;
+                    break;
                 }
 
                 if (check == false) {
