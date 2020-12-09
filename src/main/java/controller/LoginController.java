@@ -11,8 +11,8 @@ import java.util.Objects;
 
 public class LoginController extends Controller {
     public void delete(String username) {
-        //removes the username from the list
-        Account.getAllAccounts().removeIf(o -> o.getUsername().equals(username));
+        //removes the username from the list and it is a player
+        Account.getAllAccounts().removeIf(o -> o.getUsername().equals(username) && o instanceof Player);
     }
 
     public void login(String username) {

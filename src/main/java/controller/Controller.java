@@ -2,6 +2,7 @@ package controller;
 
 import model.Account;
 import model.Event;
+import model.Player;
 import model.Suggestion;
 
 import java.time.LocalDate;
@@ -106,4 +107,15 @@ public class Controller {
         }
         return false;
     }
+
+    public boolean isUsernamePlayer(String username)
+    {
+        for (Account account : Account.getAllAccounts()) {
+            if (account.getUsername().equals(username) && account instanceof Player) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

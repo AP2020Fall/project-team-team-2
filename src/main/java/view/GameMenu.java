@@ -3,6 +3,9 @@ package view;
 
 import controller.GameMenuController;
 import model.Account;
+import model.Player;
+
+import java.util.ArrayList;
 
 public class GameMenu extends Menu {
     GameMenuController controller;
@@ -50,7 +53,34 @@ public class GameMenu extends Menu {
     }
 
     private void runGame() {
-        controller.runGame();
+        System.out.println("How many players: ");
+        String input = scanner.nextLine();
+        Integer numPlayers = Integer.parseInt(input);
+        ArrayList<String> usernames = new ArrayList<>();
+        usernames.add(account.getUsername());
+        for (int i = 1 ; i < numPlayers ;i++)
+        {
+            System.out.println("Please enter username: ");
+            input = scanner.nextLine();
+            if(!controller.isUsernameExist(input))
+            {
+                System.out.println("Username doesn't exist\n");
+                i--;
+            }
+            else
+            {
+                if(usernames.contains(input)) {
+                    System.out.println(input + "has been already added.");
+                    i--;
+                }
+                else
+                {
+                    usernames.add(input);
+                }
+            }
+
+        }
+        controller.runGame(usernames);
     }
 
     private void addToFavorites() {

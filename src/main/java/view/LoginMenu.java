@@ -50,6 +50,8 @@ public class LoginMenu extends Menu {
     private void deleteAccount(String username) {
         if (!controller.isUsernameExist(username)) {
             System.out.println("username does not exist");
+        } else if (!controller.isUsernamePlayer(username)) {
+            System.out.println("Admin account can't be deleted");
         } else {
             System.out.println("password: ");
             String password = scanner.nextLine();

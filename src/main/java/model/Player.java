@@ -44,7 +44,7 @@ public class Player extends Account {
     }*/
 
     public int getDayOfRegister() {
-        return (int) ChronoUnit.DAYS.between(LocalDate.now(), registerDay);
+        return (int) ChronoUnit.DAYS.between( registerDay,LocalDate.now());
     }
 
     public double getMoney() {
@@ -179,6 +179,8 @@ public class Player extends Account {
     }
     @Override
     public String toString() {
-        return ((Account) this).toString() + "registered: " + getDayOfRegister() + " days ago\n";
+        return super.toString()
+                + "money: " + getMoney() + "$\n"
+                + "registered: " + getDayOfRegister() + " days ago\n";
     }
 }
