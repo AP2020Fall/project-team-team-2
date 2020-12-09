@@ -77,7 +77,6 @@ public class RiskGameView {
             Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
             check = matchCardsMatcher.matches();
             if (check == true && placementStatus) {
-                System.out.println("Command1!");
                 check = false;
                 matchCardEnable = true;
                 continue;
@@ -90,7 +89,7 @@ public class RiskGameView {
                 Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
                 check = type1MatchMatcher.matches();
                 if (check == true && placementStatus) {
-                    System.out.println("Command2!");
+                    riskGameController.matchCardAddSoldiers(4);
                     check = false;
                     continue;
                 }
@@ -98,7 +97,7 @@ public class RiskGameView {
                 Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
                 check = type2MatchMatcher.matches();
                 if (check == true && placementStatus) {
-                    System.out.println("Command3!");
+                    riskGameController.matchCardAddSoldiers(6);
                     check = false;
                     continue;
                 }
@@ -106,7 +105,7 @@ public class RiskGameView {
                 Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
                 check = type3MatchMatcher.matches();
                 if (check == true && placementStatus) {
-                    System.out.println("Command4!");
+                    riskGameController.matchCardAddSoldiers(8);
                     check = false;
                     continue;
                 }
@@ -114,7 +113,7 @@ public class RiskGameView {
                 Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
                 check = diffrentTypeMatchMatcher.matches();
                 if (check == true && placementStatus) {
-                    System.out.println("Command5!");
+                    riskGameController.matchCardAddSoldiers(10);
                     check = false;
                     continue;
                 }
