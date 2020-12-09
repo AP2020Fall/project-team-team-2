@@ -1,8 +1,15 @@
 package model;
 
+import com.google.gson.GsonBuilder;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Event {
     private static ArrayList<Event> events = new ArrayList<>();
@@ -18,6 +25,43 @@ public class Event {
         this.end = end;
         this.score = score;
         this.eventId = eventId;
+    }
+
+    public static void save() throws IOException {
+        for (Event event : events) {
+            save(event);
+        }
+    }
+
+    private static void save(Event event) throws IOException {
+        String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().toJson(event);
+        FileWriter file = new FileWriter("database" + "\\" + "events" + "\\" + event.getEventId() + ".json");
+        file.write(jsonAccount);
+        file.close();
+    }
+
+    public static void open() throws FileNotFoundException {
+        File folder = new File("database" + "\\" + "events");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        } else {
+            for (File file : folder.listFiles()) {
+                events.add(openEvent(file));
+            }
+        }
+    }
+
+    private static Event openEvent(File file) throws FileNotFoundException {
+        StringBuilder json = fileToString(file);
+        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Event.class);
+    }
+
+    private static StringBuilder fileToString(File file) throws FileNotFoundException {
+        StringBuilder json = new StringBuilder();
+        Scanner reader = new Scanner(file);
+        while (reader.hasNext()) json.append(reader.next());
+        reader.close();
+        return json;
     }
 
     public String getGameName() {
