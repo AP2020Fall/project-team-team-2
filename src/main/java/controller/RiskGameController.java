@@ -119,8 +119,27 @@ public class RiskGameController {
         this.draftDone = true;
     }
 
-    public void draft(){
+    public int draft(String sourceCountry, int soldiers, int totalSoldiers){
+        String toPrint = "";
+        String[] sourceDetails = sourceCountry.split("\\.");
+        String sourceCountryName = sourceDetails[0];
+        int sourceNumber = Integer.parseInt(sourceDetails[1]);
+        boolean sourceCountryValid = false;
+        Country source = getCountryByDetails(sourceCountryName, sourceNumber);
+        if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
+            sourceCountryValid = true;
+        }
+        if (!sourceCountryValid) {
+            toPrint = "Source country is not valid";
+        }
+        else if (sourceCountryValid && (soldiers > totalSoldiers || soldiers < 0)) {
+            toPrint = "Soldiers are not enough or not valid";
+        }
+        else {
 
+        }
+
+        return totalSoldiers;
     }
 
     public String attack(String sourceCountry, String destinyCountry, int soldiers) {
