@@ -136,7 +136,8 @@ public class RiskGameController {
             toPrint = "Soldiers are not enough or not valid";
         }
         else {
-
+            source.addSoldiers(soldiers);
+            totalSoldiers = totalSoldiers - soldiers;
         }
 
         return totalSoldiers;
