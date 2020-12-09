@@ -119,6 +119,10 @@ public class RiskGameController {
         this.draftDone = true;
     }
 
+    public void draft(){
+
+    }
+
     public String attack(String sourceCountry, String destinyCountry, int soldiers) {
         String toPrint = "";
         String[] sourceDetails = sourceCountry.split("\\.");
