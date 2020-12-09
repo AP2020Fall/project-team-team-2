@@ -138,6 +138,7 @@ public class RiskGameController {
         else {
             source.addSoldiers(soldiers);
             totalSoldiers = totalSoldiers - soldiers;
+            toPrint = "Add " + soldiers + " soldiers to " + sourceCountryName ;
         }
 
         return totalSoldiers;
@@ -228,6 +229,7 @@ public class RiskGameController {
         else {
             source.addSoldiers(-soldiers);
             destination.addSoldiers(soldiers);
+            toPrint = "Move " + soldiers + " soldiers from " + sourceCountryName + " to " + destinationCountryName ;
         }
         return toPrint;
     }
