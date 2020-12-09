@@ -251,7 +251,7 @@ public class RiskGameController {
         this.fortifyDone = status;
     }
 
-    public matchCardAddSoldiers(int soldiersNumber){
+    public void matchCardAddSoldiers(int soldiersNumber){
         matchCardController.incPlayerSoldier(currentPlayer, soldiersNumber);
     }
 
