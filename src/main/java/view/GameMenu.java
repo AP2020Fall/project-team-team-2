@@ -8,7 +8,7 @@ public class GameMenu extends Menu {
     GameMenuController controller;
     public GameMenu(Account account) {
         super(account);
-        controller = new GameMenuController(null);
+//        GameMenuController controller = new GameMenuController(null);
         //todo change arg
         gameMenu();
     }

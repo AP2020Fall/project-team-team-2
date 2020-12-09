@@ -11,49 +11,44 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-
 public class Map {
     private static List<List<Country>> countries;
 
     public static void main(String[] args) throws FileNotFoundException {
-//        int[][] map_11 = new int[4][4];
-//        map_11[0][0] = 40;
-//        map_11[0][1] = 43;
-//        map_11[0][2] = 9;
-//        map_11[0][3] = 21;
-//        map_11[1][0] = 41;
-//        map_11[1][1] = 42;
-//        map_11[1][2] = 10;
-//        map_11[1][3] = 22;
-//        map_11[2][0] = 1;
-//        map_11[2][1] = 4;
-//        map_11[2][2] = 11;
-//        map_11[2][3] = 33;
-//        map_11[3][0] = 2;
-//        map_11[3][1] = 3;
-//        map_11[3][2] = 35;
-//        map_11[3][3] = 33;
-//
-//
-//        Gson newGson = new Gson();
-//        String filename = "src/main/resources/maps/map_7.txt";
-//        Path path = Paths.get(filename);
-//
-////        try {
-////         //   Files.writeString(path, newGson.toJson(map_11), StandardCharsets.UTF_8);
-////        } catch (IOException ex) {
-////            // Handle exception
-////        }
-//        JsonReader reader = new JsonReader(new FileReader(filename));
-//        int[][] newPath = newGson.fromJson(reader, int[][].class);
-//        String[][] newString = new String[newPath.length][newPath[0].length];
-//        System.out.println(newPath[0].length);
-//        for (int i = 0; i < newPath.length; i++) {
-//            for (int j = 0; j < newPath[i].length; j++) {
-//                newString[i][j] = Countries.values()[newPath[i][j] - 1].getContinent();
-//            }
+        String[] names = new String[10];
+        names[0] = "Desini";
+        names[1] = "Limbus";
+        names[2] = "Quine";
+        names[3] = "Majora";
+        names[4] = "Hotkey";
+        names[5] = "Purine";
+        names[6] = "Huger";
+        names[7] = "Tunny";
+        names[8] = "Wittle";
+        names[9] = "Bigram";
+
+        Gson newGson = new Gson();
+        String filename = "src/main/resources/robots/names.txt";
+        Path path = Paths.get(filename);
+        try {
+            Files.write(path , Collections.singleton(newGson.toJson(names)), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        try {
+//            Files.writeString(path, newGson.toJson(map_11), StandardCharsets.UTF_8);
+//        } catch (IOException ex) {
+//            // Handle exception
 //        }
+        JsonReader reader = new JsonReader(new FileReader(filename));
+        String[] newPath = newGson.fromJson(reader, String[].class);
+        String[] newString = new String[newPath.length];
+        System.out.println(newPath.length);
+        for (int i = 0; i < newString.length; i++) {
+            System.out.println(newPath[i]);
+        }
         System.out.println("Hiiii");
     }
 

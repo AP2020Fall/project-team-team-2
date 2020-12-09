@@ -21,8 +21,8 @@ import java.util.regex.Pattern;
 public class RiskGameView {
     private RiskGameController riskGameController;
 
-    public RiskGameView(Map<String, Object> primitiveSettings, String gameID) {
-        this.riskGameController = new RiskGameController(primitiveSettings, gameID);
+    public RiskGameView(Map<String, Object> primitiveSettings, String gameID,int soldiers) {
+        this.riskGameController = new RiskGameController(primitiveSettings, gameID , soldiers);
     }
 
 
@@ -45,27 +45,30 @@ public class RiskGameView {
         Pattern differentTypeMatchCommand = Pattern.compile("(^)4-type1,type2,type3 score:10($)");
 
 
+        /* Pattern to draft soldier */
+        Pattern placeSoldier = Pattern
+                .compile("(^)place (?<soldierNumber>\\d+) soldiers in (?<countryDetails>\\w+\\.\\d+)($)");
+        /* Pattern to place soldier in manual placement*/
+        Pattern placeSoldierManual = Pattern.compile("(^)place soldier in (?<countryDetails>\\w+\\.\\d+)($)");
+        /* Pattern to Attac*/
+        Pattern attackPattern = Pattern
+                .compile("(^)attack from (?<sourceCountry>\\w+\\.\\d+) with (?<soldierNumber>\\d+) soldiers to (?<destinationCountry>\\w+\\.\\d+)($)");
 
-
+        /* Pattern to fortify*/
+        Pattern fortifyPattern = Pattern
+                .compile("(^)move (?<soldierNumber>\\d+) soldiers from (?<sourceCountry>\\w+\\.\\d+) to (?<destinationCountry>\\w+\\.\\d+)($)");
         /* get input command */
 
         while (inputCommand.hasNextLine()) {
+            boolean placementStatus = riskGameController.getPlacementFinished();
             /* get input command */
             inputLine = inputCommand.nextLine().trim();
 
+
             /* Check match cards */
-            if (riskGameController.getPlacementFinished()) {
-                if ((boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
-
-                } else {
-
-                }
-                continue;
-            }
-            /* check out which command is published */
             Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
             check = matchCardsMatcher.matches();
-            if (check == true) {
+            if (check == true && placementStatus) {
                 System.out.println("Command1!");
                 check = false;
                 continue;
@@ -73,7 +76,7 @@ public class RiskGameView {
 
             Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
             check = type1MatchMatcher.matches();
-            if (check == true) {
+            if (check == true && placementStatus) {
                 System.out.println("Command2!");
                 check = false;
                 continue;
@@ -81,7 +84,7 @@ public class RiskGameView {
 
             Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
             check = type2MatchMatcher.matches();
-            if (check == true) {
+            if (check == true && placementStatus) {
                 System.out.println("Command3!");
                 check = false;
                 continue;
@@ -89,7 +92,7 @@ public class RiskGameView {
 
             Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
             check = type3MatchMatcher.matches();
-            if (check == true) {
+            if (check == true && placementStatus) {
                 System.out.println("Command4!");
                 check = false;
                 continue;
@@ -97,22 +100,32 @@ public class RiskGameView {
 
             Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
             check = diffrentTypeMatchMatcher.matches();
-            if (check == true) {
+            if (check == true && placementStatus) {
                 System.out.println("Command5!");
                 check = false;
                 continue;
             }
-            if (inputLine.equals("next turn")) {
+            if(inputLine.equals("next")){
 
             }
-            if (check == false) {
+            if (inputLine.equals("turn over")) {
+
+            }
+            if (check == false && placementStatus) {
                 System.out.println("Invalid Command!");
             }
         }
     }
-
-    public void manualPlaceSoldier() {
-
+    public void showMap(){
+        String toPrint = this.riskGameController.showMap();
+        System.out.println(toPrint);
     }
-
+//    public void manualPlaceSoldier() {
+//        String toPrint = this.riskGameController.manualPlaceSoldier();
+//        System.out.println(toPrint);
+//    }
+    public void manualPlaceSoldier(String countryDetals , int soldiers){
+        String toPrint = this.riskGameController.manualPlaceSoldier(countryDetals , soldiers);
+        System.out.println(toPrint);
+    }
 }

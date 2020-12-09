@@ -7,15 +7,17 @@ public class Country {
     private String name;
     private Player Owner;
     private String continent;
+    private int gameCountryNumber;
     private int numberOfContinentCountry = 0;
     private int soldiers = 0;
 
     public static void main(String[] args) {
     }
-
-    public Country(String name, String continent) {
+    public Country(){}
+    public Country(String name, String continent , int gameCountryNumber) {
         this.name = name;
         this.continent = continent;
+        this.gameCountryNumber = gameCountryNumber;
     }
 
     public String getName() {
@@ -54,6 +56,9 @@ public class Country {
         this.numberOfContinentCountry = numberOfContinentCountry;
     }
 
+    public int getGameCountryNumber() {
+        return gameCountryNumber;
+    }
     @Override
     public String toString() {
         String firstPartOfName = name.substring(0, 2).toUpperCase();

@@ -11,6 +11,7 @@ public abstract class Account {
     private String password;
     private String email;
     private String phoneNumber;
+    private boolean isRobot = false;
 
     public Account(String botName, String username) {
         this.firstName = botName;

@@ -47,7 +47,7 @@ public class StartGameController {
         } catch (IOException ex) {
             // Handle exception
         }*/
-        RiskGameView riskGame = new RiskGameView(this.primitiveSettings, generateGameId());
+        RiskGameView riskGame = new RiskGameView(this.primitiveSettings, generateGameId() , generateSoldiersNumber());
         riskGame.riskGameView();
     }
 
@@ -108,7 +108,22 @@ public class StartGameController {
         }
         return callback;
     }
-
+    public int generateSoldiersNumber(){
+        int soldierNumber = 0;
+        switch ((String)this.primitiveSettings.get("Map Number")){
+            case "1": soldierNumber = 20;
+            case "2": soldierNumber = 25;
+            case "3": soldierNumber = 30;
+            case "4": soldierNumber = 25;
+            case "5": soldierNumber = 15;
+            case "6": soldierNumber = 20;
+            case "7": soldierNumber = 26;
+            case "8": soldierNumber = 32;
+            case "9": soldierNumber = 26;
+            case "10": soldierNumber = 40;
+        }
+        return soldierNumber;
+    }
     public String setAllianceType(String type) {
         String callback = "";
         switch (type.toLowerCase()) {

@@ -14,11 +14,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class RiskGameController {
     private static java.util.Map<String, Object> primitiveSettings;
     private ArrayList<Player> players;
-    private List<List<Map>> gameMap;
     private boolean draftDone;
     private boolean attackDone;
     private boolean fortifyDone;
@@ -28,12 +28,14 @@ public class RiskGameController {
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
     private Player currentPlayer = players.get(0);
 
-    public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID) {
+    public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID , int soldiers) {
         this.primitiveSettings = primitiveSettings;
         this.gameID = gameID;
 //        this.players = players;
         /* Shaping Map*/
         this.shapeMap();
+        /* Add Main Player */
+
         /* Make Robot Players*/
         this.makeRobotPlayers();
     }
@@ -54,6 +56,7 @@ public class RiskGameController {
         int americaNumber = 0;
         int australiaNumber = 0;
         int[][] newPath = newGson.fromJson(reader, int[][].class);
+        int gameCountryNumber = 0;
         for (int i = 0; i < newPath.length; i++) {
             for (int j = 0; j < newPath[i].length; j++) {
                 Countries countryDetails = Countries.values()[newPath[i][j] - 1];
@@ -82,7 +85,8 @@ public class RiskGameController {
                         setNumberContinentCountry = australiaNumber;
                         break;
                 }
-                Country country = new Country(countryName, countryContinent);
+                gameCountryNumber++;
+                Country country = new Country(countryName, countryContinent,gameCountryNumber);
                 country.setNumberOfContinentCountry(setNumberContinentCountry);
                 gameCountries.get(i).set(j, country);
             }
@@ -146,18 +150,18 @@ public class RiskGameController {
     public void matchCards() {
     }
 
-    public void showMap() {
+    public String showMap() {
+        String lineString = "";
         for (List<Country> listCountries : gameCountries) {
-            String lineString = "";
             for (Country country : listCountries) {
                 if (!country.equals(listCountries.get(listCountries.size() - 1))) {
                     lineString = lineString + country.toString() + " | ";
                 } else {
-                    lineString = lineString + country.toString();
+                    lineString = lineString + country.toString() + "\n";
                 }
             }
-            System.out.println(lineString);
         }
+        return lineString.trim();
     }
 
     public void setCurrentPlayer(Player currentPlayer) {
@@ -166,5 +170,62 @@ public class RiskGameController {
 
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+    //    public String manualPlaceSoldier() {
+    //        String toPrint = "";
+    //        boolean foundCountry = false;
+    //        do {
+    //            Random r = new Random();
+    //            int randomCountryNumber = r.nextInt(this.gameCountries.size() * this.gameCountries.get(0).size()) + 1;
+    //            Country toCheckCountry = this.getCountryByNumber(randomCountryNumber);
+    //            if(toCheckCountry.getOwner().equals(currentPlayer) || toCheckCountry.getOwner() == null){
+    //                toCheckCountry.setOwner(currentPlayer);
+    //                toCheckCountry.addSoldiers(+1);
+    //                foundCountry = true;
+    //                toPrint = currentPlayer.getPlayerNumber() + " add one soldier to "
+    //                        + toCheckCountry.getName();
+    //                this.changeTurn();
+    //            }
+    //        }while(!foundCountry);
+    //        return toPrint;
+    //
+    //    }
+    public String manualPlaceSoldier(String countryDetails , int soldiers) {
+        String toPrint = "";
+        String[] countryDetails2 = countryDetails.split("\\.");
+        String countryContinent = countryDetails2[0];
+        int countryContinentNumber = Integer.parseInt(countryDetails2[1]);
+        Country toCheckCountry = this.getCountryByDetails(countryContinent , countryContinentNumber);
+        if(toCheckCountry.getName() == null){
+            toPrint = "Chosen country is invalid. Plese try again";
+        }else{
+            if(toCheckCountry.getOwner().equals(currentPlayer) || toCheckCountry.getOwner() == null){
+                toCheckCountry.setOwner(currentPlayer);
+                toCheckCountry.addSoldiers(+1);
+                toPrint = currentPlayer.getPlayerNumber() + " add one soldier to "
+                        + toCheckCountry.getName();
+                this.changeTurn();
+            }else{
+                toPrint = "Please choose a country that is yours or no one has been chosen it yet";
+            }
+        }
+        return toPrint;
+    }
+    public Country getCountryByDetails(String shortName , int countryContinentNumber){
+        Country toReturnCountry = new Country();
+        for(List<Country> countries: this.gameCountries){
+            for(Country country: countries){
+                if(country.getNumberOfContinentCountry() == countryContinentNumber && country.getContinent()
+                        .substring(0, 2).toUpperCase().equals(shortName)){
+
+                    toReturnCountry = country;
+                }
+            }
+        }
+        return toReturnCountry;
     }
 }
