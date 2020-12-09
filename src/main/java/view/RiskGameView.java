@@ -74,6 +74,14 @@ public class RiskGameView {
                 placeSoldier(countryDetails,1);
             }
 
+            /* Check draft mode*/
+            Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
+            check = placeSoldierMatcher.matches();
+            if(check == true && !placementStatus){
+                String countryDetails = manualPlacementMatcher.group("countryDetails");
+                placeSoldier(countryDetails,1);
+            }
+
             /* Check match cards */
             Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
             check = matchCardsMatcher.matches();
