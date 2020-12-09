@@ -36,6 +36,16 @@ public class AdminMainMenu extends Menu {
                 viewSuggestions();
             } else if ((matcher = getMatcher(input, "Remove suggestion (\\d+)")).find()) {
                 removeSuggestion(matcher.group(1));
+            } else if ((matcher = getMatcher(input, "Add game (\\S+), (\\S+)")).find()) {
+                addGame(matcher.group(1), matcher.group(2));
+            } else if (getMatcher(input, "View games$").find()) {
+                viewGames();
+            } else if ((matcher = getMatcher(input, "Edit game name (\\S+), (\\S+)")).find()) {
+                editGameName(matcher.group(1), matcher.group(2));
+            } else if (((matcher = getMatcher(input, "Edit game detail (\\S+), (\\S+)")).find())) {
+                editGameDetail(matcher.group(1), matcher.group(2));
+            } else if (((matcher = getMatcher(input, "Remove game (\\S+)")).find())) {
+                removeGame(matcher.group(1));
             } else if (getMatcher(input, "View users").find()) {
                 viewUsers();
             } else if ((matcher = getMatcher(input, "View user profile (\\S+)")).find()) {
@@ -48,20 +58,6 @@ public class AdminMainMenu extends Menu {
         }
     }
 
-    private void viewUserProfile(String username) {
-        if (!controller.isUsernameExist(username)) {
-            System.out.println("username does not exists!");
-        } else {
-            String output = controller.showUserProfile(username);
-            System.out.println(output);
-        }
-    }
-
-    private void viewUsers() {
-        for (String username : controller.showUsers())
-            System.out.println(username);
-    }
-
     private void help() {
         System.out.println("View account menu\n" +
                 "Add event <game_name>, <start_date>, <end_date>, <score>\n" +
@@ -71,38 +67,30 @@ public class AdminMainMenu extends Menu {
                 "Add suggestion <username>, <game_name>\n" +
                 "View suggestions\n" +
                 "Remove suggestion <suggestion_id>\n" +
+                "Add game <game_name>, <game_detail>\n" +
+                "Edit game name <game_name>, <new_game_name>\n" +
+                "Edit game detail <game_name>, <new_game_detail>\n" +
+                "Remove game <game_name>\n" +
                 "View users\n" +
                 "View user profile <username>\n"
         );
     }
 
-    private void removeSuggestion(String suggestionId) {
-        if (!controller.isSuggestionIdExists(suggestionId)) {
-            System.out.println("invalid suggestion id");
+    private void addEvent(String gameName, String startDate, String endDate, String score) {
+        if (!controller.checkStartDate(startDate) || !controller.checkEndDate(endDate)) {
+            System.out.println("invalid date!");
+        } else if (score.equals("0")) {
+            System.out.println("score should be positive!");
+        } else if (!gameName.equals("Risk")) {
+            System.out.println("Invalid Game!");
         } else {
-            controller.removeSuggestion(suggestionId);
+            controller.addEvent(gameName, startDate, endDate, Integer.parseInt(score));
         }
     }
 
-    private void viewSuggestions() {
-        for (Suggestion suggestion : controller.showSuggestions()) {
-            System.out.println(suggestion);
-        }
-    }
-
-    private void addSuggestion(String username, String gameName) {
-        if (!controller.isUsernameExist(username)) {
-            System.out.println("username does not exists!");
-        } else {
-            controller.addSuggestion(username, gameName);
-        }
-    }
-
-    private void removeEvent(String eventId) {
-        if (!controller.isEventIdExists(eventId)) {
-            System.out.println("invalid event id!");
-        } else {
-            controller.removeEvent(eventId);
+    private void viewEvents() {
+        for (Event event : controller.showEvents()) {
+            System.out.println(event);
         }
     }
 
@@ -121,23 +109,81 @@ public class AdminMainMenu extends Menu {
         }
     }
 
-
-    private void viewEvents() {
-        for (Event event : controller.showEvents()) {
-            System.out.println(event);
-        }
-    }
-
-    private void addEvent(String gameName, String startDate, String endDate, String score) {
-        if (!controller.checkStartDate(startDate) || !controller.checkEndDate(endDate)) {
-            System.out.println("invalid date!");
-        } else if (score.equals("0")) {
-            System.out.println("score should be positive!");
-        } else if (!gameName.equals("Risk")) {
-            System.out.println("Invalid Game!");
+    private void removeEvent(String eventId) {
+        if (!controller.isEventIdExists(eventId)) {
+            System.out.println("invalid event id!");
         } else {
-            controller.addEvent(gameName, startDate, endDate, Integer.parseInt(score));
+            controller.removeEvent(eventId);
         }
     }
-    
+
+    private void addSuggestion(String username, String gameName) {
+        if (!controller.isUsernameExist(username)) {
+            System.out.println("username does not exists!");
+        } else {
+            controller.addSuggestion(username, gameName);
+        }
+    }
+
+    private void viewSuggestions() {
+        for (Suggestion suggestion : controller.showSuggestions()) {
+            System.out.println(suggestion);
+        }
+    }
+
+    private void removeSuggestion(String suggestionId) {
+        if (!controller.isSuggestionIdExists(suggestionId)) {
+            System.out.println("invalid suggestion id");
+        } else {
+            controller.removeSuggestion(suggestionId);
+        }
+    }
+
+    private void addGame(String gameName, String gameDetail) {
+        if (!controller.doesGameExist(gameName))
+            System.out.println("Game exists");
+        else
+            controller.addGame(gameName, gameDetail);
+    }
+
+    private void viewGames() {
+        for (String game: controller.viewGames())
+            System.out.println(game);
+    }
+
+    private void editGameName(String gameName, String newGameName) {
+        if (!controller.doesGameExist(gameName))
+            System.out.println("Game does not exist");
+        else
+            controller.editGameName(gameName, newGameName);
+
+    }
+
+    private void editGameDetail(String gameName, String newGameDetail) {
+        if (!controller.doesGameExist(gameName))
+            System.out.println("Game does not exist");
+        else
+            controller.editGameDetail(gameName, newGameDetail);
+    }
+
+    private void removeGame(String gameName) {
+        if (!controller.doesGameExist(gameName))
+            System.out.println("Game does not exist");
+        else
+            controller.removeGame(gameName);
+    }
+
+    private void viewUserProfile(String username) {
+        if (!controller.isUsernameExist(username)) {
+            System.out.println("username does not exists!");
+        } else {
+            String output = controller.showUserProfile(username);
+            System.out.println(output);
+        }
+    }
+
+    private void viewUsers() {
+        for (String username : controller.showUsers())
+            System.out.println(username);
+    }
 }

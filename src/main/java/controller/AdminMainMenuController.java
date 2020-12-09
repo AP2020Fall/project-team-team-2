@@ -70,10 +70,12 @@ public class AdminMainMenuController extends Controller {
 
     public void addSuggestion(String username, String gameName) {
         //adds a game suggestion to username
-        //throws NullPointerException if username doesn't exist.
+        //throws NullPointerException if username doesn't exist or game doesnt exist.
         Player player = Objects.requireNonNull(Player.getPlayerByUsername(username),
                 "Username passed to AdminMainMenuController.addSuggestion doesn't exist.");
-        Suggestion suggestion = new Suggestion(gameName, generateId(), player);
+        Game game = Objects.requireNonNull(Game.getGameByGameName(gameName),
+                "Game passed to AdminMainMenuController.addSuggestion doesn't exist.");
+        Suggestion suggestion = new Suggestion(game, generateId(), player);
         player.setSuggestion(suggestion);
         Suggestion.addSuggestion(suggestion);
     }
@@ -117,25 +119,42 @@ public class AdminMainMenuController extends Controller {
         message1.sendMessage();
     }
 
-    public void addGame(String gameName, String gameDetail)
-    {
+    public void addGame(String gameName, String gameDetail) {
         //creates a game and adds it to the list of games
-        Game game = new Game(gameName,generateId(),gameDetail);
+        Game game = new Game(gameName, generateId(), gameDetail);
         Game.addGame(game);
     }
 
-    public void changeGameName(String currGameName,String newGameName)
-    {
-        Game game =Objects.requireNonNull( Game.getGameByGameName(currGameName),
+    public void editGameName(String gameName, String newGameName) {
+        //edits gameName's name.
+        //throws NullPointerException if gameName doesn't exist.
+        Game game = Objects.requireNonNull(Game.getGameByGameName(gameName),
                 "Game passed to AdminMainMenuController.changeGameName doesn't exist.");
         game.setName(newGameName);
     }
 
-    public void removeGame(String gameName)
-    {
+    public void editGameDetail(String gameName, String newGameDetail) {
+        //edits gameName's detail.
+        //throws NullPointerException if gameName doesn't exist.
         Game game =Objects.requireNonNull( Game.getGameByGameName(gameName),
+                "Game passed to AdminMainMenuController.changeGameName doesn't exist.");
+        game.setDetails(newGameDetail);
+    }
+
+
+    public void removeGame(String gameName) {
+        //removes gameName from the list.
+        //throws NullPointerException if gameName doesn't exist.
+        Game game = Objects.requireNonNull(Game.getGameByGameName(gameName),
                 "Game passed to AdminMainMenuController.removeGame doesn't exist.");
         Game.getGames().remove(game);
     }
 
+    public ArrayList<String> viewGames()
+    {
+        ArrayList<String> result = new ArrayList<>();
+        for (Game game: Game.getGames())
+            result.add(game.toString());
+        return result;
+    }
 }
