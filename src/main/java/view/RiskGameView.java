@@ -143,7 +143,7 @@ public class RiskGameView {
 //        System.out.println(toPrint);
 //    }
     public void placeSoldier(String countryDetals , int soldiers){
-        String toPrint = this.riskGameController.placeSoldier(countryDetals , soldiers);
+        String toPrint = this.riskGameController.draft(countryDetals , soldiers);
         System.out.println(toPrint);
     }
     public void attack(String sourceCountry , String destinationCountry , int soldiers){
@@ -151,7 +151,8 @@ public class RiskGameView {
         System.out.println(toPrint);
     }
     public void fortify(String sourceCountry , String destinationCountry , int soldiers){
-
+        String toPrint = this.riskGameController.fortify(sourceCountry, destinationCountry, soldiers);
+        System.out.println(toPrint);
     }
     public void next(){
 
