@@ -92,7 +92,7 @@ public abstract class Account {
     private static void saveAdmin(Account account) throws IOException {
         Admin admin = (Admin) account;
         String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().toJson(account);
-        FileWriter file = new FileWriter("database" + "\\" + "accounts" + "\\" + "admins" + "\\" + account.getUsername() + ".json");
+        FileWriter file = new FileWriter("database" + "\\" + "accounts" + "\\" + "admin" + "\\" + account.getUsername() + ".json");
         file.write(jsonAccount);
         file.close();
 

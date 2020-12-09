@@ -1,6 +1,8 @@
 package view;
 
 import model.Account;
+import model.Event;
+import model.Suggestion;
 
 public class WelcomeMenu extends Menu {
     public WelcomeMenu(Account account) {
@@ -21,10 +23,22 @@ public class WelcomeMenu extends Menu {
             } else if (getMatcher(input, "^help$").find()) {
                 help();
             } else if (getMatcher(input, "^exit$").find()) {
-                return;
+                saveFiles();
+                System.exit(1);
             } else {
                 System.out.println("invalid command!");
             }
+        }
+    }
+
+    private void saveFiles() {
+        try {
+            Account.save();
+            Event.save();
+            Suggestion.save();
+
+        } catch (Exception e) {
+            e.getStackTrace();
         }
     }
 
@@ -42,5 +56,6 @@ public class WelcomeMenu extends Menu {
     private void openRegisterMenu() {
         new RegisterMenu(null);
     }
+
 
 }
