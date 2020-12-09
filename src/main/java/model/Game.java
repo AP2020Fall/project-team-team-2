@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Game {
-    private final String name;
+    private static final ArrayList<Game> games = new ArrayList<>();
+    private String name;
     private final String gameId;
     private final ArrayList<PlayLog> playLogs;
     private String details;
@@ -19,16 +20,20 @@ public class Game {
         scoreboard = new Scoreboard();
     }
 
-    public String getDetails() {
-        return details;
+    public static ArrayList<Game> getGames() {
+        return games;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public ArrayList<PlayLog> getPlayLogs() {
         return playLogs;
     }
 
-    public String getName() {
-        return name;
+    public String getDetails() {
+        return details;
     }
 
     public Scoreboard getScoreboard()
@@ -40,7 +45,21 @@ public class Game {
         this.details = details;
     }
 
-    public void goToGame() {
-//        RiskGameController game = new RiskGameController();
+    public void setName(String gameName)
+    {
+        this.name = gameName;
+    }
+
+    public static Game getGameByGameName(String gameName)
+    {
+        for(Game game:games)
+            if(game.name.equals(gameName))
+                return game;
+            return null;
+    }
+
+    public static void addGame(Game game)
+    {
+        games.add(game);
     }
 }

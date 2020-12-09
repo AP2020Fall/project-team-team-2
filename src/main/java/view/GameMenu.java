@@ -3,6 +3,7 @@ package view;
 
 import controller.GameMenuController;
 import model.Account;
+import model.Game;
 import model.Player;
 
 import java.util.ArrayList;
@@ -10,10 +11,9 @@ import java.util.ArrayList;
 public class GameMenu extends Menu {
     GameMenuController controller;
 
-    public GameMenu(Account account) {
-        super(account);
-//        GameMenuController controller = new GameMenuController(null);
-        //todo change arg
+    public GameMenu(Player player, Game game) {
+        super((Account) player);
+        GameMenuController controller = new GameMenuController(game,player);
         gameMenu();
     }
 
