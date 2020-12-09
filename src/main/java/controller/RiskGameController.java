@@ -136,7 +136,7 @@ public class RiskGameController {
             toPrint = "Soldiers are not enough or not valid";
         }
         else {
-            source.addSoldiers(soldiers);
+            placeSoldier(source, soldiers);
             currentPlayer.addNewSoldiers(-soldiers);
             toPrint = "Add " + soldiers + " soldiers to " + sourceCountryName ;
         }
