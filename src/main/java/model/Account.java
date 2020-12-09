@@ -1,6 +1,14 @@
 package model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public abstract class Account {
     protected static ArrayList<Account> allAccounts = new ArrayList<>();
@@ -58,6 +66,83 @@ public abstract class Account {
                 players.add((Player) account);
         return players;
     }
+
+    public static void save() throws IOException {
+        for (Account account : allAccounts) {
+            save(account);
+        }
+    }
+
+    private static void save(Account account) throws IOException {
+        if (account instanceof Admin) {
+            saveAdmin(account);
+        } else if (account instanceof Player) {
+            savePlayer(account);
+        }
+    }
+
+    private static void savePlayer(Account account) throws IOException {
+        Player player = (Player) account;
+        String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().toJson(account);
+        FileWriter file = new FileWriter("database" + "\\" + "accounts" + "\\" + "players" + "\\" + account.getUsername() + ".json");
+        file.write(jsonAccount);
+        file.close();
+    }
+
+    private static void saveAdmin(Account account) throws IOException {
+        Admin admin = (Admin) account;
+        String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().toJson(account);
+        FileWriter file = new FileWriter("database" + "\\" + "accounts" + "\\" + "admins" + "\\" + account.getUsername() + ".json");
+        file.write(jsonAccount);
+        file.close();
+
+    }
+
+    public static void open() throws FileNotFoundException {
+        openAdmin();
+        openPlayers();
+    }
+
+    private static void openAdmin() throws FileNotFoundException {
+        File folder = new File("database" + "\\" + "accounts" + "\\" + "admin");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        } else {
+            for (File file : folder.listFiles()) {
+                allAccounts.add(openAdmin(file));
+            }
+        }
+    }
+
+    private static void openPlayers() throws FileNotFoundException {
+        File folder = new File("database" + "\\" + "accounts" + "\\" + "players");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        } else {
+            for (File file : folder.listFiles()) {
+                allAccounts.add(openPlayer(file));
+            }
+        }
+    }
+
+    private static Player openPlayer(File file) throws FileNotFoundException {
+        StringBuilder json = fileToString(file);
+        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Player.class);
+    }
+
+    private static Admin openAdmin(File file) throws FileNotFoundException {
+        StringBuilder json = fileToString(file);
+        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Admin.class);
+    }
+
+    private static StringBuilder fileToString(File file) throws FileNotFoundException {
+        StringBuilder json = new StringBuilder();
+        Scanner reader = new Scanner(file);
+        while (reader.hasNext()) json.append(reader.next());
+        reader.close();
+        return json;
+    }
+
 
     public String getFirstName() {
         return firstName;
