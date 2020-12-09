@@ -136,7 +136,8 @@ public class RiskGameView {
         System.out.println(toPrint);
     }
     public void attack(String sourceCountry , String destinationCountry , int soldiers){
-
+        String toPrint = riskGameController.attack(sourceCountry ,destinationCountry , soldiers);
+        System.out.println(toPrint);
     }
     public void fortify(String sourceCountry , String destinationCountry , int soldiers){
 

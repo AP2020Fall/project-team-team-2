@@ -38,6 +38,7 @@ public class Player extends Account {
     // private final ArrayList<String> suggestions;
     private Suggestion suggestion;
     private int playerNumber;
+    private int draftSoldiers = 0;
 
     /*public static ArrayList<Player> getAllPlayers() {
         return allPlayers;
@@ -177,6 +178,15 @@ public class Player extends Account {
         gameLogs.sort((a, b) -> b.getLastPlay().compareTo(a.getLastPlay()));
         return gameLogs.get(0);
     }
+
+    public int getDraftSoldiers() {
+        return draftSoldiers;
+    }
+
+    public void addDraftSoldier(int draftSoldiers) {
+        this.draftSoldiers += draftSoldiers;
+    }
+
     @Override
     public String toString() {
         return super.toString()

@@ -14,7 +14,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class RiskGameController {
     private static java.util.Map<String, Object> primitiveSettings;
@@ -22,22 +21,22 @@ public class RiskGameController {
     private boolean draftDone;
     private boolean attackDone;
     private boolean fortifyDone;
-    private List<Player> allPlayers;
+    private int startSoldiers;
     private String gameID;
     private boolean placementFinished = false;
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
     private Player currentPlayer = players.get(0);
 
-    public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID , int soldiers) {
+    public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID, int soldiers) {
         this.primitiveSettings = primitiveSettings;
+        this.players = (ArrayList<Player>) primitiveSettings.get("Players");
         this.gameID = gameID;
-//        this.players = players;
+        this.startSoldiers = soldiers;
         /* Shaping Map*/
         this.shapeMap();
-        /* Add Main Player */
-
         /* Make Robot Players*/
         this.makeRobotPlayers();
+
     }
 
     public void shapeMap() {
@@ -86,7 +85,7 @@ public class RiskGameController {
                         break;
                 }
                 gameCountryNumber++;
-                Country country = new Country(countryName, countryContinent,gameCountryNumber);
+                Country country = new Country(countryName, countryContinent, gameCountryNumber);
                 country.setNumberOfContinentCountry(setNumberContinentCountry);
                 gameCountries.get(i).set(j, country);
             }
@@ -101,7 +100,7 @@ public class RiskGameController {
          */
         for (int i = 1; i < (int) primitiveSettings.get("PlayersNum"); i++) {
             Player newRobotPlayer = new Player(mainBotName + " " + i, mainBotName + " " + i);
-            allPlayers.add(newRobotPlayer);
+            players.add(newRobotPlayer);
         }
     }
 
@@ -119,7 +118,59 @@ public class RiskGameController {
         this.draftDone = true;
     }
 
-    public void attack(Country sourceCountry, Country destinyCountry) {
+    public String attack(String sourceCountry, String destinyCountry, int soldiers) {
+        String toPrint = "";
+        String[] sourceDetails = sourceCountry.split("\\.");
+        String[] destinationDetails = destinyCountry.split("\\.");
+        String sourceCountryName = sourceDetails[0];
+        int sourceNumber = Integer.parseInt(sourceDetails[1]);
+        String destinationCountryName = destinationDetails[0];
+        int destinationNumber = Integer.parseInt(destinationDetails[1]);
+        boolean sourceCountryValid = false;
+        boolean destinationCountryValid = false;
+        Country source = getCountryByDetails(sourceCountryName, sourceNumber);
+        Country destination = getCountryByDetails(destinationCountryName, destinationNumber);
+        if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
+            sourceCountryValid = true;
+        }
+            if (destination.getOwner() != null && !destination.getOwner().equals(currentPlayer)) {
+                destinationCountryValid = true;
+            }
+        if (!sourceCountryValid) {
+            toPrint = "Source country is not valid";
+        }
+        if (sourceCountryValid && !destinationCountryValid) {
+            toPrint = "Destination country is not valid";
+        }
+        if (sourceCountryValid && destinationCountryValid && (soldiers > source.getSoldiers() || soldiers < 0)) {
+            toPrint = "Soldiers are not enough or not valid";
+        } else {
+            boolean inWar = true;
+            do {
+                int randomNumberSource = (int) Math.random() * (6 - 0 + 1) + 0;
+                int randomNumberDestination = (int) Math.random() * (6 - 0 + 1) + 0;
+                toPrint = "Source Dice : " + randomNumberSource + " - Destination Dice : " + randomNumberDestination;
+                if (randomNumberSource > randomNumberDestination) {
+                    destination.addSoldiers(-1);
+                    toPrint = toPrint + "Destination Country Lost 1 soldier! , Destination Soldiers "
+                            + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
+                } else if (randomNumberDestination > randomNumberSource) {
+                    source.addSoldiers(-1);
+                    toPrint = toPrint + "Destination Country Lost 1 soldier! , Destination Soldiers "
+                            + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
+                } else {
+                    source.addSoldiers(-1);
+                    toPrint = toPrint + "Destination Country Lost 1 soldier! , Destination Soldiers "
+                            + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
+                }
+                if(source.getSoldiers() == 0 || destination.getSoldiers() == 0){
+                    inWar = false;
+                }
+            } while (inWar);
+
+
+        }
+        return toPrint;
     }
 
     /* Move Soldiers */
@@ -132,8 +183,8 @@ public class RiskGameController {
 
     public String changeTurn() {
         String toPrint = "";
-        if(!getPlacementFinished()) {
-            if(draftDone) {
+        if (!getPlacementFinished()) {
+            if (draftDone) {
                 int currentTurnIndex = this.players.indexOf(this.currentPlayer);
                 if (currentTurnIndex != this.players.size() - 1) {
                     this.currentPlayer = this.players.get(currentTurnIndex + 1);
@@ -141,14 +192,14 @@ public class RiskGameController {
                     this.currentPlayer = this.players.get(0);
                 }
                 toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
-            }else{
+            } else {
                 toPrint = "You didn't place any soldier, please first try to place a soldier in remain countries.";
             }
-        }else{
-            if(draftDone){
+        } else {
+            if (draftDone) {
                 /*Todo: attack doesn't need to be checked(?)*/
-                if(attackDone){
-                    if(fortifyDone){
+                if (attackDone) {
+                    if (fortifyDone) {
                         int currentTurnIndex = this.players.indexOf(this.currentPlayer);
                         if (currentTurnIndex != this.players.size() - 1) {
                             this.currentPlayer = this.players.get(currentTurnIndex + 1);
@@ -156,13 +207,13 @@ public class RiskGameController {
                             this.currentPlayer = this.players.get(0);
                         }
                         toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
-                    }else{
+                    } else {
                         toPrint = "You didn't fortify yet.";
                     }
-                }else{
+                } else {
                     toPrint = "You didn't attack yet.";
                 }
-            }else{
+            } else {
                 toPrint = "You didn't place any soldier, please first try to place a soldier in your countries.";
             }
         }
@@ -206,13 +257,13 @@ public class RiskGameController {
         return currentPlayer;
     }
 
-    public String placeSoldier(String countryDetails , int soldiers) {
+    public String placeSoldier(String countryDetails, int soldiers) {
         String toPrint = "";
         String[] countryDetails2 = countryDetails.split("\\.");
         String countryContinent = countryDetails2[0];
         int countryContinentNumber = Integer.parseInt(countryDetails2[1]);
-        Country toCheckCountry = this.getCountryByDetails(countryContinent , countryContinentNumber);
-        if(!this.getDraftDone()) {
+        Country toCheckCountry = this.getCountryByDetails(countryContinent, countryContinentNumber);
+        if (!this.getDraftDone()) {
             if (toCheckCountry.getName() == null) {
                 toPrint = "Chosen country is invalid. Plese try again";
             } else {
@@ -226,37 +277,43 @@ public class RiskGameController {
                     toPrint = "Please choose a country that is yours or no one has been chosen it yet";
                 }
             }
-        }else{
+        } else {
             toPrint = "You have been done your draft turn.";
         }
         return toPrint;
     }
-    public boolean getDraftDone(){
+
+    public boolean getDraftDone() {
         return draftDone;
     }
-    public void setDraftDone(boolean status){
+
+    public void setDraftDone(boolean status) {
         draftDone = status;
     }
-    public boolean getAttackDone(){
+
+    public boolean getAttackDone() {
         return attackDone;
     }
-    public void setAttackDone(boolean status){
+
+    public void setAttackDone(boolean status) {
         attackDone = status;
     }
-    public boolean getFortifyDone(){
+
+    public boolean getFortifyDone() {
         return fortifyDone;
     }
+
     public void setFortifyDone(boolean status) {
         this.fortifyDone = status;
     }
 
 
-    public Country getCountryByDetails(String shortName , int countryContinentNumber){
+    public Country getCountryByDetails(String shortName, int countryContinentNumber) {
         Country toReturnCountry = new Country();
-        for(List<Country> countries: this.gameCountries){
-            for(Country country: countries){
-                if(country.getNumberOfContinentCountry() == countryContinentNumber && country.getContinent()
-                        .substring(0, 2).toUpperCase().equals(shortName)){
+        for (List<Country> countries : this.gameCountries) {
+            for (Country country : countries) {
+                if (country.getNumberOfContinentCountry() == countryContinentNumber && country.getContinent()
+                        .substring(0, 2).toUpperCase().equals(shortName)) {
 
                     toReturnCountry = country;
                 }

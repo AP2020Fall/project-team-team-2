@@ -1,21 +1,21 @@
 package view;
 
 import controller.StartGameController;
+import model.Player;
 
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StartGameView {
-    private StartGameController startGameController = new StartGameController();
+    private StartGameController startGameController;
 
     public static void main(String[] args) {
-        StartGameView newStart = new StartGameView();
-        newStart.startGameView();
-        System.out.println("Hi");
     }
-
+    public StartGameView(ArrayList<Player> players){
+        this.startGameController = new StartGameController(players);
+    }
     public void startGameView() {
         /* write variables to get commands */
         Scanner inputCommand = Menu.getScanner();
