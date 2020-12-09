@@ -22,7 +22,8 @@ public class AdminMainMenu extends Menu {
             Matcher matcher;
             if (getMatcher(input, "^help$").find()) {
                 help();
-            } else if ((matcher = getMatcher(input, "^Add event (\\S+), (\\d{4}\\/\\d{2}\\/\\d{2}), (\\d{4}\\/\\d{2}\\/\\d{2}), (\\d+)$")).find()) {
+            } else if ((matcher = getMatcher(input, "^Add event (\\S+), (\\d{4}\\/\\d{2}\\/\\d{2})," +
+                    " (\\d{4}\\/\\d{2}\\/\\d{2}), (\\d+)$")).find()) {
                 addEvent(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
             } else if (getMatcher(input, "^View events$").find()) {
                 viewEvents();
@@ -30,7 +31,7 @@ public class AdminMainMenu extends Menu {
                 editEvent(matcher.group(1), matcher.group(2), matcher.group(3));
             } else if ((matcher = getMatcher(input, "Remove event (\\d+)")).find()) {
                 removeEvent(matcher.group(1));
-            } else if ((matcher = getMatcher(input, "Send message (\\S+)")).find()) {
+            } else if ((matcher = getMatcher(input, "Send message (.+)")).find()) {
                 sendMessage(matcher.group(1));
             } else if ((matcher = getMatcher(input, "Add suggestion (\\S+), (\\S+)")).find()) {
                 addSuggestion(matcher.group(1), matcher.group(2));
@@ -38,7 +39,7 @@ public class AdminMainMenu extends Menu {
                 viewSuggestions();
             } else if ((matcher = getMatcher(input, "Remove suggestion (\\d+)")).find()) {
                 removeSuggestion(matcher.group(1));
-            } else if ((matcher = getMatcher(input, "Add game (\\S+), (\\S+)")).find()) {
+            } else if ((matcher = getMatcher(input, "Add game (\\S+), (.+)")).find()) {
                 addGame(matcher.group(1), matcher.group(2));
             } else if (getMatcher(input, "View games$").find()) {
                 viewGames();
@@ -153,7 +154,7 @@ public class AdminMainMenu extends Menu {
     }
 
     private void addGame(String gameName, String gameDetail) {
-        if (!controller.doesGameExist(gameName))
+        if (controller.doesGameExist(gameName))
             System.out.println("game exists!");
         else
             controller.addGame(gameName, gameDetail);

@@ -113,6 +113,7 @@ public class AdminMainMenuController extends Controller {
     public void removeGame(String gameName) {
         //removes gameName from the list.
         //throws NullPointerException if gameName doesn't exist.
+        /*ToDo: remove all gameLogs and suggestions and events*/
         Game game = Objects.requireNonNull(Game.getGameByGameName(gameName),
                 "Game passed to AdminMainMenuController.removeGame doesn't exist.");
         Game.getGames().remove(game);
