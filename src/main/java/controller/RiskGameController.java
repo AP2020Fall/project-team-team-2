@@ -119,7 +119,7 @@ public class RiskGameController {
         this.draftDone = true;
     }
 
-    public int remainSoldiers (){
+    public int getRemainSoldiers (){
         return currentPlayer.getNewSoldiers();
     }
 
