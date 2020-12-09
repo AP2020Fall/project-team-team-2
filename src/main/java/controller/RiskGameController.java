@@ -130,13 +130,43 @@ public class RiskGameController {
     public void next() {
     }
 
-    public void changeTurn() {
-        int currentTurnIndex = this.players.indexOf(this.currentPlayer);
-        if (currentTurnIndex != this.players.size() - 1) {
-            this.currentPlayer = this.players.get(currentTurnIndex + 1);
-        } else {
-            this.currentPlayer = this.players.get(0);
+    public String changeTurn() {
+        String toPrint = "";
+        if(!getPlacementFinished()) {
+            if(draftDone) {
+                int currentTurnIndex = this.players.indexOf(this.currentPlayer);
+                if (currentTurnIndex != this.players.size() - 1) {
+                    this.currentPlayer = this.players.get(currentTurnIndex + 1);
+                } else {
+                    this.currentPlayer = this.players.get(0);
+                }
+                toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
+            }else{
+                toPrint = "You didn't place any soldier, please first try to place a soldier in remain countries.";
+            }
+        }else{
+            if(draftDone){
+                /*Todo: attack doesn't need to be checked(?)*/
+                if(attackDone){
+                    if(fortifyDone){
+                        int currentTurnIndex = this.players.indexOf(this.currentPlayer);
+                        if (currentTurnIndex != this.players.size() - 1) {
+                            this.currentPlayer = this.players.get(currentTurnIndex + 1);
+                        } else {
+                            this.currentPlayer = this.players.get(0);
+                        }
+                        toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
+                    }else{
+                        toPrint = "You didn't fortify yet.";
+                    }
+                }else{
+                    toPrint = "You didn't attack yet.";
+                }
+            }else{
+                toPrint = "You didn't place any soldier, please first try to place a soldier in your countries.";
+            }
         }
+        return toPrint;
     }
 
     public static java.util.Map<String, Object> getPrimitiveSettings() {
@@ -175,46 +205,52 @@ public class RiskGameController {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
-    //    public String manualPlaceSoldier() {
-    //        String toPrint = "";
-    //        boolean foundCountry = false;
-    //        do {
-    //            Random r = new Random();
-    //            int randomCountryNumber = r.nextInt(this.gameCountries.size() * this.gameCountries.get(0).size()) + 1;
-    //            Country toCheckCountry = this.getCountryByNumber(randomCountryNumber);
-    //            if(toCheckCountry.getOwner().equals(currentPlayer) || toCheckCountry.getOwner() == null){
-    //                toCheckCountry.setOwner(currentPlayer);
-    //                toCheckCountry.addSoldiers(+1);
-    //                foundCountry = true;
-    //                toPrint = currentPlayer.getPlayerNumber() + " add one soldier to "
-    //                        + toCheckCountry.getName();
-    //                this.changeTurn();
-    //            }
-    //        }while(!foundCountry);
-    //        return toPrint;
-    //
-    //    }
-    public String manualPlaceSoldier(String countryDetails , int soldiers) {
+
+    public String placeSoldier(String countryDetails , int soldiers) {
         String toPrint = "";
         String[] countryDetails2 = countryDetails.split("\\.");
         String countryContinent = countryDetails2[0];
         int countryContinentNumber = Integer.parseInt(countryDetails2[1]);
         Country toCheckCountry = this.getCountryByDetails(countryContinent , countryContinentNumber);
-        if(toCheckCountry.getName() == null){
-            toPrint = "Chosen country is invalid. Plese try again";
-        }else{
-            if(toCheckCountry.getOwner().equals(currentPlayer) || toCheckCountry.getOwner() == null){
-                toCheckCountry.setOwner(currentPlayer);
-                toCheckCountry.addSoldiers(+1);
-                toPrint = currentPlayer.getPlayerNumber() + " add one soldier to "
-                        + toCheckCountry.getName();
-                this.changeTurn();
-            }else{
-                toPrint = "Please choose a country that is yours or no one has been chosen it yet";
+        if(!this.getDraftDone()) {
+            if (toCheckCountry.getName() == null) {
+                toPrint = "Chosen country is invalid. Plese try again";
+            } else {
+                if (toCheckCountry.getOwner().equals(currentPlayer) || toCheckCountry.getOwner() == null) {
+                    toCheckCountry.setOwner(currentPlayer);
+                    toCheckCountry.addSoldiers(soldiers);
+                    toPrint = currentPlayer.getPlayerNumber() + " add one soldier to "
+                            + toCheckCountry.getName();
+                    this.setDraftDone(true);
+                } else {
+                    toPrint = "Please choose a country that is yours or no one has been chosen it yet";
+                }
             }
+        }else{
+            toPrint = "You have been done your draft turn.";
         }
         return toPrint;
     }
+    public boolean getDraftDone(){
+        return draftDone;
+    }
+    public void setDraftDone(boolean status){
+        draftDone = status;
+    }
+    public boolean getAttackDone(){
+        return attackDone;
+    }
+    public void setAttackDone(boolean status){
+        attackDone = status;
+    }
+    public boolean getFortifyDone(){
+        return fortifyDone;
+    }
+    public void setFortifyDone(boolean status) {
+        this.fortifyDone = status;
+    }
+
+
     public Country getCountryByDetails(String shortName , int countryContinentNumber){
         Country toReturnCountry = new Country();
         for(List<Country> countries: this.gameCountries){

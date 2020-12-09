@@ -11,6 +11,7 @@ import controller.RiskGameController;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,11 +46,11 @@ public class RiskGameView {
         Pattern differentTypeMatchCommand = Pattern.compile("(^)4-type1,type2,type3 score:10($)");
 
 
+        /* Pattern to place soldier in manual placement*/
+        Pattern placeSoldierManual = Pattern.compile("(^)place soldier in (?<countryDetails>\\w+\\.\\d+)($)");
         /* Pattern to draft soldier */
         Pattern placeSoldier = Pattern
                 .compile("(^)place (?<soldierNumber>\\d+) soldiers in (?<countryDetails>\\w+\\.\\d+)($)");
-        /* Pattern to place soldier in manual placement*/
-        Pattern placeSoldierManual = Pattern.compile("(^)place soldier in (?<countryDetails>\\w+\\.\\d+)($)");
         /* Pattern to Attac*/
         Pattern attackPattern = Pattern
                 .compile("(^)attack from (?<sourceCountry>\\w+\\.\\d+) with (?<soldierNumber>\\d+) soldiers to (?<destinationCountry>\\w+\\.\\d+)($)");
@@ -64,7 +65,13 @@ public class RiskGameView {
             /* get input command */
             inputLine = inputCommand.nextLine().trim();
 
-
+            /* Check manual placement*/
+            Matcher manualPlacementMatcher = placeSoldierManual.matcher(inputLine);
+            check = manualPlacementMatcher.matches();
+            if(check == true && !placementStatus){
+                String countryDetails = manualPlacementMatcher.group("countryDetails");
+                placeSoldier(countryDetails,1);
+            }
             /* Check match cards */
             Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
             check = matchCardsMatcher.matches();
@@ -109,9 +116,9 @@ public class RiskGameView {
 
             }
             if (inputLine.equals("turn over")) {
-
+                nextTurn();
             }
-            if (check == false && placementStatus) {
+            if (check == false) {
                 System.out.println("Invalid Command!");
             }
         }
@@ -124,8 +131,21 @@ public class RiskGameView {
 //        String toPrint = this.riskGameController.manualPlaceSoldier();
 //        System.out.println(toPrint);
 //    }
-    public void manualPlaceSoldier(String countryDetals , int soldiers){
-        String toPrint = this.riskGameController.manualPlaceSoldier(countryDetals , soldiers);
+    public void placeSoldier(String countryDetals , int soldiers){
+        String toPrint = this.riskGameController.placeSoldier(countryDetals , soldiers);
+        System.out.println(toPrint);
+    }
+    public void attack(String sourceCountry , String destinationCountry , int soldiers){
+
+    }
+    public void fortify(String sourceCountry , String destinationCountry , int soldiers){
+
+    }
+    public void next(){
+
+    }
+    public void nextTurn(){
+        String toPrint = riskGameController.changeTurn();
         System.out.println(toPrint);
     }
 }
