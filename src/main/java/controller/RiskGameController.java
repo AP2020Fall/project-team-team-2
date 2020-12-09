@@ -202,11 +202,12 @@ public class RiskGameController {
         else if (sourceCountryValid && !destinationCountryValid) {
             toPrint = "Destination country is not valid";
         }
-        else if (sourceCountryValid && destinationCountryValid && (soldiers > source.getSoldiers() || soldiers < 0)) {
+        else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers()-1) || soldiers < 1)) {
             toPrint = "Soldiers are not enough or not valid";
         }
         else {
-
+            source.addSoldiers(-soldiers);
+            destination.addSoldiers(soldiers);
         }
         return toPrint;
     }
