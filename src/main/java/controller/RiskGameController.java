@@ -119,6 +119,10 @@ public class RiskGameController {
         this.draftDone = true;
     }
 
+    public int remainSoldiers (){
+        return currentPlayer.getNewSoldiers();
+    }
+
     public String draft(String sourceCountry, int soldiers){
         String toPrint = "";
         String[] sourceDetails = sourceCountry.split("\\.");
