@@ -38,6 +38,7 @@ public class RiskGameView {
         boolean check = false;
         boolean matchCardEnable = false;
         boolean draftMode = false;
+        boolean fortifyMode = false;
 
 
         /* Different patterns of valid match cards commands */
@@ -84,6 +85,23 @@ public class RiskGameView {
                     int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
                     if(riskGameController.getRemainSoldiers()>0) {
                         draft(countryDetails, soldierNumber);
+                    }
+                    else {
+                        draftMode = false;
+                    }
+                }
+            }
+
+            /* Check fotify mode*/
+            if(fortifyMode) {
+                Matcher fortifyMatcher = fortifyPattern.matcher(inputLine);
+                check = fortifyMatcher.matches();
+                if(check == true && !placementStatus){
+                    String sourceCountry = fortifyMatcher.group("sourceCountry");
+                    String destinationCountry = fortifyMatcher.group("destinationCountry");
+                    int soldierNumber = Integer.parseInt(fortifyMatcher.group("soldierNumber"));
+                    if(riskGameController.getRemainSoldiers()>0) {
+                        fortify(sourceCountry, destinationCountry, soldierNumber);
                     }
                     else {
                         draftMode = false;
