@@ -2,6 +2,7 @@ package view;
 
 import model.Account;
 import model.Event;
+import model.Game;
 import model.Suggestion;
 
 public class WelcomeMenu extends Menu {
@@ -36,7 +37,7 @@ public class WelcomeMenu extends Menu {
             Account.save();
             Event.save();
             Suggestion.save();
-
+            Game.save();
         } catch (Exception e) {
             e.getStackTrace();
         }

@@ -2,14 +2,16 @@ package controller;
 
 import model.Map;
 import model.Country;
+import model.Player;
 import view.RiskGameView;
 
-import javax.print.DocFlavor;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -25,28 +27,24 @@ public class StartGameController {
         primitiveSettings.put("Fog of War", false);
         primitiveSettings.put("Duration", 0);
         primitiveSettings.put("PlayersNum", 2);
+        primitiveSettings.put("Players" , null);
     }
-
     private static Map mainMap;
-
-    public static void main(String[] args) {
-        mainMap = new Map();
-
-        while (getPrimitiveSettings().get("Placement").equals(true)) {
-
-        }
+    public StartGameController(ArrayList<Player> players){
+        setPrimitiveSettings("Players" , players);
     }
+    public static void main(String[] args) {}
 
     public void startGame() {
         String gameId = generateGameId();
         String filename = "src/main/resources/gameIDs/" + gameId + ".txt";
         System.out.println("Game Started with ID " + gameId);
         Path path = Paths.get(filename);
-        /*try {
-            Files.writeString(path, "start", StandardCharsets.UTF_8);
+        try {
+            Files.write(path, Collections.singleton("start"), StandardCharsets.UTF_8);
         } catch (IOException ex) {
             // Handle exception
-        }*/
+        }
         RiskGameView riskGame = new RiskGameView(this.primitiveSettings, generateGameId() , generateSoldiersNumber());
         riskGame.riskGameView();
     }

@@ -1,9 +1,6 @@
 package controller;
 
-import model.Account;
-import model.Event;
-import model.Player;
-import model.Suggestion;
+import model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -116,6 +113,11 @@ public class Controller {
             }
         }
         return false;
+    }
+
+    public boolean doesGameExist(String gameName)
+    {
+        return Game.getGameByGameName(gameName) != null;
     }
 
 }
