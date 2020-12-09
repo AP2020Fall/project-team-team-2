@@ -119,6 +119,35 @@ public class RiskGameController {
         this.draftDone = true;
     }
 
+    public int getRemainSoldiers (){
+        return currentPlayer.getNewSoldiers();
+    }
+
+    public String draft(String sourceCountry, int soldiers){
+        String toPrint = "";
+        String[] sourceDetails = sourceCountry.split("\\.");
+        String sourceCountryName = sourceDetails[0];
+        int sourceNumber = Integer.parseInt(sourceDetails[1]);
+        boolean sourceCountryValid = false;
+        Country source = getCountryByDetails(sourceCountryName, sourceNumber);
+        if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
+            sourceCountryValid = true;
+        }
+        if (!sourceCountryValid) {
+            toPrint = "Source country is not valid";
+        }
+        else if (sourceCountryValid && (soldiers > currentPlayer.getNewSoldiers() || soldiers < 0)) {
+            toPrint = "Soldiers are not enough or not valid";
+        }
+        else {
+            placeSoldier(source, soldiers);
+            currentPlayer.addNewSoldiers(-soldiers);
+            toPrint = "Add " + soldiers + " soldiers to " + sourceCountryName ;
+        }
+
+        return toPrint;
+    }
+
     public String attack(String sourceCountry, String destinyCountry, int soldiers) {
         String toPrint = "";
         String[] sourceDetails = sourceCountry.split("\\.");
@@ -170,6 +199,41 @@ public class RiskGameController {
             } while (inWar);
 
 
+        }
+        return toPrint;
+    }
+
+    public String fortify(String sourceCountry, String destinyCountry, int soldiers) {
+        String toPrint = "";
+        String[] sourceDetails = sourceCountry.split("\\.");
+        String[] destinationDetails = destinyCountry.split("\\.");
+        String sourceCountryName = sourceDetails[0];
+        int sourceNumber = Integer.parseInt(sourceDetails[1]);
+        String destinationCountryName = destinationDetails[0];
+        int destinationNumber = Integer.parseInt(destinationDetails[1]);
+        boolean sourceCountryValid = false;
+        boolean destinationCountryValid = false;
+        Country source = getCountryByDetails(sourceCountryName, sourceNumber);
+        Country destination = getCountryByDetails(destinationCountryName, destinationNumber);
+        if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
+            sourceCountryValid = true;
+        }
+        if (destination.getOwner() != null && destination.getOwner().equals(currentPlayer)) {
+            destinationCountryValid = true;
+        }
+        if (!sourceCountryValid) {
+            toPrint = "Source country is not valid";
+        }
+        else if (sourceCountryValid && !destinationCountryValid) {
+            toPrint = "Destination country is not valid";
+        }
+        else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers()-1) || soldiers < 1)) {
+            toPrint = "Soldiers are not enough or not valid";
+        }
+        else {
+            source.addSoldiers(-soldiers);
+            destination.addSoldiers(soldiers);
+            toPrint = "Move " + soldiers + " soldiers from " + sourceCountryName + " to " + destinationCountryName ;
         }
         return toPrint;
     }

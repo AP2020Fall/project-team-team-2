@@ -37,6 +37,8 @@ public class RiskGameView {
         String inputLine = new String();
         boolean check = false;
         boolean matchCardEnable = false;
+        boolean draftMode = false;
+        boolean fortifyMode = false;
 
 
         /* Different patterns of valid match cards commands */
@@ -73,6 +75,40 @@ public class RiskGameView {
                 String countryDetails = manualPlacementMatcher.group("countryDetails");
                 placeSoldier(countryDetails,1);
             }
+
+            /* Check draft mode*/
+            while(draftMode) {
+                Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
+                check = placeSoldierMatcher.matches();
+                if(check == true && !placementStatus){
+                    String countryDetails = placeSoldierMatcher.group("countryDetails");
+                    int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
+                    if(riskGameController.getRemainSoldiers()>0) {
+                        draft(countryDetails, soldierNumber);
+                    }
+                    else {
+                        draftMode = false;
+                    }
+                }
+            }
+
+            /* Check fotify mode*/
+            if(fortifyMode) {
+                Matcher fortifyMatcher = fortifyPattern.matcher(inputLine);
+                check = fortifyMatcher.matches();
+                if(check == true && !placementStatus){
+                    String sourceCountry = fortifyMatcher.group("sourceCountry");
+                    String destinationCountry = fortifyMatcher.group("destinationCountry");
+                    int soldierNumber = Integer.parseInt(fortifyMatcher.group("soldierNumber"));
+                    if(riskGameController.getRemainSoldiers()>0) {
+                        fortify(sourceCountry, destinationCountry, soldierNumber);
+                    }
+                    else {
+                        draftMode = false;
+                    }
+                }
+            }
+
             /* Check match cards */
             Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
             check = matchCardsMatcher.matches();
@@ -91,7 +127,7 @@ public class RiskGameView {
                 if (check == true && placementStatus) {
                     riskGameController.matchCardAddSoldiers(4);
                     check = false;
-                    continue;
+                    break;
                 }
 
                 Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
@@ -99,7 +135,7 @@ public class RiskGameView {
                 if (check == true && placementStatus) {
                     riskGameController.matchCardAddSoldiers(6);
                     check = false;
-                    continue;
+                    break;
                 }
 
                 Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
@@ -107,7 +143,7 @@ public class RiskGameView {
                 if (check == true && placementStatus) {
                     riskGameController.matchCardAddSoldiers(8);
                     check = false;
-                    continue;
+                    break;
                 }
 
                 Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
@@ -115,7 +151,7 @@ public class RiskGameView {
                 if (check == true && placementStatus) {
                     riskGameController.matchCardAddSoldiers(10);
                     check = false;
-                    continue;
+                    break;
                 }
 
                 if (check == false) {
@@ -146,13 +182,19 @@ public class RiskGameView {
         String toPrint = this.riskGameController.placeSoldier(countryDetals , soldiers);
         System.out.println(toPrint);
     }
+    public void draft(String countryDetals , int soldiers){
+        String toPrint = this.riskGameController.draft(countryDetals , soldiers);
+        System.out.println(toPrint);
+    }
     public void attack(String sourceCountry , String destinationCountry , int soldiers){
         String toPrint = riskGameController.attack(sourceCountry ,destinationCountry , soldiers);
         System.out.println(toPrint);
     }
     public void fortify(String sourceCountry , String destinationCountry , int soldiers){
-
+        String toPrint = this.riskGameController.fortify(sourceCountry, destinationCountry, soldiers);
+        System.out.println(toPrint);
     }
+
     public void next(){
 
     }
