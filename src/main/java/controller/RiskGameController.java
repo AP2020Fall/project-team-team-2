@@ -199,7 +199,7 @@ public class RiskGameController {
         return toPrint;
     }
 
-    public String forfeit(String sourceCountry, String destinyCountry, int soldiers) {
+    public String fortify(String sourceCountry, String destinyCountry, int soldiers) {
         String toPrint = "";
         String[] sourceDetails = sourceCountry.split("\\.");
         String[] destinationDetails = destinyCountry.split("\\.");
