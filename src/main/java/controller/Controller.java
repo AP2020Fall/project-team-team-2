@@ -70,9 +70,7 @@ public class Controller {
     public boolean checkStartDate(String date) {
         if (isValidDate(date)) {
             LocalDate localDate = createLocalDate(date);
-            if (LocalDate.now().compareTo(localDate) < 0) {
-                return true;
-            }
+            return LocalDate.now().compareTo(localDate) < 0;
         }
         return false;
     }
@@ -80,9 +78,7 @@ public class Controller {
     public boolean checkEndDate(String date) {
         if (isValidDate(date)) {
             LocalDate localDate = createLocalDate(date);
-            if (LocalDate.now().compareTo(localDate) > 0) {
-                return true;
-            }
+            return LocalDate.now().compareTo(localDate) > 0;
         }
         return false;
     }

@@ -30,6 +30,8 @@ public class AdminMainMenu extends Menu {
                 editEvent(matcher.group(1), matcher.group(2), matcher.group(3));
             } else if ((matcher = getMatcher(input, "Remove event (\\d+)")).find()) {
                 removeEvent(matcher.group(1));
+            } else if ((matcher = getMatcher(input, "Send message (\\S+)")).find()) {
+                sendMessage(matcher.group(1));
             } else if ((matcher = getMatcher(input, "Add suggestion (\\S+), (\\S+)")).find()) {
                 addSuggestion(matcher.group(1), matcher.group(2));
             } else if (getMatcher(input, "View suggestions").find()) {
@@ -64,6 +66,7 @@ public class AdminMainMenu extends Menu {
                 "View events\n" +
                 "Edit event <event_id>, <field>, <new_value>\n" +
                 "Remove event <event_id>\n" +
+                "Send message <message>\n" +
                 "Add suggestion <username>, <game_name>\n" +
                 "View suggestions\n" +
                 "Remove suggestion <suggestion_id>\n" +
@@ -79,10 +82,10 @@ public class AdminMainMenu extends Menu {
     private void addEvent(String gameName, String startDate, String endDate, String score) {
         if (!controller.checkStartDate(startDate) || !controller.checkEndDate(endDate)) {
             System.out.println("invalid date!");
-        } else if (score.equals("0")) {
+        } else if (Integer.parseInt(score) <= 0) {
             System.out.println("score should be positive!");
-        } else if (!gameName.equals("Risk")) {
-            System.out.println("Invalid Game!");
+        } else if (!controller.doesGameExist(gameName)) {
+            System.out.println("invalid game!");
         } else {
             controller.addEvent(gameName, startDate, endDate, Integer.parseInt(score));
         }
@@ -95,17 +98,21 @@ public class AdminMainMenu extends Menu {
     }
 
     private void editEvent(String eventId, String field, String value) {
-        if (field.equals("startDate") && controller.checkStartDate(value)) {
-            controller.editEventStart(eventId, value);
-            System.out.println("changed successfully!");
-        } else if (field.equals("endDate") && controller.checkEndDate(value)) {
-            controller.editEventEnd(eventId, value);
-            System.out.println("changed successfully!");
-        } else if (field.equals("score") && !value.equals("0")) {
-            controller.editEventScore(eventId, Integer.parseInt(value));
-            System.out.println("changed successfully!");
+        if (!controller.isEventIdExists(eventId)) {
+            System.out.println("invalid event id!");
         } else {
-            System.out.println("you cannot change this field!");
+            if (field.equals("startDate") && controller.checkStartDate(value)) {
+                controller.editEventStart(eventId, value);
+                System.out.println("changed successfully!");
+            } else if (field.equals("endDate") && controller.checkEndDate(value)) {
+                controller.editEventEnd(eventId, value);
+                System.out.println("changed successfully!");
+            } else if (field.equals("score") && !value.equals("0")) {
+                controller.editEventScore(eventId, Integer.parseInt(value));
+                System.out.println("changed successfully!");
+            } else {
+                System.out.println("you cannot change this field!");
+            }
         }
     }
 
@@ -117,9 +124,15 @@ public class AdminMainMenu extends Menu {
         }
     }
 
+    private void sendMessage(String message) {
+        controller.sendMessage(message);
+    }
+
     private void addSuggestion(String username, String gameName) {
         if (!controller.isUsernameExist(username)) {
-            System.out.println("username does not exists!");
+            System.out.println("username does not exist!");
+        } else if (!controller.doesGameExist(gameName)) {
+            System.out.println("game does not exist!");
         } else {
             controller.addSuggestion(username, gameName);
         }
@@ -133,7 +146,7 @@ public class AdminMainMenu extends Menu {
 
     private void removeSuggestion(String suggestionId) {
         if (!controller.isSuggestionIdExists(suggestionId)) {
-            System.out.println("invalid suggestion id");
+            System.out.println("invalid suggestion id!");
         } else {
             controller.removeSuggestion(suggestionId);
         }
@@ -141,7 +154,7 @@ public class AdminMainMenu extends Menu {
 
     private void addGame(String gameName, String gameDetail) {
         if (!controller.doesGameExist(gameName))
-            System.out.println("Game exists");
+            System.out.println("game exists!");
         else
             controller.addGame(gameName, gameDetail);
     }
@@ -153,7 +166,7 @@ public class AdminMainMenu extends Menu {
 
     private void editGameName(String gameName, String newGameName) {
         if (!controller.doesGameExist(gameName))
-            System.out.println("Game does not exist");
+            System.out.println("game does not exist!");
         else
             controller.editGameName(gameName, newGameName);
 
@@ -161,14 +174,14 @@ public class AdminMainMenu extends Menu {
 
     private void editGameDetail(String gameName, String newGameDetail) {
         if (!controller.doesGameExist(gameName))
-            System.out.println("Game does not exist");
+            System.out.println("game does not exist!");
         else
             controller.editGameDetail(gameName, newGameDetail);
     }
 
     private void removeGame(String gameName) {
         if (!controller.doesGameExist(gameName))
-            System.out.println("Game does not exist");
+            System.out.println("game does not exist!");
         else
             controller.removeGame(gameName);
     }
