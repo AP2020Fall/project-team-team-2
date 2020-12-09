@@ -29,6 +29,7 @@ public class Player extends Account {
     private LocalDate registerDay;
     private double money;
     private int score;
+    private int newSoldiers;
     private ArrayList<GameLog> gameLogs;
     private ArrayList<Player> friends;
     private ArrayList<FriendRequest> friendRequests;
@@ -54,6 +55,8 @@ public class Player extends Account {
     public int getScore() {
         return score;
     }
+
+    public int getNewSoldiers() { return newSoldiers; }
 
     public ArrayList<GameLog> getGameLogs() {
         return gameLogs;
@@ -86,6 +89,8 @@ public class Player extends Account {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public void addNewSoldiers(int soldiers) { newSoldiers = newSoldiers + soldiers; }
 
     public void setSuggestion(Suggestion suggestion) {
         this.suggestion = suggestion;
