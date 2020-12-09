@@ -27,6 +27,7 @@ public class RiskGameController {
     private boolean placementFinished = false;
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
     private Player currentPlayer = players.get(0);
+    private MatchCardController matchCardController = new MatchCardController();
 
     public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID , int soldiers) {
         this.primitiveSettings = primitiveSettings;
@@ -250,6 +251,9 @@ public class RiskGameController {
         this.fortifyDone = status;
     }
 
+    public matchCardAddSoldiers(int soldiersNumber){
+        matchCardController.incPlayerSoldier(currentPlayer, soldiersNumber);
+    }
 
     public Country getCountryByDetails(String shortName , int countryContinentNumber){
         Country toReturnCountry = new Country();
