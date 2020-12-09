@@ -134,6 +134,8 @@ public class AdminMainMenu extends Menu {
             System.out.println("username does not exist!");
         } else if (!controller.doesGameExist(gameName)) {
             System.out.println("game does not exist!");
+        } else if (controller.playerBeenSuggested(username,gameName)) {
+            System.out.println("game has already been suggested!");
         } else {
             controller.addSuggestion(username, gameName);
         }
