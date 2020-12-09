@@ -27,7 +27,7 @@ public class RiskGameController {
     private boolean placementFinished = false;
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
     private Player currentPlayer = players.get(0);
-    private MatchCardController matchCardController = new MatchCardController();
+    private MatchCardController matchCardController = new MatchCardController(currentPlayer);
 
     public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID , int soldiers) {
         this.primitiveSettings = primitiveSettings;
