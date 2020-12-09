@@ -1,7 +1,9 @@
+import model.Account;
 import view.WelcomeMenu;
 
 public class Main {
     public static void main(String[] args) {
         new WelcomeMenu(null);
     }
+    
 }
