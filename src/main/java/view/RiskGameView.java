@@ -24,6 +24,10 @@ public class RiskGameView {
 
     public RiskGameView(Map<String, Object> primitiveSettings, String gameID, int soldiers) {
         this.riskGameController = new RiskGameController(primitiveSettings, gameID, soldiers);
+        /* Show Map at Start */
+        this.showMap();
+        /* Show Turn at Start*/
+        this.showTurn();
         this.riskGameView();
     }
 
@@ -40,8 +44,9 @@ public class RiskGameView {
         boolean matchCardEnable = false;
         boolean draftMode = false;
         boolean fortifyMode = false;
-
-
+        if((boolean)riskGameController.getPrimitiveSettings().get("Placement") == false){
+            autoPlace();
+        }
         /* Different patterns of valid match cards commands */
         Pattern matchCardsCommand = Pattern.compile("(^)match cards($)");
         Pattern type1MatchCommand = Pattern.compile("(^)1-type1,type1,type1 score:4($)");
@@ -70,16 +75,15 @@ public class RiskGameView {
             /* get input command */
             /* Command Found*/
             boolean commandFound = false;
-            inputLine = inputCommand.nextLine().trim();
 
+            inputLine = inputCommand.nextLine().trim();
             /* Check manual placement*/
             Matcher manualPlacementMatcher = placeSoldierManual.matcher(inputLine);
             check = manualPlacementMatcher.matches();
-            if (check == true && !placementStatus) {
+            if (check == true && !placementStatus && (boolean)riskGameController.getPrimitiveSettings().get("Placement")) {
                 String countryDetails = manualPlacementMatcher.group("countryDetails");
                 placeSoldier(countryDetails, 1);
             }
-
             /* Check draft mode*/
             Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
             check = placeSoldierMatcher.matches();
@@ -169,6 +173,7 @@ public class RiskGameView {
             if (inputLine.equals("turn over")) {
                 nextTurn();
             }
+            System.out.println(riskGameController.getStatus());
             if (commandFound == false) {
                 System.out.println("Invalid Command!");
             }
@@ -207,9 +212,15 @@ public class RiskGameView {
     public void next() {
 
     }
-
+    public void autoPlace(){
+        riskGameController.autoPlace();
+    }
     public void nextTurn() {
         String toPrint = riskGameController.changeTurn();
+        System.out.println(toPrint);
+    }
+    public void showTurn(){
+        String toPrint = riskGameController.showTurn();
         System.out.println(toPrint);
     }
 }

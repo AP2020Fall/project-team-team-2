@@ -14,6 +14,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class RiskGameController {
     private static java.util.Map<String, Object> primitiveSettings;
@@ -39,7 +40,8 @@ public class RiskGameController {
         this.makeRobotPlayers();
         /* Set Player One */
         currentPlayer = players.get(0);
-        /* Start Risk View*/
+        /* Show Turn*/
+        showTurn();
 
 
     }
@@ -100,10 +102,6 @@ public class RiskGameController {
 
     public void makeRobotPlayers() {
         String mainBotName = "Robot";
-        /*
-         * here we will add the Main Player To allPlayers
-         *
-         */
         for (int i = 1; i < (int) primitiveSettings.get("PlayersNum"); i++) {
             Player newRobotPlayer = new Player(mainBotName + " " + i, mainBotName + " " + i);
             players.add(newRobotPlayer);
@@ -245,17 +243,19 @@ public class RiskGameController {
     /* Draf-Attck-forfeit */
     public void next() {
     }
-
+    public void mainChangeTurn(){
+        int currentTurnIndex = this.players.indexOf(this.currentPlayer);
+        if (currentTurnIndex != this.players.size() - 1) {
+            this.currentPlayer = this.players.get(currentTurnIndex + 1);
+        } else {
+            this.currentPlayer = this.players.get(0);
+        }
+    }
     public String changeTurn() {
         String toPrint = "";
         if (!getPlacementFinished()) {
             if (draftDone) {
-                int currentTurnIndex = this.players.indexOf(this.currentPlayer);
-                if (currentTurnIndex != this.players.size() - 1) {
-                    this.currentPlayer = this.players.get(currentTurnIndex + 1);
-                } else {
-                    this.currentPlayer = this.players.get(0);
-                }
+                mainChangeTurn();
                 toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
             } else {
                 toPrint = "You didn't place any soldier, please first try to place a soldier in remain countries.";
@@ -265,12 +265,7 @@ public class RiskGameController {
                 /*Todo: attack doesn't need to be checked(?)*/
                 if (attackDone) {
                     if (fortifyDone) {
-                        int currentTurnIndex = this.players.indexOf(this.currentPlayer);
-                        if (currentTurnIndex != this.players.size() - 1) {
-                            this.currentPlayer = this.players.get(currentTurnIndex + 1);
-                        } else {
-                            this.currentPlayer = this.players.get(0);
-                        }
+                        mainChangeTurn();
                         toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
                     } else {
                         toPrint = "You didn't fortify yet.";
@@ -388,5 +383,52 @@ public class RiskGameController {
             }
         }
         return toReturnCountry;
+    }
+    public String showTurn(){
+        String toPrint = "It's " + currentPlayer.getUsername() + " Player";
+        return toPrint;
+    }
+    public String getStatus(){
+        String toPrint = "";
+        if(!draftDone){
+            toPrint = "Please draft your soldiers in one of available countries";
+        }else if(!attackDone){
+            toPrint = "Please attack to one of the valid countries";
+        }else if(!fortifyDone){
+            toPrint = "if you want to move your soldiers, you can try now!";
+        }
+        return toPrint;
+    }
+
+    public void autoPlace() {
+        do {
+            boolean allDone = false;
+            for(Player player:players){
+                if(player.getDraftSoldiers() != 3){
+                    allDone = false;
+                    break;
+                }
+                else{
+                    allDone =true;
+                }
+            }
+            if(allDone == true){
+                break;
+            }
+            if(currentPlayer.getDraftSoldiers() == 3){
+                mainChangeTurn();
+            }
+            int rows = gameCountries.size();
+            int columns = gameCountries.get(0).size();
+            int randomRow = (int) Math.random() * (rows - 0 + 1) + 0;
+            int randomColumn = (int) Math.random() * (columns + 1);
+            Country getRandomCountry = gameCountries.get(randomRow).get(randomColumn);
+            if(getRandomCountry.getOwner() == null || getRandomCountry.getOwner().equals(currentPlayer)) {
+                getRandomCountry.setOwner(currentPlayer);
+                getRandomCountry.addSoldiers(1);
+                currentPlayer.addDraftSoldier(-1);
+                mainChangeTurn();
+            }
+        }while (true);
     }
 }
