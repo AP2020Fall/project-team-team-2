@@ -61,7 +61,7 @@ public class Country {
     }
     @Override
     public String toString() {
-        String firstPartOfName = name.substring(0, 2).toUpperCase();
+        String firstPartOfName = continent.substring(0, 2).toUpperCase();
         int ownerNumber = 0;
         if (Owner != null) {
             ownerNumber = Owner.getPlayerNumber();

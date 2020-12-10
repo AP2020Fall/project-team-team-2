@@ -15,8 +15,10 @@ public class StartGameView {
     }
     public StartGameView(ArrayList<Player> players){
         this.startGameController = new StartGameController(players);
+        this.startGameView();
     }
     public void startGameView() {
+        System.out.println("Choose the setting of game");
         /* write variables to get commands */
         Scanner inputCommand = Menu.getScanner();
         String inputLine = new String();

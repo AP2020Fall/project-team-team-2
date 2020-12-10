@@ -22,8 +22,9 @@ import java.util.regex.Pattern;
 public class RiskGameView {
     private RiskGameController riskGameController;
 
-    public RiskGameView(Map<String, Object> primitiveSettings, String gameID,int soldiers) {
-        this.riskGameController = new RiskGameController(primitiveSettings, gameID , soldiers);
+    public RiskGameView(Map<String, Object> primitiveSettings, String gameID, int soldiers) {
+        this.riskGameController = new RiskGameController(primitiveSettings, gameID, soldiers);
+        this.riskGameView();
     }
 
 
@@ -61,54 +62,57 @@ public class RiskGameView {
         /* Pattern to fortify*/
         Pattern fortifyPattern = Pattern
                 .compile("(^)move (?<soldierNumber>\\d+) soldiers from (?<sourceCountry>\\w+\\.\\d+) to (?<destinationCountry>\\w+\\.\\d+)($)");
+        /* Sow Map Pattern */
+        Pattern showMapPattern = Pattern.compile("(^)show map($)");
         /* get input command */
-
         while (inputCommand.hasNextLine()) {
             boolean placementStatus = riskGameController.getPlacementFinished();
             /* get input command */
+            /* Command Found*/
+            boolean commandFound = false;
             inputLine = inputCommand.nextLine().trim();
 
             /* Check manual placement*/
             Matcher manualPlacementMatcher = placeSoldierManual.matcher(inputLine);
             check = manualPlacementMatcher.matches();
-            if(check == true && !placementStatus){
+            if (check == true && !placementStatus) {
                 String countryDetails = manualPlacementMatcher.group("countryDetails");
-                placeSoldier(countryDetails,1);
+                placeSoldier(countryDetails, 1);
             }
 
             /* Check draft mode*/
-            while(draftMode) {
-                Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
-                check = placeSoldierMatcher.matches();
-                if(check == true && !placementStatus){
-                    String countryDetails = placeSoldierMatcher.group("countryDetails");
-                    int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
-                    if(riskGameController.getRemainSoldiers()>0) {
-                        draft(countryDetails, soldierNumber);
-                    }
-                    else {
-                        draftMode = false;
-                    }
+            Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
+            check = placeSoldierMatcher.matches();
+            if (check == true && !placementStatus) {
+                String countryDetails = placeSoldierMatcher.group("countryDetails");
+                int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
+                if (riskGameController.getRemainSoldiers() > 0) {
+                    draft(countryDetails, soldierNumber);
+                } else {
+                    draftMode = false;
                 }
             }
-
-            /* Check fotify mode*/
-            if(fortifyMode) {
-                Matcher fortifyMatcher = fortifyPattern.matcher(inputLine);
-                check = fortifyMatcher.matches();
-                if(check == true && !placementStatus){
-                    String sourceCountry = fortifyMatcher.group("sourceCountry");
-                    String destinationCountry = fortifyMatcher.group("destinationCountry");
-                    int soldierNumber = Integer.parseInt(fortifyMatcher.group("soldierNumber"));
-                    if(riskGameController.getRemainSoldiers()>0) {
-                        fortify(sourceCountry, destinationCountry, soldierNumber);
-                    }
-                    else {
-                        draftMode = false;
-                    }
+            /* Check fortify mode*/
+            Matcher fortifyMatcher = fortifyPattern.matcher(inputLine);
+            check = fortifyMatcher.matches();
+            if (check == true && !placementStatus) {
+                String sourceCountry = fortifyMatcher.group("sourceCountry");
+                String destinationCountry = fortifyMatcher.group("destinationCountry");
+                int soldierNumber = Integer.parseInt(fortifyMatcher.group("soldierNumber"));
+                if (riskGameController.getRemainSoldiers() > 0) {
+                    fortify(sourceCountry, destinationCountry, soldierNumber);
+                } else {
+                    draftMode = false;
                 }
             }
-
+            /* Show Map Match*/
+            Matcher showMapMatcher = showMapPattern.matcher(inputLine);
+            check = showMapMatcher.matches();
+            if(check == true){
+                this.showMap();
+                check = false;
+                commandFound = true;
+            }
             /* Check match cards */
             Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
             check = matchCardsMatcher.matches();
@@ -118,7 +122,7 @@ public class RiskGameView {
                 continue;
             }
 
-            while(matchCardEnable){
+            while (matchCardEnable) {
 
                 inputLine = inputCommand.nextLine().trim();
 
@@ -159,46 +163,52 @@ public class RiskGameView {
                 }
             }
 
-            if(inputLine.equals("next")){
+            if (inputLine.equals("next")) {
 
             }
             if (inputLine.equals("turn over")) {
                 nextTurn();
             }
-            if (check == false) {
+            if (commandFound == false) {
                 System.out.println("Invalid Command!");
             }
         }
     }
-    public void showMap(){
+
+    public void showMap() {
         String toPrint = this.riskGameController.showMap();
         System.out.println(toPrint);
     }
-//    public void manualPlaceSoldier() {
+
+    //    public void manualPlaceSoldier() {
 //        String toPrint = this.riskGameController.manualPlaceSoldier();
 //        System.out.println(toPrint);
 //    }
-    public void placeSoldier(String countryDetals , int soldiers){
-        String toPrint = this.riskGameController.placeSoldier(countryDetals , soldiers);
+    public void placeSoldier(String countryDetals, int soldiers) {
+        String toPrint = this.riskGameController.placeSoldier(countryDetals, soldiers);
         System.out.println(toPrint);
     }
-    public void draft(String countryDetals , int soldiers){
-        String toPrint = this.riskGameController.draft(countryDetals , soldiers);
+
+    public void draft(String countryDetals, int soldiers) {
+        String toPrint = this.riskGameController.draft(countryDetals, soldiers);
         System.out.println(toPrint);
     }
-    public void attack(String sourceCountry , String destinationCountry , int soldiers){
-        String toPrint = riskGameController.attack(sourceCountry ,destinationCountry , soldiers);
+
+    public void attack(String sourceCountry, String destinationCountry, int soldiers) {
+        String toPrint = riskGameController.attack(sourceCountry, destinationCountry, soldiers);
         System.out.println(toPrint);
     }
-    public void fortify(String sourceCountry , String destinationCountry , int soldiers){
+
+    public void fortify(String sourceCountry, String destinationCountry, int soldiers) {
         String toPrint = this.riskGameController.fortify(sourceCountry, destinationCountry, soldiers);
         System.out.println(toPrint);
     }
 
-    public void next(){
+    public void next() {
 
     }
-    public void nextTurn(){
+
+    public void nextTurn() {
         String toPrint = riskGameController.changeTurn();
         System.out.println(toPrint);
     }

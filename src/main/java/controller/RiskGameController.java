@@ -25,7 +25,7 @@ public class RiskGameController {
     private String gameID;
     private boolean placementFinished = false;
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
-    private Player currentPlayer = players.get(0);
+    private Player currentPlayer;
     private MatchCardController matchCardController = new MatchCardController(currentPlayer);
 
     public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID, int soldiers) {
@@ -37,12 +37,16 @@ public class RiskGameController {
         this.shapeMap();
         /* Make Robot Players*/
         this.makeRobotPlayers();
+        /* Set Player One */
+        currentPlayer = players.get(0);
+        /* Start Risk View*/
+
 
     }
 
     public void shapeMap() {
-        String mapNumber = (String) primitiveSettings.get("Map Number");
-        String mapFileAddress = "src/main/resources/maps/map_" + mapNumber + ".txt";
+        Integer mapNumber = (Integer) primitiveSettings.get("Map Number");
+        String mapFileAddress = "src/main/resources/maps/map_" + String.valueOf(mapNumber) + ".txt";
         Gson newGson = new Gson();
         JsonReader reader = null;
         try {
@@ -58,6 +62,7 @@ public class RiskGameController {
         int[][] newPath = newGson.fromJson(reader, int[][].class);
         int gameCountryNumber = 0;
         for (int i = 0; i < newPath.length; i++) {
+            gameCountries.add(new ArrayList<Country>());
             for (int j = 0; j < newPath[i].length; j++) {
                 Countries countryDetails = Countries.values()[newPath[i][j] - 1];
                 String countryName = countryDetails.getName();
@@ -88,7 +93,7 @@ public class RiskGameController {
                 gameCountryNumber++;
                 Country country = new Country(countryName, countryContinent, gameCountryNumber);
                 country.setNumberOfContinentCountry(setNumberContinentCountry);
-                gameCountries.get(i).set(j, country);
+                gameCountries.get(i).add(country);
             }
         }
     }
@@ -119,11 +124,11 @@ public class RiskGameController {
         this.draftDone = true;
     }
 
-    public int getRemainSoldiers (){
+    public int getRemainSoldiers() {
         return currentPlayer.getNewSoldiers();
     }
 
-    public String draft(String sourceCountry, int soldiers){
+    public String draft(String sourceCountry, int soldiers) {
         String toPrint = "";
         String[] sourceDetails = sourceCountry.split("\\.");
         String sourceCountryName = sourceDetails[0];
@@ -135,14 +140,12 @@ public class RiskGameController {
         }
         if (!sourceCountryValid) {
             toPrint = "Source country is not valid";
-        }
-        else if (sourceCountryValid && (soldiers > currentPlayer.getNewSoldiers() || soldiers < 0)) {
+        } else if (sourceCountryValid && (soldiers > currentPlayer.getNewSoldiers() || soldiers < 0)) {
             toPrint = "Soldiers are not enough or not valid";
-        }
-        else {
+        } else {
             placeSoldier(source, soldiers);
             currentPlayer.addNewSoldiers(-soldiers);
-            toPrint = "Add " + soldiers + " soldiers to " + sourceCountryName ;
+            toPrint = "Add " + soldiers + " soldiers to " + sourceCountryName;
         }
 
         return toPrint;
@@ -163,9 +166,9 @@ public class RiskGameController {
         if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
             sourceCountryValid = true;
         }
-            if (destination.getOwner() != null && !destination.getOwner().equals(currentPlayer)) {
-                destinationCountryValid = true;
-            }
+        if (destination.getOwner() != null && !destination.getOwner().equals(currentPlayer)) {
+            destinationCountryValid = true;
+        }
         if (!sourceCountryValid) {
             toPrint = "Source country is not valid";
         }
@@ -193,7 +196,7 @@ public class RiskGameController {
                     toPrint = toPrint + "Destination Country Lost 1 soldier! , Destination Soldiers "
                             + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
                 }
-                if(source.getSoldiers() == 0 || destination.getSoldiers() == 0){
+                if (source.getSoldiers() == 0 || destination.getSoldiers() == 0) {
                     inWar = false;
                 }
             } while (inWar);
@@ -223,17 +226,14 @@ public class RiskGameController {
         }
         if (!sourceCountryValid) {
             toPrint = "Source country is not valid";
-        }
-        else if (sourceCountryValid && !destinationCountryValid) {
+        } else if (sourceCountryValid && !destinationCountryValid) {
             toPrint = "Destination country is not valid";
-        }
-        else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers()-1) || soldiers < 1)) {
+        } else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers() - 1) || soldiers < 1)) {
             toPrint = "Soldiers are not enough or not valid";
-        }
-        else {
+        } else {
             source.addSoldiers(-soldiers);
             destination.addSoldiers(soldiers);
-            toPrint = "Move " + soldiers + " soldiers from " + sourceCountryName + " to " + destinationCountryName ;
+            toPrint = "Move " + soldiers + " soldiers from " + sourceCountryName + " to " + destinationCountryName;
         }
         return toPrint;
     }
@@ -372,7 +372,7 @@ public class RiskGameController {
         this.fortifyDone = status;
     }
 
-    public void matchCardAddSoldiers(int soldiersNumber){
+    public void matchCardAddSoldiers(int soldiersNumber) {
         matchCardController.incPlayerSoldier(currentPlayer, soldiersNumber);
     }
 
