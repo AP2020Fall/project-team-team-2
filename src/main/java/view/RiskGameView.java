@@ -24,6 +24,9 @@ public class RiskGameView {
 
     public RiskGameView(Map<String, Object> primitiveSettings, String gameID, int soldiers) {
         this.riskGameController = new RiskGameController(primitiveSettings, gameID, soldiers);
+        if(!(boolean)riskGameController.getPrimitiveSettings().get("Placement")){
+            autoPlace();
+        }
         /* Show Map at Start */
         this.showMap();
         /* Show Turn at Start*/
@@ -44,9 +47,6 @@ public class RiskGameView {
         boolean matchCardEnable = false;
         boolean draftMode = false;
         boolean fortifyMode = false;
-        if((boolean)riskGameController.getPrimitiveSettings().get("Placement") == false){
-            autoPlace();
-        }
         /* Different patterns of valid match cards commands */
         Pattern matchCardsCommand = Pattern.compile("(^)match cards($)");
         Pattern type1MatchCommand = Pattern.compile("(^)1-type1,type1,type1 score:4($)");
@@ -173,7 +173,6 @@ public class RiskGameView {
             if (inputLine.equals("turn over")) {
                 nextTurn();
             }
-            System.out.println(riskGameController.getStatus());
             if (commandFound == false) {
                 System.out.println("Invalid Command!");
             }
