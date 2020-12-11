@@ -22,6 +22,7 @@ public class RiskGameController {
     private boolean draftDone;
     private boolean attackDone;
     private boolean fortifyDone;
+    private boolean turnDone;
     private int startSoldiers;
     private String gameID;
     private boolean placementFinished = false;
@@ -229,6 +230,7 @@ public class RiskGameController {
         } else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers() - 1) || soldiers < 1)) {
             toPrint = "Soldiers are not enough or not valid";
         } else {
+            turnDone = true;
             source.addSoldiers(-soldiers);
             destination.addSoldiers(soldiers);
             toPrint = "Move " + soldiers + " soldiers from " + sourceCountryName + " to " + destinationCountryName;
@@ -267,6 +269,7 @@ public class RiskGameController {
                 /*Todo: attack doesn't need to be checked(?)*/
                 if (attackDone) {
                     if (fortifyDone) {
+                        turnDone = false;
                         mainChangeTurn();
                         toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
                     } else {
@@ -357,6 +360,9 @@ public class RiskGameController {
         return attackDone;
     }
 
+    public boolean getTurnDone() {
+        return turnDone;
+    }
     public void setAttackDone(boolean status) {
         attackDone = status;
     }
