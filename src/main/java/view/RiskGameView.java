@@ -80,7 +80,7 @@ public class RiskGameView {
             /* Check manual placement*/
             Matcher manualPlacementMatcher = placeSoldierManual.matcher(inputLine);
             check = manualPlacementMatcher.matches();
-            if (check == true && !placementStatus && (boolean)riskGameController.getPrimitiveSettings().get("Placement")) {
+            if (check == true && placementStatus && (boolean)riskGameController.getPrimitiveSettings().get("Placement")) {
                 String countryDetails = manualPlacementMatcher.group("countryDetails");
                 placeSoldier(countryDetails, 1);
             }
