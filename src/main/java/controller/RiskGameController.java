@@ -136,24 +136,14 @@ public class RiskGameController {
         }
     }
 
-    public String draft(String sourceCountry, int soldiers) {
+    public String draft(String countryDetails, int soldiers) {
+
         String toPrint = "";
-        String[] sourceDetails = sourceCountry.split("\\.");
-        String sourceCountryName = sourceDetails[0];
-        int sourceNumber = Integer.parseInt(sourceDetails[1]);
-        boolean sourceCountryValid = false;
-        Country source = getCountryByDetails(sourceCountryName, sourceNumber);
-        if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
-            sourceCountryValid = true;
-        }
-        if (!sourceCountryValid) {
-            toPrint = "Source country is not valid";
-        } else if (sourceCountryValid && (soldiers > currentPlayer.getNewSoldiers() || soldiers < 0)) {
-            toPrint = "Soldiers are not enough or not valid";
+        if (soldiers > currentPlayer.getNewSoldiers() || soldiers < 1) {
+            toPrint = "Soldiers are not enough or invalid";
         } else {
-            placeSoldier(source, soldiers);
+            placeSoldier(countryDetails, soldiers);
             currentPlayer.addNewSoldiers(-soldiers);
-            toPrint = "Add " + soldiers + " soldiers to " + sourceCountryName;
         }
 
         return toPrint;
@@ -337,12 +327,12 @@ public class RiskGameController {
         Country toCheckCountry = this.getCountryByDetails(countryContinent, countryContinentNumber);
         if (!this.getDraftDone()) {
             if (toCheckCountry.getName() == null) {
-                toPrint = "Chosen country is invalid. Plese try again";
+                toPrint = "Chosen country is invalid. Please try again";
             } else {
                 if (toCheckCountry.getOwner().equals(currentPlayer) || toCheckCountry.getOwner() == null) {
                     toCheckCountry.setOwner(currentPlayer);
                     toCheckCountry.addSoldiers(soldiers);
-                    toPrint = currentPlayer.getPlayerNumber() + " add one soldier to "
+                    toPrint = currentPlayer.getPlayerNumber() + " add " + soldiers + " soldiers to "
                             + toCheckCountry.getName();
                     this.setDraftDone(true);
                 } else {
