@@ -87,19 +87,15 @@ public class RiskGameView {
             /* Check draft mode*/
             Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
             check = placeSoldierMatcher.matches();
-            if (check == true && !placementStatus) {
+            if (check == true && !placementStatus && riskGameController.getDraftDone()) {
                 String countryDetails = placeSoldierMatcher.group("countryDetails");
                 int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
-                if (riskGameController.getRemainSoldiers() > 0) {
-                    draft(countryDetails, soldierNumber);
-                } else {
-                    draftMode = false;
-                }
+                draft(countryDetails, soldierNumber);
             }
             /* Check fortify mode*/
             Matcher fortifyMatcher = fortifyPattern.matcher(inputLine);
             check = fortifyMatcher.matches();
-            if (check == true && !placementStatus) {
+            if (check == true && !placementStatus && riskGameController.getFortifyDone()) {
                 String sourceCountry = fortifyMatcher.group("sourceCountry");
                 String destinationCountry = fortifyMatcher.group("destinationCountry");
                 int soldierNumber = Integer.parseInt(fortifyMatcher.group("soldierNumber"));
