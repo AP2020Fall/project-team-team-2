@@ -2,6 +2,7 @@ package view;
 
 import controller.GamesMenuController;
 import model.Account;
+import model.Player;
 
 import java.util.regex.Matcher;
 
@@ -42,7 +43,7 @@ public class GamesMenu extends Menu {
         if (!controller.gameIsListed(gameName)) {
             System.out.println("invalid game!");
         } else {
-            //run the game
+            controller.run(gameName,(Player)account);
         }
     }
 

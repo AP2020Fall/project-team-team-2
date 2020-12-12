@@ -116,4 +116,26 @@ public class AdminMainMenuController extends Controller {
                         "Username passed to AdminMainMenu.sendMessage doesn't exist."), null);
         message1.sendMessage();
     }
+
+    public void addGame(String gameName, String gameDetail)
+    {
+        //creates a game and adds it to the list of games
+        Game game = new Game(gameName,generateId(),gameDetail);
+        Game.addGame(game);
+    }
+
+    public void changeGameName(String currGameName,String newGameName)
+    {
+        Game game =Objects.requireNonNull( Game.getGameByGameName(currGameName),
+                "Game passed to AdminMainMenuController.changeGameName doesn't exist.");
+        game.setName(newGameName);
+    }
+
+    public void removeGame(String gameName)
+    {
+        Game game =Objects.requireNonNull( Game.getGameByGameName(gameName),
+                "Game passed to AdminMainMenuController.removeGame doesn't exist.");
+        Game.getGames().remove(game);
+    }
+
 }
