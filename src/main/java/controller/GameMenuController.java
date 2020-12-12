@@ -3,11 +3,12 @@ package controller;
 import model.Game;
 import model.PlayLog;
 import model.Player;
+import view.StartGameView;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class GameMenuController {
+public class GameMenuController extends Controller{
     private Game game;
     private Player player;
 
@@ -52,7 +53,14 @@ public class GameMenuController {
         player.getFavouriteGames().add(game);
     }
 
-    public void runGame() {
+    public void runGame(ArrayList<String> usernames) {
+        ArrayList<Player> players = new ArrayList<>();
+        for(String username: usernames)
+        {
+            players.add(Objects.requireNonNull(Player.getPlayerByUsername(username),
+                    "Username passed to runGame doesn't exist."));
+        }
+        //new StartGameView(players);
     }
 
     public int showPoints() {
