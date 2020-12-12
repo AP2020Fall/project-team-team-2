@@ -252,6 +252,13 @@ public class RiskGameController {
 
     /* Draf-Attck-forfeit */
     public void next() {
+        if(draftDone){
+
+        }else if(attackDone){
+
+        }else if(fortifyDone){
+
+        }
     }
 
     public void mainChangeTurn() {
@@ -339,12 +346,12 @@ public class RiskGameController {
             if (toCheckCountry.getName() == null) {
                 toPrint = "Chosen country is invalid. Plese try again";
             } else {
-                if (toCheckCountry.getOwner().equals(currentPlayer) || toCheckCountry.getOwner() == null) {
+                if ( toCheckCountry.getOwner() == null || toCheckCountry.getOwner().equals(currentPlayer)) {
                     toCheckCountry.setOwner(currentPlayer);
                     toCheckCountry.addSoldiers(soldiers);
                     toPrint = currentPlayer.getPlayerNumber() + " add one soldier to "
                             + toCheckCountry.getName();
-                    this.setDraftDone(true);
+                    this.setDraftDone(false);
                 } else {
                     toPrint = "Please choose a country that is yours or no one has been chosen it yet";
                 }
