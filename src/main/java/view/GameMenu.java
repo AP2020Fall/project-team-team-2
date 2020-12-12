@@ -6,6 +6,7 @@ import model.Account;
 
 public class GameMenu extends Menu {
     GameMenuController controller;
+
     public GameMenu(Account account) {
         super(account);
 //        GameMenuController controller = new GameMenuController(null);
@@ -45,7 +46,7 @@ public class GameMenu extends Menu {
     }
 
     private void showPoints() {
-        controller.showPoints();
+        System.out.println(controller.showPoints());
     }
 
     private void runGame() {
@@ -54,26 +55,29 @@ public class GameMenu extends Menu {
 
     private void addToFavorites() {
         controller.addToFavorites();
+        System.out.println("added successfully!");
     }
 
     private void showPlayedCount() {
-        controller.showPlayedCount();
+        System.out.println(controller.showPlayedCount());
     }
 
     private void showWinsCount() {
-        controller.showWinsCount();
+        System.out.println(controller.showWinsCount());
     }
 
     private void showLog() {
-        controller.showLog();
+        for (String log : controller.showLog()) {
+            System.out.println(log);
+        }
     }
 
     private void details() {
-        controller.showDetails();
+        System.out.println(controller.showDetails());
     }
 
     private void showScoreboard() {
-        controller.showScoreBoard();
+        System.out.println(controller.showScoreBoard());
     }
 
     private void help() {
