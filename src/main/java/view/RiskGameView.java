@@ -91,11 +91,7 @@ public class RiskGameView {
             if (check == true && placementStatus) {
                 String countryDetails = placeSoldierMatcher.group("countryDetails");
                 int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
-                if (riskGameController.getRemainSoldiers() > 0) {
-                    draft(countryDetails, soldierNumber);
-                } else {
-                    draftMode = false;
-                }
+                draft(countryDetails, soldierNumber);
                 commandFound = true;
             }
             /* Check attack mode */
@@ -115,11 +111,7 @@ public class RiskGameView {
                 String sourceCountry = fortifyMatcher.group("sourceCountry");
                 String destinationCountry = fortifyMatcher.group("destinationCountry");
                 int soldierNumber = Integer.parseInt(fortifyMatcher.group("soldierNumber"));
-                if (riskGameController.getRemainSoldiers() > 0) {
-                    fortify(sourceCountry, destinationCountry, soldierNumber);
-                } else {
-                    fortifyMode = false;
-                }
+                fortify(sourceCountry, destinationCountry, soldierNumber);
                 commandFound = true;
             }
             /* Show Map Match*/
