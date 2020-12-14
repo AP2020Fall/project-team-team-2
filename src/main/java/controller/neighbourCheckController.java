@@ -81,12 +81,36 @@ public class neighbourCheckController {
                 if (up)
                     return true;
 
+                // traverse up
+                boolean upRight = isPath(matrix, i - 1, j + 1, visited);
+
+                // if path is found in up
+                // direction return true
+                if (upRight)
+                    return true;
+
+                // traverse up
+                boolean upLeft = isPath(matrix, i - 1, j - 1, visited);
+
+                // if path is found in up
+                // direction return true
+                if (upLeft)
+                    return true;
+
                 // traverse left
                 boolean left = isPath(matrix, i, j - 1, visited);
 
                 // if path is found in left
                 // direction return true
                 if (left)
+                    return true;
+
+                // traverse right
+                boolean right = isPath(matrix, i, j + 1, visited);
+
+                // if path is found in right
+                // direction return true
+                if (right)
                     return true;
 
                 // traverse down
@@ -97,13 +121,22 @@ public class neighbourCheckController {
                 if (down)
                     return true;
 
-                // traverse right
-                boolean right = isPath(matrix, i, j + 1, visited);
+                // traverse down
+                boolean downRight = isPath(matrix, i + 1, j + 1, visited);
 
-                // if path is found in right
+                // if path is found in down
                 // direction return true
-                if (right)
+                if (downRight)
                     return true;
+
+                // traverse down
+                boolean downLeft = isPath(matrix, i + 1, j - 1, visited);
+
+                // if path is found in down
+                // direction return true
+                if (downLeft)
+                    return true;
+
             }
             // no path has been found
             return false;
