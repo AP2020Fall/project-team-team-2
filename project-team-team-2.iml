@@ -23,5 +23,7 @@
     <orderEntry type="jdk" jdkName="15" jdkType="JavaSDK" />
     <orderEntry type="library" exported="" name="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER" level="application" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="gson-2.8.2" level="project" />
+    <orderEntry type="library" name="junit-4.13" level="project" />
   </component>
 </module>
