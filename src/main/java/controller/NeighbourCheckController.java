@@ -8,10 +8,14 @@ import model.Countries;
 public class NeighbourCheckController {
     Player currentPlayer;
     Country sourceContry;
-    Country DestinationCountry;
+    Country destinationCountry;
     Countries mapCountries;
 
-
+    public NeighbourCheckController{
+        currentPlayer = new Player();
+        sourceContry = new Country();
+        destinationCountry = new Country();
+    }
 
     // Method for finding and printing
     // whether the path exists or not
