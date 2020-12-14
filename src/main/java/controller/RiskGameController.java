@@ -22,6 +22,7 @@ public class RiskGameController {
     private boolean draftDone;
     private boolean attackDone;
     private boolean fortifyDone;
+    private boolean turnDone;
     private int startSoldiers;
     private String gameID;
     private boolean placementFinished = false;
@@ -136,24 +137,14 @@ public class RiskGameController {
         }
     }
 
-    public String draft(String sourceCountry, int soldiers) {
+    public String draft(String countryDetails, int soldiers) {
+
         String toPrint = "";
-        String[] sourceDetails = sourceCountry.split("\\.");
-        String sourceCountryName = sourceDetails[0];
-        int sourceNumber = Integer.parseInt(sourceDetails[1]);
-        boolean sourceCountryValid = false;
-        Country source = getCountryByDetails(sourceCountryName, sourceNumber);
-        if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
-            sourceCountryValid = true;
-        }
-        if (!sourceCountryValid) {
-            toPrint = "Source country is not valid";
-        } else if (sourceCountryValid && (soldiers > currentPlayer.getNewSoldiers() || soldiers < 0)) {
-            toPrint = "Soldiers are not enough or not valid";
+        if (soldiers > currentPlayer.getNewSoldiers() || soldiers < 1) {
+            toPrint = "Soldiers are not enough or invalid";
         } else {
-            placeSoldier(source, soldiers);
+            placeSoldier(countryDetails, soldiers);
             currentPlayer.addNewSoldiers(-soldiers);
-            toPrint = "Add " + soldiers + " soldiers to " + sourceCountryName;
         }
 
         return toPrint;
@@ -252,6 +243,7 @@ public class RiskGameController {
         } else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers() - 1) || soldiers < 1)) {
             toPrint = "Soldiers are not enough or not valid";
         } else {
+            turnDone = true;
             source.addSoldiers(-soldiers);
             destination.addSoldiers(soldiers);
             toPrint = "Move " + soldiers + " soldiers from " + sourceCountryName + " to " + destinationCountryName;
@@ -301,6 +293,7 @@ public class RiskGameController {
                 /*Todo: attack doesn't need to be checked(?)*/
                 if (attackDone) {
                     if (fortifyDone) {
+                        turnDone = false;
                         mainChangeTurn();
                         toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
                         setDraftDone(false);
@@ -407,6 +400,8 @@ public class RiskGameController {
     public void setDraftDone(boolean status) {
         draftDone = status;
     }
+
+    public boolean getTurnDone() { return turnDone; }
 
     public boolean getAttackDone() {
         return attackDone;
