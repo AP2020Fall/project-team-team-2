@@ -114,6 +114,7 @@ public class RiskGameView {
                 fortify(sourceCountry, destinationCountry, soldierNumber);
                 commandFound = true;
             }
+
             /* Show Map Match*/
             Matcher showMapMatcher = showMapPattern.matcher(inputLine);
             check = showMapMatcher.matches();
