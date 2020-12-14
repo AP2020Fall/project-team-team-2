@@ -171,21 +171,33 @@ public class RiskGameController {
         boolean destinationCountryValid = false;
         Country source = getCountryByDetails(sourceCountryName, sourceNumber);
         Country destination = getCountryByDetails(destinationCountryName, destinationNumber);
+        boolean errorFound = false;
         if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
             sourceCountryValid = true;
         }
         if (destination.getOwner() != null && !destination.getOwner().equals(currentPlayer)) {
             destinationCountryValid = true;
         }
-        if (!sourceCountryValid) {
+        if (!sourceCountryValid && !errorFound) {
             toPrint = "Source country is not valid";
+            errorFound = true;
         }
-        if (sourceCountryValid && !destinationCountryValid) {
+        if (sourceCountryValid && !destinationCountryValid && !errorFound) {
             toPrint = "Destination country is not valid";
+            errorFound = true;
         }
-        if (sourceCountryValid && destinationCountryValid && (soldiers > source.getSoldiers() || soldiers < 0)) {
+        if (sourceCountryValid && destinationCountryValid && (soldiers > source.getSoldiers() || soldiers < 0) && !errorFound) {
             toPrint = "Soldiers are not enough or not valid";
-        } else {
+            errorFound = true;
+        }
+        if(!draftDone && !errorFound){
+            toPrint = "Draft didnt completed yet";
+            errorFound = true;
+        }
+        if(errorFound){
+            /*Do Nothing*/
+        }
+        else {
             boolean inWar = true;
             do {
                 int randomNumberSource = (int) Math.random() * (6 - 0 + 1) + 0;

@@ -72,6 +72,7 @@ public class RiskGameView {
         /* get input command */
         while (inputCommand.hasNextLine()) {
             boolean placementStatus = riskGameController.getPlacementFinished();
+            System.out.println(placementStatus);
             /* get input command */
             /* Command Found*/
             boolean commandFound = false;
@@ -96,6 +97,16 @@ public class RiskGameView {
                 } else {
                     draftMode = false;
                 }
+                commandFound = true;
+            }
+            /* Check attack mode */
+            Matcher attackMatcher = attackPattern.matcher(inputLine);
+            check = attackMatcher.matches();
+            if(check == true && !placementStatus){
+                String sourceCountry = attackMatcher.group("sourceCountry");
+                String destinationCountry = attackMatcher.group("destinationCountry");
+                int soldierNumber =Integer.parseInt(attackMatcher.group("soldierNumber"));
+                attack(sourceCountry , destinationCountry , soldierNumber);
                 commandFound = true;
             }
             /* Check fortify mode*/
@@ -128,7 +139,6 @@ public class RiskGameView {
                 matchCardEnable = true;
                 continue;
             }
-
             while (matchCardEnable) {
 
                 inputLine = inputCommand.nextLine().trim();
