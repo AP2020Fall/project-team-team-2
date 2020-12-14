@@ -72,7 +72,6 @@ public class RiskGameView {
         /* get input command */
         while (inputCommand.hasNextLine()) {
             boolean placementStatus = riskGameController.getPlacementFinished();
-            System.out.println(placementStatus);
             /* get input command */
             /* Command Found*/
             boolean commandFound = false;
@@ -81,7 +80,7 @@ public class RiskGameView {
             /* Check manual placement*/
             Matcher manualPlacementMatcher = placeSoldierManual.matcher(inputLine);
             check = manualPlacementMatcher.matches();
-            if (check == true && !placementStatus && (boolean)riskGameController.getPrimitiveSettings().get("Placement")) {
+            if (check == true && !placementStatus) {
                 String countryDetails = manualPlacementMatcher.group("countryDetails");
                 placeSoldier(countryDetails, 1);
                 commandFound = true;
@@ -89,7 +88,7 @@ public class RiskGameView {
             /* Check draft mode*/
             Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
             check = placeSoldierMatcher.matches();
-            if (check == true && !placementStatus) {
+            if (check == true && placementStatus) {
                 String countryDetails = placeSoldierMatcher.group("countryDetails");
                 int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
                 if (riskGameController.getRemainSoldiers() > 0) {
@@ -102,7 +101,7 @@ public class RiskGameView {
             /* Check attack mode */
             Matcher attackMatcher = attackPattern.matcher(inputLine);
             check = attackMatcher.matches();
-            if(check == true && !placementStatus){
+            if(check == true && placementStatus){
                 String sourceCountry = attackMatcher.group("sourceCountry");
                 String destinationCountry = attackMatcher.group("destinationCountry");
                 int soldierNumber =Integer.parseInt(attackMatcher.group("soldierNumber"));
@@ -112,7 +111,7 @@ public class RiskGameView {
             /* Check fortify mode*/
             Matcher fortifyMatcher = fortifyPattern.matcher(inputLine);
             check = fortifyMatcher.matches();
-            if (check == true && !placementStatus) {
+            if (check == true && placementStatus) {
                 String sourceCountry = fortifyMatcher.group("sourceCountry");
                 String destinationCountry = fortifyMatcher.group("destinationCountry");
                 int soldierNumber = Integer.parseInt(fortifyMatcher.group("soldierNumber"));

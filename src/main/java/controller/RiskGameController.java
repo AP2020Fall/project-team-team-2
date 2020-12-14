@@ -191,7 +191,7 @@ public class RiskGameController {
             errorFound = true;
         }
         if(!draftDone && !errorFound){
-            toPrint = "Draft didnt completed yet";
+            toPrint = "Draft didn't completed yet";
             errorFound = true;
         }
         if(errorFound){
@@ -218,6 +218,7 @@ public class RiskGameController {
                 }
                 if (source.getSoldiers() == 0 || destination.getSoldiers() == 0) {
                     inWar = false;
+                    setAttackDone(true);
                 }
             } while (inWar);
 
@@ -254,6 +255,7 @@ public class RiskGameController {
             source.addSoldiers(-soldiers);
             destination.addSoldiers(soldiers);
             toPrint = "Move " + soldiers + " soldiers from " + sourceCountryName + " to " + destinationCountryName;
+            setFortifyDone(true);
         }
         return toPrint;
     }
