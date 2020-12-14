@@ -26,13 +26,10 @@ public class neighbourCheckController {
                 for (int j = 0; j < n; j++) {
                     // if matrix[i][j] is source
                     // and it is not visited
-                    if (
-                            matrix[i][j] == 1
-                                    && !visited[i][j])
-
+                    if (matrix[i][j] == 1 && !visited[i][j])
                         // Starting from i, j and
                         // then finding the path
-                        if (isPath( matrix, i, j, visited)) {
+                        if (isPath(matrix, i, j, visited)) {
                             // if path exists
                             flag = true;
                             break;
@@ -144,13 +141,10 @@ public class neighbourCheckController {
 
         // driver program to
         // check above function
-        public void main(String[] args)
+        public void setCountryNumbers(Country sourceCountry, Country destinationCountry)
         {
 
-            int matrix[][] = { { 0, 3, 0, 1 },
-                    { 3, 0, 3, 3 },
-                    { 2, 3, 3, 3 },
-                    { 0, 3, 3, 3 } };
+
 
             // calling isPath method
             isPath(matrix, 4);
