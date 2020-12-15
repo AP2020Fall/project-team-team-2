@@ -188,7 +188,7 @@ public class RiskGameController {
         if(errorFound){
             /*Do Nothing*/
         }
-        else {
+        else if (attackNeighbourhoodCheck(source, destination)){
             boolean inWar = true;
             do {
                 int randomNumberSource = (int) Math.random() * (6 - 0 + 1) + 0;
@@ -242,7 +242,7 @@ public class RiskGameController {
             toPrint = "Destination country is not valid";
         } else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers() - 1) || soldiers < 1)) {
             toPrint = "Soldiers are not enough or not valid";
-        } else {
+        } else if(fortifyNeighbourhoodCheck(source, destination)){
             turnDone = true;
             source.addSoldiers(-soldiers);
             destination.addSoldiers(soldiers);
@@ -672,13 +672,15 @@ public class RiskGameController {
         int column = gameCountries.get(0).size() - 1;
         int[][] countryNumbers = attackMakeCountryNumbers(sourceCountry, destinationCountry);
 
-        return isPath(countryNumbers, row, column);;
+        return isPath(countryNumbers, row, column);
     }
 
     public boolean fortifyNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
+        int row = gameCountries.size() - 1;
+        int column = gameCountries.get(0).size() - 1;
+        int[][] countryNumbers = fortifyMakeCountryNumbers(sourceCountry, destinationCountry);
 
-
-        return true;
+        return isPath(countryNumbers, row, column);
     }
 
 }
