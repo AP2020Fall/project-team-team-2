@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -53,6 +54,12 @@ public class AdminMainMenuController extends Controller {
 
     public void removeEvent(String eventId) {
         //removes eventId from the list
+        File file = new File("database" + "\\" + "events" + "\\" + eventId + ".json");
+        try {
+            if (file.exists())
+                file.delete();
+        } catch (Exception ignored) {
+        }
         Event.getEvents().removeIf(a -> a.getEventId().equals(eventId));
     }
 
@@ -74,24 +81,32 @@ public class AdminMainMenuController extends Controller {
         Suggestion.addSuggestion(suggestion);
     }
 
-    public boolean playerBeenSuggested(String username,String gameName)
-    {
+    public boolean playerBeenSuggested(String username, String gameName) {
         //checks if gameName been suggested to username
         //throws NullPointerException if username doesn't exist or game doesnt exist.
         Player player = Objects.requireNonNull(Player.getPlayerByUsername(username),
                 "Username passed to AdminMainMenuController.playerBeenSuggested doesn't exist.");
         Game game = Objects.requireNonNull(Game.getGameByGameName(gameName),
                 "Game passed to AdminMainMenuController.playerBeenSuggested doesn't exist.");
-       return player.suggestionExists(gameName);
+        return player.suggestionExists(gameName);
     }
+
     public ArrayList<Suggestion> showSuggestions() {
         //returns the list of suggestions
         return Suggestion.getSuggestions();
     }
 
     public void removeSuggestion(String suggestionId) {
+
         //removes a suggestion for the player's suggestions
         //throws NullPointerException if suggestionId doesn't exist.
+
+        File file = new File("database" + "\\" + "suggestions" + "\\" + suggestionId + ".json");
+        try {
+            if (file.exists())
+                file.delete();
+        } catch (Exception ignored) {
+        }
         Suggestion suggestion = Objects.requireNonNull(Suggestion.getSuggestionById(suggestionId),
                 "SuggestionId passed to AdminMainMenuController.removeSuggestion doesn't exist.");
         suggestion.getPlayer().removeSuggestion(suggestion);
@@ -124,8 +139,17 @@ public class AdminMainMenuController extends Controller {
         //removes gameName from the list.
         //throws NullPointerException if gameName doesn't exist.
         /*ToDo: remove all gameLogs and suggestions and events*/
+
         Game game = Objects.requireNonNull(Game.getGameByGameName(gameName),
                 "Game passed to AdminMainMenuController.removeGame doesn't exist.");
+
+        File file = new File("database" + "\\" + "games" + "\\" + game.getGameId() + ".json");
+        try {
+            if (file.exists())
+                file.delete();
+        } catch (Exception ignored) {
+        }
+
         Game.getGames().remove(game);
     }
 

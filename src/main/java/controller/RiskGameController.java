@@ -188,7 +188,7 @@ public class RiskGameController {
         if(errorFound){
             /*Do Nothing*/
         }
-        else {
+        else if (attackNeighbourhoodCheck(source, destination)){
             boolean inWar = true;
             do {
                 int randomNumberSource = (int) Math.random() * (6 - 0 + 1) + 0;
@@ -214,6 +214,8 @@ public class RiskGameController {
             } while (inWar);
 
 
+        } else {
+            toPrint = "there is not any path between source and destination country";
         }
         return toPrint;
     }
@@ -242,13 +244,16 @@ public class RiskGameController {
             toPrint = "Destination country is not valid";
         } else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers() - 1) || soldiers < 1)) {
             toPrint = "Soldiers are not enough or not valid";
-        } else {
+        } else if(fortifyNeighbourhoodCheck(source, destination)){
             turnDone = true;
             source.addSoldiers(-soldiers);
             destination.addSoldiers(soldiers);
             toPrint = "Move " + soldiers + " soldiers from " + sourceCountryName + " to " + destinationCountryName;
             setFortifyDone(true);
+        } else {
+            toPrint = "there is not any path between source and destination country";
         }
+
         return toPrint;
     }
 
@@ -490,4 +495,197 @@ public class RiskGameController {
     public void setPlacementFinished(boolean placementFinished) {
         this.placementFinished = placementFinished;
     }
+
+
+    public boolean isPath( int CountryNumbers[][], int n, int m)
+    {
+        // Defining visited array to keep
+        // track of already visited indexes
+        boolean visited[][]
+                = new boolean[n][m];
+
+        // Flag to indicate whether the
+        // path exists or not
+        boolean flag = false;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // if matrix[i][j] is source
+                // and it is not visited
+                if (CountryNumbers[i][j] == 1 && !visited[i][j])
+                    // Starting from i, j and
+                    // then finding the path
+                    if (isPath(CountryNumbers, i, j, visited)) {
+                        // if path exists
+                        flag = true;
+                        break;
+                    }
+            }
+        }
+        if (flag)
+            return true;
+        else
+            return false;
+    }
+
+    // Method for checking boundries
+    public boolean isSafe( int i, int j, int CountryNumbers[][])
+    {
+
+        if ( i >= 0 && i < CountryNumbers.length && j >= 0 && j < CountryNumbers[0].length)
+            return true;
+        return false;
+    }
+
+    // Returns true if there is a
+    // path from a source (a
+    // cell with value 1) to a
+    // destination (a cell with
+    // value 2)
+    public boolean isPath( int CountryNumbers[][], int i, int j, boolean visited[][])
+    {
+
+        // Checking the boundries, walls and
+        // whether the cell is unvisited
+        if ( isSafe(i, j, CountryNumbers) && CountryNumbers[i][j] != 0 && !visited[i][j]) {
+            // Make the cell visited
+            visited[i][j] = true;
+
+            // if the cell is the required
+            // destination then return true
+            if (CountryNumbers[i][j] == 2)
+                return true;
+
+            // traverse up
+            boolean up = isPath(CountryNumbers, i - 1, j, visited);
+
+            // if path is found in up
+            // direction return true
+            if (up)
+                return true;
+
+            // traverse up
+            boolean upRight = isPath(CountryNumbers, i - 1, j + 1, visited);
+
+            // if path is found in up
+            // direction return true
+            if (upRight)
+                return true;
+
+            // traverse up
+            boolean upLeft = isPath(CountryNumbers, i - 1, j - 1, visited);
+
+            // if path is found in up
+            // direction return true
+            if (upLeft)
+                return true;
+
+            // traverse left
+            boolean left = isPath(CountryNumbers, i, j - 1, visited);
+
+            // if path is found in left
+            // direction return true
+            if (left)
+                return true;
+
+            // traverse right
+            boolean right = isPath(CountryNumbers, i, j + 1, visited);
+
+            // if path is found in right
+            // direction return true
+            if (right)
+                return true;
+
+            // traverse down
+            boolean down = isPath(CountryNumbers, i + 1, j, visited);
+
+            // if path is found in down
+            // direction return true
+            if (down)
+                return true;
+
+            // traverse down
+            boolean downRight = isPath(CountryNumbers, i + 1, j + 1, visited);
+
+            // if path is found in down
+            // direction return true
+            if (downRight)
+                return true;
+
+            // traverse down
+            boolean downLeft = isPath(CountryNumbers, i + 1, j - 1, visited);
+
+            // if path is found in down
+            // direction return true
+            if (downLeft)
+                return true;
+
+        }
+        // no path has been found
+        return false;
+    }
+
+    public int[][] attackMakeCountryNumbers(Country sourceCountry, Country destinationCountry) {
+        int row = gameCountries.size() - 1;
+        int column = gameCountries.get(0).size() - 1;
+        int[][] countryNumbers = new int[row][column];
+
+        for(int i=0; i<row; i++){
+            for(int j=0; j<column; j++){
+                if( gameCountries.get(i).get(j).getName().equals(sourceCountry.getName()) ){
+                    countryNumbers[i][j] = 1;
+                }
+                else if( gameCountries.get(i).get(j).getName().equals(destinationCountry.getName()) ){
+                    countryNumbers[i][j] = 2;
+                }
+                else {
+                    countryNumbers[i][j] = 0;
+                }
+            }
+        }
+
+        return countryNumbers;
+    }
+
+    public int[][] fortifyMakeCountryNumbers(Country sourceCountry, Country destinationCountry){
+        int row = gameCountries.size() - 1;
+        int column = gameCountries.get(0).size() - 1;
+        int[][] countryNumbers = new int[row][column];
+
+        for(int i=0; i<row; i++){
+            for(int j=0; j<column; j++){
+                if( gameCountries.get(i).get(j).getName().equals(sourceCountry.getName()) ){
+                    countryNumbers[i][j] = 1;
+                }
+                else if( gameCountries.get(i).get(j).getName().equals(destinationCountry.getName()) ){
+                    countryNumbers[i][j] = 2;
+                }
+                else if( gameCountries.get(i).get(j).getOwner().getUsername().equals(sourceCountry.getOwner().getUsername()) ){
+                    countryNumbers[i][j] = 3;
+                }
+                else {
+                    countryNumbers[i][j] = 0;
+                }
+            }
+        }
+
+        return countryNumbers;
+    }
+
+    public boolean attackNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
+        int row = gameCountries.size() - 1;
+        int column = gameCountries.get(0).size() - 1;
+        int[][] countryNumbers = attackMakeCountryNumbers(sourceCountry, destinationCountry);
+
+        return isPath(countryNumbers, row, column);
+    }
+
+    public boolean fortifyNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
+        int row = gameCountries.size() - 1;
+        int column = gameCountries.get(0).size() - 1;
+        int[][] countryNumbers = fortifyMakeCountryNumbers(sourceCountry, destinationCountry);
+
+        return isPath(countryNumbers, row, column);
+    }
+
 }
