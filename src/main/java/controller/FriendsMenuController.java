@@ -61,9 +61,18 @@ public class FriendsMenuController extends Controller {
         //returns the username of those who send a friendRequest to player.
         ArrayList<String> result = new ArrayList<>();
         for (FriendRequest friendRequest : player.getFriendRequests())
-            result.add(friendRequest.getFriend().getUsername());
+            result.add(friendRequest.getPlayer().getUsername());
         return result;
     }
+
+    public boolean hasSentFriendRequest(String username)
+    {
+        for(FriendRequest friendRequest:player.getFriendRequests())
+            if(friendRequest.getPlayer().getUsername().equals(username))
+                return true;
+            return false;
+    }
+
 
     public void acceptFriendRequest(String username) {
         //accepts the request of username and adds him to friends. adds player to friends of username.

@@ -25,6 +25,7 @@ public class FriendRequest {
         player.getFriends().add(friend);
         friend.getFriends().add(player);
         friend.getFriendRequests().remove(this);
+        player.getFriendRequests().removeIf(o->o.player.getAccountId().equals(friend.getAccountId()));
     }
 
     public void declineRequest() {

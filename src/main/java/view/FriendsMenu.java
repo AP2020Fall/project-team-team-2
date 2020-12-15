@@ -59,14 +59,17 @@ public class FriendsMenu extends Menu {
     private void accept(String username) {
         if (!controller.isUsernameExist(username)) {
             System.out.println("username does not exist!");
-        } else if (controller.friendExists(username)) {
-            System.out.println("this user has already been your friend");
+        } else if (!controller.hasSentFriendRequest(username)) {
+            System.out.println("this user hasn not send a friend request");
         } else {
             controller.acceptFriendRequest(username);
         }
     }
 
     private void showFriendsRequests() {
+        if (controller.showFriendRequests().isEmpty())
+            System.out.println("No friend requests.");
+        else
         for (String friend : controller.showFriendRequests()) {
             System.out.println(friend);
         }
@@ -77,8 +80,9 @@ public class FriendsMenu extends Menu {
             System.out.println("username does not exist!");
         } else if (controller.friendExists(username)) {
             System.out.println("this user has already been your friend");
-
-        } else {
+        }else if(account.getUsername().equals(username))
+            System.out.println("can't add yourself.");
+        else {
             controller.addFriend(username);
         }
     }
@@ -101,6 +105,9 @@ public class FriendsMenu extends Menu {
     }
 
     private void showFriends() {
+        if(controller.showFriends().isEmpty())
+            System.out.println("No friends.");
+        else
         for (String friend : controller.showFriends()) {
             System.out.println(friend);
         }
