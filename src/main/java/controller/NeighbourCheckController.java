@@ -11,10 +11,10 @@ public class NeighbourCheckController {
     Country destinationCountry;
     Countries mapCountries;
 
-    public NeighbourCheckController{
-        currentPlayer = new Player();
-        sourceContry = new Country();
-        destinationCountry = new Country();
+    public NeighbourCheckController(){
+//        currentPlayer = new Player();
+//        sourceContry = new Country();
+//        destinationCountry = new Country();
     }
 
     // Method for finding and printing
@@ -151,12 +151,12 @@ public class NeighbourCheckController {
     // check above function
     public void setCountryNumbers(Country sourceCountry, Country destinationCountry, Player CurrentPlayer)
     {
-        int[][] matrix = new int[][];
+//        int[][] matrix = new int[][];
 
 
 
         // calling isPath method
-        isPath(matrix, 5, 4);
+//        isPath(matrix, 5, 4);
     }
 
 
