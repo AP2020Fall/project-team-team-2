@@ -42,33 +42,34 @@ public class AccountMenuController extends Controller {
     }
 
     public ArrayList<Integer> viewPlatoStatistics() {
-        //returns an arraylist of Integer including number of friends,number of wins,number of days passed in that order.
+        //returns an arraylist of Integer including number of friends,number of wins,score,number of days passed in that order.
         ArrayList<Integer> result = new ArrayList<>();
         if (account instanceof Player) //must be checked in view
         {
             result.add(((Player) account).getFriends().size());
             result.add(((Player) account).getNumberOfWins());
+            result.add(((Player) account).getScore());
             result.add(((Player) account).getDayOfRegister());
         }
         return result;
     }
 
     public ArrayList<String> showGamesHistory() {
-        return null;
+        ArrayList<String> result = new ArrayList<>();
+        for(GameLog gameLog:( (Player)account).getGameLogs())
+            result.add(gameLog.toString());
+        return result;
     }
 
-    public ArrayList<String> showGameStatistics(String gameName) {
+    public String showGameStatistics(String gameName) {
         //returns arraylist of String, frequency, wins, losses
         //throws NullPointerException if players hasn't played gameName
-        ArrayList<String> result = new ArrayList<>();
         if (account instanceof Player)//must be checked in view
         {
             GameLog gameLog = Objects.requireNonNull(((Player) account).getGameHistory(gameName),
                     "Game passed to AccountMenuController.showGameStatistics hasn't been played.");
-            result.add(String.valueOf(gameLog.getFrequency()));
-            result.add(String.valueOf(gameLog.getWins()));
-            result.add(String.valueOf(gameLog.getLosses()));
-            return result;
+
+            return gameLog.toString();
 
         }
         return null;

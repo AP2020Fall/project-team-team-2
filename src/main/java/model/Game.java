@@ -27,6 +27,13 @@ public class Game {
         scoreboard = new Scoreboard();
     }
 
+    public static Game getGameById(String gameId) {
+        for(Game game:games)
+            if(game.gameId.equals(gameId))
+                return game;
+            return null;
+    }
+
     public String getGameId() {
         return gameId;
     }

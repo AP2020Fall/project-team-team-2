@@ -1,35 +1,37 @@
 package model;
 
 public class FriendRequest {
-    private Player friend;
-    private Player player;
+    private String friendId;
+    private String playerId;
 
     public FriendRequest(Player friend, Player player) {
-        this.friend = friend;
-        this.player = player;
+        this.friendId = friend.getAccountId();
+        this.playerId = player.getAccountId();
     }
 
     public Player getFriend() {
-        return friend;
+        return Player.getPlayerById(friendId);
     }
 
     public Player getPlayer() {
-        return player;
+        return Player.getPlayerById(playerId);
     }
 
     public void sendRequest() {
-        friend.getFriendRequests().add(this);
+        Player.getPlayerById(friendId).getFriendRequests().add(this);
     }
 
     public void acceptRequest() {
+        Player player =  Player.getPlayerById(playerId);
+        Player friend =  Player.getPlayerById(friendId);
         player.getFriends().add(friend);
         friend.getFriends().add(player);
         friend.getFriendRequests().remove(this);
-        player.getFriendRequests().removeIf(o->o.player.getAccountId().equals(friend.getAccountId()));
+        player.getFriendRequests().removeIf(o->o.getPlayer().getAccountId().equals(friend.getAccountId()));
     }
 
     public void declineRequest() {
-        friend.getFriendRequests().remove(this);
+        Player.getPlayerById(friendId).getFriendRequests().remove(this);
     }
 
 }
