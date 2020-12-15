@@ -1,0 +1,32 @@
+{
+  "registerDay": {
+    "year": 2020,
+    "month": 12,
+    "day": 16
+  },
+  "money": 500.0,
+  "score": 0,
+  "newSoldiers": 0,
+  "gameLogs": [],
+  "friends": [],
+  "friendRequests": [
+    {
+      "friendId": "6FB33F14",
+      "playerId": "4C71CC08"
+    }
+  ],
+  "messages": [],
+  "cards": [],
+  "favouriteGames": [],
+  "suggestions": [],
+  "playerNumber": 0,
+  "draftSoldiers": 0,
+  "firstName": "amin",
+  "lastName": "zinoghli",
+  "username": "player3",
+  "accountId": "6FB33F14",
+  "password": "player3pass",
+  "email": "aminzinoghli@gmail.com",
+  "phoneNumber": "09105734731",
+  "isRobot": false
+}
