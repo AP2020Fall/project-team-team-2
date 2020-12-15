@@ -26,7 +26,6 @@ public class Player extends Account {
         super(botName, username);
     }
 
-    //private static final ArrayList<Player> allPlayers = new ArrayList<>();
     private LocalDate registerDay;
     private double money;
     private int score;
@@ -38,13 +37,8 @@ public class Player extends Account {
     private ArrayList<Card> cards;
     private ArrayList<Game> favouriteGames;
     private ArrayList<Suggestion> suggestions;
-   // private Suggestion suggestion;
     private int playerNumber;
     private int draftSoldiers = 0;
-
-    /*public static ArrayList<Player> getAllPlayers() {
-        return allPlayers;
-    }*/
 
     public int getDayOfRegister() {
         return (int) ChronoUnit.DAYS.between( registerDay,LocalDate.now());
