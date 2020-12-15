@@ -53,10 +53,7 @@ public class AccountMenu extends Menu {
             if (!gameName.equals("RiskGame")) {
                 System.out.println("Game dose not exists!");
             } else {
-                ArrayList<String> results = controller.showGameStatistics(gameName);
-                System.out.println("frequency: " + results.get(0) +
-                        "\nwins: " + results.get(1) +
-                        "\nlosses: " + results.get(2));
+                System.out.println(controller.showGameStatistics(gameName));
             }
         } else {
             System.out.println("you are not a player!");
@@ -65,7 +62,8 @@ public class AccountMenu extends Menu {
 
     private void gameHistory() {
         if (account instanceof Player) {
-            controller.showGamesHistory();
+            for(String gameHistory: controller.showGamesHistory())
+                System.out.println(gameHistory);
         } else {
             System.out.println("you are not a player!");
         }
@@ -76,6 +74,7 @@ public class AccountMenu extends Menu {
             ArrayList<Integer> results = controller.viewPlatoStatistics();
             System.out.println("number of friends: " + results.get(0) +
                     "\nnumber of wins: " + results.get(1) +
+                    "\nscore: " + results.get(2) +
                     "\nnumber of day passed: " + results.get(2));
         } else {
             System.out.println("you are not a player!");
