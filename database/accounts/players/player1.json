@@ -1,0 +1,29 @@
+{
+  "registerDay": {
+    "year": 2020,
+    "month": 12,
+    "day": 16
+  },
+  "money": 500.0,
+  "score": 0,
+  "newSoldiers": 0,
+  "gameLogs": [],
+  "friends": [
+    "player2"
+  ],
+  "friendRequests": [],
+  "messages": [],
+  "cards": [],
+  "favouriteGames": [],
+  "suggestions": [],
+  "playerNumber": 0,
+  "draftSoldiers": 0,
+  "firstName": "alex",
+  "lastName": "zinoghli",
+  "username": "player1",
+  "accountId": "58F37276",
+  "password": "player1pass",
+  "email": "alexzinoghli@gmail.com",
+  "phoneNumber": "09105734731",
+  "isRobot": false
+}

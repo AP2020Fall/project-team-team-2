@@ -1,0 +1,31 @@
+{
+  "registerDay": {
+    "year": 2020,
+    "month": 12,
+    "day": 16
+  },
+  "money": 400.0,
+  "score": 0,
+  "newSoldiers": 0,
+  "gameLogs": [],
+  "friends": [
+    "player5",
+    "player1",
+    "player4"
+  ],
+  "friendRequests": [],
+  "messages": [],
+  "cards": [],
+  "favouriteGames": [],
+  "suggestions": [],
+  "playerNumber": 0,
+  "draftSoldiers": 0,
+  "firstName": "ali",
+  "lastName": "zinoghli",
+  "username": "player2",
+  "accountId": "87653DD0",
+  "password": "player2pass",
+  "email": "alizinoghli@gmail.com",
+  "phoneNumber": "09105734731",
+  "isRobot": false
+}
