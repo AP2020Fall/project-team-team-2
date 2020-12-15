@@ -7,6 +7,24 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class Player extends Account {
+
+    //private static final ArrayList<Player> allPlayers = new ArrayList<>();
+    private LocalDate registerDay;
+    private double money;
+    private int score;
+    private int newSoldiers;
+    private ArrayList<GameLog> gameLogs;
+    private ArrayList<Player> friends;
+    private ArrayList<FriendRequest> friendRequests;
+    private ArrayList<Message> messages;
+    private ArrayList<Card> cards;
+    private ArrayList<Game> favouriteGames;
+    private ArrayList<Suggestion> suggestions;
+    // private Suggestion suggestion;
+    private int playerNumber;
+    private int draftSoldiers = 0;
+
+
     public Player(String firstName, String lastName, String username, String accountId,
                   String password, String email, String phoneNumber, double money) {
         super(firstName, lastName, username, accountId, password, email, phoneNumber);
@@ -26,21 +44,7 @@ public class Player extends Account {
         super(botName, username);
     }
 
-    //private static final ArrayList<Player> allPlayers = new ArrayList<>();
-    private LocalDate registerDay;
-    private double money;
-    private int score;
-    private int newSoldiers;
-    private ArrayList<GameLog> gameLogs;
-    private ArrayList<Player> friends;
-    private ArrayList<FriendRequest> friendRequests;
-    private ArrayList<Message> messages;
-    private ArrayList<Card> cards;
-    private ArrayList<Game> favouriteGames;
-    private ArrayList<Suggestion> suggestions;
-   // private Suggestion suggestion;
-    private int playerNumber;
-    private int draftSoldiers = 0;
+
 
     /*public static ArrayList<Player> getAllPlayers() {
         return allPlayers;
