@@ -620,5 +620,28 @@ public class RiskGameController {
         return false;
     }
 
+    public int[][] attackMakeCountryNumbers(Country sourceCountry, Country destinationCountry) {
+
+
+
+    }
+
+    public int[][] fortifyMakeCountryNumbers(Country sourceCountry, Country destinationCountry){
+
+
+
+    }
+
+    public boolean attackNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
+
+
+
+    }
+
+    public boolean fortifyNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
+
+
+
+    }
 
 }
