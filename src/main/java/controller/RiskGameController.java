@@ -492,7 +492,7 @@ public class RiskGameController {
     }
 
 
-    public void isPath( int CountryNumbers[][], int n, int m)
+    public boolean isPath( int CountryNumbers[][], int n, int m)
     {
         // Defining visited array to keep
         // track of already visited indexes
@@ -518,9 +518,9 @@ public class RiskGameController {
             }
         }
         if (flag)
-            System.out.println("YES");
+            return true;
         else
-            System.out.println("NO");
+            return false;
     }
 
     // Method for checking boundries
