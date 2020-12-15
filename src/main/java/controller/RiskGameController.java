@@ -214,6 +214,8 @@ public class RiskGameController {
             } while (inWar);
 
 
+        } else {
+            toPrint = "there is not any path between source and destination country";
         }
         return toPrint;
     }
@@ -248,7 +250,10 @@ public class RiskGameController {
             destination.addSoldiers(soldiers);
             toPrint = "Move " + soldiers + " soldiers from " + sourceCountryName + " to " + destinationCountryName;
             setFortifyDone(true);
+        } else {
+            toPrint = "there is not any path between source and destination country";
         }
+
         return toPrint;
     }
 
