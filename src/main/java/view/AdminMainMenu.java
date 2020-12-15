@@ -134,7 +134,7 @@ public class AdminMainMenu extends Menu {
             System.out.println("username does not exist!");
         } else if (!controller.doesGameExist(gameName)) {
             System.out.println("game does not exist!");
-        } else if (controller.playerBeenSuggested(username,gameName)) {
+        } else if (controller.playerBeenSuggested(username, gameName)) {
             System.out.println("game has already been suggested!");
         } else {
             controller.addSuggestion(username, gameName);
@@ -163,7 +163,7 @@ public class AdminMainMenu extends Menu {
     }
 
     private void viewGames() {
-        for (String game: controller.viewGames())
+        for (String game : controller.viewGames())
             System.out.println(game);
     }
 

@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class Player extends Account {
+
+
     public Player(String firstName, String lastName, String username, String accountId,
                   String password, String email, String phoneNumber, double money) {
         super(firstName, lastName, username, accountId, password, email, phoneNumber);
@@ -41,6 +43,7 @@ public class Player extends Account {
    // private Suggestion suggestion;
     private int playerNumber;
     private int draftSoldiers = 0;
+
 
     /*public static ArrayList<Player> getAllPlayers() {
         return allPlayers;
