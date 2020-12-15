@@ -621,13 +621,13 @@ public class RiskGameController {
     }
 
     public int[][] attackMakeCountryNumbers(Country sourceCountry, Country destinationCountry) {
-        int[][] countryNumbers = new int[][];
+        int[][] countryNumbers = new int[5][8];
 
         return countryNumbers;
     }
 
     public int[][] fortifyMakeCountryNumbers(Country sourceCountry, Country destinationCountry){
-        int[][] countryNumbers = new int[][];
+        int[][] countryNumbers = new int[5][8];
 
         return countryNumbers;
     }
