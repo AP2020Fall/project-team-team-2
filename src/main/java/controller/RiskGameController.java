@@ -621,21 +621,58 @@ public class RiskGameController {
     }
 
     public int[][] attackMakeCountryNumbers(Country sourceCountry, Country destinationCountry) {
-        int[][] countryNumbers = new int[5][8];
+        int row = gameCountries.size() - 1;
+        int column = gameCountries.get(0).size() - 1;
+        int[][] countryNumbers = new int[row][column];
+
+        for(int i=0; i<row; i++){
+            for(int j=0; j<column; j++){
+                if( gameCountries.get(i).get(j).getName().equals(sourceCountry.getName()) ){
+                    countryNumbers[i][j] = 1;
+                }
+                else if( gameCountries.get(i).get(j).getName().equals(destinationCountry.getName()) ){
+                    countryNumbers[i][j] = 2;
+                }
+                else {
+                    countryNumbers[i][j] = 0;
+                }
+            }
+        }
 
         return countryNumbers;
     }
 
     public int[][] fortifyMakeCountryNumbers(Country sourceCountry, Country destinationCountry){
-        int[][] countryNumbers = new int[5][8];
+        int row = gameCountries.size() - 1;
+        int column = gameCountries.get(0).size() - 1;
+        int[][] countryNumbers = new int[row][column];
+
+        for(int i=0; i<row; i++){
+            for(int j=0; j<column; j++){
+                if( gameCountries.get(i).get(j).getName().equals(sourceCountry.getName()) ){
+                    countryNumbers[i][j] = 1;
+                }
+                else if( gameCountries.get(i).get(j).getName().equals(destinationCountry.getName()) ){
+                    countryNumbers[i][j] = 2;
+                }
+                else if( gameCountries.get(i).get(j).getOwner().getUsername().equals(sourceCountry.getOwner().getUsername()) ){
+                    countryNumbers[i][j] = 3;
+                }
+                else {
+                    countryNumbers[i][j] = 0;
+                }
+            }
+        }
 
         return countryNumbers;
     }
 
     public boolean attackNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
+        int row = gameCountries.size() - 1;
+        int column = gameCountries.get(0).size() - 1;
+        int[][] countryNumbers = attackMakeCountryNumbers(sourceCountry, destinationCountry);
 
-
-        return true;
+        return isPath(countryNumbers, row, column);;
     }
 
     public boolean fortifyNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
