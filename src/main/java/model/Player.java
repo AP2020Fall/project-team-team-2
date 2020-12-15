@@ -32,7 +32,7 @@ public class Player extends Account {
     private int score;
     private int newSoldiers;
     private ArrayList<GameLog> gameLogs;
-    private ArrayList<Player> friends;
+    private ArrayList<String> friends;
     private ArrayList<FriendRequest> friendRequests;
     private ArrayList<Message> messages;
     private ArrayList<Card> cards;
@@ -65,7 +65,10 @@ public class Player extends Account {
     }
 
     public ArrayList<Player> getFriends() {
-        return friends;
+        ArrayList<Player> result = new ArrayList<>();
+        for(String friendId: friends)
+            result.add(Player.getPlayerByUsername(friendId));
+        return result;
     }
 
     public ArrayList<FriendRequest> getFriendRequests() {
@@ -115,10 +118,20 @@ public class Player extends Account {
 
     public Player getFriendByUsername(String username) {
         //if username is friend of player, return the Player object of username else null.
-        for (Player friend : friends)
-            if (friend.getUsername().equals(username))
-                return friend;
+        for (String friend : friends)
+            if (friend.equals(username))
+                return Player.getPlayerByUsername(friend);
         return null;
+    }
+
+    public void addFriend(Player friend)
+    {
+        friends.add(friend.getUsername());
+    }
+
+    public void removeFriend(Player friend)
+    {
+        friends.remove(friend.getUsername());
     }
 
     public FriendRequest getFriendRequestByUsername(String username) {

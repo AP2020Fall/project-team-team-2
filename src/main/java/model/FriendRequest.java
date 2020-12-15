@@ -24,8 +24,8 @@ public class FriendRequest {
     public void acceptRequest() {
         Player player =  Player.getPlayerById(playerId);
         Player friend =  Player.getPlayerById(friendId);
-        player.getFriends().add(friend);
-        friend.getFriends().add(player);
+        player.addFriend(friend);
+        friend.addFriend(player);
         friend.getFriendRequests().remove(this);
         player.getFriendRequests().removeIf(o->o.getPlayer().getAccountId().equals(friend.getAccountId()));
     }
