@@ -57,4 +57,14 @@ public class GameLog {
     {
         this.lastPlay = lastPlay;
     }
+
+    @Override
+    public String toString() {
+        return  "game= " + game.getName() + '\n' +
+                "number of times played= " + frequency + '\n' +
+                "number of times won= " + wins + '\n' +
+                "number of times lost= " + (frequency - wins) + '\n' +
+                "score= " + score + '\n' +
+                "last time played= " + lastPlay + "\n";
+    }
 }
