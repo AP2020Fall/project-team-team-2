@@ -621,27 +621,27 @@ public class RiskGameController {
     }
 
     public int[][] attackMakeCountryNumbers(Country sourceCountry, Country destinationCountry) {
+        int[][] countryNumbers = new int[][];
 
-
-
+        return countryNumbers;
     }
 
     public int[][] fortifyMakeCountryNumbers(Country sourceCountry, Country destinationCountry){
+        int[][] countryNumbers = new int[][];
 
-
-
+        return countryNumbers;
     }
 
     public boolean attackNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
 
 
-
+        return true;
     }
 
     public boolean fortifyNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
 
 
-
+        return true;
     }
 
 }
