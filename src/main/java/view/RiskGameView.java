@@ -70,7 +70,7 @@ public class RiskGameView {
         /* Sow Map Pattern */
         Pattern showMapPattern = Pattern.compile("(^)show map($)");
         /* get input command */
-        while (inputCommand.hasNextLine()) {
+        while (inputCommand.hasNextLine() && riskGameController.getGameIsPlaying()) {
             boolean placementStatus = riskGameController.getPlacementFinished();
             /* get input command */
             /* Command Found*/
@@ -215,7 +215,7 @@ public class RiskGameView {
     }
 
     public void next() {
-        String toPrint = riskGameController.changeTurn();
+        String toPrint = riskGameController.nextPart();
         System.out.println(toPrint);
     }
     public void autoPlace(){

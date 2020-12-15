@@ -13,6 +13,6 @@ public class MatchCardController {
     }
 
     public void incPlayerSoldier(Player player, int soldierNumber) {
-        player.addNewSoldiers(soldierNumber);
+        player.addDraftSoldier(soldierNumber);
     }
 }

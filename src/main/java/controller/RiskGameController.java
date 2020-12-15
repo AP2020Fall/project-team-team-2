@@ -19,6 +19,7 @@ import java.util.Random;
 public class RiskGameController {
     private static java.util.Map<String, Object> primitiveSettings;
     private ArrayList<Player> players;
+    private boolean gameIsPlaying = true;
     private boolean draftDone;
     private boolean attackDone;
     private boolean fortifyDone;
@@ -29,6 +30,7 @@ public class RiskGameController {
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
     private Player currentPlayer;
     private MatchCardController matchCardController = new MatchCardController(currentPlayer);
+    private Player winner;
 
     public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID, int soldiers) {
         this.primitiveSettings = primitiveSettings;
@@ -110,16 +112,17 @@ public class RiskGameController {
         }
     }
 
+    public boolean getGameIsPlaying() {
+        return gameIsPlaying;
+    }
+
     public static void main(String[] args) {
     }
 
-    /* Me - Amirhossein Kiani */
-    public void createGame(int n, int m) {
-
-    }
 
     /* Draft */
     public void placeSoldier(Country country, int soldierNumber) {
+
         country.addSoldiers(soldierNumber);
         this.draftDone = true;
     }
@@ -140,13 +143,23 @@ public class RiskGameController {
     public String draft(String countryDetails, int soldiers) {
 
         String toPrint = "";
-        if (soldiers > currentPlayer.getNewSoldiers() || soldiers < 1) {
+        String[] details = countryDetails.split("\\.");
+        String countryName = details[0];
+        int continentNumber = Integer.parseInt(details[1]);
+        Country destination = getCountryByDetails(countryName, continentNumber);
+        if (soldiers > currentPlayer.getDraftSoldiers() || soldiers < 1) {
             toPrint = "Soldiers are not enough or invalid";
+        } else if (destination == null) {
+            toPrint = "Destination country is not valid";
         } else {
-            placeSoldier(countryDetails, soldiers);
-            currentPlayer.addNewSoldiers(-soldiers);
+            if (!destination.getOwner().equals(getCurrentPlayer())) {
+                toPrint = "This country is not yours";
+            } else {
+                placeSoldier(countryDetails, soldiers);
+                currentPlayer.addDraftSoldier(-soldiers);
+                toPrint = "" + soldiers + " soldiers added to " + countryDetails + " successfully";
+            }
         }
-
         return toPrint;
     }
 
@@ -163,10 +176,10 @@ public class RiskGameController {
         Country source = getCountryByDetails(sourceCountryName, sourceNumber);
         Country destination = getCountryByDetails(destinationCountryName, destinationNumber);
         boolean errorFound = false;
-        if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
+        if (source != null && source.getOwner().equals(currentPlayer)) {
             sourceCountryValid = true;
         }
-        if (destination.getOwner() != null && !destination.getOwner().equals(currentPlayer)) {
+        if (destination != null && !destination.getOwner().equals(currentPlayer)) {
             destinationCountryValid = true;
         }
         if (!sourceCountryValid && !errorFound) {
@@ -181,39 +194,44 @@ public class RiskGameController {
             toPrint = "Soldiers are not enough or not valid";
             errorFound = true;
         }
-        if(!draftDone && !errorFound){
+        if (!draftDone && !errorFound) {
             toPrint = "Draft didn't completed yet";
             errorFound = true;
         }
-        if(errorFound){
+        if (errorFound) {
             /*Do Nothing*/
-        }
-        else if (attackNeighbourhoodCheck(source, destination)){
+        } else if (attackNeighbourhoodCheck(source, destination)) {
             boolean inWar = true;
             do {
-                int randomNumberSource = (int) Math.random() * (6 - 0 + 1) + 0;
-                int randomNumberDestination = (int) Math.random() * (6 - 0 + 1) + 0;
+                int randomNumberSource = (int) (Math.random() * (6 - 0 + 1)) + 0;
+                int randomNumberDestination = (int) (Math.random() * (6 - 0 + 1)) + 0;
                 toPrint = "Source Dice : " + randomNumberSource + " - Destination Dice : " + randomNumberDestination;
                 if (randomNumberSource > randomNumberDestination) {
                     destination.addSoldiers(-1);
-                    toPrint = toPrint + "Destination Country Lost 1 soldier! , Destination Soldiers "
+                    toPrint = toPrint + " Destination Country Lost 1 soldier! , Destination Soldiers "
                             + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
                 } else if (randomNumberDestination > randomNumberSource) {
                     source.addSoldiers(-1);
-                    toPrint = toPrint + "Destination Country Lost 1 soldier! , Destination Soldiers "
+                    soldiers--;
+                    toPrint = toPrint + " Destination Country Lost 1 soldier! , Destination Soldiers "
                             + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
                 } else {
                     source.addSoldiers(-1);
-                    toPrint = toPrint + "Destination Country Lost 1 soldier! , Destination Soldiers "
+                    soldiers--;
+                    toPrint = toPrint + " Destination Country Lost 1 soldier! , Destination Soldiers "
                             + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
                 }
-                if (source.getSoldiers() == 0 || destination.getSoldiers() == 0) {
+                System.out.println(toPrint);
+                if (soldiers == 0 || destination.getSoldiers() == 0 || source.getSoldiers() == 1) {
                     inWar = false;
                     setAttackDone(true);
+                    if (source.getSoldiers() == 1 || soldiers == 0) {
+                        toPrint = "attack failed";
+                    } else {
+                        toPrint = "attack was successful";
+                    }
                 }
             } while (inWar);
-
-
         } else {
             toPrint = "there is not any path between source and destination country";
         }
@@ -244,7 +262,7 @@ public class RiskGameController {
             toPrint = "Destination country is not valid";
         } else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers() - 1) || soldiers < 1)) {
             toPrint = "Soldiers are not enough or not valid";
-        } else if(fortifyNeighbourhoodCheck(source, destination)){
+        } else if (fortifyNeighbourhoodCheck(source, destination)) {
             turnDone = true;
             source.addSoldiers(-soldiers);
             destination.addSoldiers(soldiers);
@@ -263,11 +281,11 @@ public class RiskGameController {
 
     /* Draf-Attck-forfeit */
     public void next() {
-        if(draftDone){
+        if (draftDone) {
 
-        }else if(attackDone){
+        } else if (attackDone) {
 
-        }else if(fortifyDone){
+        } else if (fortifyDone) {
 
         }
     }
@@ -283,6 +301,15 @@ public class RiskGameController {
 
     public String changeTurn() {
         String toPrint = "";
+        boolean checkWinner = checkWinner();
+        if (checkWinner) {
+            if (this.winner != null) {
+                toPrint = "Game has been finished." + " " + currentPlayer.getUsername() + " is this winner";
+            } else {
+                toPrint = "Game has been finished in draw.";
+            }
+            return toPrint;
+        }
         if (!getPlacementFinished()) {
             if (draftDone) {
                 mainChangeTurn();
@@ -358,7 +385,7 @@ public class RiskGameController {
         String toPrint = "";
         String[] countryDetails2 = countryDetails.split("\\.");
         String countryContinent = countryDetails2[0];
-        if(soldiers > getCurrentPlayer().getDraftSoldiers()){
+        if (soldiers > getCurrentPlayer().getDraftSoldiers()) {
             toPrint = "You do not have enough soldiers";
             return toPrint;
         }
@@ -368,11 +395,13 @@ public class RiskGameController {
             if (toCheckCountry.getName() == null) {
                 toPrint = "Chosen country is invalid. Please try again";
             } else {
-                if ( toCheckCountry.getOwner() == null || toCheckCountry.getOwner().equals(currentPlayer)) {
+                if (toCheckCountry.getOwner() == null || toCheckCountry.getOwner().equals(currentPlayer)) {
                     toCheckCountry.setOwner(currentPlayer);
                     toCheckCountry.addSoldiers(soldiers);
+                    currentPlayer.addDraftSoldier(-1);
                     toPrint = currentPlayer.getPlayerNumber() + " add " + soldiers + " soldier to "
                             + toCheckCountry.getName();
+
                     this.setDraftDone(true);
                 } else {
                     toPrint = "Please choose a country that is yours or no one has been chosen it yet";
@@ -381,7 +410,7 @@ public class RiskGameController {
         } else {
             toPrint = "You have been done your draft turn.";
         }
-        if(getPlacementFinished() == false){
+        if (getPlacementFinished() == false) {
             boolean allDone = false;
             for (Player player : players) {
                 if (player.getDraftSoldiers() != 3) {
@@ -393,6 +422,10 @@ public class RiskGameController {
             }
             if (allDone == true) {
                 setPlacementFinished(true);
+                toPrint += "\nGame has been started";
+                mainChangeTurn();
+                toPrint += "\nit's player " + currentPlayer.getUsername() + " turn to draft\n";
+                draftDone = false;
             }
         }
         return toPrint;
@@ -406,7 +439,9 @@ public class RiskGameController {
         draftDone = status;
     }
 
-    public boolean getTurnDone() { return turnDone; }
+    public boolean getTurnDone() {
+        return turnDone;
+    }
 
     public boolean getAttackDone() {
         return attackDone;
@@ -497,8 +532,7 @@ public class RiskGameController {
     }
 
 
-    public boolean isPath( int CountryNumbers[][], int n, int m)
-    {
+    public boolean isPath(int CountryNumbers[][], int n, int m) {
         // Defining visited array to keep
         // track of already visited indexes
         boolean visited[][]
@@ -529,10 +563,9 @@ public class RiskGameController {
     }
 
     // Method for checking boundries
-    public boolean isSafe( int i, int j, int CountryNumbers[][])
-    {
+    public boolean isSafe(int i, int j, int CountryNumbers[][]) {
 
-        if ( i >= 0 && i < CountryNumbers.length && j >= 0 && j < CountryNumbers[0].length)
+        if (i >= 0 && i < CountryNumbers.length && j >= 0 && j < CountryNumbers[0].length)
             return true;
         return false;
     }
@@ -542,12 +575,11 @@ public class RiskGameController {
     // cell with value 1) to a
     // destination (a cell with
     // value 2)
-    public boolean isPath( int CountryNumbers[][], int i, int j, boolean visited[][])
-    {
+    public boolean isPath(int CountryNumbers[][], int i, int j, boolean visited[][]) {
 
         // Checking the boundries, walls and
         // whether the cell is unvisited
-        if ( isSafe(i, j, CountryNumbers) && CountryNumbers[i][j] != 0 && !visited[i][j]) {
+        if (isSafe(i, j, CountryNumbers) && CountryNumbers[i][j] != 0 && !visited[i][j]) {
             // Make the cell visited
             visited[i][j] = true;
 
@@ -630,15 +662,13 @@ public class RiskGameController {
         int column = gameCountries.get(0).size() - 1;
         int[][] countryNumbers = new int[row][column];
 
-        for(int i=0; i<row; i++){
-            for(int j=0; j<column; j++){
-                if( gameCountries.get(i).get(j).getName().equals(sourceCountry.getName()) ){
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (gameCountries.get(i).get(j).getName().equals(sourceCountry.getName())) {
                     countryNumbers[i][j] = 1;
-                }
-                else if( gameCountries.get(i).get(j).getName().equals(destinationCountry.getName()) ){
+                } else if (gameCountries.get(i).get(j).getName().equals(destinationCountry.getName())) {
                     countryNumbers[i][j] = 2;
-                }
-                else {
+                } else {
                     countryNumbers[i][j] = 0;
                 }
             }
@@ -647,23 +677,20 @@ public class RiskGameController {
         return countryNumbers;
     }
 
-    public int[][] fortifyMakeCountryNumbers(Country sourceCountry, Country destinationCountry){
+    public int[][] fortifyMakeCountryNumbers(Country sourceCountry, Country destinationCountry) {
         int row = gameCountries.size() - 1;
         int column = gameCountries.get(0).size() - 1;
         int[][] countryNumbers = new int[row][column];
 
-        for(int i=0; i<row; i++){
-            for(int j=0; j<column; j++){
-                if( gameCountries.get(i).get(j).getName().equals(sourceCountry.getName()) ){
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (gameCountries.get(i).get(j).getName().equals(sourceCountry.getName())) {
                     countryNumbers[i][j] = 1;
-                }
-                else if( gameCountries.get(i).get(j).getName().equals(destinationCountry.getName()) ){
+                } else if (gameCountries.get(i).get(j).getName().equals(destinationCountry.getName())) {
                     countryNumbers[i][j] = 2;
-                }
-                else if( gameCountries.get(i).get(j).getOwner().getUsername().equals(sourceCountry.getOwner().getUsername()) ){
+                } else if (gameCountries.get(i).get(j).getOwner().getUsername().equals(sourceCountry.getOwner().getUsername())) {
                     countryNumbers[i][j] = 3;
-                }
-                else {
+                } else {
                     countryNumbers[i][j] = 0;
                 }
             }
@@ -672,7 +699,7 @@ public class RiskGameController {
         return countryNumbers;
     }
 
-    public boolean attackNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
+    public boolean attackNeighbourhoodCheck(Country sourceCountry, Country destinationCountry) {
         int row = gameCountries.size() - 1;
         int column = gameCountries.get(0).size() - 1;
         int[][] countryNumbers = attackMakeCountryNumbers(sourceCountry, destinationCountry);
@@ -680,7 +707,7 @@ public class RiskGameController {
         return isPath(countryNumbers, row, column);
     }
 
-    public boolean fortifyNeighbourhoodCheck(Country sourceCountry, Country destinationCountry){
+    public boolean fortifyNeighbourhoodCheck(Country sourceCountry, Country destinationCountry) {
         int row = gameCountries.size() - 1;
         int column = gameCountries.get(0).size() - 1;
         int[][] countryNumbers = fortifyMakeCountryNumbers(sourceCountry, destinationCountry);
@@ -688,4 +715,75 @@ public class RiskGameController {
         return isPath(countryNumbers, row, column);
     }
 
+    public String nextPart() {
+        String toPrint = "";
+        if (getPlacementFinished()) {
+            if (draftDone && !attackDone && !fortifyDone) {
+                toPrint = "Draft done, Start Attacking";
+                if (attackDone && !fortifyDone) {
+                    toPrint = "Attack done, Start fortifying";
+                    if (fortifyDone) {
+                        toPrint = "Fortify done, try turn over";
+                    } else {
+                        toPrint = "Please first try to fortify , then use `turn over`";
+                    }
+                } else {
+                    toPrint = "Please first Attack to a country then try next";
+                }
+
+            } else {
+
+            }
+        } else {
+            if (draftDone) {
+                toPrint = "If you wanna change your turn, you should use 'turn over'";
+            }
+        }
+        return toPrint;
+    }
+
+    public boolean checkWinner() {
+        boolean finished = true;
+        if (!getPlacementFinished()) {
+            return false;
+        }
+        for (List<Country> countries : gameCountries) {
+            for (Country country : countries) {
+                if (country.getOwner() != null && !country.getOwner().equals(currentPlayer)) {
+                    finished = false;
+                    break;
+                }
+            }
+        }
+        if (finished == true) {
+            this.winner = currentPlayer;
+            currentPlayer.setScore(+3);
+            currentPlayer.setWins();
+            for (Player player : players) {
+                if (player.equals(currentPlayer)) {
+                    continue;
+                }
+                player.setLoses();
+            }
+            return finished;
+        }
+        if (finished == false) {
+            for (List<Country> countries : gameCountries) {
+                for (Country country : countries) {
+                    if (country.getSoldiers() != 1 && country.getSoldiers() != 0) {
+                        finished = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (finished == true) {
+            for (Player player : players) {
+                player.setDraws();
+                player.setScore(+1);
+            }
+        }
+        ;
+        return finished;
+    }
 }

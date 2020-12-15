@@ -10,6 +10,9 @@ public class Player extends Account {
     private LocalDate registerDay;
     private double money;
     private int score;
+    private int loses;
+    private int wins;
+    private int draws;
     private int newSoldiers;
     private ArrayList<GameLog> gameLogs;
     private ArrayList<String> friends;
@@ -86,10 +89,8 @@ public class Player extends Account {
     }
 
     public void setScore(int score) {
-        this.score = score;
+        this.score += score;
     }
-
-    public void addNewSoldiers(int soldiers) { newSoldiers = newSoldiers + soldiers; }
 
     public void addSuggestion(Suggestion suggestion) {
         this.suggestions.add( suggestion);
@@ -212,5 +213,15 @@ public class Player extends Account {
         return super.toString()
                 + "money: " + getMoney() + "$\n"
                 + "registered: " + getDayOfRegister() + " days ago\n";
+    }
+
+    public void setDraws() {
+        this.draws++;
+    }
+    public void setWins(){
+        this.wins++;
+    }
+    public void setLoses(){
+        this.loses++;
     }
 }

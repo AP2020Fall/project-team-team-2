@@ -109,6 +109,7 @@ public class StartGameController {
     public int generateSoldiersNumber(){
         int soldierNumber = 0;
         switch ((Integer)this.primitiveSettings.get("Map Number")){
+            case 0: soldierNumber = 10;break;
             case 1: soldierNumber = 20;break;
             case 2: soldierNumber = 25;break;
             case 3: soldierNumber = 30;break;
