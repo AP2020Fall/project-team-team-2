@@ -11,14 +11,14 @@ import java.util.Scanner;
 
 public class Suggestion {
     private static ArrayList<Suggestion> suggestions = new ArrayList<>();
-    private final Game game;
+    private final String gameId;
     private final String id;
-    private final Player player;
+    private final String playerId;
 
     public Suggestion(Game game, String id, Player player) {
-        this.game = game;
+        this.gameId = game.getGameId();
         this.id = id;
-        this.player = player;
+        this.playerId = player.getAccountId();
     }
 
     public static ArrayList<Suggestion> getSuggestions() {
@@ -68,15 +68,15 @@ public class Suggestion {
     }
 
     public Player getPlayer() {
-        return player;
+        return Player.getPlayerById(playerId);
     }
 
     public Game getGame() {
-        return game;
+        return Game.getGameById(gameId);
     }
 
     public String getGameName() {
-        return game.getName();
+        return Game.getGameById(gameId).getName();
     }
 
     public String getId() {
@@ -96,7 +96,7 @@ public class Suggestion {
 
     @Override
     public String toString() {
-        return "Game suggested: " + game.getName();
+        return "Game suggested: " + Game.getGameById(gameId).getName();
 
     }
 }
