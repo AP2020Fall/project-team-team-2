@@ -655,8 +655,8 @@ public class RiskGameController {
     }
 
     public int[][] attackMakeCountryNumbers(Country sourceCountry, Country destinationCountry) {
-        int row = gameCountries.size() - 1;
-        int column = gameCountries.get(0).size() - 1;
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
         int[][] countryNumbers = new int[row][column];
 
         for (int i = 0; i < row; i++) {
@@ -675,8 +675,8 @@ public class RiskGameController {
     }
 
     public int[][] fortifyMakeCountryNumbers(Country sourceCountry, Country destinationCountry) {
-        int row = gameCountries.size() - 1;
-        int column = gameCountries.get(0).size() - 1;
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
         int[][] countryNumbers = new int[row][column];
 
         for (int i = 0; i < row; i++) {
@@ -697,8 +697,8 @@ public class RiskGameController {
     }
 
     public boolean attackNeighbourhoodCheck(Country sourceCountry, Country destinationCountry) {
-        int row = gameCountries.size() - 1;
-        int column = gameCountries.get(0).size() - 1;
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
         int[][] countryNumbers = attackMakeCountryNumbers(sourceCountry, destinationCountry);
 
         return isPath(countryNumbers, row, column);
