@@ -82,14 +82,19 @@ public class Player extends Account {
 
     public GameLog getGameHistory(String gameName) {
         for (GameLog gameLog : gameLogs)
-            if (gameLog.getGame().getName().equals(gameName))
+            if (gameLog.getGameName().equals(gameName))
                 return gameLog;
         return null;
     }
 
+    public void addGameLog(GameLog gameLog)
+    {
+        gameLogs.add(gameLog);
+    }
+
     public void removeGameLog(Game game)
     {
-        gameLogs.removeIf(o->o.getGame().getGameId().equals(game.getGameId()));
+        gameLogs.removeIf(o->o.getGameName().equals(game.getName()));
     }
 
 
