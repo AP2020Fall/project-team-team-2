@@ -1,24 +1,26 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PlayLog {
-    private final Game game;
+    private final String gameName;
     private final ArrayList<Player> players;
     private final Player winner;
-    private final LocalDate time;
+    private final LocalDateTime time;
 
-    public PlayLog(Game game,ArrayList<Player> players, Player winner, LocalDate time)
+    public PlayLog(String gameName,ArrayList<Player> players, Player winner, LocalDateTime time)
     {
-        this.game =game;
+        this.gameName =gameName;
         this.players = new ArrayList<>(players);
         this.winner = winner;
         this.time = time;
     }
 
     public Game getGame() {
-        return game;
+        return Objects.requireNonNull(Game.getGameByGameName(gameName));
     }
 
     public ArrayList<Player> getPlayers() {
@@ -30,13 +32,13 @@ public class PlayLog {
     }
 
 
-    public LocalDate getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
     @Override
     public String toString() {
-        return  game + ": " + time +
+        return  gameName + ": " + time +
                 ", players=" + players +
                 ", winner=" + winner;
     }

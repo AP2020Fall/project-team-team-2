@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class GameLog {
@@ -9,7 +10,16 @@ public class GameLog {
     private String gameLogId;
     private int score;
     private LocalDateTime lastPlay;
-    private Game game;
+    private String gameName;
+
+    public GameLog(String gameName,String gameLogId)
+    {
+        this.gameLogId= gameLogId;
+        this.gameName= gameName;
+        this.wins = 0;
+        this.frequency = 0;
+        this.score = 0;
+    }
 
     public int getFrequency() {
         return frequency;
@@ -23,8 +33,8 @@ public class GameLog {
         return frequency - wins;
     }
 
-    public Game getGame() {
-        return game;
+    public String getGameName() {
+        return gameName;
     }
 
     public String getGameLogId() {
@@ -47,7 +57,6 @@ public class GameLog {
         this.wins = wins;
     }
 
-
     public void setScore(int score) {
         this.score = score;
     }
@@ -57,9 +66,30 @@ public class GameLog {
         this.lastPlay = lastPlay;
     }
 
+    public void updateForWin(int score, LocalDateTime lastPlay)
+    {
+        frequency++;
+        wins++;
+        score += score;
+        this.lastPlay = lastPlay;
+    }
+    public void updateForLoss(int score,LocalDateTime lastPlay)
+    {
+        frequency++;
+        score += score;
+        this.lastPlay= lastPlay;
+    }
+
+    public void updateForDraw(int score,LocalDateTime lastPlay)
+    {
+        frequency++;
+        score+= score;
+        this.lastPlay = lastPlay;
+    }
+
     @Override
     public String toString() {
-        return  "game= " + game.getName() + '\n' +
+        return  "game= " + gameName + '\n' +
                 "number of times played= " + frequency + '\n' +
                 "number of times won= " + wins + '\n' +
                 "number of times lost= " + (frequency - wins) + '\n' +

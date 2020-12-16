@@ -40,6 +40,12 @@ public class Game {
         return playLogs;
     }
 
+    public void addPlayLog(PlayLog playLog)
+    {
+        playLogs.add(playLog);
+        scoreboard.updateScoreboard(playLog);
+    }
+
     public String getDetails() {
         return details;
     }
@@ -55,7 +61,6 @@ public class Game {
     public void setDetails(String details) {
         this.details = details;
     }
-
 
 
     public static ArrayList<Game> getGames() {
@@ -74,15 +79,14 @@ public class Game {
     }
 
     public static Game getGameById(String gameId) {
-        for(Game game:games)
-            if(game.gameId.equals(gameId))
+        for (Game game : games)
+            if (game.gameId.equals(gameId))
                 return game;
         return null;
     }
 
 
-    public void delete()
-    {
+    public void delete() {
         File file = new File("database" + "\\" + "games" + "\\" + this.getGameId() + ".json");
         try {
             if (file.exists())
@@ -90,11 +94,9 @@ public class Game {
         } catch (Exception ignored) {
         }
         playLogs.clear();
-        for(Player player: Player.getAllPlayers())
-        {
+        for (Player player : Player.getAllPlayers()) {
             Suggestion suggestion = player.getSuggestionByGameName(this.name);
-            if(suggestion != null)
-            {
+            if (suggestion != null) {
                 suggestion.delete();
             }
             //player.removeSuggestion(this);
@@ -146,6 +148,6 @@ public class Game {
     @Override
     public String toString() {
         return "Game: " + name + '\n'
-                + details ;
+                + details;
     }
 }
