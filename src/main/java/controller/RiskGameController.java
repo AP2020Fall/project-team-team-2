@@ -2,21 +2,16 @@ package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import model.Countries;
-import model.Player;
-import model.Map;
-import model.Country;
+import model.*;
 
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.time.LocalDateTime;
+import java.util.*;
 
-public class RiskGameController {
+public class RiskGameController  extends Controller {
     private static java.util.Map<String, Object> primitiveSettings;
     private ArrayList<Player> players;
     private boolean gameIsPlaying = true;
@@ -32,7 +27,7 @@ public class RiskGameController {
     private MatchCardController matchCardController = new MatchCardController(currentPlayer);
     private Player winner;
 
-    public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID, int soldiers) {
+    public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID, int soldiers){
         this.primitiveSettings = primitiveSettings;
         this.players = (ArrayList<Player>) primitiveSettings.get("Players");
         this.gameID = gameID;
@@ -754,13 +749,29 @@ public class RiskGameController {
         }
         if (finished == true) {
             this.winner = currentPlayer;
-            currentPlayer.setScore(+3);
-            currentPlayer.setWins();
+            //currentPlayer.setScore(+3);
+            //currentPlayer.setWins();
+            GameLog gameLog = currentPlayer.getGameHistory("Risk");
+            if(gameLog == null) {
+                gameLog = new GameLog("Risk", generateId());
+                currentPlayer.addGameLog(gameLog);
+            }
+            gameLog.updateForWin(3, LocalDateTime.now());
+            Game game = Objects.requireNonNull( Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist.");
+            PlayLog playLog = new PlayLog("Risk",players,currentPlayer,LocalDateTime.now());
+            game.addPlayLog(playLog);
             for (Player player : players) {
                 if (player.equals(currentPlayer)) {
                     continue;
                 }
-                player.setLoses();
+                gameLog = player.getGameHistory("Risk");
+                if (gameLog == null) {
+                    gameLog = new GameLog("Risk", generateId());
+                    player.addGameLog(gameLog);
+                }
+                    gameLog.updateForLoss(0, LocalDateTime.now());
+
             }
             return finished;
         }
@@ -775,9 +786,20 @@ public class RiskGameController {
             }
         }
         if (finished == true) {
+            Game game = Objects.requireNonNull( Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist.");
+            PlayLog playLog = new PlayLog("Risk",players,null,LocalDateTime.now());
+            game.addPlayLog(playLog);
             for (Player player : players) {
-                player.setDraws();
-                player.setScore(+1);
+                GameLog gameLog = player.getGameHistory("Risk");
+                if (gameLog == null) {
+                    gameLog = new GameLog("Risk", generateId());
+                    player.addGameLog(gameLog);
+                }
+                    gameLog.updateForWin(1, LocalDateTime.now());
+                    //player.setDraws();
+                    // player.setScore(+1);
+
             }
         }
         ;
