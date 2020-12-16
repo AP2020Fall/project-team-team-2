@@ -1,12 +1,25 @@
 package model;
 
-public class FriendRequest {
-    private String friendId;
-    private String playerId;
+import java.util.ArrayList;
+import java.util.Objects;
 
-    public FriendRequest(Player friend, Player player) {
+public class FriendRequest {
+    private static final ArrayList<FriendRequest> friendRequests = new ArrayList<>();
+    private final String friendId;
+    private final String playerId;
+    private FriendRequestState accepted;
+    private final String friendRequestId;
+
+    public String getFriendRequestId() {
+        return friendRequestId;
+    }
+
+    public FriendRequest(Player friend, Player player, String id) {
         this.friendId = friend.getAccountId();
         this.playerId = player.getAccountId();
+        this.friendRequestId = id;
+        this.accepted = FriendRequestState.NOTANSWERED;
+        friendRequests.add(this);
     }
 
     public Player getFriend() {
@@ -18,20 +31,39 @@ public class FriendRequest {
     }
 
     public void sendRequest() {
-        Player.getPlayerById(friendId).getFriendRequests().add(this);
+        //send the friend request to the friend
+        //throws NullPointerException if there is any error
+        Objects.requireNonNull(Player.getPlayerById(friendId)).addReceivedFriendRequest(this);
+        Objects.requireNonNull( Player.getPlayerById(playerId)).addSentFriendRequest(this);
     }
 
     public void acceptRequest() {
-        Player player =  Player.getPlayerById(playerId);
-        Player friend =  Player.getPlayerById(friendId);
+        //friends accepts the request, removes the request from the friend but keeps it in player
+        //throws NullPointerException if there is any error
+        Player player = Objects.requireNonNull( Player.getPlayerById(playerId));
+        Player friend = Objects.requireNonNull( Player.getPlayerById(friendId));
         player.addFriend(friend);
         friend.addFriend(player);
-        friend.getFriendRequests().remove(this);
-        player.getFriendRequests().removeIf(o->o.getPlayer().getAccountId().equals(friend.getAccountId()));
+        friend.removeFriendRequest(this);
+        player.removeFriendRequest(this);
+        this.accepted = FriendRequestState.ACCEPTED;
     }
 
     public void declineRequest() {
-        Player.getPlayerById(friendId).getFriendRequests().remove(this);
+        //friends declines the request, removes the request from the friend but keeps it in player
+        //throws NullPointerExecption if there is any error
+        Player player = Objects.requireNonNull( Player.getPlayerById(playerId));
+        Player friend = Objects.requireNonNull( Player.getPlayerById(friendId));
+        friend.removeFriendRequest(this);
+        this.accepted = FriendRequestState.DECLINED;
     }
 
+    public static FriendRequest getFriendRequestById(String friendRequestId) {
+        for(FriendRequest friendRequest: friendRequests)
+        {
+            if(friendRequest.friendRequestId.equals(friendRequestId))
+                return friendRequest;
+        }
+        return null;
+    }
 }
