@@ -9,10 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class RiskGameController  extends Controller {
     private static java.util.Map<String, Object> primitiveSettings;
@@ -763,7 +760,10 @@ public class RiskGameController  extends Controller {
                 currentPlayer.addGameLog(gameLog);
             }
             gameLog.updateForWin(3, LocalDateTime.now());
-
+            Game game = Objects.requireNonNull( Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist.");
+            PlayLog playLog = new PlayLog("Risk",players,currentPlayer,LocalDateTime.now());
+            game.addPlayLog(playLog);
             for (Player player : players) {
                 if (player.equals(currentPlayer)) {
                     continue;
@@ -789,6 +789,10 @@ public class RiskGameController  extends Controller {
             }
         }
         if (finished == true) {
+            Game game = Objects.requireNonNull( Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist.");
+            PlayLog playLog = new PlayLog("Risk",players,null,LocalDateTime.now());
+            game.addPlayLog(playLog);
             for (Player player : players) {
                 GameLog gameLog = player.getGameHistory("Risk");
                 if (gameLog == null) {
