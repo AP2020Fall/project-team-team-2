@@ -7,17 +7,18 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Suggestion {
-    private static ArrayList<Suggestion> suggestions = new ArrayList<>();
+    private static final ArrayList<Suggestion> suggestions = new ArrayList<>();
     private final String gameId;
-    private final String id;
+    private final String suggestionId;
     private final String playerId;
 
-    public Suggestion(Game game, String id, Player player) {
+    public Suggestion(Game game, String suggestionId, Player player) {
         this.gameId = game.getGameId();
-        this.id = id;
+        this.suggestionId = suggestionId;
         this.playerId = player.getAccountId();
     }
 
@@ -27,6 +28,43 @@ public class Suggestion {
 
     public static void addSuggestion(Suggestion suggestion) {
         suggestions.add(suggestion);
+    }
+
+    public Player getPlayer() {
+        //throw NullPointerException if there is any error
+        return Objects.requireNonNull( Player.getPlayerById(playerId));
+    }
+
+    public Game getGame() {
+        //throw NullPointerException if there is any error
+        return Objects.requireNonNull(Game.getGameById(gameId));
+    }
+
+    public String getGameName() {
+        //throw NullPointerException if there is any error
+        return Objects.requireNonNull( Game.getGameById(gameId)).getName();
+    }
+
+    public String getSuggestionId() {
+        return suggestionId;
+    }
+
+    public static Suggestion getSuggestionById(String suggestionId) {
+        for (Suggestion suggestion : suggestions)
+            if (suggestion.suggestionId.equals(suggestionId))
+                return suggestion;
+        return null;
+    }
+
+    public void delete() {
+        File file = new File("database" + "\\" + "suggestions" + "\\" + this.suggestionId + ".json");
+        try {
+            if (file.exists())
+                file.delete();
+        } catch (Exception ignored) {
+        }
+        this.getPlayer().removeSuggestion(this);
+        Suggestion.getSuggestions().remove(this);
     }
 
     public static void open() throws FileNotFoundException {
@@ -61,42 +99,17 @@ public class Suggestion {
     }
 
     private static void save(Suggestion suggestion) throws IOException {
-        String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().toJson(suggestion);
-        FileWriter file = new FileWriter("database" + "\\" + "suggestions" + "\\" + suggestion.getId() + ".json");
+        String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create()
+                .toJson(suggestion);
+        FileWriter file = new FileWriter("database" + "\\" + "suggestions" + "\\" + suggestion.getSuggestionId()
+                + ".json");
         file.write(jsonAccount);
         file.close();
     }
 
-    public Player getPlayer() {
-        return Player.getPlayerById(playerId);
-    }
-
-    public Game getGame() {
-        return Game.getGameById(gameId);
-    }
-
-    public String getGameName() {
-        return Game.getGameById(gameId).getName();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public static Suggestion getSuggestionById(String id) {
-        for (Suggestion suggestion : suggestions)
-            if (suggestion.id.equals(id))
-                return suggestion;
-        return null;
-    }
-
-    public static boolean searchSuggestionById(String id) {
-        return getSuggestionById(id) != null;
-    }
-
     @Override
     public String toString() {
-        return "Game suggested: " + Game.getGameById(gameId).getName();
-
+        //throw NullPointerException if there is any error
+        return "Game suggested: " +Objects.requireNonNull( Game.getGameById(gameId)).getName();
     }
 }
