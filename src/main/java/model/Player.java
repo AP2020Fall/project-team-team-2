@@ -87,6 +87,11 @@ public class Player extends Account {
         return null;
     }
 
+    public void removeGameLog(Game game)
+    {
+        gameLogs.removeIf(o->o.getGame().getGameId().equals(game.getGameId()));
+    }
+
 
     public ArrayList<Player> getFriends() {
         ArrayList<Player> result = new ArrayList<>();
@@ -188,6 +193,16 @@ public class Player extends Account {
         suggestions.remove(suggestion.getSuggestionId());
     }
 
+    public void removeSuggestion(Game game)
+    {
+        Iterator<String> iterator = suggestions.iterator();
+        while(iterator.hasNext())
+        {
+            Suggestion suggestion = Objects.requireNonNull(Suggestion.getSuggestionById(iterator.next()));
+            if(suggestion.getGameName().equals(game.getName()))
+                iterator.remove();
+        }
+    }
 
 
 

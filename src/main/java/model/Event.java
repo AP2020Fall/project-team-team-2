@@ -26,40 +26,7 @@ public class Event {
         this.score = score;
         this.eventId = eventId;
     }
-    public void delete()
-    {
-        events.remove(this);
-        File file = new File("database" + "\\" + "events" + "\\" + eventId + ".json");
-        try {
-            if (file.exists())
-                file.delete();
-        } catch (Exception ignored) {
-        }
-    }
 
-    public static void save() throws IOException {
-        for (Event event : events) {
-            save(event);
-        }
-    }
-
-    private static void save(Event event) throws IOException {
-        String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().toJson(event);
-        FileWriter file = new FileWriter("database" + "\\" + "events" + "\\" + event.getEventId() + ".json");
-        file.write(jsonAccount);
-        file.close();
-    }
-
-    public static void open() throws FileNotFoundException {
-        File folder = new File("database" + "\\" + "events");
-        if (!folder.exists()) {
-            folder.mkdirs();
-        } else {
-            for (File file : folder.listFiles()) {
-                events.add(openEvent(file));
-            }
-        }
-    }
 
     private static Event openEvent(File file) throws FileNotFoundException {
         StringBuilder json = fileToString(file);
@@ -123,6 +90,41 @@ public class Event {
             if (event.getEventId().equals(eventId))
                 return event;
         return null;
+    }
+
+    public void delete()
+    {
+        events.remove(this);
+        File file = new File("database" + "\\" + "events" + "\\" + eventId + ".json");
+        try {
+            if (file.exists())
+                file.delete();
+        } catch (Exception ignored) {
+        }
+    }
+
+    public static void save() throws IOException {
+        for (Event event : events) {
+            save(event);
+        }
+    }
+
+    private static void save(Event event) throws IOException {
+        String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().toJson(event);
+        FileWriter file = new FileWriter("database" + "\\" + "events" + "\\" + event.getEventId() + ".json");
+        file.write(jsonAccount);
+        file.close();
+    }
+
+    public static void open() throws FileNotFoundException {
+        File folder = new File("database" + "\\" + "events");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        } else {
+            for (File file : folder.listFiles()) {
+                events.add(openEvent(file));
+            }
+        }
     }
 
     @Override
