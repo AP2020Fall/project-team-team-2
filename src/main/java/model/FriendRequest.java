@@ -44,8 +44,8 @@ public class FriendRequest {
         Player friend = Objects.requireNonNull( Player.getPlayerById(friendId));
         player.addFriend(friend);
         friend.addFriend(player);
-        friend.removeFriendRequest(this);
-        player.removeFriendRequest(this);
+        friend.removeReceivedFriendRequest(this);
+        player.removeReceivedFriendRequest(this);
         this.accepted = FriendRequestState.ACCEPTED;
     }
 
@@ -54,7 +54,7 @@ public class FriendRequest {
         //throws NullPointerExecption if there is any error
         Player player = Objects.requireNonNull( Player.getPlayerById(playerId));
         Player friend = Objects.requireNonNull( Player.getPlayerById(friendId));
-        friend.removeFriendRequest(this);
+        friend.removeReceivedFriendRequest(this);
         this.accepted = FriendRequestState.DECLINED;
     }
 
@@ -65,5 +65,10 @@ public class FriendRequest {
                 return friendRequest;
         }
         return null;
+    }
+
+    public void delete()
+    {
+        friendRequests.remove(this);
     }
 }

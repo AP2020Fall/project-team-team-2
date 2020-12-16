@@ -26,6 +26,16 @@ public class Event {
         this.score = score;
         this.eventId = eventId;
     }
+    public void delete()
+    {
+        events.remove(this);
+        File file = new File("database" + "\\" + "events" + "\\" + eventId + ".json");
+        try {
+            if (file.exists())
+                file.delete();
+        } catch (Exception ignored) {
+        }
+    }
 
     public static void save() throws IOException {
         for (Event event : events) {

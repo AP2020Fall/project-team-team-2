@@ -33,8 +33,8 @@ public class AdminMainMenuController extends Controller {
         LocalDate startDate = createLocalDate(start);
         //changes the start field of eventId.
         //throws NullPointerException if eventId doesn't exist.
-        Objects.requireNonNull(Event.getEventById(eventId), "EventId passed" +
-                " AdminMainMenuController.editEventStart doesn't exist.").setStart(startDate);
+        Objects.requireNonNull(Event.getEventById(eventId),
+                "EventId passed AdminMainMenuController.editEventStart doesn't exist.").setStart(startDate);
     }
 
     public void editEventEnd(String eventId, String end) {
@@ -54,13 +54,9 @@ public class AdminMainMenuController extends Controller {
 
     public void removeEvent(String eventId) {
         //removes eventId from the list
-        File file = new File("database" + "\\" + "events" + "\\" + eventId + ".json");
-        try {
-            if (file.exists())
-                file.delete();
-        } catch (Exception ignored) {
-        }
-        Event.getEvents().removeIf(a -> a.getEventId().equals(eventId));
+        //throws NullPointerException if eventId doesn't exist.
+        Objects.requireNonNull(Event.getEventById(eventId),
+                "EventId passed AdminMainMenuController.removeEvent doesn't exist.").delete();
     }
 
     public void sendMessage(String messageText) {
@@ -100,17 +96,9 @@ public class AdminMainMenuController extends Controller {
 
         //removes a suggestion for the player's suggestions
         //throws NullPointerException if suggestionId doesn't exist.
+         Objects.requireNonNull(Suggestion.getSuggestionById(suggestionId),
+                "SuggestionId passed to AdminMainMenuController.removeSuggestion doesn't exist.").delete();
 
-        File file = new File("database" + "\\" + "suggestions" + "\\" + suggestionId + ".json");
-        try {
-            if (file.exists())
-                file.delete();
-        } catch (Exception ignored) {
-        }
-        Suggestion suggestion = Objects.requireNonNull(Suggestion.getSuggestionById(suggestionId),
-                "SuggestionId passed to AdminMainMenuController.removeSuggestion doesn't exist.");
-        suggestion.getPlayer().removeSuggestion(suggestion);
-        Suggestion.getSuggestions().remove(suggestion);
     }
 
     public void addGame(String gameName, String gameDetail) {
