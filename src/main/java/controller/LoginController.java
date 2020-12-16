@@ -13,15 +13,10 @@ import java.util.Objects;
 public class LoginController extends Controller {
     public void delete(String username) {
         //removes the username from the list and it is a player
-        Player player = Player.getPlayerByUsername(username);
-        File file = new File("database" + "\\" + "accounts" + "\\" + "players" + "\\" + player.getUsername() + ".json");
-        try {
-            if (file.exists())
-                file.delete();
-        } catch (Exception ignored) {
-        }
-        Account.getAllAccounts().removeIf(o -> o.getUsername().equals(username) && o instanceof Player);
-
+        //throws NullPointerException if username is not a player
+        Player player =Objects.requireNonNull( Player.getPlayerByUsername(username),
+                "Username passed to LoginController.delete isn't a player or doesn't exist.");
+        player.delete();
     }
 
     public void login(String username) {

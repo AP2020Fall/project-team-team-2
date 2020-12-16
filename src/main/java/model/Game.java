@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -27,20 +28,83 @@ public class Game {
         scoreboard = new Scoreboard();
     }
 
-    public static Game getGameById(String gameId) {
-        for(Game game:games)
-            if(game.gameId.equals(gameId))
-                return game;
-            return null;
+    public String getName() {
+        return name;
     }
 
     public String getGameId() {
         return gameId;
     }
 
+    public ArrayList<PlayLog> getPlayLogs() {
+        return playLogs;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
+
+    public void setName(String gameName) {
+        this.name = gameName;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+
+
     public static ArrayList<Game> getGames() {
         return games;
     }
+
+    public static void addGame(Game game) {
+        games.add(game);
+    }
+
+    public static Game getGameByGameName(String gameName) {
+        for (Game game : games)
+            if (game.name.equals(gameName))
+                return game;
+        return null;
+    }
+
+    public static Game getGameById(String gameId) {
+        for(Game game:games)
+            if(game.gameId.equals(gameId))
+                return game;
+        return null;
+    }
+
+
+    public void delete()
+    {
+        File file = new File("database" + "\\" + "games" + "\\" + this.getGameId() + ".json");
+        try {
+            if (file.exists())
+                file.delete();
+        } catch (Exception ignored) {
+        }
+        playLogs.clear();
+        for(Player player: Player.getAllPlayers())
+        {
+            Suggestion suggestion = player.getSuggestionByGameName(this.name);
+            if(suggestion != null)
+            {
+                suggestion.delete();
+            }
+            //player.removeSuggestion(this);
+            player.removeGameLog(this);
+        }
+        //Suggestion.getSuggestions().removeIf(suggestion -> suggestion.getGameName().equals(this.name));
+        Event.getEvents().removeIf(event -> event.getGameName().equals(this.name));
+        Game.getGames().remove(this);
+    }
+
 
     public static void open() throws FileNotFoundException {
         File folder = new File("database" + "\\" + "games");
@@ -77,41 +141,6 @@ public class Game {
         FileWriter file = new FileWriter("database" + "\\" + "games" + "\\" + game.getGameId() + ".json");
         file.write(jsonAccount);
         file.close();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ArrayList<PlayLog> getPlayLogs() {
-        return playLogs;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public Scoreboard getScoreboard() {
-        return scoreboard;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public void setName(String gameName) {
-        this.name = gameName;
-    }
-
-    public static Game getGameByGameName(String gameName) {
-        for (Game game : games)
-            if (game.name.equals(gameName))
-                return game;
-        return null;
-    }
-
-    public static void addGame(Game game) {
-        games.add(game);
     }
 
     @Override

@@ -55,10 +55,15 @@ public class AccountMenuController extends Controller {
     }
 
     public ArrayList<String> showGamesHistory() {
-        ArrayList<String> result = new ArrayList<>();
-        for(GameLog gameLog:( (Player)account).getGameLogs())
-            result.add(gameLog.toString());
-        return result;
+        //returns arraylist of gameLogs
+        if (account instanceof Player)//must be checked in view
+        {
+            ArrayList<String> result = new ArrayList<>();
+            for (GameLog gameLog : ((Player) account).getGameLogs())
+                result.add(gameLog.toString());
+            return result;
+        }
+        return null;
     }
 
     public String showGameStatistics(String gameName) {

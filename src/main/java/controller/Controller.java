@@ -94,7 +94,7 @@ public class Controller {
 
     public boolean isSuggestionIdExists(String suggestionId) {
         for (Suggestion suggestion : Suggestion.getSuggestions()) {
-            if (suggestion.getId().equals(suggestionId)) {
+            if (suggestion.getSuggestionId().equals(suggestionId)) {
                 return true;
             }
         }

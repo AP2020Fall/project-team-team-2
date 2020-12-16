@@ -1,10 +1,12 @@
 package model;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class Player extends Account {
     private LocalDate registerDay;
@@ -13,14 +15,16 @@ public class Player extends Account {
     private int loses;
     private int wins;
     private int draws;
-    private int newSoldiers;
     private ArrayList<GameLog> gameLogs;
     private ArrayList<String> friends;
-    private ArrayList<FriendRequest> friendRequests;
+    private ArrayList<String> receivedFriendRequests;
+    private ArrayList<String> sentFriendRequests;
     private ArrayList<Message> messages;
+    private ArrayList<String> favouriteGames;
+    private ArrayList<String> suggestions;
+
     private ArrayList<Card> cards;
-    private ArrayList<Game> favouriteGames;
-    private ArrayList<Suggestion> suggestions;
+    private int newSoldiers;
     private int playerNumber;
     private int draftSoldiers = 0;
 
@@ -30,9 +34,11 @@ public class Player extends Account {
         registerDay = LocalDate.now();
         this.money = money;
         this.score = 0;
+        //this.loses = this.wins = this.draws = 0;
         gameLogs = new ArrayList<>();
         friends = new ArrayList<>();
-        friendRequests = new ArrayList<>();
+        receivedFriendRequests = new ArrayList<>();
+        sentFriendRequests = new ArrayList<>();
         cards = new ArrayList<>();
         messages = new ArrayList<>();
         favouriteGames = new ArrayList<>();
@@ -44,7 +50,7 @@ public class Player extends Account {
     }
 
     public int getDayOfRegister() {
-        return (int) ChronoUnit.DAYS.between( registerDay,LocalDate.now());
+        return (int) ChronoUnit.DAYS.between(registerDay, LocalDate.now());
     }
 
     public double getMoney() {
@@ -55,35 +61,6 @@ public class Player extends Account {
         return score;
     }
 
-    public int getNewSoldiers() { return newSoldiers; }
-
-    public ArrayList<GameLog> getGameLogs() {
-        return gameLogs;
-    }
-
-    public ArrayList<Player> getFriends() {
-        ArrayList<Player> result = new ArrayList<>();
-        for(String friendId: friends)
-            result.add(Player.getPlayerByUsername(friendId));
-        return result;
-    }
-
-    public ArrayList<FriendRequest> getFriendRequests() {
-        return friendRequests;
-    }
-
-    public ArrayList<Suggestion> getSuggestions() {
-        return suggestions;
-    }
-
-    public ArrayList<Message> getMessages() {
-        return messages;
-    }
-
-    public ArrayList<Game> getFavouriteGames() {
-        return favouriteGames;
-    }
-
     public void setMoney(double money) {
         this.money = money;
     }
@@ -92,23 +69,35 @@ public class Player extends Account {
         this.score += score;
     }
 
-    public void addSuggestion(Suggestion suggestion) {
-        this.suggestions.add( suggestion);
+    public ArrayList<GameLog> getGameLogs() {
+        return gameLogs;
     }
 
-    public Suggestion getSuggestionByGameName(String gameName) {
-        for (Suggestion suggestion : suggestions)
-            if (suggestion.getGameName().equals(gameName))
-                return suggestion;
+    public GameLog getLastGamePlayed() {
+        if (gameLogs.isEmpty())
+            return null;
+        gameLogs.sort((a, b) -> b.getLastPlay().compareTo(a.getLastPlay()));
+        return gameLogs.get(0);
+    }
+
+    public GameLog getGameHistory(String gameName) {
+        for (GameLog gameLog : gameLogs)
+            if (gameLog.getGame().getName().equals(gameName))
+                return gameLog;
         return null;
     }
 
-    public boolean suggestionExists(String gameName)
+    public void removeGameLog(Game game)
     {
-        return getSuggestionByGameName(gameName) != null;
+        gameLogs.removeIf(o->o.getGame().getGameId().equals(game.getGameId()));
     }
-    public void removeSuggestion(Suggestion suggestion) {
-        suggestions.remove(suggestion);
+
+
+    public ArrayList<Player> getFriends() {
+        ArrayList<Player> result = new ArrayList<>();
+        for (String friendId : friends)
+            result.add(Player.getPlayerByUsername(friendId));
+        return result;
     }
 
     public Player getFriendByUsername(String username) {
@@ -119,23 +108,126 @@ public class Player extends Account {
         return null;
     }
 
-    public void addFriend(Player friend)
-    {
+    public void addFriend(Player friend) {
         friends.add(friend.getUsername());
     }
 
-    public void removeFriend(Player friend)
-    {
+    public void removeFriend(Player friend) {
         friends.remove(friend.getUsername());
+    }
+
+
+
+    public ArrayList<FriendRequest> getReceivedFriendRequests() {
+        //throws NullPointerException if there is any error
+        ArrayList<FriendRequest> result = new ArrayList<>();
+        for (String friendRequests : receivedFriendRequests)
+            result.add(Objects.requireNonNull( FriendRequest.getFriendRequestById(friendRequests)));
+        return result;
+    }
+
+    public ArrayList<FriendRequest> getSentFriendRequests() {
+        //throws NullPointerException if there is any error
+        ArrayList<FriendRequest> result = new ArrayList<>();
+        for (String friendRequests : sentFriendRequests)
+            result.add(Objects.requireNonNull( FriendRequest.getFriendRequestById(friendRequests)));
+        return result;
+    }
+
+    public void addReceivedFriendRequest(FriendRequest friendRequest) {
+        receivedFriendRequests.add(friendRequest.getFriendRequestId());
+    }
+
+    public void addSentFriendRequest(FriendRequest friendRequest) {
+        sentFriendRequests.add(friendRequest.getFriendRequestId());
     }
 
     public FriendRequest getFriendRequestByUsername(String username) {
         //if username sent a FriendRequest to player, return the FriendRequest else null.
-        for (FriendRequest friendRequest : friendRequests)
+        //throws NullPointerException if there is an error
+        for (String friendRequestId : receivedFriendRequests) {
+            FriendRequest friendRequest = Objects.requireNonNull(FriendRequest.getFriendRequestById(friendRequestId));
             if (friendRequest.getPlayer().getUsername().equals(username))
                 return friendRequest;
+        }
         return null;
     }
+
+    public void removeReceivedFriendRequest(FriendRequest friendRequest) {
+        receivedFriendRequests.remove(friendRequest.getFriendRequestId());
+    }
+
+    public void removeSentFriendRequest(FriendRequest friendRequest) {
+        sentFriendRequests.remove(friendRequest.getFriendRequestId());
+    }
+
+
+    public ArrayList<Suggestion> getSuggestions() {
+        //throws NullPointerException if there is any error
+        ArrayList<Suggestion> result= new ArrayList<>();
+        for(String suggestion: suggestions)
+        {
+            result.add(Objects.requireNonNull(Suggestion.getSuggestionById(suggestion)));
+        }
+        return result;
+    }
+
+    public void addSuggestion(Suggestion suggestion) {
+        this.suggestions.add(suggestion.getSuggestionId());
+    }
+
+    public Suggestion getSuggestionByGameName(String gameName) {
+        for (String suggestionId : suggestions) {
+            Suggestion suggestion = Objects.requireNonNull(Suggestion.getSuggestionById(suggestionId));
+            if (suggestion.getGameName().equals(gameName))
+                return suggestion;
+        }
+        return null;
+    }
+
+    public boolean suggestionExists(String gameName) {
+        return getSuggestionByGameName(gameName) != null;
+    }
+
+    public void removeSuggestion(Suggestion suggestion) {
+        suggestions.remove(suggestion.getSuggestionId());
+    }
+
+    public void removeSuggestion(Game game)
+    {
+        Iterator<String> iterator = suggestions.iterator();
+        while(iterator.hasNext())
+        {
+            Suggestion suggestion = Objects.requireNonNull(Suggestion.getSuggestionById(iterator.next()));
+            if(suggestion.getGameName().equals(game.getName()))
+                iterator.remove();
+        }
+    }
+
+
+
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+
+
+    public ArrayList<Game> getFavouriteGames() {
+        ArrayList<Game> result = new ArrayList<>();
+        for (String gameId : favouriteGames)
+        {
+            result.add(Objects.requireNonNull(Game.getGameById(gameId)));
+        }
+        return result;
+    }
+
+    public void addFavouriteGame(Game game)
+    {
+        favouriteGames.add(game.getGameId());
+    }
+
+
+
 
     public static Player getPlayerById(String id) {
         //if a player with id exists returns player else null.
@@ -152,6 +244,86 @@ public class Player extends Account {
         return null;
     }
 
+
+
+    public int getNumberOfWins() {
+        int wins = 0;
+        for (GameLog gameLog : gameLogs)
+            wins += gameLog.getWins();
+        return wins;
+    }
+
+
+    public void delete() {
+        File file = new File("database" + "\\" + "accounts" + "\\" + "players" + "\\" +
+                this.getUsername() + ".json");
+        try {
+            if (file.exists())
+                file.delete();
+        } catch (Exception ignored) {
+        }
+        gameLogs.clear();
+        for(String username: friends)
+        {
+            Player friend = Objects.requireNonNull(Player.getPlayerByUsername(username));
+            friend.removeFriend(this);
+        }
+        friends.clear();
+
+        for(String friendRequestId: receivedFriendRequests)
+        {
+            FriendRequest friendRequest = Objects.requireNonNull(FriendRequest.getFriendRequestById(friendRequestId));
+            friendRequest.getPlayer().removeSentFriendRequest(friendRequest);
+            friendRequest.delete();
+        }
+        receivedFriendRequests.clear();
+
+        for(String friendRequestId: sentFriendRequests)
+        {
+            FriendRequest friendRequest = Objects.requireNonNull(FriendRequest.getFriendRequestById(friendRequestId));
+            friendRequest.getFriend().removeReceivedFriendRequest(friendRequest);
+            friendRequest.delete();
+        }
+        sentFriendRequests.clear();
+
+        messages.clear();
+
+        favouriteGames.clear();
+        Iterator<String> iterator = suggestions.iterator();
+        while(iterator.hasNext()) {
+            String res = iterator.next();
+            Suggestion suggestion = Objects.requireNonNull(Suggestion.getSuggestionById(res));
+            Suggestion.getSuggestions().remove(suggestion);
+            iterator.remove();
+        }
+        suggestions.clear();
+        Account.getAllAccounts().remove(this);
+
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + "money: " + getMoney() + "$\n"
+                + "registered: " + getDayOfRegister() + " days ago\n";
+    }
+
+
+
+
+
+    public int getDraftSoldiers() {
+        return draftSoldiers;
+    }
+
+    public void addDraftSoldier(int draftSoldiers) {
+        this.draftSoldiers += draftSoldiers;
+    }
+
+    public int getNewSoldiers() {
+        return newSoldiers;
+    }
+
     public void addCard(Card card) {
         this.cards.add(card);
     }
@@ -166,20 +338,6 @@ public class Player extends Account {
         }
     }
 
-    public int getNumberOfWins() {
-        int wins = 0;
-        for (GameLog gameLog : gameLogs)
-            wins += gameLog.getWins();
-        return wins;
-    }
-
-    public GameLog getGameHistory(String gameName) {
-        for (GameLog gameLog : gameLogs)
-            if (gameLog.getGame().getName().equals(gameName))
-                return gameLog;
-        return null;
-    }
-
     public void setPlayerNumber(int playerNumber) {
         this.playerNumber = playerNumber;
     }
@@ -192,36 +350,16 @@ public class Player extends Account {
         return cards;
     }
 
-    public GameLog getLastGamePlayed()
-    {
-        if(gameLogs.isEmpty())
-            return null;
-        gameLogs.sort((a, b) -> b.getLastPlay().compareTo(a.getLastPlay()));
-        return gameLogs.get(0);
-    }
-
-    public int getDraftSoldiers() {
-        return draftSoldiers;
-    }
-
-    public void addDraftSoldier(int draftSoldiers) {
-        this.draftSoldiers += draftSoldiers;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString()
-                + "money: " + getMoney() + "$\n"
-                + "registered: " + getDayOfRegister() + " days ago\n";
-    }
 
     public void setDraws() {
         this.draws++;
     }
-    public void setWins(){
+
+    public void setWins() {
         this.wins++;
     }
-    public void setLoses(){
+
+    public void setLoses() {
         this.loses++;
     }
 }

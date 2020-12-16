@@ -9,7 +9,6 @@ public class GameLog {
     private String gameLogId;
     private int score;
     private LocalDateTime lastPlay;
-
     private Game game;
 
     public int getFrequency() {

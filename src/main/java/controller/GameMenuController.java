@@ -50,7 +50,7 @@ public class GameMenuController extends Controller{
     }
 
     public void addToFavorites() {
-        player.getFavouriteGames().add(game);
+        player.addFavouriteGame(game);
     }
 
     public void runGame(ArrayList<String> usernames) {
