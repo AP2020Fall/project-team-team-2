@@ -116,15 +116,6 @@ public class RiskGameController {
         return gameIsPlaying;
     }
 
-    public void main(String[] args) {
-        int row = gameCountries.size() - 1;
-        int column = gameCountries.get(0).size() - 1;
-        int[][] countryNumbers1 = new int[row][column];
-        int[][] countryNumbers2 = new int[row][column];
-
-
-    }
-
 
     /* Draft */
     public void placeSoldier(Country country, int soldierNumber) {
