@@ -700,8 +700,8 @@ public class RiskGameController  extends Controller {
     }
 
     public boolean fortifyNeighbourhoodCheck(Country sourceCountry, Country destinationCountry) {
-        int row = gameCountries.size() - 1;
-        int column = gameCountries.get(0).size() - 1;
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
         int[][] countryNumbers = fortifyMakeCountryNumbers(sourceCountry, destinationCountry);
 
         return isPath(countryNumbers, row, column);
