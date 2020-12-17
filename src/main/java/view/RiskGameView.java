@@ -1,26 +1,13 @@
 package view;
 
-import com.google.gson.stream.JsonReader;
 import controller.RiskGameController;
-import model.Countries;
-import model.Country;
-import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
-import model.Player;
-import controller.RiskGameController;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.math.MathContext;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RiskGameView {
-    private RiskGameController riskGameController;
+    private final RiskGameController riskGameController;
 
     public RiskGameView(Map<String, Object> primitiveSettings, String gameID, int soldiers) {
         this.riskGameController = new RiskGameController(primitiveSettings, gameID, soldiers);
@@ -107,7 +94,7 @@ public class RiskGameView {
                     draftAfterWin(countryDetails, soldierNumber);
                     commandFound = true;
                     check = false;
-                } else {
+                } else if(!commandFound) {
                     System.out.println("Invalid command!");
                     continue;
                 }
