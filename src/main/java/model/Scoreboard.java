@@ -64,19 +64,21 @@ public class Scoreboard {
             Entry entry = findPlayerEntry(player.getUsername());
             if(entry == null)
             {
-                entry = new Entry(player.getUsername(),0,1);
+                entries.add(new Entry(player.getUsername(),0,1));
             }
             else
             {
                 entry.setNumPlayed(entry.getNumPlayed()+1);
             }
         }
+        System.out.println("why");
         //increment the wins of the winner
-        if(playLog.getWinner() == null) {
+        if(playLog.getWinner() != null) {
             Entry entry = Objects.requireNonNull(findPlayerEntry(playLog.getWinner().getUsername()),
                     "Invalid PlayLog has been passed to Scoreboard.");
             entry.setWins(entry.getWins() + 1);
         }
+        System.out.println("no");
         entries.sort((a,b) -> (a.getWins() != b.getWins() ? Integer.compare(b.getWins(),a.getWins())
                 : (a.getNumPlayed() != b.getNumPlayed() ? Integer.compare(a.getNumPlayed(),b.getNumPlayed())
                 : a.getPlayerName().compareTo(b.getPlayerName()))));
