@@ -898,4 +898,16 @@ public class RiskGameController extends Controller {
                 "4-type1,type2,type3 score:10" + "\n";
         return toPrint;
     }
+
+    public String showWhatToDo() {
+        String toPrint = "Playing status : ";
+        if(!draftDone){
+            toPrint += "Draft";
+        }else if(!attackDone){
+            toPrint += "Attack";
+        }else if(!fortifyDone){
+            toPrint += "Fortify";
+        }
+        return toPrint;
+    }
 }

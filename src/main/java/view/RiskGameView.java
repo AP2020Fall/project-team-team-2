@@ -189,10 +189,19 @@ public class RiskGameView {
                 nextTurn();
                 commandFound = true;
             }
+            if(inputLine.equals("show what to do")){
+                showWhatToDo();
+                commandFound = true;
+            }
             if (commandFound == false) {
                 System.out.println("Invalid Command!");
             }
         }
+    }
+
+    private void showWhatToDo() {
+        String toPrint = riskGameController.showWhatToDo();
+        System.out.println(toPrint);
     }
 
     public void showMap() {
