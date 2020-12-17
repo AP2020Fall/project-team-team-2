@@ -4,15 +4,13 @@ package model;
 import java.util.*;
 
 public class Country {
-    private String name;
+    private String name ="";
     private Player Owner;
     private String continent;
     private int gameCountryNumber;
     private int numberOfContinentCountry = 0;
     private int soldiers = 0;
 
-    public static void main(String[] args) {
-    }
     public Country(){}
     public Country(String name, String continent , int gameCountryNumber) {
         this.name = name;

@@ -89,15 +89,24 @@ public class RiskGameView {
                 placeSoldier(countryDetails, 1);
                 commandFound = true;
             }
+            /* Show Map Match*/
+            Matcher showMapMatcher = showMapPattern.matcher(inputLine);
+            check = showMapMatcher.matches();
+            if (check == true) {
+                this.showMap();
+                check = false;
+                commandFound = true;
+            }
             /* Check draft mode*/
             Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
             check = placeSoldierMatcher.matches();
-            if (!riskGameController.getAttackWon()) {
+            if (riskGameController.getAttackWon() && placementStatus) {
                 if (check) {
                     String countryDetails = placeSoldierMatcher.group("countryDetails");
                     int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
                     draftAfterWin(countryDetails, soldierNumber);
                     commandFound = true;
+                    check = false;
                 } else {
                     System.out.println("Invalid command!");
                     continue;
@@ -130,31 +139,21 @@ public class RiskGameView {
                 commandFound = true;
             }
 
-            /* Show Map Match*/
-            Matcher showMapMatcher = showMapPattern.matcher(inputLine);
-            check = showMapMatcher.matches();
-            if (check == true) {
-                this.showMap();
-                check = false;
-                commandFound = true;
-            }
+
             /* Check match cards */
             Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
             check = matchCardsMatcher.matches();
             if (check == true && placementStatus) {
                 check = false;
-                matchCardEnable = true;
-                continue;
+                showOptions();
+                commandFound = true;
             }
-
-            inputLine = inputCommand.nextLine().trim();
-
             Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
             check = type1MatchMatcher.matches();
             if (check == true && placementStatus) {
                 riskGameController.matchCards(1);
                 check = false;
-                break;
+                commandFound = true;
             }
 
             Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
@@ -162,7 +161,7 @@ public class RiskGameView {
             if (check == true && placementStatus) {
                 riskGameController.matchCards(2);
                 check = false;
-                break;
+                commandFound = true;
             }
 
             Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
@@ -170,7 +169,8 @@ public class RiskGameView {
             if (check == true && placementStatus) {
                 riskGameController.matchCards(3);
                 check = false;
-                break;
+                commandFound = true;
+                commandFound = true;
             }
 
             Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
@@ -178,11 +178,12 @@ public class RiskGameView {
             if (check == true && placementStatus) {
                 riskGameController.matchCards(4);
                 check = false;
-                break;
+                commandFound = true;
             }
 
             if (inputLine.equals("next")) {
-
+                next();
+                commandFound =true;
             }
             if (inputLine.equals("turn over")) {
                 nextTurn();
@@ -220,7 +221,7 @@ public class RiskGameView {
     }
 
     public void next() {
-        String toPrint = riskGameController.nextPart();
+        String toPrint = riskGameController.next();
         System.out.println(toPrint);
     }
 
@@ -237,14 +238,17 @@ public class RiskGameView {
         String toPrint = riskGameController.showTurn();
         System.out.println(toPrint);
     }
-    public void showOptions(){
+
+    public void showOptions() {
         String toPrint = riskGameController.showMatchOptions();
         System.out.println(toPrint);
     }
-    public void matchCards(int typical){
+
+    public void matchCards(int typical) {
         String toPrint = riskGameController.matchCards(typical);
         System.out.println(toPrint);
     }
+
     public void draftAfterWin(String countryDetails, int soldiers) {
         String toPrint = riskGameController.draftAfterWin(countryDetails, soldiers);
         System.out.println(toPrint);
