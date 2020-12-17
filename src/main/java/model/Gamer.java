@@ -7,9 +7,9 @@ public class Gamer {
     private int score;
     private int coin;
     private List<Card> cards;
-
-    public static void main(String[] args) {
-    }
+//
+//    public static void main(String[] args) {
+//    }
 
     public void setUsername(String username) {
         this.username = username;
