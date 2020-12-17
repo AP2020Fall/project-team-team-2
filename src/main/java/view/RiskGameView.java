@@ -24,7 +24,7 @@ public class RiskGameView {
 
     public RiskGameView(Map<String, Object> primitiveSettings, String gameID, int soldiers) {
         this.riskGameController = new RiskGameController(primitiveSettings, gameID, soldiers);
-        if(!(boolean)riskGameController.getPrimitiveSettings().get("Placement")){
+        if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
             autoPlace();
         }
         /* Show Map at Start */
@@ -49,9 +49,13 @@ public class RiskGameView {
         boolean fortifyMode = false;
         /* Different patterns of valid match cards commands */
         Pattern matchCardsCommand = Pattern.compile("(^)match cards($)");
+        /*Typical 1*/
         Pattern type1MatchCommand = Pattern.compile("(^)1-type1,type1,type1 score:4($)");
+        /*Typical 2*/
         Pattern type2MatchCommand = Pattern.compile("(^)2-type2,type2,type2 score:6($)");
+        /*Typical 3*/
         Pattern type3MatchCommand = Pattern.compile("(^)3-type3,type3,type3 score:8($)");
+        /*Typical 4*/
         Pattern differentTypeMatchCommand = Pattern.compile("(^)4-type1,type2,type3 score:10($)");
 
 
@@ -88,6 +92,17 @@ public class RiskGameView {
             /* Check draft mode*/
             Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
             check = placeSoldierMatcher.matches();
+            if (!riskGameController.getAttackWon()) {
+                if (check) {
+                    String countryDetails = placeSoldierMatcher.group("countryDetails");
+                    int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
+                    draftAfterWin(countryDetails, soldierNumber);
+                    commandFound = true;
+                } else {
+                    System.out.println("Invalid command!");
+                    continue;
+                }
+            }
             if (check == true && placementStatus) {
                 String countryDetails = placeSoldierMatcher.group("countryDetails");
                 int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
@@ -97,11 +112,11 @@ public class RiskGameView {
             /* Check attack mode */
             Matcher attackMatcher = attackPattern.matcher(inputLine);
             check = attackMatcher.matches();
-            if(check == true && placementStatus){
+            if (check == true && placementStatus) {
                 String sourceCountry = attackMatcher.group("sourceCountry");
                 String destinationCountry = attackMatcher.group("destinationCountry");
-                int soldierNumber =Integer.parseInt(attackMatcher.group("soldierNumber"));
-                attack(sourceCountry , destinationCountry , soldierNumber);
+                int soldierNumber = Integer.parseInt(attackMatcher.group("soldierNumber"));
+                attack(sourceCountry, destinationCountry, soldierNumber);
                 commandFound = true;
             }
             /* Check fortify mode*/
@@ -118,7 +133,7 @@ public class RiskGameView {
             /* Show Map Match*/
             Matcher showMapMatcher = showMapPattern.matcher(inputLine);
             check = showMapMatcher.matches();
-            if(check == true){
+            if (check == true) {
                 this.showMap();
                 check = false;
                 commandFound = true;
@@ -131,45 +146,39 @@ public class RiskGameView {
                 matchCardEnable = true;
                 continue;
             }
-            while (matchCardEnable) {
 
-                inputLine = inputCommand.nextLine().trim();
+            inputLine = inputCommand.nextLine().trim();
 
-                Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
-                check = type1MatchMatcher.matches();
-                if (check == true && placementStatus) {
-                    riskGameController.matchCardAddSoldiers(4);
-                    check = false;
-                    break;
-                }
+            Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
+            check = type1MatchMatcher.matches();
+            if (check == true && placementStatus) {
+                riskGameController.matchCards(1);
+                check = false;
+                break;
+            }
 
-                Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
-                check = type2MatchMatcher.matches();
-                if (check == true && placementStatus) {
-                    riskGameController.matchCardAddSoldiers(6);
-                    check = false;
-                    break;
-                }
+            Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
+            check = type2MatchMatcher.matches();
+            if (check == true && placementStatus) {
+                riskGameController.matchCards(2);
+                check = false;
+                break;
+            }
 
-                Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
-                check = type3MatchMatcher.matches();
-                if (check == true && placementStatus) {
-                    riskGameController.matchCardAddSoldiers(8);
-                    check = false;
-                    break;
-                }
+            Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
+            check = type3MatchMatcher.matches();
+            if (check == true && placementStatus) {
+                riskGameController.matchCards(3);
+                check = false;
+                break;
+            }
 
-                Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
-                check = diffrentTypeMatchMatcher.matches();
-                if (check == true && placementStatus) {
-                    riskGameController.matchCardAddSoldiers(10);
-                    check = false;
-                    break;
-                }
-
-                if (check == false) {
-                    System.out.println("Invalid Command!");
-                }
+            Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
+            check = diffrentTypeMatchMatcher.matches();
+            if (check == true && placementStatus) {
+                riskGameController.matchCards(4);
+                check = false;
+                break;
             }
 
             if (inputLine.equals("next")) {
@@ -190,10 +199,6 @@ public class RiskGameView {
         System.out.println(toPrint);
     }
 
-    //    public void manualPlaceSoldier() {
-//        String toPrint = this.riskGameController.manualPlaceSoldier();
-//        System.out.println(toPrint);
-//    }
     public void placeSoldier(String countryDetals, int soldiers) {
         String toPrint = this.riskGameController.placeSoldier(countryDetals, soldiers);
         System.out.println(toPrint);
@@ -218,15 +223,30 @@ public class RiskGameView {
         String toPrint = riskGameController.nextPart();
         System.out.println(toPrint);
     }
-    public void autoPlace(){
+
+    public void autoPlace() {
         riskGameController.autoPlace();
     }
+
     public void nextTurn() {
         String toPrint = riskGameController.changeTurn();
         System.out.println(toPrint);
     }
-    public void showTurn(){
+
+    public void showTurn() {
         String toPrint = riskGameController.showTurn();
+        System.out.println(toPrint);
+    }
+    public void showOptions(){
+        String toPrint = riskGameController.showMatchOptions();
+        System.out.println(toPrint);
+    }
+    public void matchCards(int typical){
+        String toPrint = riskGameController.matchCards(typical);
+        System.out.println(toPrint);
+    }
+    public void draftAfterWin(String countryDetails, int soldiers) {
+        String toPrint = riskGameController.draftAfterWin(countryDetails, soldiers);
         System.out.println(toPrint);
     }
 }

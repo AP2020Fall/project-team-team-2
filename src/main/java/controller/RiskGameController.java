@@ -10,16 +10,19 @@ import java.io.FileReader;
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.*;
-
-public class RiskGameController  extends Controller {
+import model.Card;
+public class RiskGameController extends Controller {
     private static java.util.Map<String, Object> primitiveSettings;
     private ArrayList<Player> players;
     private boolean gameIsPlaying = true;
     private boolean draftDone;
     private boolean attackDone;
     private boolean fortifyDone;
+    private boolean attackWon = false;
+    private String attackDestination;
     private boolean turnDone;
     private int startSoldiers;
+    private boolean gotCards = false;
     private String gameID;
     private boolean placementFinished = false;
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
@@ -44,7 +47,6 @@ public class RiskGameController  extends Controller {
 
 
     }
-
     public void shapeMap() {
         Integer mapNumber = (Integer) primitiveSettings.get("Map Number");
         String mapFileAddress = "src/main/resources/maps/map_" + String.valueOf(mapNumber) + ".txt";
@@ -111,13 +113,6 @@ public class RiskGameController  extends Controller {
         return gameIsPlaying;
     }
 
-
-    /* Draft */
-    public void placeSoldier(Country country, int soldierNumber) {
-
-        country.addSoldiers(soldierNumber);
-        this.draftDone = true;
-    }
 
     public int getRemainSoldiers() {
         return currentPlayer.getNewSoldiers();
@@ -221,6 +216,19 @@ public class RiskGameController  extends Controller {
                         toPrint = "attack failed";
                     } else {
                         toPrint = "attack was successful";
+                        if(source.getSoldiers() == 2){
+                            source.addSoldiers(-1);
+                            destination.addSoldiers(+1);
+                            destination.setOwner(currentPlayer);
+                        }else{
+                            destination.setOwner(currentPlayer);
+                            this.attackWon = true;
+                            this.attackDestination = destinyCountry;
+                        }
+                        if(!gotCards){
+                            toPrint = "\n You Got new Card! : Card " + addCard() + " has been added to you";
+                            gotCards = true;
+                        }
                     }
                 }
             } while (inWar);
@@ -292,7 +300,7 @@ public class RiskGameController  extends Controller {
     }
 
     public String changeTurn() {
-        String toPrint = "";
+        String toPrint;
         boolean checkWinner = checkWinner();
         if (checkWinner) {
             if (this.winner != null) {
@@ -309,6 +317,7 @@ public class RiskGameController  extends Controller {
                 setDraftDone(false);
                 setAttackDone(false);
                 setFortifyDone(false);
+                gotCards = false;
             } else {
                 toPrint = "You didn't place any soldier, please first try to place a soldier in remain countries.";
             }
@@ -323,6 +332,7 @@ public class RiskGameController  extends Controller {
                         setDraftDone(false);
                         setAttackDone(false);
                         setFortifyDone(false);
+                        gotCards = false;
                     } else {
                         toPrint = "You didn't fortify yet.";
                     }
@@ -344,7 +354,23 @@ public class RiskGameController  extends Controller {
         return this.placementFinished;
     }
 
-    public void matchCards() {
+    public String matchCards(int type) {
+        String toPrint = "";
+        switch (type){
+            case 1:
+                    toPrint = Card.matchCard(currentPlayer.getCards() , 1 , currentPlayer);
+                break;
+            case 2:
+                toPrint = Card.matchCard(currentPlayer.getCards() , 2 , currentPlayer);
+                break;
+            case 3:
+                toPrint = Card.matchCard(currentPlayer.getCards() , 3 , currentPlayer);
+                break;
+            case 4:
+                toPrint = Card.matchCard(currentPlayer.getCards() , 4 , currentPlayer);
+                break;
+        }
+        return toPrint;
     }
 
     public String showMap() {
@@ -435,16 +461,9 @@ public class RiskGameController  extends Controller {
         return turnDone;
     }
 
-    public boolean getAttackDone() {
-        return attackDone;
-    }
 
     public void setAttackDone(boolean status) {
         attackDone = status;
-    }
-
-    public boolean getFortifyDone() {
-        return fortifyDone;
     }
 
     public void setFortifyDone(boolean status) {
@@ -722,7 +741,6 @@ public class RiskGameController  extends Controller {
                 } else {
                     toPrint = "Please first Attack to a country then try next";
                 }
-
             } else {
 
             }
@@ -805,6 +823,49 @@ public class RiskGameController  extends Controller {
         ;
         return finished;
     }
+    public boolean getAttackWon(){
+        return this.attackWon;
+    }
 
-
+    public String draftAfterWin(String countryDetails, int soldiers) {
+        String toPrint = "";
+        String[] details = countryDetails.split("\\.");
+        String countryName = details[0];
+        int continentNumber = Integer.parseInt(details[1]);
+        Country destination = getCountryByDetails(countryName, continentNumber);
+        if (soldiers > currentPlayer.getDraftSoldiers() || soldiers < 1) {
+            toPrint = "Soldiers are not enough or invalid";
+        } else if (destination == null) {
+            toPrint = "Destination country is not valid";
+        } else {
+            if (!destination.getOwner().equals(getCurrentPlayer())) {
+                toPrint = "This country is not yours";
+            } else {
+                if(countryDetails.equals(this.attackDestination)) {
+                    placeSoldier(countryDetails, soldiers);
+                    currentPlayer.addDraftSoldier(-soldiers);
+                    toPrint = "" + soldiers + " soldiers added to " + countryDetails + " successfully";
+                    attackWon = false;
+                    attackDestination = null;
+                }else{
+                    toPrint = "Please try the previous destination country, not others";
+                }
+            }
+        }
+        return toPrint;
+    }
+    public String addCard(){
+        String toPrint = "";
+        int rnd = new Random().nextInt(Card.values().length);
+        Card toGetCard = Card.values()[rnd];
+        currentPlayer.addCard(toGetCard);
+        return toGetCard.name();
+    }
+    public String showMatchOptions() {
+        String toPrint = "1-type1,type1,type1 score:4" + "\n" +
+                         "2-type2,type2,type2 score:6" + "\n" +
+                         "3-type3,type3,type3 score:8" + "\n" +
+                         "4-type1,type2,type3 score:10"+ "\n";
+        return toPrint;
+    }
 }
