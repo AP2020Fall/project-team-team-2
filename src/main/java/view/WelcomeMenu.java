@@ -66,13 +66,13 @@ public class WelcomeMenu implements View{
                 "exit");
     }
     @FXML
-    private void openLoginMenu() {
-        new LoginMenu(null);
+    private void openLoginMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new LoginMenu());
     }
 
     @FXML
     private void openRegisterMenu() {
-        new RegisterMenu(null);
+      //  ViewHandler.getViewHandler().push(new RegisterMenu(null));
     }
 
     @FXML
