@@ -1,13 +1,15 @@
 package view;
 
 import controller.RegisterController;
+import javafx.stage.Stage;
 import model.Account;
 import model.Admin;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
-public class RegisterMenu extends Menu {
+public class RegisterMenu extends Menu implements View {
 
     private final RegisterController controller;
 
@@ -16,6 +18,11 @@ public class RegisterMenu extends Menu {
         System.out.println("Register Menu");
         controller = new RegisterController();
         registerMenu();
+    }
+
+    @Override
+    public void show(Stage stage) throws IOException {
+
     }
 
     private void registerMenu() {

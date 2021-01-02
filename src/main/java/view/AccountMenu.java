@@ -45,7 +45,7 @@ public class AccountMenu extends Menu {
     }
 
     private void logout() {
-        new WelcomeMenu(null);
+        new WelcomeMenu();
     }
 
     private void gameStatistics(String gameName) {
