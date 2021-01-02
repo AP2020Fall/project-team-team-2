@@ -88,7 +88,7 @@ public class AccountMenuController extends Controller {
     }
 
     public void logOut() {
-        new WelcomeMenu(null);
+        new WelcomeMenu();
     }
 
     public void setAccount(Account account) {
