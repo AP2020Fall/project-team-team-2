@@ -5,6 +5,8 @@ import model.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Controller {
     private static ArrayList<String> ids = new ArrayList<>();
@@ -116,4 +118,16 @@ public class Controller {
         return Game.getGameByGameName(gameName) != null;
     }
 
+    public boolean checkEmail(String email) {
+        return email.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$");
+    }
+
+    public boolean checkPhoneNumber(String phoneNumber) {
+        return phoneNumber.matches("09\\d{9}");
+    }
+
+    public Matcher getMatcher(String input, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(input);
+    }
 }

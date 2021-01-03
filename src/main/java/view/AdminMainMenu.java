@@ -13,9 +13,9 @@ public class AdminMainMenu extends Menu {
         super(account);
         System.out.println("Admin MainMenu");
         controller = new AdminMainMenuController((Admin) account);
-        adminMainMenu();
+       // adminMainMenu();
     }
-
+/*
     private void adminMainMenu() {
         while (true) {
             String input = scanner.nextLine();
@@ -60,7 +60,7 @@ public class AdminMainMenu extends Menu {
             }
         }
     }
-
+*/
     private void help() {
         System.out.println("View account menu\n" +
                 "Add event <game_name>, <start_date>, <end_date>, <score>\n" +

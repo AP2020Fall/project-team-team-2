@@ -14,10 +14,10 @@ public class GameMenu extends Menu {
     public GameMenu(Player player, Game game) {
         super((Account) player);
         this.controller = new GameMenuController(game,player);
-        gameMenu();
+        //gameMenu();
     }
 
-    private void gameMenu() {
+   /* private void gameMenu() {
         while (true) {
             String input = scanner.nextLine();
             if (getMatcher(input, "^help$").find()) {
@@ -47,7 +47,7 @@ public class GameMenu extends Menu {
             }
         }
     }
-
+*/
     private void showPoints() {
         System.out.println(controller.showPoints());
     }

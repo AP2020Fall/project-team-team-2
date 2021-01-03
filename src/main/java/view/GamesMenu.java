@@ -13,10 +13,10 @@ public class GamesMenu extends Menu {
     public GamesMenu(Account account) {
         super(account);
         controller = new GamesMenuController();
-        gamesMenu();
+      //  gamesMenu();
     }
 
-    private void gamesMenu() {
+   /* private void gamesMenu() {
         System.out.println("Games:");
         for (String gameName : controller.listOfGames()) {
             System.out.println(gameName);
@@ -38,7 +38,7 @@ public class GamesMenu extends Menu {
             }
         }
     }
-
+*/
     private void openGame(String gameName) {
         if (!controller.gameIsListed(gameName)) {
             System.out.println("invalid game!");

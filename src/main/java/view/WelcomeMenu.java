@@ -59,26 +59,28 @@ public class WelcomeMenu implements View{
         }
     }
 
-    private void help() {
+    /*private void help() {
         System.out.println("register\n" +
                 "login\n" +
                 "help\n" +
                 "exit");
-    }
+    }*/
     @FXML
     private void openLoginMenu() throws IOException {
         ViewHandler.getViewHandler().push(new LoginMenu());
     }
 
     @FXML
-    private void openRegisterMenu() {
-      //  ViewHandler.getViewHandler().push(new RegisterMenu(null));
+    private void openRegisterMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new RegisterMenu());
     }
 
     @FXML
     private void exit()
     {
+
         saveFiles();
+        ViewHandler.getViewHandler().exit();
         System.exit(1);
     }
 }
