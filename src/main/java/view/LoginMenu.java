@@ -104,8 +104,7 @@ public class LoginMenu implements View {
     }*/
 
     @FXML
-    private void back()
-    {
-
+    private void back() throws IOException {
+        ViewHandler.getViewHandler().pop();
     }
 }

@@ -13,10 +13,10 @@ public class AccountMenu extends Menu {
     public AccountMenu(Account account) {
         super(account);
         controller = new AccountMenuController(account);
-        accountMenu();
+        //accountMenu();
     }
 
-    private void accountMenu() {
+    /*private void accountMenu() {
         while (true) {
             Matcher matcher;
             String input = scanner.nextLine();
@@ -42,7 +42,7 @@ public class AccountMenu extends Menu {
                 System.out.println("invalid command!");
             }
         }
-    }
+    }*/
 
     private void logout() {
         new WelcomeMenu();
@@ -86,11 +86,11 @@ public class AccountMenu extends Menu {
             System.out.println("invalid field or this field is not changeable");
             return;
         }
-        if (field.equals("email") && !checkEmail(newValue)) {
+        if (field.equals("email") && !controller.checkEmail(newValue)) {
             System.out.println("invalid email");
             return;
         }
-        if (field.equals("phoneNumber") && !checkPhoneNumber(newValue)) {
+        if (field.equals("phoneNumber") && !controller.checkPhoneNumber(newValue)) {
             System.out.println("invalid phone number");
             return;
         }

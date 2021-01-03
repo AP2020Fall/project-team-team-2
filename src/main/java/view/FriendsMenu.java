@@ -13,9 +13,9 @@ public class FriendsMenu extends Menu {
     public FriendsMenu(Account account) {
         super(account);
         controller = new FriendsMenuController((Player) account);
-        friendsMenu();
+       // friendsMenu();
     }
-
+/*
     private void friendsMenu() {
         while (true) {
             String input = scanner.nextLine();
@@ -45,7 +45,7 @@ public class FriendsMenu extends Menu {
             }
         }
     }
-
+*/
     private void decline(String username) {
         if (!controller.isUsernameExist(username)) {
             System.out.println("username does not exist!");

@@ -13,10 +13,10 @@ public class PlayerMainMenu extends Menu {
         super(account);
         controller = new PlayerMainMenuController((Player) account);
         System.out.println("Player MainMenu");
-        playerMainMenu();
+       // playerMainMenu();
     }
 
-    private void playerMainMenu() {
+    /*private void playerMainMenu() {
         while (true) {
             String input = scanner.nextLine();
             Matcher matcher;
@@ -46,7 +46,7 @@ public class PlayerMainMenu extends Menu {
                 System.out.println("invalid command!");
             }
         }
-    }
+    }*/
 
     private void viewFriendsMenu(Account account) {
         new FriendsMenu(account);
