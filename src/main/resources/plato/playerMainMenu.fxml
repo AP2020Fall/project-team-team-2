@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="1080.0" minHeight="-Infinity" minWidth="830.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PlayerMainMenu">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" onAction="#viewAccountMenu" text="Profile" />
+          <Menu mnemonicParsing="false" onAction="#viewFriendsMenu" text="Friends" />
+          <Menu mnemonicParsing="false" onAction="#viewGamesMenu" text="Games" />
+        </menus>
+      </MenuBar>
+   </top>
+   <left>
+      <Region maxWidth="30.0" minWidth="30.0" opacity="0.22" prefHeight="368.0" prefWidth="30.0" style="-fx-background-color: darkmagenta;" BorderPane.alignment="CENTER" />
+   </left>
+   <center>
+      <TreeTableView fx:id="games" minWidth="600.0" prefHeight="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TreeTableColumn editable="false" prefWidth="149.0" resizable="false" sortable="false" text="GameList" />
+          <TreeTableColumn minWidth="0.0" prefWidth="216.0" text="C2" />
+        </columns>
+         <columnResizePolicy>
+            <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TreeTableView>
+   </center>
+   <right>
+      <TreeTableView fx:id="eventList" minWidth="200.0" prefHeight="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TreeTableColumn prefWidth="75.0" text="EventList" />
+          <TreeTableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TreeTableView>
+   </right>
+   <bottom>
+      <Region prefHeight="28.0" prefWidth="600.0" style="-fx-background-color: darkmagenta;" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

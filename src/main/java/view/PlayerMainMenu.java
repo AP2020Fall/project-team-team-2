@@ -1,19 +1,40 @@
 package view;
 
 import controller.PlayerMainMenuController;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TreeTableView;
+import javafx.stage.Stage;
 import model.Account;
 import model.Player;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 
-public class PlayerMainMenu extends Menu {
-    PlayerMainMenuController controller;
+public class PlayerMainMenu implements View, Initializable {
+    public TreeTableView games;
+    public TreeTableView eventList;
+    PlayerMainMenuController controller =new PlayerMainMenuController(null);
 
-    public PlayerMainMenu(Account account) {
-        super(account);
-        controller = new PlayerMainMenuController((Player) account);
-        System.out.println("Player MainMenu");
+    public PlayerMainMenu() {
+        //super(account);
+       // controller = new ((Player) account);
+       // System.out.println("Player MainMenu");
        // playerMainMenu();
+    }
+
+    @Override
+    public void show(Stage stage) throws IOException {
+
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 
     /*private void playerMainMenu() {
@@ -47,14 +68,18 @@ public class PlayerMainMenu extends Menu {
             }
         }
     }*/
+    @FXML
+    private void viewFriendsMenu() {
+    }
+    @FXML
+    private void viewGamesMenu() {
 
-    private void viewFriendsMenu(Account account) {
-        new FriendsMenu(account);
+    }
+    @FXML
+    private void viewAccountMenu() {
+
     }
 
-    private void ViewGamesMenu(Account account) {
-        new GamesMenu(account);
-    }
 
 //  private void addFriend(String username) {
 //        controller.addFriend(username);
@@ -68,6 +93,7 @@ public class PlayerMainMenu extends Menu {
     }
 
     private void viewAdminSuggestion() {
+        //todo initialize a row to TreeTableView games
         if(controller.showAdminsSuggestions().isEmpty())
             System.out.println("no suggestions!");
         else {
@@ -77,6 +103,7 @@ public class PlayerMainMenu extends Menu {
     }
 
     private void viewLastPlayed() {
+        //todo initialize a row to TreeTableView games
         if(!controller.hasPlayerPlayed())
             System.out.println("player has not played a game!");
         else
@@ -84,6 +111,7 @@ public class PlayerMainMenu extends Menu {
     }
 
     private void viewPlatoBotMessages() {
+        //todo add mail icon to the menu bar
         if(controller.showPlatoBotsMessages().isEmpty())
             System.out.println("no message!");
         else {
@@ -94,6 +122,7 @@ public class PlayerMainMenu extends Menu {
     }
 
     private void viewFavoriteGames() {
+        //todo initialize a row to TreeTableView games
         if(controller.showFavoriteGames().isEmpty())
             System.out.println("no favorite game!");
         else {
@@ -119,4 +148,7 @@ public class PlayerMainMenu extends Menu {
                 "View friends menu\n" +
                 "View games menu\n");
     }
+
+
+
 }

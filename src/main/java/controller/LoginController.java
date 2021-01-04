@@ -22,12 +22,12 @@ public class LoginController extends Controller {
     public void login(String username) {
         //logins into account
         //throws NullPointerException if username doesn't exist
-        Account account = Objects.requireNonNull(Account.getAccountByUsername(username),
+        loggedIn = Objects.requireNonNull(Account.getAccountByUsername(username),
                 "Username passed to LoginController.login doesn't exist.");
-        if (account instanceof Admin) {
-            new AdminMainMenu(account);
-        } else if (account instanceof Player) {
-            new PlayerMainMenu(account);
+        if (loggedIn instanceof Admin) {
+            new AdminMainMenu(loggedIn);
+        } else if (loggedIn instanceof Player) {
+            new PlayerMainMenu();
         }
     }
 
