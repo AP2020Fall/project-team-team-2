@@ -10,6 +10,7 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
+            <Menu mnemonicParsing="false" onAction="#viewMainMenu" text="Main" />
           <Menu mnemonicParsing="false" onAction="#viewAccountMenu" text="Profile" />
           <Menu mnemonicParsing="false" onAction="#viewFriendsMenu" text="Friends" />
           <Menu mnemonicParsing="false" onAction="#viewGamesMenu" text="Games" />
@@ -27,7 +28,10 @@
       </TreeTableView>
    </center>
    <right>
-      <TreeTableView fx:id="eventList" minWidth="200.0" prefHeight="200.0" BorderPane.alignment="CENTER" />
+      <TreeTableView fx:id="eventList" minWidth="200.0" prefHeight="200.0" BorderPane.alignment="CENTER">
+         <columnResizePolicy>
+            <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy></TreeTableView>
    </right>
    <bottom>
       <Region prefHeight="28.0" prefWidth="600.0" style="-fx-background-color: darkmagenta;" BorderPane.alignment="CENTER" />

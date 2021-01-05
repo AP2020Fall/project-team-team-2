@@ -23,7 +23,7 @@ public class GamesMenuController extends Controller{
 
     public void run(String gameName, Player player)
     {
-        new GameMenu(player, Objects.requireNonNull(Game.getGameByGameName(gameName),
-                "Game passed to GamesMenuController.run doesn't exist."));
+       /* new GameMenu(player, Objects.requireNonNull(Game.getGameByGameName(gameName),
+                "Game passed to GamesMenuController.run doesn't exist."));*/
     }
 }

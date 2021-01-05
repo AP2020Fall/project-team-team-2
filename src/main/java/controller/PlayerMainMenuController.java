@@ -67,7 +67,7 @@ public class PlayerMainMenuController extends Controller {
         Suggestion suggestion = Objects.requireNonNull(player.getSuggestionByGameName(gameName),
                 "Game passed to PlayerMainMenuController.chooseSuggestedGame" +
                         " hasn't been suggested to player.");
-        new GameMenu(player, suggestion.getGame());
+        //new GameMenu(player, suggestion.getGame());
     }
 
     public boolean isGameSuggested(String gameName) {

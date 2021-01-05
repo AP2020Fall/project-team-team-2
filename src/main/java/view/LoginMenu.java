@@ -59,7 +59,7 @@ public class LoginMenu implements View {
     }
 */
     @FXML
-    private void loginAccount() {
+    private void loginAccount() throws IOException {
         if (!controller.isUsernameExist(username.getText())) {
             //System.out.println("username does not exist");
             errorMsg.setText("username does not exist");
@@ -67,10 +67,14 @@ public class LoginMenu implements View {
            /* System.out.println("password: ");
             String password = scanner.nextLine();*/
             if (!controller.isUsernameAndPasswordMatch(username.getText(), password.getText())) {
-               // System.out.println("username and password are not match");
+                // System.out.println("username and password are not match");
                 errorMsg.setText("username and password are not match");
             } else {
-                controller.login(username.getText());
+                if (controller.login(username.getText())) {
+                    //ViewHandler.getViewHandler().push(new AdminMainMenu());
+                } else {
+                    ViewHandler.getViewHandler().push(new PlayerMainMenu());
+                }
             }
         }
     }

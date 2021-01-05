@@ -8,12 +8,13 @@ import model.Player;
 
 import java.util.ArrayList;
 
-public class GameMenu extends Menu {
+public class GameMenu {
     GameMenuController controller;
 
-    public GameMenu(Player player, Game game) {
-        super((Account) player);
-        this.controller = new GameMenuController(game,player);
+    public GameMenu(Game game) {
+       // super((Account) player);
+        //this.controller = new GameMenuController(game,player);
+        System.out.println("game menu");
         //gameMenu();
     }
 
@@ -51,7 +52,7 @@ public class GameMenu extends Menu {
     private void showPoints() {
         System.out.println(controller.showPoints());
     }
-
+/*
     private void runGame() {
         if (!controller.canRunGame())
             System.out.println("can't run the game: only Risk has been implemented!");
@@ -79,7 +80,7 @@ public class GameMenu extends Menu {
             controller.runGame(usernames);
         }
     }
-
+*/
     private void addToFavorites() {
         controller.addToFavorites();
         System.out.println("added successfully!");

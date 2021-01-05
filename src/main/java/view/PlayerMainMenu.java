@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
@@ -15,6 +16,7 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.stage.Stage;
 import model.*;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,8 +48,10 @@ public class PlayerMainMenu implements View, Initializable {
         TreeItem<GameEntry> favourite = new TreeItem<>(new GameEntry("Favourite Games"));
         favourite.setExpanded(true);
         for (GameEntry gameEntry : controller.favoriteGames()) {
+
             favourite.getChildren().add(new TreeItem<>(gameEntry));
         }
+
         TreeItem<GameEntry> recently = new TreeItem<>(new GameEntry("Recently Played"));
         recently.setExpanded(true);
         if (controller.hasPlayerPlayed())
@@ -55,16 +59,21 @@ public class PlayerMainMenu implements View, Initializable {
 
         TreeItem<GameEntry> suggested = new TreeItem<>(new GameEntry("Suggested"));
         suggested.setExpanded(true);
+
         for (GameEntry gameEntry : controller.adminsSuggestions()) {
             suggested.getChildren().add(new TreeItem<>(gameEntry));
         }
+
         TreeTableColumn<GameEntry, String> gameName = new TreeTableColumn<>("Name");
         gameName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        TreeTableColumn<GameEntry, Hyperlink> gameOpen = new TreeTableColumn<>("Open game");
+        gameOpen.setCellValueFactory(new TreeItemPropertyValueFactory<>("link"));
         TreeItem<GameEntry> gameRoot = new TreeItem<>();
         gameRoot.getChildren().addAll(favourite, recently, suggested);
         games.setRoot(gameRoot);
         games.setShowRoot(false);
-        games.getColumns().setAll(gameName);
+        games.getColumns().setAll(gameName,gameOpen);
+
 
         TreeTableColumn<EventEntry, String> eventName = new TreeTableColumn<>("Name");
         eventName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
@@ -120,7 +129,8 @@ public class PlayerMainMenu implements View, Initializable {
     private void viewAccountMenu() {
 
     }
-
+    public void viewMainMenu(ActionEvent actionEvent) {
+    }
 
 //  private void addFriend(String username) {
 //        controller.addFriend(username);
@@ -179,6 +189,8 @@ public class PlayerMainMenu implements View, Initializable {
         int points = controller.showPoints();
         System.out.println("points: " + points);
     }
+
+
 /*
     private void help() {
         System.out.println("Show Points\n" +
