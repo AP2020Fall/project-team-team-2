@@ -1,9 +1,6 @@
 package controller;
 
-import model.Game;
-import model.Message;
-import model.Player;
-import model.Suggestion;
+import model.*;
 import view.GameMenu;
 
 import java.util.ArrayList;
@@ -14,8 +11,8 @@ public class PlayerMainMenuController extends Controller {
 
     private final Player player;
 
-    public PlayerMainMenuController(Player player) {
-        this.player = Objects.requireNonNull(player,
+    public PlayerMainMenuController() {
+        this.player = Objects.requireNonNull(((Player) loggedIn),
                 "Player passed to PlayerMainMenuController is null.");
     }
 
@@ -24,11 +21,11 @@ public class PlayerMainMenuController extends Controller {
         return player.getScore();
     }
 
-    public ArrayList<String> showFavoriteGames() {
+    public ArrayList<GameEntry> favoriteGames() {
         //returns the names of player's favourite games.
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<GameEntry> result = new ArrayList<>();
         for (Game game : player.getFavouriteGames())
-            result.add(game.getName());
+            result.add(new GameEntry(game));
         return result;
 
     }
@@ -42,11 +39,12 @@ public class PlayerMainMenuController extends Controller {
         return result;
     }
 
-    public String showLastPlayed() {
+    public GameEntry lastGamePlayed() {
         //returns the last game played by player.
         //throws NullPointerException if gameLogs is empty.
-        return Objects.requireNonNull(player.getLastGamePlayed(),
-                "Player hasn't played any games.").getGameName();
+        return new GameEntry(Objects.requireNonNull(Game.getGameByGameName(
+                Objects.requireNonNull(player.getLastGamePlayed(), "Player hasn't played any games.")
+                        .getGameName()),"Game doesn't exist"));
     }
 
     public boolean hasPlayerPlayed()
@@ -55,11 +53,11 @@ public class PlayerMainMenuController extends Controller {
         return player.getLastGamePlayed() != null;
     }
 
-    public ArrayList<String> showAdminsSuggestions() {
+    public ArrayList<GameEntry> adminsSuggestions() {
         //returns the list of suggested games to player.
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<GameEntry> result = new ArrayList<>();
         for (Suggestion suggestion : player.getSuggestions())
-            result.add(suggestion.toString());
+            result.add(new GameEntry(suggestion.getGame()));
         return result;
     }
 
@@ -76,5 +74,11 @@ public class PlayerMainMenuController extends Controller {
         //checks if the gameName is suggested.
         return player.suggestionExists(gameName);
     }
-
+    public ArrayList<EventEntry> getEvents()
+    {
+        ArrayList<EventEntry> result = new ArrayList<>();
+        for(Event event: Event.getEvents())
+            result.add(new EventEntry(event));
+        return result;
+    }
 }

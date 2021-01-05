@@ -6,20 +6,22 @@ import model.Admin;
 import model.Player;
 import view.AdminMainMenu;
 import view.PlayerMainMenu;
+import view.ViewHandler;
 
 import java.util.ArrayList;
 
 public class RegisterController extends Controller {
 
 
-    public void createAccount(String username, String password, ArrayList<String> additionalInfo) {
+    public boolean createAccount(String username, String password, ArrayList<String> additionalInfo) {
         //creates an account and loads either AdminMainMenu or PlayerMainMenu
         if (!Admin.isAdminExist()) {
             loggedIn = createAdmin(username, password, additionalInfo);
-            new AdminMainMenu(loggedIn);
+            return true;
         } else {
             loggedIn = createPlayer(username, password, additionalInfo);
-            new PlayerMainMenu();
+            //ViewHandler.getViewHandler().push(new PlayerMainMenu());
+            return false;
         }
     }
 

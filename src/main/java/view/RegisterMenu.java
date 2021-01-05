@@ -120,15 +120,23 @@ public class RegisterMenu  implements View {
             //todo get the info and wait for submit button with an animation
             money.setVisible(Admin.isAdminExist()); //todo must be add before the animation
         } else {
-            System.out.println("username exists!");
+            //System.out.println("username exists!");
+            errorMsg.setText("username exists!");
         }
     }
 
-    public void submit(ActionEvent actionEvent) {
+    public void submit(ActionEvent actionEvent) throws IOException {
         ArrayList<String> additionalInfo = getAdditionalInfo();
         if(additionalInfo != null) {
             errorMsg.setText(username.getText() + " registered successfully");
-            controller.createAccount(username.getText(), password.getText(), additionalInfo);
+            if(controller.createAccount(username.getText(), password.getText(), additionalInfo))
+            {
+                //ViewHandler.getViewHandler().push(new AdminMainMenu());
+            }
+            else
+            {
+                ViewHandler.getViewHandler().push(new PlayerMainMenu());
+            }
         }
     }
 
