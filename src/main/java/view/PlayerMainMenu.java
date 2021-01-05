@@ -7,24 +7,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.stage.Stage;
-import model.*;
+import model.Entry.EventEntry;
+import model.Entry.GameEntry;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
 
 public class PlayerMainMenu implements View, Initializable {
-    public TreeTableView<GameEntry> games;
-    public TreeTableView<EventEntry> eventList;
+    @FXML
+    private TreeTableView<GameEntry> games;
+    @FXML
+    private TreeTableView<EventEntry> eventList;
+    @FXML
+    private Label score;
     PlayerMainMenuController controller = new PlayerMainMenuController();
 
     public PlayerMainMenu() {
@@ -45,6 +44,7 @@ public class PlayerMainMenu implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        score.setText(controller.showPoints());
         TreeItem<GameEntry> favourite = new TreeItem<>(new GameEntry("Favourite Games"));
         favourite.setExpanded(true);
         for (GameEntry gameEntry : controller.favoriteGames()) {
@@ -85,6 +85,29 @@ public class PlayerMainMenu implements View, Initializable {
         eventList.getColumns().setAll(eventName);
     }
 
+    @FXML
+    private void viewFriendsMenu() throws IOException {
+       ViewHandler.getViewHandler().push(new FriendsMenu());
+    }
+
+    @FXML
+    private void viewGamesMenu() {
+
+    }
+
+    @FXML
+    private void viewAccountMenu() {
+
+    }
+    public void viewMainMenu(ActionEvent actionEvent) {
+    }
+
+    public void back(ActionEvent actionEvent) {
+    }
+
+    public void platoMsg(ActionEvent actionEvent) {
+    }
+
     /*private void playerMainMenu() {
         while (true) {
             String input = scanner.nextLine();
@@ -116,32 +139,17 @@ public class PlayerMainMenu implements View, Initializable {
             }
         }
     }*/
-    @FXML
-    private void viewFriendsMenu() {
-    }
-
-    @FXML
-    private void viewGamesMenu() {
-
-    }
-
-    @FXML
-    private void viewAccountMenu() {
-
-    }
-    public void viewMainMenu(ActionEvent actionEvent) {
-    }
 
 //  private void addFriend(String username) {
 //        controller.addFriend(username);
 //    }
 
-    private void chooseSuggestedGame(String gameName) {
+  /*  private void chooseSuggestedGame(String gameName) {
         if (!controller.isGameSuggested(gameName))
             System.out.println("game is not suggested!");
         else
             controller.chooseSuggestedGame(gameName);
-    }
+    }*/
 
     /*
         private void viewAdminSuggestion() {
@@ -185,10 +193,10 @@ public class PlayerMainMenu implements View, Initializable {
             }
         }
     */
-    private void showPoints() {
+  /*  private void showPoints() {
         int points = controller.showPoints();
         System.out.println("points: " + points);
-    }
+    }*/
 
 
 /*

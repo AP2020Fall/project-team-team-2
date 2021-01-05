@@ -1,4 +1,6 @@
-package model;
+package model.Entry;
+
+import model.Event;
 
 public class EventEntry {
     String name;

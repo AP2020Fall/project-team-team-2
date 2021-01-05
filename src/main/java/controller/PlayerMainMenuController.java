@@ -1,7 +1,8 @@
 package controller;
 
 import model.*;
-import view.GameMenu;
+import model.Entry.EventEntry;
+import model.Entry.GameEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,9 +17,9 @@ public class PlayerMainMenuController extends Controller {
                 "Player passed to PlayerMainMenuController is null.");
     }
 
-    public int showPoints() {
+    public String showPoints() {
         //returns the score of player.
-        return player.getScore();
+        return String.valueOf( player.getScore());
     }
 
     public ArrayList<GameEntry> favoriteGames() {
