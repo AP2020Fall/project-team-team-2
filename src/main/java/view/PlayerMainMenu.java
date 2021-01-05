@@ -3,11 +3,17 @@ package view;
 import controller.PlayerMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.stage.Stage;
-import model.Account;
-import model.Player;
+import model.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,26 +21,59 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 
 public class PlayerMainMenu implements View, Initializable {
-    public TreeTableView games;
-    public TreeTableView eventList;
-    PlayerMainMenuController controller =new PlayerMainMenuController(null);
+    public TreeTableView<GameEntry> games;
+    public TreeTableView<EventEntry> eventList;
+    PlayerMainMenuController controller = new PlayerMainMenuController();
 
     public PlayerMainMenu() {
         //super(account);
-       // controller = new ((Player) account);
-       // System.out.println("Player MainMenu");
-       // playerMainMenu();
+        // controller = new ((Player) account);
+        // System.out.println("Player MainMenu");
+        // playerMainMenu();
     }
 
     @Override
-    public void show(Stage stage) throws IOException {
-
+    public void show(Stage window) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/plato/playerMainMenu.fxml"));
+        window.setTitle("Plato");
+        window.setScene(new Scene(root));
+        window.setResizable(false);
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        TreeItem<GameEntry> favourite = new TreeItem<>(new GameEntry("Favourite Games"));
+        favourite.setExpanded(true);
+        for (GameEntry gameEntry : controller.favoriteGames()) {
+            favourite.getChildren().add(new TreeItem<>(gameEntry));
+        }
+        TreeItem<GameEntry> recently = new TreeItem<>(new GameEntry("Recently Played"));
+        recently.setExpanded(true);
+        if (controller.hasPlayerPlayed())
+            recently.getChildren().add(new TreeItem<>(controller.lastGamePlayed()));
 
+        TreeItem<GameEntry> suggested = new TreeItem<>(new GameEntry("Suggested"));
+        suggested.setExpanded(true);
+        for (GameEntry gameEntry : controller.adminsSuggestions()) {
+            suggested.getChildren().add(new TreeItem<>(gameEntry));
+        }
+        TreeTableColumn<GameEntry, String> gameName = new TreeTableColumn<>("Name");
+        gameName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        TreeItem<GameEntry> gameRoot = new TreeItem<>();
+        gameRoot.getChildren().addAll(favourite, recently, suggested);
+        games.setRoot(gameRoot);
+        games.setShowRoot(false);
+        games.getColumns().setAll(gameName);
+
+        TreeTableColumn<EventEntry, String> eventName = new TreeTableColumn<>("Name");
+        eventName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        TreeItem<EventEntry> eventRoot = new TreeItem<>();
+        for(EventEntry eventEntry: controller.getEvents())
+            eventRoot.getChildren().add(new TreeItem<>(eventEntry));
+        eventList.setRoot(eventRoot);
+        eventList.setShowRoot(false);
+        eventList.getColumns().setAll(eventName);
     }
 
     /*private void playerMainMenu() {
@@ -71,10 +110,12 @@ public class PlayerMainMenu implements View, Initializable {
     @FXML
     private void viewFriendsMenu() {
     }
+
     @FXML
     private void viewGamesMenu() {
 
     }
+
     @FXML
     private void viewAccountMenu() {
 
@@ -86,22 +127,23 @@ public class PlayerMainMenu implements View, Initializable {
 //    }
 
     private void chooseSuggestedGame(String gameName) {
-        if(!controller.isGameSuggested(gameName))
+        if (!controller.isGameSuggested(gameName))
             System.out.println("game is not suggested!");
         else
             controller.chooseSuggestedGame(gameName);
     }
 
-    private void viewAdminSuggestion() {
-        //todo initialize a row to TreeTableView games
-        if(controller.showAdminsSuggestions().isEmpty())
-            System.out.println("no suggestions!");
-        else {
-            for (String suggestion : controller.showAdminsSuggestions())
-                System.out.println(suggestion);
+    /*
+        private void viewAdminSuggestion() {
+            //todo initialize a row to TreeTableView games
+            if(controller.showAdminsSuggestions().isEmpty())
+                System.out.println("no suggestions!");
+            else {
+                for (String suggestion : controller.showAdminsSuggestions())
+                    System.out.println(suggestion);
+            }
         }
-    }
-
+    *//*
     private void viewLastPlayed() {
         //todo initialize a row to TreeTableView games
         if(!controller.hasPlayerPlayed())
@@ -109,10 +151,10 @@ public class PlayerMainMenu implements View, Initializable {
         else
         System.out.println( controller.showLastPlayed());
     }
-
+*/
     private void viewPlatoBotMessages() {
         //todo add mail icon to the menu bar
-        if(controller.showPlatoBotsMessages().isEmpty())
+        if (controller.showPlatoBotsMessages().isEmpty())
             System.out.println("no message!");
         else {
             for (String message : controller.showPlatoBotsMessages()) {
@@ -121,22 +163,23 @@ public class PlayerMainMenu implements View, Initializable {
         }
     }
 
-    private void viewFavoriteGames() {
-        //todo initialize a row to TreeTableView games
-        if(controller.showFavoriteGames().isEmpty())
-            System.out.println("no favorite game!");
-        else {
-            for (String favoriteGame : controller.showFavoriteGames()) {
-                System.out.println(favoriteGame);
+    /*
+        private void viewFavoriteGames() {
+            //todo initialize a row to TreeTableView games
+            if(controller.showFavoriteGames().isEmpty())
+                System.out.println("no favorite game!");
+            else {
+                for (String favoriteGame : controller.showFavoriteGames()) {
+                    System.out.println(favoriteGame);
+                }
             }
         }
-    }
-
+    */
     private void showPoints() {
         int points = controller.showPoints();
         System.out.println("points: " + points);
     }
-
+/*
     private void help() {
         System.out.println("Show Points\n" +
                 "View favorite games\n" +
@@ -148,7 +191,5 @@ public class PlayerMainMenu implements View, Initializable {
                 "View friends menu\n" +
                 "View games menu\n");
     }
-
-
-
+*/
 }
