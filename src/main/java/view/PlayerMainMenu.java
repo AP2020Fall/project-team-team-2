@@ -35,9 +35,10 @@ public class PlayerMainMenu implements View, Initializable {
 
     @Override
     public void show(Stage window) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/plato/playerMainMenu.fxml"));
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/playerMainMenu.fxml"));
+        root.setController(this);
         window.setTitle("Plato");
-        window.setScene(new Scene(root));
+        window.setScene(new Scene(root.load()));
         window.setResizable(false);
     }
 

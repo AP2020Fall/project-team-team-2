@@ -34,9 +34,10 @@ public class LoginMenu implements View {
     }
     @Override
     public void show(Stage window) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/plato/loginMenu.fxml"));
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/loginMenu.fxml"));
+        root.setController(this);
         window.setTitle("Plato");
-        window.setScene(new Scene(root));
+        window.setScene(new Scene(root.load()));
         window.setResizable(false);
     }
 

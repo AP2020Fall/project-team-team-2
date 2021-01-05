@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="1080.0" minHeight="-Infinity" minWidth="830.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PlayerMainMenu">
+<BorderPane maxHeight="-Infinity" maxWidth="1080.0" minHeight="-Infinity" minWidth="830.0" prefHeight="720.0"
+            prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <Region maxWidth="30.0" minWidth="30.0" opacity="0.22" prefHeight="368.0" prefWidth="30.0" style="-fx-background-color: darkmagenta;" BorderPane.alignment="CENTER" />
    </left>

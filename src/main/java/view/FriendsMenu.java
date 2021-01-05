@@ -35,9 +35,10 @@ public class FriendsMenu implements View, Initializable {
 
     @Override
     public void show(Stage window) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/plato/friendsMenu.fxml"));
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/friendsMenu.fxml"));
+        root.setController(this);
         window.setTitle("Plato");
-        window.setScene(new Scene(root));
+        window.setScene(new Scene(root.load()));
         window.setResizable(false);
     }
 
@@ -68,10 +69,13 @@ public class FriendsMenu implements View, Initializable {
         friendRequest.getColumns().addAll(friendRequestNames,friendRequestAccept,friendRequestDecline);
     }
 
-    public void platoMsg(ActionEvent actionEvent) {
+    @FXML
+    private void platoMsg() {
     }
 
-    public void back(ActionEvent actionEvent) {
+    @FXML
+    private void back() throws IOException {
+        ViewHandler.getViewHandler().pop();
     }
     @FXML
     private void viewFriendsMenu() throws IOException {
@@ -84,12 +88,17 @@ public class FriendsMenu implements View, Initializable {
 
     @FXML
     private void viewAccountMenu() {
-
     }
-    public void viewMainMenu(ActionEvent actionEvent) {
+    public void viewMainMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new PlayerMainMenu());
     }
 
-    public void search(ActionEvent actionEvent) {
+    public void search() throws IOException {
+        if (!controller.isUsernameExist(searchUsername.getText())) {
+            System.out.println("username does not exist!");
+        } else {
+            ViewHandler.getViewHandler().push(new ProfileView(controller.searchPlayer(searchUsername.getText())));
+        }
     }
 
 /*
