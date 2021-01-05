@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 public class Controller {
     private static ArrayList<String> ids = new ArrayList<>();
     protected static Account loggedIn;
+
     protected static String generateId() {
         String id = "";
         while (true) {
@@ -103,8 +104,7 @@ public class Controller {
         return false;
     }
 
-    public boolean isUsernamePlayer(String username)
-    {
+    public boolean isUsernamePlayer(String username) {
         for (Account account : Account.getAllAccounts()) {
             if (account.getUsername().equals(username) && account instanceof Player) {
                 return true;
@@ -113,8 +113,7 @@ public class Controller {
         return false;
     }
 
-    public boolean doesGameExist(String gameName)
-    {
+    public boolean doesGameExist(String gameName) {
         return Game.getGameByGameName(gameName) != null;
     }
 
@@ -129,5 +128,10 @@ public class Controller {
     public Matcher getMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
+    }
+
+    public Player searchPlayer(String username)
+    {
+        return Player.getPlayerByUsername(username);
     }
 }

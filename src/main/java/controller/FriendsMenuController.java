@@ -1,5 +1,10 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TreeItem;
+import model.Entry.FriendEntry;
+import model.Entry.FriendRequestEntry;
 import model.FriendRequest;
 import model.Player;
 
@@ -7,11 +12,29 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class FriendsMenuController extends Controller {
-    private Player player;
+    private final Player player;
 
-    public FriendsMenuController(Player player) {
-        this.player = Objects.requireNonNull(player,
+    public FriendsMenuController() {
+        this.player = Objects.requireNonNull((Player) loggedIn,
                 "Player object passed to FriendsMenuController is null.");
+    }
+
+
+    public ObservableList<TreeItem<FriendEntry>> getFriends() {
+        ObservableList<TreeItem<FriendEntry>> result = FXCollections.observableArrayList();
+        for (Player friend : player.getFriends()) {
+            result.add(new TreeItem<>(new FriendEntry(friend)));
+        }
+        return result;
+    }
+
+
+    public ObservableList<TreeItem<FriendRequestEntry>> getFriendRequest() {
+        ObservableList<TreeItem<FriendRequestEntry>> result = FXCollections.observableArrayList();
+        for (FriendRequest friendRequest : player.getReceivedFriendRequests()){
+            result.add(new TreeItem<>(new FriendRequestEntry(friendRequest)));
+        }
+        return result;
     }
 
     public ArrayList<String> showFriends() {
@@ -48,12 +71,13 @@ public class FriendsMenuController extends Controller {
                 .toString();
     }
 
+  /*
     public void addFriend(String username) {
         //sends a FriendRequest to username
         //throws NullPointerError if username doesn't exist.
         Player friend = Objects.requireNonNull(Player.getPlayerByUsername(username),
                 "Username passed to FriendsMenuController.addFriend doesn't exist.");
-        FriendRequest friendRequest = new FriendRequest(friend,player,generateId());
+        FriendRequest friendRequest = new FriendRequest(friend, player, generateId());
         friendRequest.sendRequest();
     }
 
@@ -65,13 +89,12 @@ public class FriendsMenuController extends Controller {
         return result;
     }
 
-    public boolean hasSentFriendRequest(String username)
-    {
+    public boolean hasSentFriendRequest(String username) {
         //checks if the username send a friend request
-        for(FriendRequest friendRequest:player.getReceivedFriendRequests())
-            if(friendRequest.getPlayer().getUsername().equals(username))
+        for (FriendRequest friendRequest : player.getReceivedFriendRequests())
+            if (friendRequest.getPlayer().getUsername().equals(username))
                 return true;
-            return false;
+        return false;
     }
 
 
@@ -89,7 +112,5 @@ public class FriendsMenuController extends Controller {
         FriendRequest friendRequest = Objects.requireNonNull(player.getFriendRequestByUsername(username),
                 "Username passed to FriendsRequest.acceptFriendRequest didn't sent a friend request.");
         friendRequest.declineRequest();
-    }
-
-
+    }*/
 }

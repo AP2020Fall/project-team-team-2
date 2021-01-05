@@ -1,20 +1,106 @@
 package view;
 
 import controller.FriendsMenuController;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.stage.Stage;
 import model.Account;
+import model.Entry.FriendEntry;
+import model.Entry.FriendRequestEntry;
 import model.FriendRequest;
 import model.Player;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 
-public class FriendsMenu extends Menu {
-    FriendsMenuController controller;
+public class FriendsMenu implements View, Initializable {
 
-    public FriendsMenu(Account account) {
-        super(account);
-        controller = new FriendsMenuController((Player) account);
+    public TextField searchUsername;
+    public Label score;
+    @FXML private  TreeTableView<FriendEntry> friends;
+    @FXML private  TreeTableView<FriendRequestEntry> friendRequest;
+    private FriendsMenuController controller = new FriendsMenuController();
+
+    public FriendsMenu() {
        // friendsMenu();
     }
+
+    @Override
+    public void show(Stage window) throws IOException {
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/friendsMenu.fxml"));
+        root.setController(this);
+        window.setTitle("Plato");
+        window.setScene(new Scene(root.load()));
+        window.setResizable(false);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        TreeTableColumn<FriendEntry,String> friendNames = new TreeTableColumn<>("Name");
+        friendNames.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        TreeTableColumn<FriendEntry, Hyperlink> friendView = new TreeTableColumn<>("View");
+        friendView.setCellValueFactory(new TreeItemPropertyValueFactory<>("view"));
+        TreeTableColumn<FriendEntry,Hyperlink> friendRemove = new TreeTableColumn<>("Remove");
+        friendRemove.setCellValueFactory(new TreeItemPropertyValueFactory<>("remove"));
+        TreeItem<FriendEntry> friendRoot = new TreeItem<>();
+        friendRoot.getChildren().addAll(controller.getFriends());
+        friends = new TreeTableView<>(friendRoot);
+        friends.setShowRoot(false);
+        friends.getColumns().addAll(friendNames,friendView,friendRemove);
+
+        TreeTableColumn<FriendRequestEntry,String> friendRequestNames = new TreeTableColumn<>("Name");
+        friendNames.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        TreeTableColumn<FriendRequestEntry, Hyperlink> friendRequestAccept= new TreeTableColumn<>("Accept");
+        friendView.setCellValueFactory(new TreeItemPropertyValueFactory<>("accept"));
+        TreeTableColumn<FriendRequestEntry,Hyperlink> friendRequestDecline = new TreeTableColumn<>("Decline");
+        friendRemove.setCellValueFactory(new TreeItemPropertyValueFactory<>("decline"));
+        TreeItem<FriendRequestEntry> friendRequestRoot = new TreeItem<>();
+        friendRequestRoot.getChildren().addAll(controller.getFriendRequest());
+        friendRequest = new TreeTableView<>(friendRequestRoot);
+        friendRequest.setShowRoot(false);
+        friendRequest.getColumns().addAll(friendRequestNames,friendRequestAccept,friendRequestDecline);
+    }
+
+    @FXML
+    private void platoMsg() {
+    }
+
+    @FXML
+    private void back() throws IOException {
+        ViewHandler.getViewHandler().pop();
+    }
+    @FXML
+    private void viewFriendsMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new FriendsMenu());
+    }
+
+    @FXML
+    private void viewGamesMenu() {
+    }
+
+    @FXML
+    private void viewAccountMenu() {
+    }
+    public void viewMainMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new PlayerMainMenu());
+    }
+
+    public void search() throws IOException {
+        if (!controller.isUsernameExist(searchUsername.getText())) {
+            System.out.println("username does not exist!");
+        } else {
+            ViewHandler.getViewHandler().push(new ProfileView(controller.searchPlayer(searchUsername.getText())));
+        }
+    }
+
 /*
     private void friendsMenu() {
         while (true) {
@@ -46,6 +132,7 @@ public class FriendsMenu extends Menu {
         }
     }
 */
+    /*
     private void decline(String username) {
         if (!controller.isUsernameExist(username)) {
             System.out.println("username does not exist!");
@@ -126,4 +213,5 @@ public class FriendsMenu extends Menu {
                 "back");
     }
 
+*/
 }

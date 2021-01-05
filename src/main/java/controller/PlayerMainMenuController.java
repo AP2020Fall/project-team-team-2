@@ -1,7 +1,8 @@
 package controller;
 
 import model.*;
-import view.GameMenu;
+import model.Entry.EventEntry;
+import model.Entry.GameEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,9 +17,9 @@ public class PlayerMainMenuController extends Controller {
                 "Player passed to PlayerMainMenuController is null.");
     }
 
-    public int showPoints() {
+    public String showPoints() {
         //returns the score of player.
-        return player.getScore();
+        return String.valueOf( player.getScore());
     }
 
     public ArrayList<GameEntry> favoriteGames() {
@@ -67,7 +68,7 @@ public class PlayerMainMenuController extends Controller {
         Suggestion suggestion = Objects.requireNonNull(player.getSuggestionByGameName(gameName),
                 "Game passed to PlayerMainMenuController.chooseSuggestedGame" +
                         " hasn't been suggested to player.");
-        new GameMenu(player, suggestion.getGame());
+        //new GameMenu(player, suggestion.getGame());
     }
 
     public boolean isGameSuggested(String gameName) {

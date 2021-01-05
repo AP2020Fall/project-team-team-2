@@ -1,14 +1,16 @@
-package model;
+package model.Entry;
 
-public class GameEntry {
+import model.Event;
+
+public class EventEntry {
     String name;
     //ImageView avatar;
-    public GameEntry(Game game)
+    public EventEntry(Event event)
     {
-        name= game.getName();
+        name= event.getGameName();
     }
 
-    public GameEntry(String title)
+    public EventEntry(String title)
     {
         name = title;
     }
