@@ -17,10 +17,7 @@ public class PlayerMainMenuController extends Controller {
                 "Player passed to PlayerMainMenuController is null.");
     }
 
-    public String showPoints() {
-        //returns the score of player.
-        return String.valueOf( player.getScore());
-    }
+
 
     public ArrayList<GameEntry> favoriteGames() {
         //returns the names of player's favourite games.

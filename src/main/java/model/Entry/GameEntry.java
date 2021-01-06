@@ -1,13 +1,10 @@
 package model.Entry;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Hyperlink;
 import model.Game;
-import view.GameMenu;
 
 public class GameEntry {
-   private String name;
+   private final String name;
    private Hyperlink link;
     //ImageView avatar;
     public GameEntry(Game game)
@@ -28,9 +25,9 @@ public class GameEntry {
         return name;
     }
 
-    public void setName(String name) {
+    /*public void setName(String name) {
         this.name = name;
-    }
+    }*/
 
     public Hyperlink getLink() {
         return link;

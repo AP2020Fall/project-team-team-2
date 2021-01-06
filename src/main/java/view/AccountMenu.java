@@ -1,21 +1,39 @@
 package view;
 
 import controller.AccountMenuController;
+import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 import model.Account;
 import model.Player;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 
-public class AccountMenu extends Menu {
+public class AccountMenu implements View, Initializable {
     AccountMenuController controller;
 
-    public AccountMenu(Account account) {
-        super(account);
-        controller = new AccountMenuController(account);
+    public AccountMenu() {
+        //super(account);
+        controller = new AccountMenuController();
         //accountMenu();
     }
 
+    private void viewPersonalInfo() {
+        System.out.println(controller.showPersonalInfo());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    @Override
+    public void show(Stage stage) throws IOException {
+
+    }
     /*private void accountMenu() {
         while (true) {
             Matcher matcher;
@@ -48,7 +66,7 @@ public class AccountMenu extends Menu {
         new WelcomeMenu();
     }
 
-    private void gameStatistics(String gameName) {
+   /* private void gameStatistics(String gameName) {
         if (account instanceof Player) {
             if (!gameName.equals("RiskGame")) {
                 System.out.println("Game dose not exists!");
@@ -130,8 +148,6 @@ public class AccountMenu extends Menu {
             System.out.println("password changed successfully");
         }
     }
+*/
 
-    private void viewPersonalInfo() {
-        System.out.println(controller.showPersonalInfo());
-    }
 }

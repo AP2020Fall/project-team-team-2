@@ -45,7 +45,7 @@ public class FriendsMenuController extends Controller {
         }
         return result;
     }
-
+/*
     public void removeFriend(String username) {
         //removes username from friends of player and removes the player from the friends of username.
         //throws NullPointerError if username doesn't exist in friends list of player.
@@ -54,7 +54,8 @@ public class FriendsMenuController extends Controller {
         friend.removeFriend(player);
         player.removeFriend(friend);
     }
-
+*/
+/*
     public boolean friendExists(String username) {
         //returns true if username is a friend of player.
         for (Player friend : player.getFriends())
@@ -62,7 +63,6 @@ public class FriendsMenuController extends Controller {
                 return true;
         return false;
     }
-
     public String showUserProfile(String username) {
         //returns username.toString().
         //throws NullPointerError if username doesn't exist in friends list of player.
@@ -70,7 +70,7 @@ public class FriendsMenuController extends Controller {
                 "Username passed to FriendsMenuController.showUserProfile doesn't exist in friends list.")
                 .toString();
     }
-
+*/
   /*
     public void addFriend(String username) {
         //sends a FriendRequest to username

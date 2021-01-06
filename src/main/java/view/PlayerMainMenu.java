@@ -46,6 +46,7 @@ public class PlayerMainMenu implements View, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         score.setText(controller.showPoints());
+
         TreeItem<GameEntry> favourite = new TreeItem<>(new GameEntry("Favourite Games"));
         favourite.setExpanded(true);
         for (GameEntry gameEntry : controller.favoriteGames()) {
@@ -73,7 +74,7 @@ public class PlayerMainMenu implements View, Initializable {
         gameRoot.getChildren().addAll(favourite, recently, suggested);
         games.setRoot(gameRoot);
         games.setShowRoot(false);
-        games.getColumns().setAll(gameName,gameOpen);
+        games.getColumns().addAll(gameName,gameOpen);
 
 
         TreeTableColumn<EventEntry, String> eventName = new TreeTableColumn<>("Name");
@@ -83,7 +84,7 @@ public class PlayerMainMenu implements View, Initializable {
             eventRoot.getChildren().add(new TreeItem<>(eventEntry));
         eventList.setRoot(eventRoot);
         eventList.setShowRoot(false);
-        eventList.getColumns().setAll(eventName);
+        eventList.getColumns().add(eventName);
     }
 
     @FXML
@@ -92,21 +93,27 @@ public class PlayerMainMenu implements View, Initializable {
     }
 
     @FXML
-    private void viewGamesMenu() {
-
+    private void viewGamesMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new GamesMenu());
     }
 
     @FXML
-    private void viewAccountMenu() {
-
+    private void viewAccountMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new AccountMenu());
     }
-    public void viewMainMenu(ActionEvent actionEvent) {
+    @FXML
+    private void viewMainMenu() throws IOException {
+        //ViewHandler.getViewHandler().push(new PlayerMainMenu());
     }
 
-    public void back(ActionEvent actionEvent) {
+    @FXML
+    private void back() throws IOException {
+        ViewHandler.getViewHandler().mainMenuBack();
     }
 
-    public void platoMsg(ActionEvent actionEvent) {
+    @FXML
+    private void platoMsg() throws IOException {
+        ViewHandler.getViewHandler().push(new PlatoMessageView());
     }
 
     /*private void playerMainMenu() {
@@ -171,7 +178,7 @@ public class PlayerMainMenu implements View, Initializable {
         System.out.println( controller.showLastPlayed());
     }
 */
-    private void viewPlatoBotMessages() {
+  /*  private void viewPlatoBotMessages() {
         //todo add mail icon to the menu bar
         if (controller.showPlatoBotsMessages().isEmpty())
             System.out.println("no message!");
@@ -181,7 +188,7 @@ public class PlayerMainMenu implements View, Initializable {
             }
         }
     }
-
+*/
     /*
         private void viewFavoriteGames() {
             //todo initialize a row to TreeTableView games

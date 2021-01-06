@@ -11,9 +11,9 @@ import java.util.Objects;
 public class AccountMenuController extends Controller {
     private Account account;
 
-    public AccountMenuController(Account account) {
+    public AccountMenuController() {
 
-        this.account = Objects.requireNonNull(account, "Account passed to AccountMenuController is null.");
+        this.account = Objects.requireNonNull(loggedIn, "Account passed to AccountMenuController is null.");
     }
 
     public void changePassword(String newPass) {
