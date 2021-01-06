@@ -23,13 +23,14 @@ import java.util.regex.Matcher;
 
 public class FriendsMenu implements View, Initializable {
 
-    public TextField searchUsername;
-    public Label score;
+    @FXML private  TextField searchUsername;
+    @FXML private  Label score;
     @FXML private  TreeTableView<FriendEntry> friends;
     @FXML private  TreeTableView<FriendRequestEntry> friendRequest;
-    private FriendsMenuController controller = new FriendsMenuController();
+    private final FriendsMenuController controller;
 
     public FriendsMenu() {
+        controller = new FriendsMenuController();
        // friendsMenu();
     }
 
@@ -44,6 +45,8 @@ public class FriendsMenu implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        score.setText(controller.showPoints());
+
         TreeTableColumn<FriendEntry,String> friendNames = new TreeTableColumn<>("Name");
         friendNames.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
         TreeTableColumn<FriendEntry, Hyperlink> friendView = new TreeTableColumn<>("View");
@@ -58,9 +61,11 @@ public class FriendsMenu implements View, Initializable {
 
         TreeTableColumn<FriendRequestEntry,String> friendRequestNames = new TreeTableColumn<>("Name");
         friendNames.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
-        TreeTableColumn<FriendRequestEntry, Hyperlink> friendRequestAccept= new TreeTableColumn<>("Accept");
+        TreeTableColumn<FriendRequestEntry, Hyperlink> friendRequestAccept=
+                new TreeTableColumn<>("Accept");
         friendView.setCellValueFactory(new TreeItemPropertyValueFactory<>("accept"));
-        TreeTableColumn<FriendRequestEntry,Hyperlink> friendRequestDecline = new TreeTableColumn<>("Decline");
+        TreeTableColumn<FriendRequestEntry,Hyperlink> friendRequestDecline =
+                new TreeTableColumn<>("Decline");
         friendRemove.setCellValueFactory(new TreeItemPropertyValueFactory<>("decline"));
         TreeItem<FriendRequestEntry> friendRequestRoot = new TreeItem<>();
         friendRequestRoot.getChildren().addAll(controller.getFriendRequest());
@@ -70,24 +75,27 @@ public class FriendsMenu implements View, Initializable {
     }
 
     @FXML
-    private void platoMsg() {
+    private void platoMsg() throws IOException {
+        ViewHandler.getViewHandler().push(new PlatoMessageView());
     }
 
     @FXML
     private void back() throws IOException {
-        ViewHandler.getViewHandler().pop();
+        ViewHandler.getViewHandler().mainMenuBack();
     }
     @FXML
     private void viewFriendsMenu() throws IOException {
-        ViewHandler.getViewHandler().push(new FriendsMenu());
+        //ViewHandler.getViewHandler().push(new FriendsMenu());
     }
 
     @FXML
-    private void viewGamesMenu() {
+    private void viewGamesMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new GamesMenu());
     }
 
     @FXML
-    private void viewAccountMenu() {
+    private void viewAccountMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new AccountMenu());
     }
     public void viewMainMenu() throws IOException {
         ViewHandler.getViewHandler().push(new PlayerMainMenu());
@@ -97,7 +105,8 @@ public class FriendsMenu implements View, Initializable {
         if (!controller.isUsernameExist(searchUsername.getText())) {
             System.out.println("username does not exist!");
         } else {
-            ViewHandler.getViewHandler().push(new ProfileView(controller.searchPlayer(searchUsername.getText())));
+            ViewHandler.getViewHandler().push(new
+                    ProfileView(controller.searchPlayer(searchUsername.getText())));
         }
     }
 

@@ -62,13 +62,13 @@ public class GameMenuController extends Controller{
         }
         new StartGameView(players);
     }
-
+/*
     public int showPoints() {
         //returns the score of player in the game.
         //throws NullPointerException if the player hasn't played the game.
         return Objects.requireNonNull(player.getGameHistory(game.getName()),
                 "Player hasn't played this game.").getScore();
-    }
+    }*/
 
     public boolean canRunGame()
     {

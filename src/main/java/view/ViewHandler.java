@@ -56,7 +56,10 @@ public class ViewHandler {
     }
 
     public void mainMenuBack() throws IOException {
+        View view = viewStack.peek();
         viewStack.pop();
+        if(viewStack.peek() instanceof LoginMenu)
+            viewStack.push(view);
         showView();
     }
 

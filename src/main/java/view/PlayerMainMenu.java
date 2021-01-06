@@ -46,6 +46,7 @@ public class PlayerMainMenu implements View, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         score.setText(controller.showPoints());
+
         TreeItem<GameEntry> favourite = new TreeItem<>(new GameEntry("Favourite Games"));
         favourite.setExpanded(true);
         for (GameEntry gameEntry : controller.favoriteGames()) {
@@ -73,7 +74,7 @@ public class PlayerMainMenu implements View, Initializable {
         gameRoot.getChildren().addAll(favourite, recently, suggested);
         games.setRoot(gameRoot);
         games.setShowRoot(false);
-        games.getColumns().setAll(gameName,gameOpen);
+        games.getColumns().addAll(gameName,gameOpen);
 
 
         TreeTableColumn<EventEntry, String> eventName = new TreeTableColumn<>("Name");
@@ -83,7 +84,7 @@ public class PlayerMainMenu implements View, Initializable {
             eventRoot.getChildren().add(new TreeItem<>(eventEntry));
         eventList.setRoot(eventRoot);
         eventList.setShowRoot(false);
-        eventList.getColumns().setAll(eventName);
+        eventList.getColumns().add(eventName);
     }
 
     @FXML

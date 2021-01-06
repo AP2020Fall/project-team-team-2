@@ -4,6 +4,7 @@ import model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -133,5 +134,10 @@ public class Controller {
     public Player searchPlayer(String username)
     {
         return Player.getPlayerByUsername(username);
+    }
+    public String showPoints() {
+        //returns the score of player.
+        return String.valueOf( Objects.requireNonNull(((Player)loggedIn),
+                "Logged in account in Controller.showPoints is null").getScore());
     }
 }
