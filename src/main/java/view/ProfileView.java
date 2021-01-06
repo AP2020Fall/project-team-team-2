@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ProfileView implements View, Initializable {
-    private ProfileViewController controller;
+    private final ProfileViewController controller;
     @FXML
     private Label username;
     @FXML
@@ -66,6 +66,7 @@ public class ProfileView implements View, Initializable {
 
     @FXML
     private void back(ActionEvent actionEvent) {
+
     }
 
     @FXML

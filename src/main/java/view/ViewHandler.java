@@ -54,4 +54,10 @@ public class ViewHandler {
     public void remove() {
         viewStack.pop();
     }
+
+    public void mainMenuBack() throws IOException {
+        viewStack.pop();
+        showView();
+    }
+
 }

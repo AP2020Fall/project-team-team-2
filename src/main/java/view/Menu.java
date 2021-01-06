@@ -20,7 +20,7 @@ public abstract class Menu {
 
 
     protected void viewAccountMenu(Account account) {
-        new AccountMenu(account);
+        //new AccountMenu(account);
     }
 
 }

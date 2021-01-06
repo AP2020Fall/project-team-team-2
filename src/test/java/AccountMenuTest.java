@@ -9,7 +9,8 @@ import static org.junit.Assert.*;
 
 public class AccountMenuTest {
     Player player = new Player("mohamadamin", "karami", "m.karami", "abcd123", "123", "karami@gmail.com", "09121234567", 10);
-    AccountMenuController controller = new AccountMenuController(player);
+    //AccountMenuController controller = new AccountMenuController(player);
+    AccountMenuController controller = new AccountMenuController();
 
     @Test
     public void testShowSuggestion() {

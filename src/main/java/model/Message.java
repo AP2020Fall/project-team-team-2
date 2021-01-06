@@ -23,4 +23,8 @@ public class Message {
         return "Message:" + message;
         //+ time + '\n';
     }
+
+    public String getMessage() {
+        return message;
+    }
 }
