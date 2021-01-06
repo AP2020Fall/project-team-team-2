@@ -65,4 +65,8 @@ public class ProfileViewController extends Controller {
                 return true;
         return false;
     }
+
+    public boolean areTheSame() {
+        return logged.getUsername().equals(player.getUsername());
+    }
 }

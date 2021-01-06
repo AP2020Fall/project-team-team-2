@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="1080.0" minHeight="-Infinity" minWidth="830.0" prefHeight="720.0"
-            prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="1080.0" minHeight="-Infinity" minWidth="830.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
             <children>
@@ -71,14 +70,14 @@
         <Region maxWidth="30.0" minWidth="30.0" opacity="0.22" prefHeight="368.0" prefWidth="30.0" style="-fx-background-color: darkmagenta;" BorderPane.alignment="CENTER" />
     </left>
     <center>
-        <TreeTableView fx:id="friends" minWidth="600.0" prefHeight="200.0" BorderPane.alignment="CENTER">
+        <TreeTableView fx:id="friends" minWidth="600.0" prefHeight="660.0" prefWidth="755.0" BorderPane.alignment="CENTER">
             <columnResizePolicy>
                 <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TreeTableView>
     </center>
     <right>
-        <TreeTableView fx:id="friendRequest" minWidth="200.0" prefHeight="200.0" BorderPane.alignment="CENTER">
+        <TreeTableView fx:id="friendRequest" minWidth="200.0" prefHeight="660.0" prefWidth="387.0" BorderPane.alignment="CENTER">
             <columnResizePolicy>
                 <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy></TreeTableView>

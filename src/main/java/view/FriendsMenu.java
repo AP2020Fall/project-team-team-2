@@ -54,22 +54,24 @@ public class FriendsMenu implements View, Initializable {
         TreeTableColumn<FriendEntry,Hyperlink> friendRemove = new TreeTableColumn<>("Remove");
         friendRemove.setCellValueFactory(new TreeItemPropertyValueFactory<>("remove"));
         TreeItem<FriendEntry> friendRoot = new TreeItem<>();
+
         friendRoot.getChildren().addAll(controller.getFriends());
-        friends = new TreeTableView<>(friendRoot);
+        friends.setRoot(friendRoot);
         friends.setShowRoot(false);
         friends.getColumns().addAll(friendNames,friendView,friendRemove);
 
         TreeTableColumn<FriendRequestEntry,String> friendRequestNames = new TreeTableColumn<>("Name");
-        friendNames.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        friendRequestNames.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
         TreeTableColumn<FriendRequestEntry, Hyperlink> friendRequestAccept=
                 new TreeTableColumn<>("Accept");
-        friendView.setCellValueFactory(new TreeItemPropertyValueFactory<>("accept"));
+        friendRequestAccept.setCellValueFactory(new TreeItemPropertyValueFactory<>("accept"));
         TreeTableColumn<FriendRequestEntry,Hyperlink> friendRequestDecline =
                 new TreeTableColumn<>("Decline");
-        friendRemove.setCellValueFactory(new TreeItemPropertyValueFactory<>("decline"));
+        friendRequestDecline.setCellValueFactory(new TreeItemPropertyValueFactory<>("decline"));
         TreeItem<FriendRequestEntry> friendRequestRoot = new TreeItem<>();
+
         friendRequestRoot.getChildren().addAll(controller.getFriendRequest());
-        friendRequest = new TreeTableView<>(friendRequestRoot);
+        friendRequest.setRoot(friendRequestRoot);
         friendRequest.setShowRoot(false);
         friendRequest.getColumns().addAll(friendRequestNames,friendRequestAccept,friendRequestDecline);
     }

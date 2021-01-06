@@ -55,6 +55,12 @@ public class ProfileView implements View, Initializable {
             removeButton.setVisible(false);
             friendRequestPending.setVisible(true);
         }
+        if(controller.areTheSame())
+        {
+            addButton.setVisible(false);
+            removeButton.setVisible(false);
+            friendRequestPending.setVisible(false);
+        }
     }
 
     @Override

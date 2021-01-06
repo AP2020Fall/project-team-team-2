@@ -25,9 +25,9 @@ public class ViewHandler {
             return viewHandler;
     }
 
-    public boolean isEmpty() {
+    /*public boolean isEmpty() {
         return viewStack.isEmpty();
-    }
+    }*/
 
     private void showView() throws IOException {
         viewStack.peek().show(Main.window);
@@ -58,8 +58,8 @@ public class ViewHandler {
     public void mainMenuBack() throws IOException {
         View view = viewStack.peek();
         viewStack.pop();
-        if(viewStack.peek() instanceof LoginMenu)
-            viewStack.push(view);
+        /*if(viewStack.peek() instanceof LoginMenu)
+            viewStack.push(view);*/
         showView();
     }
 
