@@ -1,8 +1,10 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TreeItem;
 import model.*;
-import model.Entry.EventEntry;
-import model.Entry.GameEntry;
+import model.Entry.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,15 +30,6 @@ public class PlayerMainMenuController extends Controller {
 
     }
 
-    public ArrayList<String> showPlatoBotsMessages() {
-        //returns the list of messages send to player.
-        ArrayList<String> result = new ArrayList<>();
-        for (Message message : player.getMessages())
-            result.add(message.toString());
-        Collections.reverse(result);
-        return result;
-    }
-
     public GameEntry lastGamePlayed() {
         //returns the last game played by player.
         //throws NullPointerException if gameLogs is empty.
@@ -59,6 +52,14 @@ public class PlayerMainMenuController extends Controller {
         return result;
     }
 
+/*    public ArrayList<String> showPlatoBotsMessages() {
+        //returns the list of messages send to player.
+        ArrayList<String> result = new ArrayList<>();
+        for (Message message : player.getMessages())
+            result.add(message.toString());
+        Collections.reverse(result);
+        return result;
+    }
     public void chooseSuggestedGame(String gameName) {
         //goes to the GameMenu of the suggested game.
         //throws NullPointerException if gameName is not suggested.
@@ -72,6 +73,7 @@ public class PlayerMainMenuController extends Controller {
         //checks if the gameName is suggested.
         return player.suggestionExists(gameName);
     }
+ */
     public ArrayList<EventEntry> getEvents()
     {
         ArrayList<EventEntry> result = new ArrayList<>();
@@ -79,6 +81,55 @@ public class PlayerMainMenuController extends Controller {
             result.add(new EventEntry(event));
         return result;
     }
+    public String getBio() {
+        return player.getBio();
+    }
+    public String getMoney() {
+        return String.valueOf(player.getMoney());
+    }
+    public String getDate() {
+        return String.valueOf(player.getDayOfRegister());
+    }
+    public String getWins() {
+        return String.valueOf(player.getNumberOfWins());
+    }
+    public String getFriendCount() {
+        return String.valueOf(player.getFriends().size());
+    }
+
+    public void logout()
+    {
+        loggedIn = null;
+    }
+
+    public ObservableList<GameLogEntry> getGameHistory() {
+        ObservableList<GameLogEntry> result = FXCollections.observableArrayList();
+        for (GameLog gameLog : player.getGameLogs())
+            result.add(new GameLogEntry(gameLog));
+        return result;
+    }
+
+    public ObservableList<TreeItem<FriendEntry>> getFriends() {
+        ObservableList<TreeItem<FriendEntry>> result = FXCollections.observableArrayList();
+        for (Player friend : player.getFriends()) {
+            result.add(new TreeItem<>(new FriendEntry(friend,player)));
+        }
+        return result;
+    }
 
 
+    public ObservableList<FriendRequestEntry> getFriendRequests() {
+        ObservableList<FriendRequestEntry> result = FXCollections.observableArrayList();
+        for (FriendRequest friendRequest : player.getReceivedFriendRequests()){
+            result.add(new FriendRequestEntry(friendRequest));
+        }
+        return result;
+    }
+
+    public ObservableList<GameEntry> getGames() {
+        ObservableList<GameEntry> result = FXCollections.observableArrayList();
+        for(Game game: Game.getGames())
+            result.add(new GameEntry(game));
+        return result;
+    }
 }

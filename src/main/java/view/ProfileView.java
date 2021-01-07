@@ -82,7 +82,7 @@ public class ProfileView implements View, Initializable {
         ViewHandler.getViewHandler().mainMenuBack();
     }
 
-    @FXML
+  /*  @FXML
     private void viewFriendsMenu() throws IOException {
         ViewHandler.getViewHandler().push(new FriendsMenu());
     }
@@ -96,7 +96,7 @@ public class ProfileView implements View, Initializable {
     private void viewAccountMenu() throws IOException {
         ViewHandler.getViewHandler().push(new PlayerAccountMenu());
     }
-
+*/
     @FXML
     private void viewMainMenu() throws IOException {
         ViewHandler.getViewHandler().push(new PlayerMainMenu());
