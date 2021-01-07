@@ -5,10 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Account;
-import model.Event;
-import model.Game;
-import model.Suggestion;
+import model.*;
 
 import java.io.IOException;
 
@@ -55,6 +52,7 @@ public class WelcomeMenu implements View{
             Event.save();
             Suggestion.save();
             Game.save();
+            FriendRequest.save();
         } catch (Exception e) {
             e.getStackTrace();
         }
