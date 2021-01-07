@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import view.player.PlayerMainMenuLayout;
 
 import java.io.IOException;
 
@@ -45,7 +46,7 @@ public class LoginMenu implements View {
                 if (controller.login(username.getText())) {
                     //ViewHandler.getViewHandler().push(new AdminMainMenu());
                 } else {
-                    ViewHandler.getViewHandler().push(new PlayerMainMenu());
+                    ViewHandler.getViewHandler().push(new PlayerMainMenuLayout());
                 }
             }
         }

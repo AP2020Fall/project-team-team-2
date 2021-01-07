@@ -1,7 +1,6 @@
-package view;
+package view.player;
 
 import controller.ProfileViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Player;
+import view.View;
+import view.ViewHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,7 +48,7 @@ public class ProfileView implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        score.setText(controller.showPoints());
+        //score.setText(controller.showPoints());
 
         username.setText(controller.getUsername());
         firstName.setText(controller.getFirstName());

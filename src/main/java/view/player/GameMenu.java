@@ -1,10 +1,11 @@
-package view;
+package view.player;
 
 
 import controller.GameMenuController;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import model.Game;
+import view.View;
 
 import java.io.IOException;
 import java.net.URL;
@@ -53,7 +54,7 @@ public class GameMenu implements View, Initializable {
     }
 */
     private void showPoints() {
-        System.out.println(controller.showPoints());
+        //System.out.println(controller.showPoints());
     }
 /*
     private void runGame() {

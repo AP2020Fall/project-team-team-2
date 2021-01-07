@@ -1,0 +1,93 @@
+package view.player;
+
+import controller.PlayerMainMenuController;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.stage.Stage;
+import model.Entry.EventEntry;
+import model.Entry.GameEntry;
+import view.Tab;
+import view.View;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class PlayerMainMenu implements Tab, Initializable {
+    @FXML
+    private TreeTableView<GameEntry> gamesList;
+    @FXML
+    private TreeTableView<EventEntry> eventList;
+    PlayerMainMenuController controller;
+
+    public PlayerMainMenu() {
+        controller = new PlayerMainMenuController();
+    }
+
+    @Override
+    public Parent show() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerMainMenu.fxml"));
+        loader.setController(this);
+        return loader.load();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initializeTreeGamesList();
+        initializeTreeEventList();
+    }
+
+    private void initializeTreeGamesList() {
+        TreeItem<GameEntry> favourite = new TreeItem<>(new GameEntry("Favourite Games"));
+        favourite.setExpanded(true);
+        for (GameEntry gameEntry : controller.favoriteGames()) {
+
+            favourite.getChildren().add(new TreeItem<>(gameEntry));
+        }
+
+        TreeItem<GameEntry> recently = new TreeItem<>(new GameEntry("Recently Played"));
+        recently.setExpanded(true);
+        if (controller.hasPlayerPlayed())
+            recently.getChildren().add(new TreeItem<>(controller.lastGamePlayed()));
+
+        TreeItem<GameEntry> suggested = new TreeItem<>(new GameEntry("Suggested"));
+        suggested.setExpanded(true);
+
+        for (GameEntry gameEntry : controller.adminsSuggestions()) {
+            suggested.getChildren().add(new TreeItem<>(gameEntry));
+        }
+
+        TreeTableColumn<GameEntry, String> gameName = new TreeTableColumn<>("Name");
+        gameName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        TreeTableColumn<GameEntry, Hyperlink> gameOpen = new TreeTableColumn<>("Open game");
+        gameOpen.setCellValueFactory(new TreeItemPropertyValueFactory<>("link"));
+        TreeItem<GameEntry> gameRoot = new TreeItem<>();
+        gameRoot.getChildren().addAll(favourite, recently, suggested);
+        gamesList.setRoot(gameRoot);
+        gamesList.setShowRoot(false);
+        gamesList.getColumns().addAll(gameName, gameOpen);
+    }
+
+    private void initializeTreeEventList() {
+        TreeTableColumn<EventEntry, String> eventName = new TreeTableColumn<>("Name");
+        eventName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        TreeItem<EventEntry> eventRoot = new TreeItem<>();
+        for (EventEntry eventEntry : controller.getEvents())
+            eventRoot.getChildren().add(new TreeItem<>(eventEntry));
+        eventList.setRoot(eventRoot);
+        eventList.setShowRoot(false);
+        eventList.getColumns().add(eventName);
+    }
+
+
+}
+
+

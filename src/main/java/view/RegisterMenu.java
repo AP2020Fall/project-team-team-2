@@ -4,18 +4,16 @@ import controller.RegisterController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Account;
 import model.Admin;
+import view.player.PlayerMainMenuLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 
 public class RegisterMenu  implements View {
 
@@ -90,7 +88,7 @@ public class RegisterMenu  implements View {
             if (controller.createAccount(username.getText(), password.getText(), additionalInfo)) {
                 //ViewHandler.getViewHandler().push(new AdminMainMenu());
             } else {
-                ViewHandler.getViewHandler().push(new PlayerMainMenu());
+                ViewHandler.getViewHandler().push(new PlayerMainMenuLayout());
             }
         }
     }
