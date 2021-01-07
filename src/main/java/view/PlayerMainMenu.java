@@ -1,11 +1,9 @@
 package view;
 
 import controller.PlayerMainMenuController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
@@ -34,7 +32,7 @@ public class PlayerMainMenu implements View, Initializable {
 
     @Override
     public void show(Stage window) throws IOException {
-        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/playerMainMenu.fxml"));
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/playerMainMenu1.fxml"));
         root.setController(this);
         window.setTitle("Plato");
         window.setScene(new Scene(root.load()));
