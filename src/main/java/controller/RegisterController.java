@@ -4,9 +4,6 @@ package controller;
 import model.Account;
 import model.Admin;
 import model.Player;
-import view.AdminMainMenu;
-import view.PlayerMainMenu;
-import view.ViewHandler;
 
 import java.util.ArrayList;
 

@@ -30,6 +30,24 @@ public class FriendsMenuController extends Controller {
         }
         return result;
     }
+
+
+    public ObservableList<TreeItem<FriendEntry>> getFriends() {
+        ObservableList<TreeItem<FriendEntry>> result = FXCollections.observableArrayList();
+        for (Player friend : player.getFriends()) {
+            result.add(new TreeItem<>(new FriendEntry(friend,player)));
+        }
+        return result;
+    }
+
+
+    public ObservableList<FriendRequestEntry> getFriendRequests() {
+        ObservableList<FriendRequestEntry> result = FXCollections.observableArrayList();
+        for (FriendRequest friendRequest : player.getReceivedFriendRequests()){
+            result.add(new FriendRequestEntry(friendRequest));
+        }
+        return result;
+    }
 /*
     public void removeFriend(String username) {
         //removes username from friends of player and removes the player from the friends of username.

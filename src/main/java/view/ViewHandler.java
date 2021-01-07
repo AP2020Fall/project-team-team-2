@@ -9,15 +9,10 @@ import java.util.logging.Logger;
 public class ViewHandler {
     private static final Stack<View> viewStack = new Stack<>();
     private static ViewHandler viewHandler;
-    //private static Stage mainWindow;
 
-    private ViewHandler(){
+    private ViewHandler() {
 
-}
-    /*public static void setWindow(Stage window)
-    {
-        mainWindow = window;
-    }*/
+    }
     public static ViewHandler getViewHandler()
     {
         if(viewHandler == null)
@@ -35,7 +30,7 @@ public class ViewHandler {
             viewStack.peek().show(Main.window);
         }catch (IOException exception)
         {
-            Logger.getLogger("Show view error");
+            Logger.getLogger("Show view error");//todo exit
         }
     }
 
@@ -69,7 +64,7 @@ public class ViewHandler {
         showView();
     }
     public void refresh() {
-        showView();
+        //showView();
     }
     public void logout() {
         while(!(viewStack.peek() instanceof LoginMenu))

@@ -2,7 +2,7 @@ package model.Entry;
 
 import javafx.scene.control.Hyperlink;
 import model.Game;
-import view.GameMenu;
+import view.player.GameMenu;
 import view.ViewHandler;
 
 public class GameEntry {

@@ -1,4 +1,4 @@
-package view;
+package view.player;
 
 import controller.PlatoMessageController;
 import javafx.fxml.FXML;
@@ -10,6 +10,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Entry.PlatoMessageEntry;
+import view.View;
+import view.ViewHandler;
 
 
 import java.io.IOException;

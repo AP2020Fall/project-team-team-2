@@ -1,14 +1,9 @@
 package model.Entry;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Hyperlink;
 import model.Player;
-import view.GameMenu;
-import view.ProfileView;
+import view.player.ProfileView;
 import view.ViewHandler;
-
-import java.io.IOException;
 
 public class FriendEntry {
     private String name;
