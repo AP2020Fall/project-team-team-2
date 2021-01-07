@@ -20,22 +20,7 @@ public class FriendsMenuController extends Controller {
     }
 
 
-    public ObservableList<TreeItem<FriendEntry>> getFriends() {
-        ObservableList<TreeItem<FriendEntry>> result = FXCollections.observableArrayList();
-        for (Player friend : player.getFriends()) {
-            result.add(new TreeItem<>(new FriendEntry(friend,player)));
-        }
-        return result;
-    }
 
-
-    public ObservableList<TreeItem<FriendRequestEntry>> getFriendRequest() {
-        ObservableList<TreeItem<FriendRequestEntry>> result = FXCollections.observableArrayList();
-        for (FriendRequest friendRequest : player.getReceivedFriendRequests()){
-            result.add(new TreeItem<>(new FriendRequestEntry(friendRequest)));
-        }
-        return result;
-    }
 
     public ArrayList<String> showFriends() {
         //returns the list of player's friends' usernames.
