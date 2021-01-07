@@ -2,6 +2,9 @@ package model.Entry;
 
 import javafx.scene.control.Hyperlink;
 import model.FriendRequest;
+import view.ViewHandler;
+
+import java.io.IOException;
 
 public class FriendRequestEntry {
     private String name;
@@ -13,10 +16,22 @@ public class FriendRequestEntry {
         accept = new Hyperlink("accept");
         decline = new Hyperlink("decline");
         accept.setOnAction(event -> {
-            System.out.println("Accepting must be implemented");
+            friendRequest.acceptRequest();
+            try {
+                ViewHandler.getViewHandler().refresh();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //System.out.println("Accepting must be implemented");
         });
         decline.setOnAction(event -> {
-            System.out.println("Declining must be implemented");
+            friendRequest.declineRequest();
+            try {
+                ViewHandler.getViewHandler().refresh();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //System.out.println("Declining must be implemented");
         });
     }
 

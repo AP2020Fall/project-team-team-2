@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 
+<?import javafx.scene.control.TextField?>
 <BorderPane maxHeight="-Infinity" maxWidth="1080.0" minHeight="-Infinity" minWidth="830.0" prefHeight="720.0"
             prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <left>
@@ -77,6 +78,8 @@
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Label>
+            <TextField fx:id="searchUsername" promptText="search" />
+            <Button mnemonicParsing="false" onAction="#search" text="Search" />
          </children>
          <BorderPane.margin>
             <Insets left="10.0" right="10.0" />

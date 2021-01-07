@@ -62,5 +62,8 @@ public class ViewHandler {
             viewStack.push(view);*/
         showView();
     }
+    public void refresh() throws IOException {
+        showView();
+    }
 
 }

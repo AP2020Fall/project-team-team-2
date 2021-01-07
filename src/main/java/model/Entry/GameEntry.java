@@ -2,6 +2,10 @@ package model.Entry;
 
 import javafx.scene.control.Hyperlink;
 import model.Game;
+import view.GameMenu;
+import view.ViewHandler;
+
+import java.io.IOException;
 
 public class GameEntry {
    private final String name;
@@ -13,7 +17,12 @@ public class GameEntry {
         link = new Hyperlink("Open");
         link.setOnAction(event ->
         {
-            System.out.println("Open game must be implemented.");
+            try {
+                ViewHandler.getViewHandler().push(new GameMenu(game));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+           // System.out.println("Open game must be implemented.");
         });
     }
 
