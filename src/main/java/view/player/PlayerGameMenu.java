@@ -3,8 +3,10 @@ package view.player;
 
 import controller.GameMenuController;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.stage.Stage;
 import model.Game;
+import view.Tab;
 import view.View;
 
 import java.io.IOException;
@@ -12,10 +14,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class GameMenu implements View, Initializable {
+public class PlayerGameMenu implements Tab, Initializable {
     GameMenuController controller;
 
-    public GameMenu(Game game) {
+    public PlayerGameMenu(Game game) {
        // super((Account) player);
         //this.controller = new GameMenuController(game,player);
         System.out.println("game menu");
@@ -137,8 +139,9 @@ public class GameMenu implements View, Initializable {
 
     }
 
-    @Override
-    public void show(Stage stage) throws IOException {
 
+    @Override
+    public Parent show() throws IOException {
+        return null;
     }
 }

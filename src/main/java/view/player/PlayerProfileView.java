@@ -4,12 +4,14 @@ import controller.ProfileViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Player;
+import view.Tab;
 import view.View;
 import view.ViewHandler;
 
@@ -17,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileView implements View, Initializable {
+public class PlayerProfileView implements Tab, Initializable {
     private final ProfileViewController controller;
     @FXML
     private TextField searchUsername;
@@ -42,7 +44,7 @@ public class ProfileView implements View, Initializable {
     @FXML
     private Button removeButton;
 
-    public ProfileView(Player player) {
+    public PlayerProfileView(Player player) {
         controller = new ProfileViewController(player);
     }
 
@@ -73,12 +75,10 @@ public class ProfileView implements View, Initializable {
     }
 
     @Override
-    public void show(Stage window) throws IOException {
-        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/profileView.fxml"));
-        root.setController(this);
-        window.setTitle("Plato");
-        window.setScene(new Scene(root.load()));
-        window.setResizable(false);
+    public Parent show() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerProfileView.fxml"));
+        loader.setController(this);
+        return loader.load();
     }
 
     @FXML
@@ -97,8 +97,8 @@ public class ProfileView implements View, Initializable {
             System.out.println("username does not exist!");
         } else if (!searchUsername.getText().equals(controller.getUsername())) {
             //not the same person
-            ViewHandler.getViewHandler().push(new
-                    ProfileView(controller.searchPlayer(searchUsername.getText())));
+            /*ViewHandler.getViewHandler().push(new
+                    PlayerProfileView(controller.searchPlayer(searchUsername.getText())));*/
         }
     }
 
@@ -117,5 +117,6 @@ public class ProfileView implements View, Initializable {
         removeButton.setVisible(false);
         friendRequestPending.setVisible(false);
     }
+
 
 }
