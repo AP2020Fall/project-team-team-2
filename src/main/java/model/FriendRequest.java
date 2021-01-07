@@ -1,7 +1,14 @@
 package model;
 
+import com.google.gson.GsonBuilder;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class FriendRequest {
     private static final ArrayList<FriendRequest> friendRequests = new ArrayList<>();
@@ -9,6 +16,58 @@ public class FriendRequest {
     private final String playerId;
     private FriendRequestState accepted;
     private final String friendRequestId;
+
+    public static void open() throws FileNotFoundException {
+        File folder = new File("database" + "\\" + "friendsRequests");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        } else {
+            for (File file : folder.listFiles()) {
+                friendRequests.add(openFriendRequest(file));
+            }
+        }
+
+    }
+
+    private static FriendRequest openFriendRequest(File file) throws FileNotFoundException {
+        StringBuilder json = fileToString(file);
+        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), FriendRequest.class);
+
+    }
+
+    private static StringBuilder fileToString(File file) throws FileNotFoundException {
+        StringBuilder json = new StringBuilder();
+        Scanner reader = new Scanner(file);
+        while (reader.hasNextLine()) json.append(reader.nextLine());
+        reader.close();
+        return json;
+    }
+
+    public static void save() throws IOException {
+        for (FriendRequest friendRequest : friendRequests) {
+            save(friendRequest);
+        }
+    }
+
+    public void delete() {
+        File file = new File("database" + "\\" + "friendsRequests" + "\\" + this.friendRequestId + ".json");
+        try {
+            if (file.exists())
+                file.delete();
+        } catch (Exception ignored) {
+        }
+        friendRequests.remove(this);
+
+    }
+
+
+    private static void save(FriendRequest friendRequest) throws IOException {
+        String jsonFriendRequest = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create()
+                .toJson(friendRequest);
+        FileWriter file = new FileWriter("database" + "\\" + "friendsRequests" + "\\" + friendRequest.getFriendRequestId()
+                + ".json");
+        file.write(jsonFriendRequest);
+        file.close();    }
 
     public String getFriendRequestId() {
         return friendRequestId;
@@ -67,8 +126,4 @@ public class FriendRequest {
         return null;
     }
 
-    public void delete()
-    {
-        friendRequests.remove(this);
-    }
 }

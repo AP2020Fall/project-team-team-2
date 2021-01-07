@@ -127,7 +127,7 @@ public class Game {
     private static StringBuilder fileToString(File file) throws FileNotFoundException {
         StringBuilder json = new StringBuilder();
         Scanner reader = new Scanner(file);
-        while (reader.hasNext()) json.append(reader.next());
+        while (reader.hasNextLine()) json.append(reader.nextLine());
         reader.close();
         return json;
     }

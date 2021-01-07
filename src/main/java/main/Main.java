@@ -2,10 +2,7 @@ package main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.Account;
-import model.Event;
-import model.Game;
-import model.Suggestion;
+import model.*;
 import view.ViewHandler;
 import view.WelcomeMenu;
 
@@ -29,6 +26,7 @@ public class Main extends Application {
             Event.open();
             Suggestion.open();
             Game.open();
+            FriendRequest.open();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
