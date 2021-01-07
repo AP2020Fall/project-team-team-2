@@ -94,4 +94,6 @@ public class AccountMenuController extends Controller {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+
 }
