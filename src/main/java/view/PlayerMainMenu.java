@@ -21,28 +21,39 @@ import java.util.ResourceBundle;
 public class PlayerMainMenu implements View, Initializable {
 
 
-    @FXML private TreeTableView<GameEntry> gamesList;
-    @FXML private TreeTableView<EventEntry> eventList;
-    @FXML private TreeTableView<FriendEntry> friendsList;
-    @FXML private TableView<FriendRequestEntry> friendRequestList;
-    @FXML private TableView<GameEntry> gamesListGamesMenu;
-    @FXML private TableView<GameLogEntry> gameHistoryList;
-    @FXML private Label bio = new Label();
-    @FXML private Label money = new Label() ;
-    @FXML private Label date =  new Label();
-    @FXML private Label wins = new Label();
-    @FXML private Label friends= new Label();
-    @FXML private TextField searchUsername;
-    @FXML private Label score = new Label();
-    @FXML private Label moneyMenuBar= new Label();
-    @FXML private Label scoreMenuBar= new Label();
+    @FXML
+    private TreeTableView<GameEntry> gamesList;
+    @FXML
+    private TreeTableView<EventEntry> eventList;
+    @FXML
+    private TreeTableView<FriendEntry> friendsList;
+    @FXML
+    private TableView<FriendRequestEntry> friendRequestList;
+    @FXML
+    private TableView<GameEntry> gamesListGamesMenu;
+    @FXML
+    private TableView<GameLogEntry> gameHistoryList;
+    @FXML
+    private Label bio = new Label();
+    @FXML
+    private Label money = new Label();
+    @FXML
+    private Label date = new Label();
+    @FXML
+    private Label wins = new Label();
+    @FXML
+    private Label friends = new Label();
+    @FXML
+    private TextField searchUsername;
+    @FXML
+    private Label score = new Label();
+    @FXML
+    private Label moneyMenuBar = new Label();
+    @FXML
+    private Label scoreMenuBar = new Label();
     PlayerMainMenuController controller = new PlayerMainMenuController();
 
     public PlayerMainMenu() {
-        //super(account);
-        // controller = new ((Player) account);
-        // System.out.println("Player MainMenu");
-        // playerMainMenu();
     }
 
     @Override
@@ -53,7 +64,6 @@ public class PlayerMainMenu implements View, Initializable {
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,33 +81,8 @@ public class PlayerMainMenu implements View, Initializable {
         initializeTableGameHistoryList();
     }
 
-
-
-    /*@FXML
-    private void viewFriendsMenu() throws IOException {
-       ViewHandler.getViewHandler().push(new FriendsMenu());
-    }
-
     @FXML
-    private void viewGamesMenu() throws IOException {
-        ViewHandler.getViewHandler().push(new GamesMenu());
-    }
-
-    @FXML
-    private void viewAccountMenu() throws IOException {
-        ViewHandler.getViewHandler().push(new PlayerAccountMenu());
-    }
-    @FXML
-    private void viewMainMenu() throws IOException {
-        //ViewHandler.getViewHandler().push(new PlayerMainMenu());
-    }
-
-    @FXML
-    private void back() throws IOException {
-        ViewHandler.getViewHandler().mainMenuBack();
-    }*/
-
-    public void search() throws IOException {
+    private void search() throws IOException {
         if (!controller.isUsernameExist(searchUsername.getText())) {
             System.out.println("username does not exist!");
         } else {
@@ -106,17 +91,19 @@ public class PlayerMainMenu implements View, Initializable {
         }
     }
 
-    public void logout() throws IOException {
+    @FXML
+    private void logout() throws IOException {
         controller.logout();
         ViewHandler.getViewHandler().logout();
     }
 
-    public void editInfo(ActionEvent actionEvent) {
+    @FXML
+    private void editInfo(ActionEvent actionEvent) {
     }
 
-    public void platoMessage(ActionEvent actionEvent) throws IOException {
+    @FXML
+    private void platoMessage(ActionEvent actionEvent) throws IOException {
         ViewHandler.getViewHandler().push(new PlatoMessageView());
-
     }
 
     public void initializeMenuBar() {
@@ -230,108 +217,27 @@ public class PlayerMainMenu implements View, Initializable {
         gamesListGamesMenu.getItems().addAll(controller.getGames());
     }
 }
-    /*private void playerMainMenu() {
-        while (true) {
-            String input = scanner.nextLine();
-            Matcher matcher;
-            if (getMatcher(input, "^help$").find()) {
-                help();
-            } else if (getMatcher(input, "^Show Points$").find()) {
-                showPoints();
-            } else if (getMatcher(input, "^View favorite games$").find()) {
-                viewFavoriteGames();
-            } else if (getMatcher(input, "^View platobot's messages$").find()) {
-                viewPlatoBotMessages();
-            } else if (getMatcher(input, "^View last played$").find()) {
-                viewLastPlayed();
-            } else if (getMatcher(input, "^View admin's suggestions$").find()) {
-                viewAdminSuggestion();
-            } else if ((matcher = getMatcher(input, "^Choose suggested game (\\S+)")).find()) {
-                chooseSuggestedGame(matcher.group(1));
-//            } else if ((matcher = getMatcher(input, "^Add friend (\\S+)$")).find()) {
-//                addFriend(matcher.group(1));
-            } else if (getMatcher(input, "^View account menu$").find()) {
-                viewAccountMenu(account);
-            } else if (getMatcher(input, "^View friends menu").find()) {
-                viewFriendsMenu(account);
-            } else if (getMatcher(input, "View Games menu").find()) {
-                ViewGamesMenu(account);
-            } else {
-                System.out.println("invalid command!");
-            }
-        }
-    }*/
-
-//  private void addFriend(String username) {
-//        controller.addFriend(username);
-//    }
-
-  /*  private void chooseSuggestedGame(String gameName) {
-        if (!controller.isGameSuggested(gameName))
-            System.out.println("game is not suggested!");
-        else
-            controller.chooseSuggestedGame(gameName);
-    }*/
-
-    /*
-        private void viewAdminSuggestion() {
-            //todo initialize a row to TreeTableView games
-            if(controller.showAdminsSuggestions().isEmpty())
-                System.out.println("no suggestions!");
-            else {
-                for (String suggestion : controller.showAdminsSuggestions())
-                    System.out.println(suggestion);
-            }
-        }
-    *//*
-    private void viewLastPlayed() {
-        //todo initialize a row to TreeTableView games
-        if(!controller.hasPlayerPlayed())
-            System.out.println("player has not played a game!");
-        else
-        System.out.println( controller.showLastPlayed());
+    /*@FXML
+    private void viewFriendsMenu() throws IOException {
+       ViewHandler.getViewHandler().push(new FriendsMenu());
     }
-*/
-  /*  private void viewPlatoBotMessages() {
-        //todo add mail icon to the menu bar
-        if (controller.showPlatoBotsMessages().isEmpty())
-            System.out.println("no message!");
-        else {
-            for (String message : controller.showPlatoBotsMessages()) {
-                System.out.println(message);
-            }
-        }
+
+    @FXML
+    private void viewGamesMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new GamesMenu());
     }
-*/
-    /*
-        private void viewFavoriteGames() {
-            //todo initialize a row to TreeTableView games
-            if(controller.showFavoriteGames().isEmpty())
-                System.out.println("no favorite game!");
-            else {
-                for (String favoriteGame : controller.showFavoriteGames()) {
-                    System.out.println(favoriteGame);
-                }
-            }
-        }
-    */
-  /*  private void showPoints() {
-        int points = controller.showPoints();
-        System.out.println("points: " + points);
+
+    @FXML
+    private void viewAccountMenu() throws IOException {
+        ViewHandler.getViewHandler().push(new PlayerAccountMenu());
+    }
+    @FXML
+    private void viewMainMenu() throws IOException {
+        //ViewHandler.getViewHandler().push(new PlayerMainMenu());
+    }
+
+    @FXML
+    private void back() throws IOException {
+        ViewHandler.getViewHandler().mainMenuBack();
     }*/
-
-
-/*
-    private void help() {
-        System.out.println("Show Points\n" +
-                "View favorite games\n" +
-                "View platobot's messages\n" +
-                "View last played\n" +
-                "View admin's suggestions\n" +
-                "Choose suggested game\n" +
-                "View account menu\n" +
-                "View friends menu\n" +
-                "View games menu\n");
-    }
-*/
 

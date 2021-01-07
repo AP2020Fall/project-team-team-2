@@ -18,16 +18,16 @@ import java.util.ResourceBundle;
 
 public class PlatoMessageView implements View, Initializable {
     private final PlatoMessageController controller;
-    @FXML private TableView<PlatoMessageEntry> messageTable;
-    public PlatoMessageView()
-    {
+    @FXML
+    private TableView<PlatoMessageEntry> messageTable;
+
+    public PlatoMessageView() {
         controller = new PlatoMessageController();
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        TableColumn<PlatoMessageEntry,String> messageColumn = new TableColumn<>();
+        TableColumn<PlatoMessageEntry, String> messageColumn = new TableColumn<>();
         messageColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
         messageTable.getColumns().addAll(messageColumn);
         messageTable.getItems().addAll(controller.platoBotsMessages());
@@ -41,9 +41,9 @@ public class PlatoMessageView implements View, Initializable {
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
     }
+
     @FXML
-    private void back() throws IOException {
+    private void back() {
         ViewHandler.getViewHandler().mainMenuBack();
     }
-
 }

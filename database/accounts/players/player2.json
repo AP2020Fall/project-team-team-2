@@ -10,7 +10,9 @@
   "wins": 0,
   "draws": 0,
   "gameLogs": [],
-  "friends": [],
+  "friends": [
+    "player1"
+  ],
   "receivedFriendRequests": [],
   "sentFriendRequests": [],
   "messages": [
@@ -19,7 +21,7 @@
       "messageId": "BC3AB80A"
     },
     {
-      "message": "play,the game is pretty fun",
+      "message": "play, the game is pretty fun",
       "messageId": "2F2998E1"
     }
   ],
