@@ -94,7 +94,7 @@ public class ProfileView implements View, Initializable {
 
     @FXML
     private void viewAccountMenu() throws IOException {
-        ViewHandler.getViewHandler().push(new AccountMenu());
+        ViewHandler.getViewHandler().push(new PlayerAccountMenu());
     }
 
     @FXML

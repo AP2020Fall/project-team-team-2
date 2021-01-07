@@ -2,13 +2,16 @@ package view;
 
 
 import controller.GameMenuController;
-import model.Account;
+import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 import model.Game;
-import model.Player;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class GameMenu {
+
+public class GameMenu implements View, Initializable {
     GameMenuController controller;
 
     public GameMenu(Game game) {
@@ -126,5 +129,15 @@ public class GameMenu {
                 "Show points\n" +
                 "help\n" +
                 "back");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    @Override
+    public void show(Stage stage) throws IOException {
+
     }
 }

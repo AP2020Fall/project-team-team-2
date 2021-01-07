@@ -62,5 +62,12 @@ public class ViewHandler {
             viewStack.push(view);*/
         showView();
     }
-
+    public void refresh() throws IOException {
+        showView();
+    }
+    public void logout() throws IOException{
+        while(!(viewStack.peek() instanceof LoginMenu))
+            viewStack.pop();
+        showView();
+    }
 }

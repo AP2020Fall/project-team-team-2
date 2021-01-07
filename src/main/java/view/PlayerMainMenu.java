@@ -18,12 +18,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayerMainMenu implements View, Initializable {
-    @FXML
-    private TreeTableView<GameEntry> games;
-    @FXML
-    private TreeTableView<EventEntry> eventList;
-    @FXML
-    private Label score;
+
+    @FXML private  TextField searchUsername;
+    @FXML private TreeTableView<GameEntry> games;
+    @FXML private TreeTableView<EventEntry> eventList;
+    @FXML private Label score;
     PlayerMainMenuController controller = new PlayerMainMenuController();
 
     public PlayerMainMenu() {
@@ -99,7 +98,7 @@ public class PlayerMainMenu implements View, Initializable {
 
     @FXML
     private void viewAccountMenu() throws IOException {
-        ViewHandler.getViewHandler().push(new AccountMenu());
+        ViewHandler.getViewHandler().push(new PlayerAccountMenu());
     }
     @FXML
     private void viewMainMenu() throws IOException {
@@ -115,7 +114,14 @@ public class PlayerMainMenu implements View, Initializable {
     private void platoMsg() throws IOException {
         ViewHandler.getViewHandler().push(new PlatoMessageView());
     }
-
+    public void search() throws IOException {
+        if (!controller.isUsernameExist(searchUsername.getText())) {
+            System.out.println("username does not exist!");
+        } else {
+            ViewHandler.getViewHandler().push(new
+                    ProfileView(controller.searchPlayer(searchUsername.getText())));
+        }
+    }
     /*private void playerMainMenu() {
         while (true) {
             String input = scanner.nextLine();
