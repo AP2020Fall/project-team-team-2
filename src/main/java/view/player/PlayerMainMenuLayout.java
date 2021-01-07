@@ -44,23 +44,17 @@ public class PlayerMainMenuLayout implements View, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeMenuBar();
+        TabHandler.getTabHandler().setBorderPane(borderPane);
         viewMainMenu();
     }
 
     @FXML
-    private void search() throws IOException {
+    private void search() {
         if (!controller.isUsernameExist(searchUsername.getText())) {
             System.out.println("username does not exist!");
         } else {
-            //ViewHandler.getViewHandler().push(new
-            //  ProfileView(controller.searchPlayer(searchUsername.getText())));
-            //FXMLLoader parent = new FXMLLoader(getClass().getResource("/plato/profileView.fxml"));
-            //FXMLLoader parent =new FXMLLoader(getClass().getResource("/plato/profileView.fxml"));
-           // parent.setController(new ProfileView(controller.searchPlayer(searchUsername.getText())));
-            //invisibleTab.setContent(parent.load());
-            //invisibleTab.setStyle("-fx-tooltip-visible false");
-            //tabPane.getSelectionModel().select(invisibleTab);;
-            //parent.setController();
+            TabHandler.getTabHandler().push(
+                    new PlayerProfileView(controller.searchPlayer(searchUsername.getText())));
         }
     }
 
@@ -68,39 +62,35 @@ public class PlayerMainMenuLayout implements View, Initializable {
     private void platoMessage(ActionEvent actionEvent) throws IOException {
         ViewHandler.getViewHandler().push(new PlatoMessageView());
     }
+
     @FXML
-    private void back()
-    {
-        borderPane.setCenter(TabHandler.getTabHandler().back());
+    private void back() {
+        TabHandler.getTabHandler().back();
     }
+
     @FXML
-    private void ahead()
-    {
-        borderPane.setCenter(TabHandler.getTabHandler().ahead());
+    private void ahead() {
+        TabHandler.getTabHandler().ahead();
     }
 
     @FXML
     private void viewMainMenu() {
-        System.out.println("main menu");
-        borderPane.setCenter(TabHandler.getTabHandler().push(new PlayerMainMenu()));
+        TabHandler.getTabHandler().push(new PlayerMainMenu());
     }
 
     @FXML
     private void viewFriendsMenu() {
-        System.out.println("friends menu");
-        borderPane.setCenter(TabHandler.getTabHandler().push(new PlayerFriendsMenu()));
+        TabHandler.getTabHandler().push(new PlayerFriendsMenu());
     }
 
     @FXML
     private void viewGamesMenu() {
-        System.out.println("games menu");
-        borderPane.setCenter( TabHandler.getTabHandler().push(new PlayerGamesMenu()));
+        TabHandler.getTabHandler().push(new PlayerGamesMenu());
     }
 
     @FXML
     private void viewAccountMenu() {
-        System.out.println("account menu");
-        borderPane.setCenter(TabHandler.getTabHandler().push(new PlayerAccountMenu()));
+        TabHandler.getTabHandler().push(new PlayerAccountMenu());
     }
 
     public void initializeMenuBar() {

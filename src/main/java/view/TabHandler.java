@@ -1,7 +1,6 @@
 package view;
 
-import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import java.util.logging.Logger;
 public class TabHandler {
     private static final ArrayList<Tab> viewArrayList = new ArrayList<>();
     private static TabHandler TabHandler;
+    private BorderPane borderPane;
     private static int index;
     private TabHandler() {
         index = -1;
@@ -21,33 +21,41 @@ public class TabHandler {
         else
             return TabHandler;
     }
-    private Parent display()
+
+    public void setBorderPane(BorderPane borderPane) {
+        this.borderPane = borderPane;
+    }
+
+    private void display()
     {
         try {
-            return viewArrayList.get(index).show();
+            borderPane.setCenter( viewArrayList.get(index).show());
         }catch (IOException ignored)
         {
             Logger.getLogger("Show view error");//todo exit
-            return  null;
         }
     }
 
-    public Parent push(Tab tab)
+    public void push(Tab tab)
     {
 
         viewArrayList.subList(index + 1,viewArrayList.size()).clear();
         viewArrayList.add(tab);
         index++;
-        return display();
+        display();
     }
-    public Parent back()
+    public void back()
     {
         if(index > 0) index--;
-        return display();
+         display();
     }
-    public Parent ahead()
+    public void ahead()
     {
         if(index < viewArrayList.size() - 1) index++;
-        return display();
+         display();
+    }
+
+    public void refresh() {
+        display();
     }
 }

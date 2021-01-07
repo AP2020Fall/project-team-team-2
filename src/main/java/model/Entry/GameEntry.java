@@ -2,8 +2,8 @@ package model.Entry;
 
 import javafx.scene.control.Hyperlink;
 import model.Game;
-import view.player.GameMenu;
-import view.ViewHandler;
+import view.TabHandler;
+import view.player.PlayerGameMenu;
 
 public class GameEntry {
    private final String name;
@@ -15,7 +15,7 @@ public class GameEntry {
         link = new Hyperlink("Open");
         link.setOnAction(event ->
         {
-            ViewHandler.getViewHandler().push(new GameMenu(game));
+            TabHandler.getTabHandler().push(new PlayerGameMenu(game));
            // System.out.println("Open game must be implemented.");
         });
     }

@@ -2,7 +2,8 @@ package model.Entry;
 
 import javafx.scene.control.Hyperlink;
 import model.Player;
-import view.player.ProfileView;
+import view.TabHandler;
+import view.player.PlayerProfileView;
 import view.ViewHandler;
 
 public class FriendEntry {
@@ -15,11 +16,11 @@ public class FriendEntry {
             //System.out.println("Removing must be implemented");
             player.removeFriend(friend);
             friend.removeFriend(player);
-            ViewHandler.getViewHandler().refresh();
+            TabHandler.getTabHandler().refresh();
         });
         view.setOnAction(event -> {
             //System.out.println("Viewing must be implemented");
-            ViewHandler.getViewHandler().push(new ProfileView(friend));
+            TabHandler.getTabHandler().push(new PlayerProfileView(friend));
         });
     }
 

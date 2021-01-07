@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="625.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="username" layoutX="225.0" layoutY="206.0" text="username" />
+      <Label fx:id="firstName" layoutX="225.0" layoutY="236.0" text="firstname" />
+      <Label fx:id="lastName" layoutX="225.0" layoutY="267.0" text="lastname" />
+      <Label fx:id="email" layoutX="237.0" layoutY="299.0" text="email" />
+      <Label fx:id="phoneNumber" layoutX="215.0" layoutY="320.0" text="phonenumber" />
+      <Label fx:id="daysPassed" layoutX="190.0" layoutY="341.0" text="days passed register" />
+      <Button fx:id="addButton" layoutX="742.0" layoutY="80.0" mnemonicParsing="false" onAction="#addFriend" text="Add friend" />
+      <Button fx:id="removeButton" layoutX="727.0" layoutY="130.0" mnemonicParsing="false" onAction="#removeFriend" text="Remove Friend" />
+      <Label fx:id="friendRequestPending" layoutX="704.0" layoutY="181.0" prefHeight="25.0" prefWidth="165.0" text="Friend Request Pending" />
+   </children>
+</Pane>
