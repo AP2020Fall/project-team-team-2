@@ -10,27 +10,18 @@ public class FriendRequestEntry {
     private String name;
     private Hyperlink accept ;
     private Hyperlink decline;
-    public FriendRequestEntry(FriendRequest friendRequest)
-    {
+    public FriendRequestEntry(FriendRequest friendRequest) {
         name = friendRequest.getPlayer().getUsername();
         accept = new Hyperlink("accept");
         decline = new Hyperlink("decline");
         accept.setOnAction(event -> {
             friendRequest.acceptRequest();
-            try {
-                ViewHandler.getViewHandler().refresh();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ViewHandler.getViewHandler().refresh();
             //System.out.println("Accepting must be implemented");
         });
         decline.setOnAction(event -> {
             friendRequest.declineRequest();
-            try {
-                ViewHandler.getViewHandler().refresh();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ViewHandler.getViewHandler().refresh();
             //System.out.println("Declining must be implemented");
         });
     }

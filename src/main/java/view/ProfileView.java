@@ -18,22 +18,32 @@ import java.util.ResourceBundle;
 
 public class ProfileView implements View, Initializable {
     private final ProfileViewController controller;
-    @FXML private TextField searchUsername;
-    @FXML private  Label score;
-    @FXML private Label friendRequestPending;
-    @FXML private Label username;
-    @FXML private Label firstName;
-    @FXML private Label lastName;
-    @FXML private Label email;
-    @FXML private Label phoneNumber;
-    @FXML private Label daysPassed;
-    @FXML private Button addButton;
-    @FXML private Button removeButton;
+    @FXML
+    private TextField searchUsername;
+    @FXML
+    private Label score;
+    @FXML
+    private Label friendRequestPending;
+    @FXML
+    private Label username;
+    @FXML
+    private Label firstName;
+    @FXML
+    private Label lastName;
+    @FXML
+    private Label email;
+    @FXML
+    private Label phoneNumber;
+    @FXML
+    private Label daysPassed;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button removeButton;
 
     public ProfileView(Player player) {
         controller = new ProfileViewController(player);
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,14 +59,12 @@ public class ProfileView implements View, Initializable {
         friendRequestPending.setVisible(false);
         addButton.setVisible(!controller.areFriends());
         removeButton.setVisible(controller.areFriends());
-        if(controller.HasFriendRequestBeenSent())
-        {
+        if (controller.HasFriendRequestBeenSent()) {
             addButton.setVisible(false);
             removeButton.setVisible(false);
             friendRequestPending.setVisible(true);
         }
-        if(controller.areTheSame())
-        {
+        if (controller.areTheSame()) {
             addButton.setVisible(false);
             removeButton.setVisible(false);
             friendRequestPending.setVisible(false);
@@ -73,40 +81,20 @@ public class ProfileView implements View, Initializable {
     }
 
     @FXML
-    private void platoMsg() throws IOException {
+    private void platoMsg() {
         ViewHandler.getViewHandler().push(new PlatoMessageView());
     }
 
     @FXML
-    private void back() throws IOException {
+    private void back() {
         ViewHandler.getViewHandler().mainMenuBack();
     }
 
-  /*  @FXML
-    private void viewFriendsMenu() throws IOException {
-        ViewHandler.getViewHandler().push(new FriendsMenu());
-    }
-
     @FXML
-    private void viewGamesMenu() throws IOException {
-        ViewHandler.getViewHandler().push(new GamesMenu());
-    }
-
-    @FXML
-    private void viewAccountMenu() throws IOException {
-        ViewHandler.getViewHandler().push(new PlayerAccountMenu());
-    }
-*/
-    @FXML
-    private void viewMainMenu() throws IOException {
-        ViewHandler.getViewHandler().push(new PlayerMainMenu());
-    }
-
-    @FXML
-    private void search() throws IOException {
+    private void search() {
         if (!controller.isUsernameExist(searchUsername.getText())) {
             System.out.println("username does not exist!");
-        } else if (!searchUsername.getText().equals(controller.getUsername())){
+        } else if (!searchUsername.getText().equals(controller.getUsername())) {
             //not the same person
             ViewHandler.getViewHandler().push(new
                     ProfileView(controller.searchPlayer(searchUsername.getText())));

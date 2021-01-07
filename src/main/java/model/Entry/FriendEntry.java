@@ -14,26 +14,17 @@ public class FriendEntry {
     private String name;
     private Hyperlink remove = new Hyperlink("Remove");
     private Hyperlink view = new Hyperlink("View");
-    public FriendEntry(Player friend,Player player)
-    {
+    public FriendEntry(Player friend,Player player) {
         name = friend.getUsername();
         remove.setOnAction(event -> {
             //System.out.println("Removing must be implemented");
             player.removeFriend(friend);
             friend.removeFriend(player);
-            try {
-                ViewHandler.getViewHandler().refresh();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ViewHandler.getViewHandler().refresh();
         });
         view.setOnAction(event -> {
             //System.out.println("Viewing must be implemented");
-            try {
-                ViewHandler.getViewHandler().push(new ProfileView(friend));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ViewHandler.getViewHandler().push(new ProfileView(friend));
         });
     }
 

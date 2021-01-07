@@ -132,4 +132,10 @@ public class PlayerMainMenuController extends Controller {
             result.add(new GameEntry(game));
         return result;
     }
+
+    public String showPoints() {
+        //returns the score of player.
+        return String.valueOf( Objects.requireNonNull(((Player)loggedIn),
+                "Logged in account in Controller.showPoints is null").getScore());
+    }
 }

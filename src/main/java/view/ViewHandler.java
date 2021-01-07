@@ -4,6 +4,7 @@ import main.Main;
 
 import java.io.IOException;
 import java.util.Stack;
+import java.util.logging.Logger;
 
 public class ViewHandler {
     private static final Stack<View> viewStack = new Stack<>();
@@ -29,17 +30,22 @@ public class ViewHandler {
         return viewStack.isEmpty();
     }*/
 
-    private void showView() throws IOException {
-        viewStack.peek().show(Main.window);
+    private void showView()  {
+        try {
+            viewStack.peek().show(Main.window);
+        }catch (IOException exception)
+        {
+            Logger.getLogger("Show view error");
+        }
     }
 
-    public void pop() throws IOException {
+    public void pop() {
         viewStack.pop();
         showView();
 
     }
 
-    public void push(View view) throws IOException{
+    public void push(View view) {
         viewStack.push(view);
         showView();
     }
@@ -55,17 +61,17 @@ public class ViewHandler {
         viewStack.pop();
     }
 
-    public void mainMenuBack() throws IOException {
+    public void mainMenuBack() {
         View view = viewStack.peek();
         viewStack.pop();
-        /*if(viewStack.peek() instanceof LoginMenu)
-            viewStack.push(view);*/
+        if(viewStack.peek() instanceof LoginMenu)
+            viewStack.push(view);
         showView();
     }
-    public void refresh() throws IOException {
+    public void refresh() {
         showView();
     }
-    public void logout() throws IOException{
+    public void logout() {
         while(!(viewStack.peek() instanceof LoginMenu))
             viewStack.pop();
         showView();

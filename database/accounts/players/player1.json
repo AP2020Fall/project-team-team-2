@@ -10,16 +10,20 @@
   "wins": 0,
   "draws": 0,
   "gameLogs": [],
-  "friends": [],
+  "friends": [
+    "player2"
+  ],
   "receivedFriendRequests": [],
-  "sentFriendRequests": [],
+  "sentFriendRequests": [
+    "8C8D2515"
+  ],
   "messages": [
     {
       "message": "risk game was created",
       "messageId": "BC3AB80A"
     },
     {
-      "message": "play,the game is pretty fun",
+      "message": "play, the game is pretty fun",
       "messageId": "2F2998E1"
     }
   ],

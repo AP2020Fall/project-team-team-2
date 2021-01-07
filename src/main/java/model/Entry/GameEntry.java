@@ -5,8 +5,6 @@ import model.Game;
 import view.GameMenu;
 import view.ViewHandler;
 
-import java.io.IOException;
-
 public class GameEntry {
    private final String name;
    private Hyperlink link;
@@ -17,11 +15,7 @@ public class GameEntry {
         link = new Hyperlink("Open");
         link.setOnAction(event ->
         {
-            try {
-                ViewHandler.getViewHandler().push(new GameMenu(game));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ViewHandler.getViewHandler().push(new GameMenu(game));
            // System.out.println("Open game must be implemented.");
         });
     }
