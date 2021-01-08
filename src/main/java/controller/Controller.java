@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Controller {
     private static ArrayList<String> ids = new ArrayList<>();
-    protected static Account loggedIn;
+    //protected static Account loggedIn;
 
     protected static String generateId() {
         String id = "";

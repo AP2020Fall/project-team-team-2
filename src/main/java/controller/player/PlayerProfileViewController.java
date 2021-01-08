@@ -1,18 +1,18 @@
-package controller;
+package controller.player;
 
 import model.FriendRequest;
 import model.Player;
 
 import java.util.Objects;
 
-public class ProfileViewController extends Controller {
+public class PlayerProfileViewController extends PlayerMainMenuLayoutController {
     private final Player player;
     private final Player logged;
 
-    public ProfileViewController(Player player) {
+    public PlayerProfileViewController(Player player) {
         this.player = Objects.requireNonNull(player,
                 "Players passed to ProfileViewController is null");
-        this.logged = Objects.requireNonNull(((Player) loggedIn),
+        this.logged = Objects.requireNonNull(loggedIn,
                 "Players passed to ProfileViewController is null");
     }
 

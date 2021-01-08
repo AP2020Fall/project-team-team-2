@@ -1,6 +1,9 @@
-package controller;
+package controller.login;
 
 
+import controller.Controller;
+import controller.admin.AdminMainMenuLayoutController;
+import controller.player.PlayerMainMenuLayoutController;
 import model.Account;
 import model.Admin;
 import model.Player;
@@ -13,10 +16,10 @@ public class RegisterController extends Controller {
     public boolean createAccount(String username, String password, ArrayList<String> additionalInfo) {
         //creates an account and loads either AdminMainMenu or PlayerMainMenu
         if (!Admin.isAdminExist()) {
-            loggedIn = createAdmin(username, password, additionalInfo);
+            new AdminMainMenuLayoutController().login( createAdmin(username, password, additionalInfo));
             return true;
         } else {
-            loggedIn = createPlayer(username, password, additionalInfo);
+            new PlayerMainMenuLayoutController().login(createPlayer(username, password, additionalInfo));
             //ViewHandler.getViewHandler().push(new PlayerMainMenu());
             return false;
         }

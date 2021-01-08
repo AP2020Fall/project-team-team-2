@@ -1,8 +1,5 @@
 import controller.AccountMenuController;
-import controller.LoginController;
-import controller.PlayerMainMenuController;
 import model.Player;
-import model.Suggestion;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

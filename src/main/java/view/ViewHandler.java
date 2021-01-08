@@ -1,6 +1,8 @@
 package view;
 
 import main.Main;
+import view.login.LoginMenu;
+import view.login.WelcomeMenu;
 
 import java.io.IOException;
 import java.util.Stack;

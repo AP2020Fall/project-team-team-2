@@ -1,6 +1,6 @@
 package view.player;
 
-import controller.PlayerMainMenuController;
+import controller.player.PlayerMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

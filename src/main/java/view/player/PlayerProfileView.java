@@ -1,6 +1,6 @@
 package view.player;
 
-import controller.ProfileViewController;
+import controller.player.PlayerProfileViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayerProfileView implements Tab, Initializable {
-    private final ProfileViewController controller;
+    private final PlayerProfileViewController controller;
     @FXML
     private TextField searchUsername;
     @FXML
@@ -42,7 +42,7 @@ public class PlayerProfileView implements Tab, Initializable {
     private Button removeButton;
 
     public PlayerProfileView(Player player) {
-        controller = new ProfileViewController(player);
+        controller = new PlayerProfileViewController(player);
     }
 
     @Override

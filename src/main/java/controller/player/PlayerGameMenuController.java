@@ -1,22 +1,22 @@
-package controller;
+package controller.player;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TreeItem;
-import model.*;
 import model.Entry.GameLogEntry;
+import model.Game;
+import model.GameLog;
+import model.GameLogSummary;
+import model.Player;
 import view.StartGameView;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class GameMenuController extends Controller{
+public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
     private final Game game;
     private final Player player;
 
-    public GameMenuController(Game game) {
+    public PlayerGameMenuController(Game game) {
         this.game = Objects.requireNonNull(game, "Game passed to GameMenuController is null.");
-        this.player = Objects.requireNonNull((Player) loggedIn,"Player passed to GameMenuController is null.");
+        this.player = Objects.requireNonNull(loggedIn,"Player passed to GameMenuController is null.");
     }
 
     public String showScoreBoard() {

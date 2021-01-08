@@ -1,8 +1,12 @@
-package controller;
+package controller.login;
 
+import controller.Controller;
+import controller.admin.AdminMainMenuLayoutController;
+import controller.player.PlayerMainMenuLayoutController;
 import model.Account;
 import model.Admin;
 import model.Player;
+import view.admin.AdminMainMenuLayout;
 
 import java.util.Objects;
 
@@ -18,12 +22,14 @@ public class LoginController extends Controller {
     public boolean login(String username) {
         //logins into account
         //throws NullPointerException if username doesn't exist
-        loggedIn = Objects.requireNonNull(Account.getAccountByUsername(username),
+       Account loggedIn = Objects.requireNonNull(Account.getAccountByUsername(username),
                 "Username passed to LoginController.login doesn't exist.");
         if (loggedIn instanceof Admin) {
-            //new AdminMainMenu(loggedIn);
+            new AdminMainMenuLayoutController().login((Admin) loggedIn);
             return true;
         } else if (loggedIn instanceof Player) {
+            new PlayerMainMenuLayoutController().login((Player) loggedIn);
+
             return false;
         }
         return false;
