@@ -1,6 +1,7 @@
 package main;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.*;
 import view.ViewHandler;
@@ -11,6 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
+        window.setOnCloseRequest(event -> Platform.exit());
         openFiles();
         ViewHandler viewHandler = ViewHandler.getViewHandler();
         viewHandler.push(new WelcomeMenu());

@@ -59,8 +59,9 @@ public class PlayerMainMenuLayout implements View, Initializable {
     }
 
     @FXML
-    private void platoMessage(ActionEvent actionEvent) throws IOException {
-        ViewHandler.getViewHandler().push(new PlatoMessageView());
+    private void platoMessage() throws IOException {
+        new PlatoMessageView().openWindow();
+        //ViewHandler.getViewHandler().push(new PlatoMessageView());
     }
 
     @FXML
@@ -75,22 +76,37 @@ public class PlayerMainMenuLayout implements View, Initializable {
 
     @FXML
     private void viewMainMenu() {
+        if(TabHandler.getTabHandler().current() instanceof PlayerMainMenu) {
+            TabHandler.getTabHandler().refresh();
+        }
+        else
         TabHandler.getTabHandler().push(new PlayerMainMenu());
     }
 
     @FXML
     private void viewFriendsMenu() {
-        TabHandler.getTabHandler().push(new PlayerFriendsMenu());
+        if(TabHandler.getTabHandler().current() instanceof PlayerFriendsMenu) {
+
+            TabHandler.getTabHandler().refresh();
+        }
+        else
+            TabHandler.getTabHandler().push(new PlayerFriendsMenu());
     }
 
     @FXML
     private void viewGamesMenu() {
-        TabHandler.getTabHandler().push(new PlayerGamesMenu());
+        if(TabHandler.getTabHandler().current() instanceof PlayerGamesMenu)
+            TabHandler.getTabHandler().refresh();
+        else
+            TabHandler.getTabHandler().push(new PlayerGamesMenu());
     }
 
     @FXML
     private void viewAccountMenu() {
-        TabHandler.getTabHandler().push(new PlayerAccountMenu());
+        if(TabHandler.getTabHandler().current() instanceof PlayerAccountMenu)
+            TabHandler.getTabHandler().refresh();
+        else
+            TabHandler.getTabHandler().push(new PlayerAccountMenu());
     }
 
     public void initializeMenuBar() {
