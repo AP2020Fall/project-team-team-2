@@ -5,7 +5,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.*;
 import view.ViewHandler;
-import view.WelcomeMenu;
+import view.login.WelcomeMenu;
 
 public class Main extends Application {
     public static Stage window;

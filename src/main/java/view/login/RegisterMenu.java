@@ -1,6 +1,6 @@
-package view;
+package view.login;
 
-import controller.RegisterController;
+import controller.login.RegisterController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +10,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Admin;
+import view.View;
+import view.ViewHandler;
+import view.admin.AdminMainMenuLayout;
 import view.player.PlayerMainMenuLayout;
 
 import java.io.IOException;
@@ -41,7 +44,7 @@ public class RegisterMenu  implements View {
 
     @Override
     public void show(Stage window) throws IOException {
-        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/registerMenu.fxml"));
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/login/registerMenu.fxml"));
         root.setController(this);
         window.setTitle("Plato");
         window.setScene(new Scene(root.load()));
@@ -86,7 +89,7 @@ public class RegisterMenu  implements View {
         if (additionalInfo != null) {
             errorMsg.setText(username.getText() + " registered successfully");
             if (controller.createAccount(username.getText(), password.getText(), additionalInfo)) {
-                //ViewHandler.getViewHandler().push(new AdminMainMenu());
+                ViewHandler.getViewHandler().push(new AdminMainMenuLayout());
             } else {
                 ViewHandler.getViewHandler().push(new PlayerMainMenuLayout());
             }

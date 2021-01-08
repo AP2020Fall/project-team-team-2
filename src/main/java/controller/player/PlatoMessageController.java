@@ -1,4 +1,4 @@
-package controller;
+package controller.player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -6,14 +6,13 @@ import model.Entry.PlatoMessageEntry;
 import model.Message;
 import model.Player;
 
-import java.util.Collections;
 import java.util.Objects;
 
-public class PlatoMessageController extends Controller{
+public class PlatoMessageController extends PlayerMainMenuLayoutController {
     private final Player player;
 
     public PlatoMessageController() {
-        this.player = Objects.requireNonNull(((Player) loggedIn),
+        this.player = Objects.requireNonNull( loggedIn,
                 "Player passed to PlatoMessageController is null.");
     }
     public ObservableList<PlatoMessageEntry> platoBotsMessages() {

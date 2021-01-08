@@ -1,7 +1,7 @@
 package view.player;
 
 
-import controller.GameMenuController;
+import controller.player.PlayerGameMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,10 +26,10 @@ public class PlayerGameMenu implements Tab, Initializable {
     @FXML private  Label win= new Label();
     @FXML private ToggleButton favoriteButton = new ToggleButton();
     public TreeTableView<GameLogEntry> gameLog;
-    GameMenuController controller;
+    PlayerGameMenuController controller;
 
     public PlayerGameMenu(Game game) {
-        controller = new GameMenuController(game);
+        controller = new PlayerGameMenuController(game);
     }
     @Override
     public Parent show() throws IOException {

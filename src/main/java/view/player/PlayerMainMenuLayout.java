@@ -1,6 +1,6 @@
 package view.player;
 
-import controller.PlayerMainMenuController;
+import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,9 +25,10 @@ public class PlayerMainMenuLayout implements View, Initializable {
     private Label moneyMenuBar = new Label();
     @FXML
     private Label scoreMenuBar = new Label();
-    PlayerMainMenuController controller = new PlayerMainMenuController();
+    PlayerMainMenuController controller;
 
     public PlayerMainMenuLayout() {
+        controller = new PlayerMainMenuController();
     }
 
     @Override

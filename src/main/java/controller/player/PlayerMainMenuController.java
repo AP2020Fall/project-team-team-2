@@ -1,4 +1,4 @@
-package controller;
+package controller.player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,12 +8,12 @@ import model.Entry.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class PlayerMainMenuController extends Controller {
+public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
 
     private final Player player;
 
     public PlayerMainMenuController() {
-        this.player = Objects.requireNonNull(((Player) loggedIn),
+        this.player = Objects.requireNonNull(loggedIn,
                 "Player passed to PlayerMainMenuController is null.");
     }
 
@@ -42,12 +42,6 @@ public class PlayerMainMenuController extends Controller {
         }
     }
 
-    public boolean hasPlayerPlayed()
-    {
-        //checks if player has played a game
-        return player.getGameLogLastGamePlayed() != null;
-    }
-
     public ArrayList<GameEntry> adminsSuggestions() {
         //returns the list of suggested games to player.
         ArrayList<GameEntry> result = new ArrayList<>();
@@ -56,28 +50,6 @@ public class PlayerMainMenuController extends Controller {
         return result;
     }
 
-/*    public ArrayList<String> showPlatoBotsMessages() {
-        //returns the list of messages send to player.
-        ArrayList<String> result = new ArrayList<>();
-        for (Message message : player.getMessages())
-            result.add(message.toString());
-        Collections.reverse(result);
-        return result;
-    }
-    public void chooseSuggestedGame(String gameName) {
-        //goes to the GameMenu of the suggested game.
-        //throws NullPointerException if gameName is not suggested.
-        Suggestion suggestion = Objects.requireNonNull(player.getSuggestionByGameName(gameName),
-                "Game passed to PlayerMainMenuController.chooseSuggestedGame" +
-                        " hasn't been suggested to player.");
-        //new GameMenu(player, suggestion.getGame());
-    }
-
-    public boolean isGameSuggested(String gameName) {
-        //checks if the gameName is suggested.
-        return player.suggestionExists(gameName);
-    }
- */
     public ArrayList<EventEntry> getEvents()
     {
         ArrayList<EventEntry> result = new ArrayList<>();
@@ -101,10 +73,7 @@ public class PlayerMainMenuController extends Controller {
         return String.valueOf(player.getFriends().size());
     }
 
-    public void logout()
-    {
-        loggedIn = null;
-    }
+
 
     public ObservableList<GameLogSummaryEntry> getGameHistory() {
         ObservableList<GameLogSummaryEntry> result = FXCollections.observableArrayList();
@@ -123,7 +92,7 @@ public class PlayerMainMenuController extends Controller {
 
     public String showPoints() {
         //returns the score of player.
-        return String.valueOf( Objects.requireNonNull(((Player)loggedIn),
+        return String.valueOf( Objects.requireNonNull(player,
                 "Logged in account in Controller.showPoints is null").getScore());
     }
 }
