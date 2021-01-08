@@ -1,7 +1,6 @@
 package view.player;
 
 
-import com.sun.deploy.security.SelectableSecurityManager;
 import controller.GameMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,13 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import model.Entry.EventEntry;
 import model.Entry.GameLogEntry;
-import model.Entry.GameLogSummaryEntry;
 import model.Game;
-import model.GameLog;
 import model.GameLogStates;
-import model.GameStates;
 import view.Tab;
 
 import java.io.IOException;

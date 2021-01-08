@@ -53,12 +53,14 @@ public class PlayerGamesMenu implements Tab, Initializable {
     private void initializeTreeEventList() {
         TreeTableColumn<EventEntry, String> eventName = new TreeTableColumn<>("Name");
         eventName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        TreeTableColumn<EventEntry, Hyperlink> eventJoin = new TreeTableColumn<>("Join");
+        eventJoin.setCellValueFactory(new TreeItemPropertyValueFactory<>("link"));
         TreeItem<EventEntry> eventRoot = new TreeItem<>();
         for (EventEntry eventEntry : controller.getEvents())
             eventRoot.getChildren().add(new TreeItem<>(eventEntry));
         eventList.setRoot(eventRoot);
         eventList.setShowRoot(false);
-        eventList.getColumns().add(eventName);
+        eventList.getColumns().add(eventJoin);
     }
 
 }

@@ -5,20 +5,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.Entry.PlatoMessageEntry;
 import view.View;
 import view.ViewHandler;
-
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlatoMessageView implements View, Initializable {
+    @FXML private Button backButton = new Button();
+    private static Stage popupWindow;
     private final PlatoMessageController controller;
     @FXML
     private TableView<PlatoMessageEntry> messageTable;
@@ -29,6 +32,7 @@ public class PlatoMessageView implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        backButton.setVisible(false);
         TableColumn<PlatoMessageEntry, String> messageColumn = new TableColumn<>();
         messageColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
         messageTable.getColumns().addAll(messageColumn);
@@ -42,6 +46,17 @@ public class PlatoMessageView implements View, Initializable {
         window.setTitle("Plato");
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
+    }
+
+    public void openWindow() throws IOException {
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/platoMessageView.fxml"));
+        root.setController(this);
+        if (popupWindow == null)
+            popupWindow = new Stage(StageStyle.DECORATED);
+        popupWindow.setTitle("PlatoBot Message");
+        popupWindow.setScene(new Scene(root.load()));
+        popupWindow.setResizable(false);
+        popupWindow.show();
     }
 
     @FXML

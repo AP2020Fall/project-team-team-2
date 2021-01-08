@@ -58,4 +58,11 @@ public class TabHandler {
     public void refresh() {
         display();
     }
+    public Tab current()
+    {
+        if(index < viewArrayList.size() && index >= 0) {
+            return viewArrayList.get(index);
+        }
+            return null;
+    }
 }
