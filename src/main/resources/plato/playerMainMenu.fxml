@@ -3,15 +3,9 @@
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="625.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8.0.171"
-      xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="625.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TreeTableView fx:id="gamesList" layoutX="15.0" layoutY="15.0" prefHeight="600.0" prefWidth="560.0">
-         <columnResizePolicy>
-            <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TreeTableView>
-      <TreeTableView fx:id="eventList" layoutX="600.0" layoutY="15.0" prefHeight="600.0" prefWidth="400.0">
          <columnResizePolicy>
             <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>

@@ -6,15 +6,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import model.Entry.GameLogEntry;
+import model.Entry.GameLogSummaryEntry;
 import view.Tab;
-import view.View;
 import view.ViewHandler;
 
 import java.io.IOException;
@@ -24,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class PlayerAccountMenu implements Tab, Initializable {
     @FXML
-    private TableView<GameLogEntry> gameHistoryList;
+    private TableView<GameLogSummaryEntry> gameHistoryList;
     @FXML
     private Label bio = new Label();
     @FXML
@@ -74,15 +71,15 @@ public class PlayerAccountMenu implements Tab, Initializable {
     }
 
     private void initializeTableGameHistoryList() {
-        TableColumn<GameLogEntry, String> gameNameColumn = new TableColumn<>("Game");
+        TableColumn<GameLogSummaryEntry, String> gameNameColumn = new TableColumn<>("Game");
         gameNameColumn.setCellValueFactory(new PropertyValueFactory<>("gameName"));
-        TableColumn<GameLogEntry, Integer> frequencyColumn = new TableColumn<>("Frequency");
+        TableColumn<GameLogSummaryEntry, Integer> frequencyColumn = new TableColumn<>("Frequency");
         frequencyColumn.setCellValueFactory(new PropertyValueFactory<>("frequency"));
-        TableColumn<GameLogEntry, Integer> winsColumn = new TableColumn<>("Wins");
+        TableColumn<GameLogSummaryEntry, Integer> winsColumn = new TableColumn<>("Wins");
         winsColumn.setCellValueFactory(new PropertyValueFactory<>("wins"));
-        TableColumn<GameLogEntry, Integer> scoreColumn = new TableColumn<>("Score");
+        TableColumn<GameLogSummaryEntry, Integer> scoreColumn = new TableColumn<>("Score");
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
-        TableColumn<GameLogEntry, LocalDateTime> lastPlayColumn = new TableColumn<>("Last Play");
+        TableColumn<GameLogSummaryEntry, LocalDateTime> lastPlayColumn = new TableColumn<>("Last Play");
         lastPlayColumn.setCellValueFactory(new PropertyValueFactory<>("lastPlay"));
         gameHistoryList.getColumns().addAll(gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
         gameHistoryList.getItems().addAll(controller.getGameHistory());

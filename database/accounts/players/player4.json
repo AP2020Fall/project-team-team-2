@@ -2,39 +2,32 @@
   "registerDay": {
     "year": 2021,
     "month": 1,
-    "day": 5
+    "day": 8
   },
-  "money": 500.0,
+  "money": 200.0,
   "score": 0,
   "loses": 0,
   "wins": 0,
   "draws": 0,
   "gameLogSummaries": [],
-  "friends": [],
+  "friends": [
+    "player1"
+  ],
   "receivedFriendRequests": [],
   "sentFriendRequests": [],
-  "messages": [
-    {
-      "message": "risk game was created",
-      "messageId": "BC3AB80A"
-    },
-    {
-      "message": "play, the game is pretty fun",
-      "messageId": "2F2998E1"
-    }
-  ],
+  "messages": [],
   "favouriteGames": [],
   "suggestions": [],
   "cards": [],
   "newSoldiers": 0,
   "playerNumber": 0,
   "draftSoldiers": 0,
-  "firstName": "amin",
+  "firstName": "mohammad",
   "lastName": "zinoghli",
-  "username": "player3",
-  "accountId": "E45AF08B",
-  "password": "player3pass",
-  "email": "aminzinoghli@gmail.com",
+  "username": "player4",
+  "accountId": "A11F87B6",
+  "password": "player4pass",
+  "email": "mohammadzinoghli@gmail.com",
   "phoneNumber": "09105734731",
   "isRobot": false
 }

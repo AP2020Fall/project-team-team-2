@@ -2,6 +2,7 @@ package controller;
 
 import model.Account;
 import model.GameLog;
+import model.GameLogSummary;
 import model.Player;
 import view.WelcomeMenu;
 
@@ -54,7 +55,7 @@ public class AccountMenuController extends Controller {
         return result;
     }
 
-    public ArrayList<String> showGamesHistory() {
+    /*public ArrayList<String> showGamesHistory() {
         //returns arraylist of gameLogs
         if (account instanceof Player)//must be checked in view
         {
@@ -64,14 +65,14 @@ public class AccountMenuController extends Controller {
             return result;
         }
         return null;
-    }
+    }*/
 
     public String showGameStatistics(String gameName) {
         //returns arraylist of String, frequency, wins, losses
         //throws NullPointerException if players hasn't played gameName
         if (account instanceof Player)//must be checked in view
         {
-            GameLog gameLog = Objects.requireNonNull(((Player) account).getGameHistory(gameName),
+            GameLogSummary gameLog = Objects.requireNonNull(((Player) account).getGameHistory(gameName),
                     "Game passed to AccountMenuController.showGameStatistics hasn't been played.");
 
             return gameLog.toString();

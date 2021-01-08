@@ -1,29 +1,106 @@
 package view.player;
 
 
+import com.sun.deploy.security.SelectableSecurityManager;
 import controller.GameMenuController;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import model.Entry.EventEntry;
+import model.Entry.GameLogEntry;
+import model.Entry.GameLogSummaryEntry;
 import model.Game;
+import model.GameLog;
+import model.GameLogStates;
+import model.GameStates;
 import view.Tab;
-import view.View;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 
 public class PlayerGameMenu implements Tab, Initializable {
+    @FXML private   Label detail = new Label();
+    @FXML private  Label frequency= new Label();
+    @FXML private  Label win= new Label();
+    @FXML private ToggleButton favoriteButton = new ToggleButton();
+    public TreeTableView<GameLogEntry> gameLog;
     GameMenuController controller;
 
     public PlayerGameMenu(Game game) {
-       // super((Account) player);
-        //this.controller = new GameMenuController(game,player);
-        System.out.println("game menu");
-        //gameMenu();
+        controller = new GameMenuController(game);
+    }
+    @Override
+    public Parent show() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerGameMenu.fxml"));
+        loader.setController(this);
+        return loader.load();
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+            if(controller.isFavorite())
+                favoriteButton.setSelected(true);
+            InitializeInfo();
+            InitializeTreeGameLogList();
+    }
+
+    @FXML private void addToFavorite() {
+        if(!favoriteButton.isSelected()) {
+            controller.removeFromFavorites();
+        }
+        else {
+            controller.addToFavorites();
+        }
+    }
+
+    @FXML private void runGame() {
+        System.out.println("must run game");
+    }
+
+    @FXML private void scoreboard(ActionEvent actionEvent) {
+    }
+
+    private void InitializeInfo()
+    {
+        detail.setText(controller.getDetails());
+        frequency.setText(controller.getPlayedFrequency());
+        win.setText(controller.getWinsCount());
+    }
+    private void InitializeTreeGameLogList()
+    {
+        TreeTableColumn<GameLogEntry, String> gameLogGameName = new TreeTableColumn<>("Game");
+        gameLogGameName.setCellValueFactory(new TreeItemPropertyValueFactory<>("gameName"));
+
+        TreeTableColumn<GameLogEntry, String> gameLogEnemies = new TreeTableColumn<>("Enemies");
+        gameLogEnemies.setCellValueFactory(new TreeItemPropertyValueFactory<>("enemies"));
+
+        TreeTableColumn<GameLogEntry, GameLogStates> gameLogState = new TreeTableColumn<>("Result");
+        gameLogState.setCellValueFactory(new TreeItemPropertyValueFactory<>("result"));
+
+        TreeTableColumn<GameLogEntry, LocalDateTime> gameLogTime = new TreeTableColumn<>("Time Finished");
+        gameLogTime.setCellValueFactory(new TreeItemPropertyValueFactory<>("timeFinished"));
+        TreeItem<GameLogEntry> gameLogRoot = new TreeItem<>();
+        if(controller.hasPlayedGame()) {
+            for (GameLogEntry gameLogEntry : controller.getGameLog())
+                gameLogRoot.getChildren().add(new TreeItem<>(gameLogEntry));
+            gameLog.setRoot(gameLogRoot);
+            gameLog.setShowRoot(false);
+        }
+        else
+        {
+            gameLog.setPlaceholder(new Label("Hasn't been played."));
+        }
+
+        gameLog.getColumns().addAll(gameLogGameName,gameLogEnemies,gameLogState,gameLogTime);
+    }
    /* private void gameMenu() {
         while (true) {
             String input = scanner.nextLine();
@@ -55,9 +132,9 @@ public class PlayerGameMenu implements Tab, Initializable {
         }
     }
 */
-    private void showPoints() {
+  /*  private void showPoints() {
         //System.out.println(controller.showPoints());
-    }
+    }*/
 /*
     private void runGame() {
         if (!controller.canRunGame())
@@ -87,40 +164,40 @@ public class PlayerGameMenu implements Tab, Initializable {
         }
     }
 */
-    private void addToFavorites() {
+  /*  private void addToFavorites() {
         controller.addToFavorites();
         System.out.println("added successfully!");
-    }
+    }*/
 
-    private void showPlayedCount() {
+  /* private void showPlayedCount() {
         if(!controller.hasPlayedGame())
             System.out.println("player hasn't played the game.");
         else
         System.out.println(controller.showPlayedCount());
-    }
+    }*/
 
-    private void showWinsCount() {
+    /*private void showWinsCount() {
         if(!controller.hasPlayedGame())
             System.out.println("player hasn't played the game.");
         else
         System.out.println(controller.showWinsCount());
-    }
+    }*/
 
-    private void showLog() {
+   /* private void showLog() {
         for (String log : controller.showLog()) {
             System.out.println(log);
         }
-    }
+    }*/
 
-    private void details() {
+   /* private void details() {
         System.out.println(controller.showDetails());
-    }
+    }*/
 
     private void showScoreboard() {
         System.out.println(controller.showScoreBoard());
     }
 
-    private void help() {
+    /*private void help() {
         System.out.println("View account menu\n" +
                 "Show scoreboard\n" +
                 "Details\n" +
@@ -133,15 +210,5 @@ public class PlayerGameMenu implements Tab, Initializable {
                 "help\n" +
                 "back");
     }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-
-    @Override
-    public Parent show() throws IOException {
-        return null;
-    }
+*/
 }

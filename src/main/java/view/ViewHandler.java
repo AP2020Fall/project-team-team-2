@@ -67,7 +67,7 @@ public class ViewHandler {
         showView();
     }
     public void logout() {
-        while(!(viewStack.peek() instanceof LoginMenu))
+        while(!(viewStack.peek() instanceof WelcomeMenu))
             viewStack.pop();
         showView();
     }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -16,7 +15,7 @@ public class Player extends Account {
     private int wins;
     private int draws;
     private String bio;
-    private ArrayList<GameLog> gameLogs;
+    private ArrayList<GameLogSummary> gameLogSummaries;
     private ArrayList<String> friends;
     private ArrayList<String> receivedFriendRequests;
     private ArrayList<String> sentFriendRequests;
@@ -36,7 +35,7 @@ public class Player extends Account {
         this.money = money;
         this.score = 0;
         //this.loses = this.wins = this.draws = 0;
-        gameLogs = new ArrayList<>();
+        gameLogSummaries = new ArrayList<>();
         friends = new ArrayList<>();
         receivedFriendRequests = new ArrayList<>();
         sentFriendRequests = new ArrayList<>();
@@ -78,31 +77,32 @@ public class Player extends Account {
         this.bio = bio;
     }
 
-    public ArrayList<GameLog> getGameLogs() {
-        return gameLogs;
+    public ArrayList<GameLogSummary> getGameLogSummaries() {
+        return gameLogSummaries;
     }
 
 
-    public GameLog getLastGamePlayed() {
-        if (gameLogs.isEmpty())
+    public GameLogSummary getGameLogLastGamePlayed() {
+        if (gameLogSummaries.isEmpty()) {
             return null;
-        gameLogs.sort((a, b) -> b.getLastPlay().compareTo(a.getLastPlay()));
-        return gameLogs.get(0);
+        }
+        gameLogSummaries.sort((a, b) -> b.getLastPlay().compareTo(a.getLastPlay()));
+        return gameLogSummaries.get(0);
     }
 
-    public GameLog getGameHistory(String gameName) {
-        for (GameLog gameLog : gameLogs)
-            if (gameLog.getGameName().equals(gameName))
-                return gameLog;
+    public GameLogSummary getGameHistory(String gameName) {
+        for (GameLogSummary gameLogSummary : gameLogSummaries)
+            if (gameLogSummary.getGameName().equals(gameName))
+                return gameLogSummary;
         return null;
     }
 
-    public void addGameLog(GameLog gameLog) {
-        gameLogs.add(gameLog);
+    public static void addGameLog(ArrayList<Player> players, Game game,GameStates gameState,Player winner) {
+        //todo
     }
 
     public void removeGameLog(Game game) {
-        gameLogs.removeIf(o -> o.getGameName().equals(game.getName()));
+        gameLogSummaries.removeIf(o -> o.getGameName().equals(game.getName()));
     }
 
 
@@ -230,6 +230,10 @@ public class Player extends Account {
     public void addFavouriteGame(Game game) {
         favouriteGames.add(game.getGameId());
     }
+    public void removeFavouriteGame(Game game) {
+        favouriteGames.remove(game.getGameId());
+    }
+
 
 
     public static Player getPlayerById(String id) {
@@ -250,8 +254,8 @@ public class Player extends Account {
 
     public int getNumberOfWins() {
         int wins = 0;
-        for (GameLog gameLog : gameLogs)
-            wins += gameLog.getWins();
+        for (GameLogSummary gameLogSummary : gameLogSummaries)
+            wins += gameLogSummary.getWins();
         return wins;
     }
 
@@ -264,7 +268,7 @@ public class Player extends Account {
                 file.delete();
         } catch (Exception ignored) {
         }
-        gameLogs.clear();
+        gameLogSummaries.clear();
         for (String username : friends) {
             Player friend = Objects.requireNonNull(Player.getPlayerByUsername(username));
             friend.removeFriend(this);
@@ -358,4 +362,6 @@ public class Player extends Account {
     public void setLoses() {
         this.loses++;
     }
+
+
 }

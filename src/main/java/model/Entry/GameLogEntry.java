@@ -1,41 +1,37 @@
 package model.Entry;
 
 import model.GameLog;
+import model.GameLogStates;
 
 import java.time.LocalDateTime;
 
 public class GameLogEntry {
-    private final int frequency;
-    private final int wins;
-    private final int score;
-    private final LocalDateTime lastPlay;
-    private final String gameName;
+    private  String gameName;
+    private  String enemies;
+    private  GameLogStates result;
+    private  LocalDateTime timeFinished;
 
     public GameLogEntry(GameLog gameLog)
     {
-        frequency = gameLog.getFrequency();
-        wins = gameLog.getWins();
-        score = gameLog.getScore();
-        lastPlay = gameLog.getLastPlay();
+        enemies = gameLog.getEnemyUsernames().toString();
+        result = gameLog.getResult();
+        timeFinished = gameLog.getTimeFinished();
         gameName = gameLog.getGameName();
-    }
-    public int getFrequency() {
-        return frequency;
-    }
-
-    public int getWins() {
-        return wins;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public LocalDateTime getLastPlay() {
-        return lastPlay;
     }
 
     public String getGameName() {
         return gameName;
+    }
+
+    public String getEnemies() {
+        return enemies;
+    }
+
+    public GameLogStates getResult() {
+        return result;
+    }
+
+    public LocalDateTime getTimeFinished() {
+        return timeFinished;
     }
 }

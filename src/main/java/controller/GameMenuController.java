@@ -1,8 +1,10 @@
 package controller;
 
-import model.Game;
-import model.PlayLog;
-import model.Player;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TreeItem;
+import model.*;
+import model.Entry.GameLogEntry;
 import view.StartGameView;
 
 import java.util.ArrayList;
@@ -12,9 +14,9 @@ public class GameMenuController extends Controller{
     private final Game game;
     private final Player player;
 
-    public GameMenuController(Game game,Player player) {
+    public GameMenuController(Game game) {
         this.game = Objects.requireNonNull(game, "Game passed to GameMenuController is null.");
-        this.player = Objects.requireNonNull(player,"Player passed to GameMenuController is null.");
+        this.player = Objects.requireNonNull((Player) loggedIn,"Player passed to GameMenuController is null.");
     }
 
     public String showScoreBoard() {
@@ -22,35 +24,50 @@ public class GameMenuController extends Controller{
         return game.getScoreboard().toString();
     }
 
-    public String showDetails() {
+    public String getDetails() {
         //returns game's details.
         return game.getDetails();
     }
+    public boolean hasPlayedGame()
+    {
+        return player.getGameHistory(game.getName()) != null;
+    }
 
-    public ArrayList<String> showLog() {
-        //returns the game's logs.
-        ArrayList<String> result = new ArrayList<>();
-        for(PlayLog playLog : game.getPlayLogs())
-            result.add(playLog.toString());
+    public ArrayList<GameLogEntry> getGameLog() {
+        ArrayList<GameLogEntry> result = new ArrayList<>();
+        GameLogSummary gameLogSummary = player.getGameHistory(game.getName());
+        for (GameLog gameLog : gameLogSummary.getGameLogs()) {
+            result.add(new GameLogEntry(gameLog));
+        }
         return result;
     }
 
-    public int showWinsCount() {
+    public String getWinsCount() {
         //returns the number of times player won the game.
         //throws NullPointerException if the player hasn't played the game.
-        return Objects.requireNonNull(player.getGameHistory(game.getName()),
-                "Player hasn't played this game.").getWins();
+        GameLogSummary gameLogSummary= player.getGameHistory(game.getName());
+        if(gameLogSummary == null)
+            return "Hasn't been played";
+        else
+            return String.valueOf(gameLogSummary.getFrequency());
     }
 
-    public int showPlayedCount() {
+    public String getPlayedFrequency() {
         //returns the number of times player played the game.
         //throws NullPointerException if the player hasn't played the game.
-        return Objects.requireNonNull(player.getGameHistory(game.getName()),
-                "Player hasn't played this game.").getFrequency();
+        GameLogSummary gameLogSummary= player.getGameHistory(game.getName());
+        if(gameLogSummary == null)
+            return "Hasn't been played";
+        else
+        return String.valueOf(gameLogSummary.getWins());
     }
 
     public void addToFavorites() {
         player.addFavouriteGame(game);
+    }
+
+    public void removeFromFavorites() {
+        player.removeFavouriteGame(game);
     }
 
     public void runGame(ArrayList<String> usernames) {
@@ -62,6 +79,11 @@ public class GameMenuController extends Controller{
         }
         new StartGameView(players);
     }
+
+    public boolean isFavorite() {
+        return player.getFavouriteGames().contains(game);
+    }
+
 /*
     public int showPoints() {
         //returns the score of player in the game.
@@ -70,7 +92,14 @@ public class GameMenuController extends Controller{
                 "Player hasn't played this game.").getScore();
     }*/
 
-    public boolean canRunGame()
+    /*public ArrayList<String> showLog() {
+    //returns the game's logs.
+    ArrayList<String> result = new ArrayList<>();
+    for(PlayLog playLog : game.getPlayLogs())
+        result.add(playLog.toString());
+    return result;
+}*/
+   /* public boolean canRunGame()
     {
         return game.getName().equals("Risk");
     }
@@ -79,4 +108,6 @@ public class GameMenuController extends Controller{
     {
         return player.getGameHistory(game.getName()) != null;
     }
+*/
+
 }

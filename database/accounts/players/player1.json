@@ -9,13 +9,15 @@
   "loses": 0,
   "wins": 0,
   "draws": 0,
-  "gameLogs": [],
+  "gameLogSummaries": [],
   "friends": [
-    "player2"
+    "player2",
+    "player4"
   ],
   "receivedFriendRequests": [],
   "sentFriendRequests": [
-    "8C8D2515"
+    "8C8D2515",
+    "B5F9A356"
   ],
   "messages": [
     {
@@ -27,7 +29,9 @@
       "messageId": "2F2998E1"
     }
   ],
-  "favouriteGames": [],
+  "favouriteGames": [
+    "A5367793"
+  ],
   "suggestions": [
     "D80C2AE0"
   ],

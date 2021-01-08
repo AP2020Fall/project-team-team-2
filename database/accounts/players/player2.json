@@ -9,7 +9,7 @@
   "loses": 0,
   "wins": 0,
   "draws": 0,
-  "gameLogs": [],
+  "gameLogSummaries": [],
   "friends": [
     "player1"
   ],

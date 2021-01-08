@@ -2,12 +2,10 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TreeItem;
 import model.*;
 import model.Entry.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 
 public class PlayerMainMenuController extends Controller {
@@ -33,15 +31,21 @@ public class PlayerMainMenuController extends Controller {
     public GameEntry lastGamePlayed() {
         //returns the last game played by player.
         //throws NullPointerException if gameLogs is empty.
-        return new GameEntry(Objects.requireNonNull(Game.getGameByGameName(
-                Objects.requireNonNull(player.getLastGamePlayed(), "Player hasn't played any games.")
-                        .getGameName()),"Game doesn't exist"));
+        GameLogSummary gameLogSummary = player.getGameLogLastGamePlayed();
+        if (gameLogSummary == null) {
+            return new GameEntry("No game has been played");
+        }
+        else
+        {
+            return new GameEntry(Objects.requireNonNull(Game.getGameByGameName(gameLogSummary.getGameName()),
+                    "Game doesn't exist"));
+        }
     }
 
     public boolean hasPlayerPlayed()
     {
         //checks if player has played a game
-        return player.getLastGamePlayed() != null;
+        return player.getGameLogLastGamePlayed() != null;
     }
 
     public ArrayList<GameEntry> adminsSuggestions() {
@@ -102,10 +106,10 @@ public class PlayerMainMenuController extends Controller {
         loggedIn = null;
     }
 
-    public ObservableList<GameLogEntry> getGameHistory() {
-        ObservableList<GameLogEntry> result = FXCollections.observableArrayList();
-        for (GameLog gameLog : player.getGameLogs())
-            result.add(new GameLogEntry(gameLog));
+    public ObservableList<GameLogSummaryEntry> getGameHistory() {
+        ObservableList<GameLogSummaryEntry> result = FXCollections.observableArrayList();
+        for (GameLogSummary gameLog : player.getGameLogSummaries())
+            result.add(new GameLogSummaryEntry(gameLog));
         return result;
     }
 
