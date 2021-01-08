@@ -6,36 +6,30 @@ import java.util.ArrayList;
 public class GameLog {
 
 
-    private final String playerId;
-    private final ArrayList<String> enemyIds;
+    private final String playerUsername;
+    private final ArrayList<String> enemyUsernames;
     private final String gameName;
     private final GameLogStates result;
     private final LocalDateTime timeFinished;
 
-    /*private int frequency;
-    private int wins;
-    private String gameLogId;
-    private int score;
-    private LocalDateTime lastPlay;
-    private String gameName;
-*/
-    public GameLog(Player player, ArrayList<Player> enemies, String gameName, GameLogStates result, LocalDateTime timeFinished) {
-        this.playerId = player.getAccountId();
+    public GameLog(Player player, ArrayList<Player> enemies, String gameName, GameLogStates result,
+                   LocalDateTime timeFinished) {
+        this.playerUsername = player.getUsername();
         this.gameName = gameName;
-        enemyIds = new ArrayList<>();
+        enemyUsernames = new ArrayList<>();
         for (Player enemy : enemies) {
-            enemyIds.add(enemy.getAccountId());
+            enemyUsernames.add(enemy.getUsername());
         }
         this.result = result;
         this.timeFinished = timeFinished;
     }
 
-    public String getPlayerId() {
-        return playerId;
+    public String getPlayerUsername() {
+        return playerUsername;
     }
 
-    public ArrayList<String> getEnemyIds() {
-        return enemyIds;
+    public ArrayList<String> getEnemyUsernames() {
+        return enemyUsernames;
     }
 
     public GameLogStates getResult() {

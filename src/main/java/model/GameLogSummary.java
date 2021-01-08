@@ -27,6 +27,10 @@ public class GameLogSummary {
         return wins;
     }
 
+    public String getGameLogSummaryId() {
+        return gameLogSummaryId;
+    }
+
     public int getLosses() {
         return frequency - wins;
     }
@@ -34,9 +38,8 @@ public class GameLogSummary {
     public String getGameName() {
         return gameName;
     }
-
-    public String getGameLogSummaryId() {
-        return gameLogSummaryId;
+    public ArrayList<GameLog> getGameLogs() {
+        return gameLogs;
     }
 
     public int getScore() {

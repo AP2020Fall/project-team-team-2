@@ -31,9 +31,15 @@ public class PlayerMainMenuController extends Controller {
     public GameEntry lastGamePlayed() {
         //returns the last game played by player.
         //throws NullPointerException if gameLogs is empty.
-        return new GameEntry(Objects.requireNonNull(Game.getGameByGameName(
-                Objects.requireNonNull(player.getGameLogLastGamePlayed(), "Player hasn't played any games.")
-                        .getGameName()),"Game doesn't exist"));
+        GameLogSummary gameLogSummary = player.getGameLogLastGamePlayed();
+        if (gameLogSummary == null) {
+            return new GameEntry("No game has been played");
+        }
+        else
+        {
+            return new GameEntry(Objects.requireNonNull(Game.getGameByGameName(gameLogSummary.getGameName()),
+                    "Game doesn't exist"));
+        }
     }
 
     public boolean hasPlayerPlayed()

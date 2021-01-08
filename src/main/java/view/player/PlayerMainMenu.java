@@ -50,19 +50,15 @@ public class PlayerMainMenu implements Tab, Initializable {
 
             favourite.getChildren().add(new TreeItem<>(gameEntry));
         }
-
         TreeItem<GameEntry> recently = new TreeItem<>(new GameEntry("Recently Played"));
         recently.setExpanded(true);
-        if (controller.hasPlayerPlayed())
-            recently.getChildren().add(new TreeItem<>(controller.lastGamePlayed()));
-
+        recently.getChildren().add(new TreeItem<>(controller.lastGamePlayed()));
         TreeItem<GameEntry> suggested = new TreeItem<>(new GameEntry("Suggested"));
         suggested.setExpanded(true);
 
         for (GameEntry gameEntry : controller.adminsSuggestions()) {
             suggested.getChildren().add(new TreeItem<>(gameEntry));
         }
-
         TreeTableColumn<GameEntry, String> gameName = new TreeTableColumn<>("Name");
         gameName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
         TreeTableColumn<GameEntry, Hyperlink> gameOpen = new TreeTableColumn<>("Open game");

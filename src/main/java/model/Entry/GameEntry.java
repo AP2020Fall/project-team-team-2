@@ -16,9 +16,9 @@ public class GameEntry {
         link.setOnAction(event ->
         {
             TabHandler.getTabHandler().push(new PlayerGameMenu(game));
-           // System.out.println("Open game must be implemented.");
         });
     }
+
 
     public GameEntry(String title)
     {

@@ -83,8 +83,9 @@ public class Player extends Account {
 
 
     public GameLogSummary getGameLogLastGamePlayed() {
-        if (gameLogSummaries.isEmpty())
+        if (gameLogSummaries.isEmpty()) {
             return null;
+        }
         gameLogSummaries.sort((a, b) -> b.getLastPlay().compareTo(a.getLastPlay()));
         return gameLogSummaries.get(0);
     }
@@ -229,6 +230,10 @@ public class Player extends Account {
     public void addFavouriteGame(Game game) {
         favouriteGames.add(game.getGameId());
     }
+    public void removeFavouriteGame(Game game) {
+        favouriteGames.remove(game.getGameId());
+    }
+
 
 
     public static Player getPlayerById(String id) {
@@ -357,4 +362,6 @@ public class Player extends Account {
     public void setLoses() {
         this.loses++;
     }
+
+
 }
