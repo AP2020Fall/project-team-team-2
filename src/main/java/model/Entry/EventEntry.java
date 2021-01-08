@@ -12,7 +12,7 @@ public class EventEntry {
     public EventEntry(Event event)
     {
         name= event.getGameName();
-        link = new Hyperlink("join");
+        link = new Hyperlink("open");
         link.setOnAction(events ->
         {
             TabHandler.getTabHandler().push(new PlayerEventMenu(event));

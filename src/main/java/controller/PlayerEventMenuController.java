@@ -10,4 +10,23 @@ public class PlayerEventMenuController extends Controller{
     {
         this.event = Objects.requireNonNull(event,"Event passed to PlayerEventMenu is null");
     }
+
+    public String getGameName() {
+        return event.getGameName();
+    }
+
+    public String getStartDate() {
+        return  event.getStart().toString();
+    }
+
+    public String getEndDate() {
+        return event.getEnd().toString();
+    }
+
+    public String getScore() {
+        return String.valueOf( event.getScore());
+    }
+
+    public void join() {
+    }
 }
