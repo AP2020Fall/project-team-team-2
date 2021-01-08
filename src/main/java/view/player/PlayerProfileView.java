@@ -5,14 +5,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import model.Player;
 import view.Tab;
-import view.View;
 import view.ViewHandler;
 
 import java.io.IOException;
@@ -76,7 +73,7 @@ public class PlayerProfileView implements Tab, Initializable {
 
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerProfileView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerProfileView.fxml"));
         loader.setController(this);
         return loader.load();
     }

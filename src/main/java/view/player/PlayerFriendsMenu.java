@@ -30,7 +30,7 @@ public class PlayerFriendsMenu implements Tab, Initializable {
 
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerFriendsMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerFriendsMenu.fxml"));
         loader.setController(this);
         return loader.load();
     }

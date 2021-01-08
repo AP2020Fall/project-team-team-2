@@ -28,7 +28,7 @@ public class PlayerGamesMenu implements Tab, Initializable {
     }
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerGamesMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerGamesMenu.fxml"));
         loader.setController(this);
         return loader.load();
     }

@@ -5,17 +5,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.stage.Stage;
-import model.Entry.EventEntry;
 import model.Entry.GameEntry;
 import view.Tab;
-import view.View;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,7 +29,7 @@ public class PlayerMainMenu implements Tab, Initializable {
 
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerMainMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerMainMenu.fxml"));
         loader.setController(this);
         return loader.load();
     }

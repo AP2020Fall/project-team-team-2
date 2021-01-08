@@ -11,9 +11,9 @@
       <Label layoutX="209.0" layoutY="199.0" text="Game name:" />
       <Label fx:id="gameName" layoutX="309.0" layoutY="199.0" text="Game name" />
       <Label layoutX="209.0" layoutY="228.0" text="StartDate:" />
-      <Label fx:id="startData" layoutX="309.0" layoutY="228.0" text="StartDate" />
+      <Label fx:id="startDate" layoutX="309.0" layoutY="228.0" text="StartDate" />
       <Label layoutX="209.0" layoutY="263.0" text="EndDate:" />
-      <Label fx:id="endData" layoutX="309.0" layoutY="263.0" text="EndData" />
+      <Label fx:id="endDate" layoutX="309.0" layoutY="263.0" text="EndData" />
       <Label layoutX="209.0" layoutY="292.0" text="Score" />
       <Label fx:id="score" layoutX="309.0" layoutY="292.0" text="Score" />
       <Button layoutX="494.0" layoutY="106.0" mnemonicParsing="false" onAction="#join" text="Join" />
