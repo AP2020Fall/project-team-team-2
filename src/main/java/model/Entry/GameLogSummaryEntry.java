@@ -1,17 +1,17 @@
 package model.Entry;
 
-import model.GameLog;
+import model.GameLogSummary;
 
 import java.time.LocalDateTime;
 
-public class GameLogEntry {
+public class GameLogSummaryEntry {
     private final int frequency;
     private final int wins;
     private final int score;
     private final LocalDateTime lastPlay;
     private final String gameName;
 
-    public GameLogEntry(GameLog gameLog)
+    public GameLogSummaryEntry(GameLogSummary gameLog)
     {
         frequency = gameLog.getFrequency();
         wins = gameLog.getWins();

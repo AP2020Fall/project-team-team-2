@@ -2,12 +2,15 @@ package view.player;
 
 
 import controller.GameMenuController;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.control.TreeTableView;
+import model.Entry.GameLogSummaryEntry;
 import model.Game;
 import view.Tab;
-import view.View;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,15 +18,50 @@ import java.util.ResourceBundle;
 
 
 public class PlayerGameMenu implements Tab, Initializable {
+    public Label detail;
+    public Label frequency;
+    public Label win;
+    public TreeTableView<GameLogSummaryEntry> gameLog;
     GameMenuController controller;
 
     public PlayerGameMenu(Game game) {
-       // super((Account) player);
-        //this.controller = new GameMenuController(game,player);
-        System.out.println("game menu");
-        //gameMenu();
+        controller = new GameMenuController(game);
+    }
+    @Override
+    public Parent show() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerGameMenu.fxml"));
+        loader.setController(this);
+        return loader.load();
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+            InitializeInfo();
+            InitializeTreeGameLogList();
+    }
+
+    public void addToFavorite() {
+        controller.addToFavorites();
+        System.out.println("added favorites");
+    }
+
+    public void runGame() {
+        System.out.println("must run game");
+    }
+
+    public void scoreboard(ActionEvent actionEvent) {
+    }
+
+    private void InitializeInfo()
+    {
+        detail.setText(controller.getDetails());
+        frequency.setText(controller.getPlayedFrequency());
+        win.setText(controller.getWinsCount());
+    }
+    private void InitializeTreeGameLogList()
+    {
+
+    }
    /* private void gameMenu() {
         while (true) {
             String input = scanner.nextLine();
@@ -55,9 +93,9 @@ public class PlayerGameMenu implements Tab, Initializable {
         }
     }
 */
-    private void showPoints() {
+  /*  private void showPoints() {
         //System.out.println(controller.showPoints());
-    }
+    }*/
 /*
     private void runGame() {
         if (!controller.canRunGame())
@@ -87,24 +125,24 @@ public class PlayerGameMenu implements Tab, Initializable {
         }
     }
 */
-    private void addToFavorites() {
+  /*  private void addToFavorites() {
         controller.addToFavorites();
         System.out.println("added successfully!");
-    }
+    }*/
 
-    private void showPlayedCount() {
+  /* private void showPlayedCount() {
         if(!controller.hasPlayedGame())
             System.out.println("player hasn't played the game.");
         else
         System.out.println(controller.showPlayedCount());
-    }
+    }*/
 
-    private void showWinsCount() {
+    /*private void showWinsCount() {
         if(!controller.hasPlayedGame())
             System.out.println("player hasn't played the game.");
         else
         System.out.println(controller.showWinsCount());
-    }
+    }*/
 
     private void showLog() {
         for (String log : controller.showLog()) {
@@ -112,9 +150,9 @@ public class PlayerGameMenu implements Tab, Initializable {
         }
     }
 
-    private void details() {
+   /* private void details() {
         System.out.println(controller.showDetails());
-    }
+    }*/
 
     private void showScoreboard() {
         System.out.println(controller.showScoreBoard());
@@ -134,14 +172,4 @@ public class PlayerGameMenu implements Tab, Initializable {
                 "back");
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-
-    @Override
-    public Parent show() throws IOException {
-        return null;
-    }
 }

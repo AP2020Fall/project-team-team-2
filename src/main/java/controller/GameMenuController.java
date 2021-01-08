@@ -12,9 +12,9 @@ public class GameMenuController extends Controller{
     private final Game game;
     private final Player player;
 
-    public GameMenuController(Game game,Player player) {
+    public GameMenuController(Game game) {
         this.game = Objects.requireNonNull(game, "Game passed to GameMenuController is null.");
-        this.player = Objects.requireNonNull(player,"Player passed to GameMenuController is null.");
+        this.player = Objects.requireNonNull((Player) loggedIn,"Player passed to GameMenuController is null.");
     }
 
     public String showScoreBoard() {
@@ -22,7 +22,7 @@ public class GameMenuController extends Controller{
         return game.getScoreboard().toString();
     }
 
-    public String showDetails() {
+    public String getDetails() {
         //returns game's details.
         return game.getDetails();
     }
@@ -35,18 +35,18 @@ public class GameMenuController extends Controller{
         return result;
     }
 
-    public int showWinsCount() {
+    public String getWinsCount() {
         //returns the number of times player won the game.
         //throws NullPointerException if the player hasn't played the game.
-        return Objects.requireNonNull(player.getGameHistory(game.getName()),
-                "Player hasn't played this game.").getWins();
+        return String.valueOf(Objects.requireNonNull(player.getGameHistory(game.getName()),
+                "Player hasn't played this game.").getWins());
     }
 
-    public int showPlayedCount() {
+    public String getPlayedFrequency() {
         //returns the number of times player played the game.
         //throws NullPointerException if the player hasn't played the game.
-        return Objects.requireNonNull(player.getGameHistory(game.getName()),
-                "Player hasn't played this game.").getFrequency();
+        return String.valueOf( Objects.requireNonNull(player.getGameHistory(game.getName()),
+                "Player hasn't played this game.").getFrequency());
     }
 
     public void addToFavorites() {

@@ -24,8 +24,7 @@ import java.util.ResourceBundle;
 public class PlayerMainMenu implements Tab, Initializable {
     @FXML
     private TreeTableView<GameEntry> gamesList;
-    @FXML
-    private TreeTableView<EventEntry> eventList;
+
     PlayerMainMenuController controller;
 
     public PlayerMainMenu() {
@@ -42,7 +41,6 @@ public class PlayerMainMenu implements Tab, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeTreeGamesList();
-        initializeTreeEventList();
     }
 
     private void initializeTreeGamesList() {
@@ -76,16 +74,6 @@ public class PlayerMainMenu implements Tab, Initializable {
         gamesList.getColumns().addAll(gameName, gameOpen);
     }
 
-    private void initializeTreeEventList() {
-        TreeTableColumn<EventEntry, String> eventName = new TreeTableColumn<>("Name");
-        eventName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
-        TreeItem<EventEntry> eventRoot = new TreeItem<>();
-        for (EventEntry eventEntry : controller.getEvents())
-            eventRoot.getChildren().add(new TreeItem<>(eventEntry));
-        eventList.setRoot(eventRoot);
-        eventList.setShowRoot(false);
-        eventList.getColumns().add(eventName);
-    }
 
 
 }

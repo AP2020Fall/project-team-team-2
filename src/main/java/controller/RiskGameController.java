@@ -793,11 +793,14 @@ public class RiskGameController extends Controller {
                 }
             }
         }
-        if (finished == true) {
+        if (finished) {
             this.winner = currentPlayer;
-            GameLog gameLog = currentPlayer.getGameHistory("Risk");
+            Player.addGameLog(players,Objects.requireNonNull(Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist."),GameStates.WON,this.winner);
+            //todo update play log
+            /*GameLogSummary gameLog = currentPlayer.getGameHistory("Risk");
             if (gameLog == null) {
-                gameLog = new GameLog("Risk", generateId());
+                gameLog = new GameLogSummary("Risk", generateId());
                 currentPlayer.addGameLog(gameLog);
             }
             gameLog.updateForWin(3, LocalDateTime.now());
@@ -819,9 +822,9 @@ public class RiskGameController extends Controller {
             }
             if (finished) {
                 return finished;
-            }
+            }*/
         }
-        if (finished == false) {
+        if (!finished) {
             for (List<Country> countries : gameCountries) {
                 for (Country country : countries) {
                     if (country.getSoldiers() != 1 && country.getSoldiers() != 0) {
@@ -831,8 +834,11 @@ public class RiskGameController extends Controller {
                 }
             }
         }
-        if (finished == true) {
-            Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
+        if (finished) {
+            Player.addGameLog(players,Objects.requireNonNull(Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist."),GameStates.DRAWN,null);
+            //todo update playlog
+            /*Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist.");
             PlayLog playLog = new PlayLog("Risk", players, null, LocalDateTime.now());
             game.addPlayLog(playLog);
@@ -843,7 +849,7 @@ public class RiskGameController extends Controller {
                     player.addGameLog(gameLog);
                 }
                 gameLog.updateForWin(1, LocalDateTime.now());
-            }
+            }*/
         }
         ;
         return finished;
