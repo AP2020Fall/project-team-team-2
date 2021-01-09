@@ -27,7 +27,7 @@ public class AdminMainMenu implements Tab, Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        InitializedTableSuggestionList();
+        initializedTableSuggestionList();
     }
 
     @Override
@@ -47,9 +47,10 @@ public class AdminMainMenu implements Tab, Initializable {
         {
             controller.deleteSuggestion(suggestionEntry);
         }
+        TabHandler.getTabHandler().refresh();
     }
 
-    private void InitializedTableSuggestionList()
+    private void initializedTableSuggestionList()
     {
         TableColumn<SuggestionEntry, String> suggestionIdColumn = new TableColumn<>("ID");
         suggestionIdColumn.setCellValueFactory(new PropertyValueFactory<>("suggestionId"));

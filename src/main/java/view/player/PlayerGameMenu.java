@@ -43,8 +43,8 @@ public class PlayerGameMenu implements Tab, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
             if(controller.isFavorite())
                 favoriteButton.setSelected(true);
-            InitializeInfo();
-            InitializeTreeGameLogList();
+            initializeInfo();
+            initializeTreeGameLogList();
     }
 
     @FXML private void addToFavorite() {
@@ -63,13 +63,13 @@ public class PlayerGameMenu implements Tab, Initializable {
     @FXML private void scoreboard(ActionEvent actionEvent) {
     }
 
-    private void InitializeInfo()
+    private void initializeInfo()
     {
         detail.setText(controller.getDetails());
         frequency.setText(controller.getPlayedFrequency());
         win.setText(controller.getWinsCount());
     }
-    private void InitializeTreeGameLogList()
+    private void initializeTreeGameLogList()
     {
         TreeTableColumn<GameLogEntry, String> gameLogGameName = new TreeTableColumn<>("Game");
         gameLogGameName.setCellValueFactory(new TreeItemPropertyValueFactory<>("gameName"));
