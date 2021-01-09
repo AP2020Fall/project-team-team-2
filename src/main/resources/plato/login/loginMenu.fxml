@@ -5,15 +5,18 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color:  dodgerblue" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="username" layoutX="207.0" layoutY="144.0" promptText="username" />
-      <PasswordField fx:id="password" layoutX="207.0" layoutY="200.0" promptText="password" />
-      <Button layoutX="454.0" layoutY="284.0" mnemonicParsing="false" onAction="#loginAccount" prefHeight="31.0" prefWidth="100.0" text="Login" />
-      <Button layoutX="108.0" layoutY="284.0" mnemonicParsing="false" onAction="#back" prefHeight="31.0" prefWidth="100.0" text="Back" />
-      <Button layoutX="300.0" layoutY="284.0" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="31.0" prefWidth="100.0" text="Delete" />
-      <Label fx:id="errorMsg" alignment="CENTER" layoutX="283.0" layoutY="89.0" textAlignment="CENTER" textFill="RED" />
+      <TextField fx:id="username" layoutX="84.0" layoutY="147.0" prefHeight="31.0" prefWidth="187.0" promptText="username" />
+      <PasswordField fx:id="password" layoutX="84.0" layoutY="185.0" prefHeight="31.0" prefWidth="187.0" promptText="password" />
+      <Button layoutX="301.0" layoutY="147.0" mnemonicParsing="false" onAction="#loginAccount" prefHeight="31.0" prefWidth="125.0" text="Login" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" prefHeight="31.0" prefWidth="100.0" text="Back" />
+      <Button layoutX="301.0" layoutY="185.0" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="31.0" prefWidth="125.0" text="Delete" />
+      <Label fx:id="errorMsg" alignment="CENTER" layoutY="238.0" prefHeight="21.0" prefWidth="601.0" textAlignment="CENTER" textFill="#c90202">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font></Label>
    </children>
 </AnchorPane>

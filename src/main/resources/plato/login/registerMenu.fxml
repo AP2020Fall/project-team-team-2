@@ -5,21 +5,33 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: dodgerblue" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="448.0" layoutY="305.0" mnemonicParsing="false" onAction="#register" text="Register" />
-      <Button layoutX="293.0" layoutY="305.0" mnemonicParsing="false" onAction="#back" text="Back" />
-      <Button layoutX="128.0" layoutY="305.0" mnemonicParsing="false" onAction="#submit" text="Submit" />
-      <TextField fx:id="username" layoutX="68.0" layoutY="51.0" promptText="username" />
-      <PasswordField fx:id="password" layoutX="68.0" layoutY="98.0" promptText="password" />
-      <TextField fx:id="firstName" layoutX="344.0" layoutY="51.0" promptText="first name" />
-      <TextField fx:id="lastName" layoutX="344.0" layoutY="98.0" promptText="last name" />
-      <TextField fx:id="phoneNumber" layoutX="344.0" layoutY="150.0" promptText="phone number" />
-      <TextField fx:id="email" layoutX="344.0" layoutY="200.0" promptText="email" />
-      <TextField fx:id="money" layoutX="344.0" layoutY="251.0" promptText="money" />
-      <Label fx:id="errorMsg" layoutX="283.0" layoutY="23.0" text="Label" textFill="RED" />
+      <Button layoutX="297.0" layoutY="275.0" mnemonicParsing="false" onAction="#register" prefHeight="25.0" prefWidth="102.0" text="Register" />
+      <Button layoutX="8.0" layoutY="8.0" mnemonicParsing="false" onAction="#back" prefHeight="32.0" prefWidth="102.0" text="Back" />
+      <Button layoutX="190.0" layoutY="275.0" mnemonicParsing="false" onAction="#submit" prefHeight="25.0" prefWidth="102.0" text="Submit" />
+      <Label fx:id="errorMsg" alignment="CENTER" layoutY="310.0" prefHeight="27.0" prefWidth="608.0" text="srgdh" textFill="#c90202">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font></Label>
+      <VBox layoutX="190.0" layoutY="63.0" prefHeight="207.0" prefWidth="212.0">
+         <children>
+            <TextField fx:id="username" prefHeight="37.0" prefWidth="212.0" promptText="username" />
+            <PasswordField fx:id="password" prefHeight="37.0" prefWidth="212.0" promptText="password" />
+            <TextField fx:id="firstName" prefHeight="35.0" prefWidth="212.0" promptText="first name" />
+            <TextField fx:id="lastName" prefHeight="34.0" prefWidth="212.0" promptText="last name" />
+            <TextField fx:id="email" prefHeight="34.0" prefWidth="212.0" promptText="email" />
+            <TextField fx:id="phoneNumber" prefHeight="34.0" prefWidth="212.0" promptText="phone number" />
+            <TextField fx:id="money" prefHeight="32.0" prefWidth="212.0" promptText="money" />
+         </children>
+      </VBox>
+      <Label layoutX="175.0" layoutY="36.0" text="Create New Account:">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
