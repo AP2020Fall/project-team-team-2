@@ -18,10 +18,8 @@
                 <Image url="@../../images/icon.png" />
             </image>
         </ImageView>
-        <Button layoutX="409.0" layoutY="128.0" mnemonicParsing="false" onAction="#openRegisterMenu" prefHeight="31.0" prefWidth="141.0" styleClass="buttons" text="Register" />
-        <Button layoutX="409.0" layoutY="169.0" mnemonicParsing="false" onAction="#openLoginMenu" prefHeight="31.0" prefWidth="141.0" text="Login" />
-        <Button layoutX="409.0" layoutY="208.0" mnemonicParsing="false" onAction="#exit" prefHeight="31.0" prefWidth="141.0" text="Exit" />
-      <Button layoutX="256.0" layoutY="304.0" mnemonicParsing="false" text="Button" />
-      <JFXButton layoutX="100.0" layoutY="280.0" text="Button" />
+        <JFXButton layoutX="409.0" layoutY="128.0" mnemonicParsing="false" onAction="#openRegisterMenu" prefHeight="31.0" prefWidth="141.0"  style="-fx-background-color: #00bbff;" textFill="WHITE" text="Register" />
+        <JFXButton layoutX="409.0" layoutY="169.0" mnemonicParsing="false" onAction="#openLoginMenu" prefHeight="31.0" prefWidth="141.0"   style="-fx-background-color: #00bbff;" textFill="WHITE" text="Login" />
+        <JFXButton layoutX="409.0" layoutY="208.0" mnemonicParsing="false" onAction="#exit" prefHeight="31.0" prefWidth="141.0"  style="-fx-background-color: #00bbff;" textFill="WHITE" text="Exit" />
     </children>
 </AnchorPane>
