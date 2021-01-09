@@ -16,7 +16,7 @@ public class Main extends Application {
         window.setOnCloseRequest(event -> Platform.exit());
         openFiles();
         ViewHandler viewHandler = ViewHandler.getViewHandler();
-        viewHandler.push(new StartGameView());
+        viewHandler.push(new WelcomeMenu());
         Main.window.show();
     }
     public static void main(String[] args) {

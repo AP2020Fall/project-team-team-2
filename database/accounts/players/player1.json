@@ -16,7 +16,6 @@
   ],
   "receivedFriendRequests": [],
   "sentFriendRequests": [
-
     "8C8D2515",
     "B5F9A356"
   ],
@@ -30,10 +29,8 @@
       "messageId": "2F2998E1"
     }
   ],
-  "favouriteGames": [
-  ],
-  "suggestions": [
-  ],
+  "favouriteGames": [],
+  "suggestions": [],
   "cards": [],
   "newSoldiers": 0,
   "playerNumber": 0,
