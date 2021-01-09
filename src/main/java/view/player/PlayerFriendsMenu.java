@@ -1,6 +1,6 @@
 package view.player;
 
-import controller.FriendsMenuController;
+import controller.player.PlayerFriendsMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,16 +21,16 @@ public class PlayerFriendsMenu implements Tab, Initializable {
     private TreeTableView<FriendEntry> friendsList;
     @FXML
     private TableView<FriendRequestEntry> friendRequestList;
-    private final FriendsMenuController controller;
+    private final PlayerFriendsMenuController controller;
 
 
     public PlayerFriendsMenu() {
-        controller = new FriendsMenuController();
+        controller = new PlayerFriendsMenuController();
     }
 
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerFriendsMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerFriendsMenu.fxml"));
         loader.setController(this);
         return loader.load();
     }

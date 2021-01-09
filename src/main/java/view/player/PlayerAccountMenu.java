@@ -1,6 +1,6 @@
 package view.player;
 
-import controller.PlayerMainMenuController;
+import controller.player.PlayerMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Entry.GameLogSummaryEntry;
 import view.Tab;
+import view.TabHandler;
 import view.ViewHandler;
 
 import java.io.IOException;
@@ -34,6 +35,16 @@ public class PlayerAccountMenu implements Tab, Initializable {
     private Label friends = new Label();
     @FXML
     private Label score = new Label();
+    @FXML
+    private Label username = new Label();
+    @FXML
+    private Label firstname = new Label();
+    @FXML
+    private Label lastname = new Label();
+    @FXML
+    private Label email = new Label();
+    @FXML
+    private Label phoneNumber = new Label();
     private PlayerMainMenuController controller;
     public PlayerAccountMenu() {
         controller = new PlayerMainMenuController();
@@ -47,13 +58,14 @@ public class PlayerAccountMenu implements Tab, Initializable {
 
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerAccountMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerAccountMenu.fxml"));
         loader.setController(this);
         return loader.load();
     }
     @FXML
     private void logout() throws IOException {
         controller.logout();
+        TabHandler.getTabHandler().logout();
         ViewHandler.getViewHandler().logout();
     }
 
@@ -62,6 +74,11 @@ public class PlayerAccountMenu implements Tab, Initializable {
         //todo implement
     }
     private void initializedInfo() {
+        username.setText(controller.getPlayer().getUsername());
+        firstname.setText(controller.getPlayer().getFirstName());
+        lastname.setText(controller.getPlayer().getLastName());
+        email.setText(controller.getPlayer().getEmail());
+        phoneNumber.setText(controller.getPlayer().getPhoneNumber());
         score.setText(controller.showPoints());
         bio.setText(controller.getBio());
         money.setText(controller.getMoney());

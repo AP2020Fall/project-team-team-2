@@ -1,0 +1,17 @@
+.background {
+    -fx-background-color: linear-gradient(to bottom, #b12c2c, #e73838, transparent);
+}
+.toggleButton , .buttons , .textFields{
+    -fx-background-color: #333;
+    -fx-text-fill: wheat;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-font-size: 25px;
+}
+.toggleButton:hover , .buttons:hover , .textFields:hover{
+    -fx-background-color: #444;
+}
+.toggleButton:selected , .buttons:pressed{
+    -fx-background-color: wheat;
+    -fx-text-fill: #333;
+    -fx-border-style: solid;
+}

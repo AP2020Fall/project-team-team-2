@@ -1,7 +1,7 @@
 package view.player;
 
 
-import controller.GameMenuController;
+import controller.player.PlayerGameMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,15 +26,15 @@ public class PlayerGameMenu implements Tab, Initializable {
     @FXML private  Label win= new Label();
     @FXML private ToggleButton favoriteButton = new ToggleButton();
     public TreeTableView<GameLogEntry> gameLog;
-    GameMenuController controller;
+    PlayerGameMenuController controller;
 
     public PlayerGameMenu(Game game) {
-        controller = new GameMenuController(game);
+        controller = new PlayerGameMenuController(game);
     }
     @Override
     public Parent show() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerGameMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerGameMenu.fxml"));
         loader.setController(this);
         return loader.load();
     }
@@ -43,8 +43,8 @@ public class PlayerGameMenu implements Tab, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
             if(controller.isFavorite())
                 favoriteButton.setSelected(true);
-            InitializeInfo();
-            InitializeTreeGameLogList();
+            initializeInfo();
+            initializeTreeGameLogList();
     }
 
     @FXML private void addToFavorite() {
@@ -63,13 +63,13 @@ public class PlayerGameMenu implements Tab, Initializable {
     @FXML private void scoreboard(ActionEvent actionEvent) {
     }
 
-    private void InitializeInfo()
+    private void initializeInfo()
     {
         detail.setText(controller.getDetails());
         frequency.setText(controller.getPlayedFrequency());
         win.setText(controller.getWinsCount());
     }
-    private void InitializeTreeGameLogList()
+    private void initializeTreeGameLogList()
     {
         TreeTableColumn<GameLogEntry, String> gameLogGameName = new TreeTableColumn<>("Game");
         gameLogGameName.setCellValueFactory(new TreeItemPropertyValueFactory<>("gameName"));

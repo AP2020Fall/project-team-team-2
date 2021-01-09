@@ -1,15 +1,12 @@
 package model;
 
 import com.google.gson.GsonBuilder;
-import controller.RiskGameController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Game {
@@ -101,6 +98,7 @@ public class Game {
             }
             //player.removeSuggestion(this);
             player.removeGameLog(this);
+            player.removeFavouriteGame(this);
         }
         //Suggestion.getSuggestions().removeIf(suggestion -> suggestion.getGameName().equals(this.name));
         Event.getEvents().removeIf(event -> event.getGameName().equals(this.name));
