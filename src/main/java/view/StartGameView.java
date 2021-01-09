@@ -83,7 +83,7 @@ public class StartGameView implements View {
         root.setController(this);
         window.setTitle("Plato");
         window.setScene(new Scene(root.load()));
-        window.setResizable(true);
+        window.setResizable(false);
         window.show();
     }
 
