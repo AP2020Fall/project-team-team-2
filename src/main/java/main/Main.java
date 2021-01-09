@@ -8,8 +8,6 @@ import view.StartGameView;
 import view.ViewHandler;
 import view.login.WelcomeMenu;
 
-import java.util.Scanner;
-
 public class Main extends Application {
     public static Stage window;
     @Override
@@ -18,14 +16,7 @@ public class Main extends Application {
         window.setOnCloseRequest(event -> Platform.exit());
         openFiles();
         ViewHandler viewHandler = ViewHandler.getViewHandler();
-        System.out.println("1- Plato\n2- Risk");
-        Scanner input = new Scanner(System.in);
-        if(input.nextInt() == 1)
         viewHandler.push(new WelcomeMenu());
-        else
-        {
-            viewHandler.push(new StartGameView());
-        }
         Main.window.show();
     }
     public static void main(String[] args) {
