@@ -1,16 +1,14 @@
 package view.admin;
 
 import controller.admin.AdminMainMenuController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Admin;
-import model.Entry.GameEntry;
 import model.Entry.SuggestionEntry;
 import view.Tab;
 import view.TabHandler;
@@ -22,7 +20,7 @@ import java.util.ResourceBundle;
 public class AdminMainMenu implements Tab, Initializable {
     @FXML
     private TableView<SuggestionEntry> suggestionList;
-    private AdminMainMenuController controller;
+    private final AdminMainMenuController controller;
     public AdminMainMenu()
     {
         controller = new AdminMainMenuController();
@@ -39,8 +37,8 @@ public class AdminMainMenu implements Tab, Initializable {
         return loader.load();
     }
 
-    public void add() {
-
+    public void add() throws IOException {
+        new AddSuggestionPopup().openWindow();
         TabHandler.getTabHandler().refresh();
     }
 
@@ -60,7 +58,7 @@ public class AdminMainMenu implements Tab, Initializable {
         TableColumn<SuggestionEntry, String> suggestionPlayerNameColumn = new TableColumn<>("Player");
         suggestionPlayerNameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
 
-        //suggestionList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        suggestionList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         suggestionList.getColumns().addAll(suggestionIdColumn, suggestionGameNameColumn,suggestionPlayerNameColumn);
         suggestionList.getItems().addAll(controller.getSuggestions());
     }

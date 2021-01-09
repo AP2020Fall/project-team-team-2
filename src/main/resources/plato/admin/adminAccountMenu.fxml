@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="625.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Hyperlink layoutX="75.0" layoutY="339.0" onAction="#editInfo" text="edit info" />
+        <Button layoutX="78.0" layoutY="413.0" mnemonicParsing="false" onAction="#logout" text="Log out" />
+    </children>
+</Pane>

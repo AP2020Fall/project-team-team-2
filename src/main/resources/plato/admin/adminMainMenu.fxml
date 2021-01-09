@@ -6,8 +6,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="625.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="view.admin.AdminMainMenu">
+<Pane prefHeight="625.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <TableView fx:id="suggestionList" editable="true" layoutX="15.0" layoutY="15.0" prefHeight="600.0" prefWidth="560.0">
         <columns>

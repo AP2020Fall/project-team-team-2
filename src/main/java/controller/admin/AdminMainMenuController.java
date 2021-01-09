@@ -11,6 +11,14 @@ import model.Suggestion;
 import java.util.Objects;
 
 public class AdminMainMenuController extends AdminMainMenuLayoutController {
+   // private final Admin admin;
+
+    public AdminMainMenuController()
+    {
+       // admin = Objects.requireNonNull(loggedIn,
+         //       "Admin passed to AdminMainMenuController is null.");
+    }
+
     public ObservableList<SuggestionEntry> getSuggestions() {
         ObservableList<SuggestionEntry> result = FXCollections.observableArrayList();
         for (Suggestion suggestion : Suggestion.getSuggestions()) {
@@ -36,5 +44,14 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         Suggestion suggestion = new Suggestion(game, generateId(), player);
         player.addSuggestion(suggestion);
         Suggestion.addSuggestion(suggestion);
+    }
+    public boolean playerBeenSuggested(String username, String gameName) {
+        //checks if gameName been suggested to username
+        //throws NullPointerException if username doesn't exist or game doesn't exist.
+        Player player = Objects.requireNonNull(Player.getPlayerByUsername(username),
+                "Username passed to AdminMainMenuController.playerBeenSuggested doesn't exist.");
+         Objects.requireNonNull(Game.getGameByGameName(gameName),
+                "Game passed to AdminMainMenuController.playerBeenSuggested doesn't exist.");
+        return player.suggestionExists(gameName);
     }
 }
