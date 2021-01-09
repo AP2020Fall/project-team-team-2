@@ -1,12 +1,12 @@
 package view.login;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import controller.login.LoginController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import view.View;
 import view.ViewHandler;
@@ -19,9 +19,10 @@ public class LoginMenu implements View {
     @FXML
     private Label errorMsg = new Label();
     @FXML
-    private TextField username = new TextField();
+    private JFXTextField username;
     @FXML
-    private PasswordField password = new PasswordField();
+    private JFXPasswordField password;
+
     LoginController controller;
 
     public LoginMenu() {
