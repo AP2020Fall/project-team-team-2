@@ -35,6 +35,16 @@ public class PlayerAccountMenu implements Tab, Initializable {
     private Label friends = new Label();
     @FXML
     private Label score = new Label();
+    @FXML
+    private Label username = new Label();
+    @FXML
+    private Label firstname = new Label();
+    @FXML
+    private Label lastname = new Label();
+    @FXML
+    private Label email = new Label();
+    @FXML
+    private Label phoneNumber = new Label();
     private PlayerMainMenuController controller;
     public PlayerAccountMenu() {
         controller = new PlayerMainMenuController();
@@ -64,6 +74,11 @@ public class PlayerAccountMenu implements Tab, Initializable {
         //todo implement
     }
     private void initializedInfo() {
+        username.setText(controller.getPlayer().getUsername());
+        firstname.setText(controller.getPlayer().getFirstName());
+        lastname.setText(controller.getPlayer().getLastName());
+        email.setText(controller.getPlayer().getEmail());
+        phoneNumber.setText(controller.getPlayer().getPhoneNumber());
         score.setText(controller.showPoints());
         bio.setText(controller.getBio());
         money.setText(controller.getMoney());

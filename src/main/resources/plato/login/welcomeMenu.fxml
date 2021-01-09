@@ -17,7 +17,7 @@
             <image>
                 <Image url="@../../images/icon.png" />
             </image>
-        </ImageView>
+        </ImageView
       <JFXButton buttonType="RAISED" focusTraversable="false" layoutX="562.0" layoutY="160.0" onAction="#openRegisterMenu" prefHeight="45.0" prefWidth="193.0" style="-fx-background-color: #102027;" text="Register" textFill="WHITE">
          <font>
             <Font name="Geometr415 Blk BT Black" size="24.0" />

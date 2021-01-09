@@ -72,6 +72,9 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
     public String getFriendCount() {
         return String.valueOf(player.getFriends().size());
     }
+    public Player getPlayer(){
+        return player;
+    }
 
 
 
