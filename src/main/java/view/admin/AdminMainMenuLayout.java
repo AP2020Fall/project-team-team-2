@@ -76,8 +76,9 @@ public class AdminMainMenuLayout implements View, Initializable {
     @FXML private  void viewMainMenu() {
         if(TabHandler.getTabHandler().current() instanceof AdminMainMenu)
             TabHandler.getTabHandler().refresh();
-        else
+        else {
             TabHandler.getTabHandler().push(new AdminMainMenu());
+        }
     }
 
 
