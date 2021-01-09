@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="640.0" prefWidth="924.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="640.0" prefWidth="924.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ToggleButton fx:id="friendToggle" layoutX="137.0" layoutY="68.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Friend" />
+      <ToggleButton fx:id="friendToggle" layoutX="137.0" layoutY="68.0" mnemonicParsing="false" onAction="#action" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Friend" />
       <ToggleButton fx:id="manualPlacementToggle" contentDisplay="CENTER" layoutX="625.0" layoutY="68.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Manual &#10;Placement" textAlignment="CENTER" />
       <ToggleButton fx:id="blizzardToggle" layoutX="386.0" layoutY="68.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Bilzzard" />
       <Button fx:id="startButton" layoutX="386.0" layoutY="492.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="194.0" styleClass="buttons" text="Start" />

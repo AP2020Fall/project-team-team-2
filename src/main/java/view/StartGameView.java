@@ -33,6 +33,10 @@ public class StartGameView implements View {
         players.add(newPlayer2);
         new StartGameView(players);
     }
+    public void action()
+    {
+        System.out.println("this action works");
+    }
 
     public void changePlayersNumber(String strNumber) {
         int playerNumber = Integer.parseInt(strNumber);
