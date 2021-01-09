@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
-      <Button layoutX="268.0" layoutY="96.0" mnemonicParsing="false" onAction="#openRegisterMenu" text="Register" />
-      <Button layoutX="268.0" layoutY="178.0" mnemonicParsing="false" onAction="#openLoginMenu" prefHeight="31.0" prefWidth="74.0" text="Login" />
-      <Button layoutX="268.0" layoutY="255.0" mnemonicParsing="false" onAction="#exit" prefHeight="31.0" prefWidth="74.0" text="Exit" />
+      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="70.0" onAction="#openRegisterMenu" prefHeight="31.0" prefWidth="321.0" ripplerFill="BLACK" style="-fx-background-color: #00bbff;" text="Register" textFill="#fffdfd">
+         <font>
+            <Font name="Geometr706 BlkCn BT Black" size="30.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="160.0" onAction="#openLoginMenu" prefHeight="31.0" prefWidth="321.0" ripplerFill="BLACK" style="-fx-background-color: #00bbff;" text="Login" textFill="#fffdfd">
+         <font>
+            <Font name="Geometr706 BlkCn BT Black" size="30.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="250.0" onAction="#exit" prefHeight="31.0" prefWidth="321.0" ripplerFill="BLACK" style="-fx-background-color: #00bbff;" text="Exit" textFill="#fffdfd">
+         <font>
+            <Font name="Geometr706 BlkCn BT Black" size="30.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

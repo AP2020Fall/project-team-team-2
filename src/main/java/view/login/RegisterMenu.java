@@ -1,6 +1,9 @@
 package view.login;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import controller.login.RegisterController;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Admin;
 import view.View;
 import view.ViewHandler;
@@ -19,27 +24,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RegisterMenu  implements View {
-
     @FXML
-    private Label errorMsg = new Label();
+    private Label errorMsg;
     @FXML
-    private PasswordField password = new PasswordField();
+    private JFXTextField username;
     @FXML
-    private TextField username = new TextField();
+    private JFXPasswordField password;
     @FXML
-    private TextField firstName = new TextField();
+    private JFXTextField firstName;
     @FXML
-    private TextField lastName = new TextField();
+    private JFXTextField lastName;
     @FXML
-    private TextField phoneNumber = new TextField();
+    private JFXTextField phoneNumber;
     @FXML
-    private TextField email = new TextField();
+    private JFXTextField email;
     @FXML
-    private TextField money = new TextField();
-
-    private RegisterController controller = new RegisterController();
+    private JFXTextField money;
+    @FXML
+    private Pane animationPane;
+    private final RegisterController controller;
 
     public RegisterMenu() {
+        controller = new RegisterController();
     }
 
     @Override
@@ -78,6 +84,7 @@ public class RegisterMenu  implements View {
     private void register() {
         if (!controller.isUsernameExist(username.getText())) {
             //todo get the info and wait for submit button with an animation
+            animate(-1);
             money.setVisible(Admin.isAdminExist()); //todo must be add before the animation
         } else {
             errorMsg.setText("username exists!");
@@ -96,7 +103,27 @@ public class RegisterMenu  implements View {
         }
     }
 
-    public void back() {
+    @FXML private void back() {
         ViewHandler.getViewHandler().pop();
     }
+
+    @FXML private void backSubmit() {
+        clear();
+        animate(1);
+    }
+    private void animate(int forward)
+    {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(500), animationPane);
+        tt.setByX(forward*400f);
+        tt.play();
+    }
+    private void clear()
+    {
+        firstName.clear();
+        lastName.clear();
+        phoneNumber.clear();
+        email.clear();
+        money.clear();
+    }
+
 }
