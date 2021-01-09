@@ -65,4 +65,10 @@ public class TabHandler {
         }
             return null;
     }
+    public void logout()
+    {
+        viewArrayList.clear();
+        index= -1;
+        borderPane = null;
+    }
 }

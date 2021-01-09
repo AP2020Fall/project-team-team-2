@@ -64,7 +64,12 @@ public class AdminMainMenuLayout implements View, Initializable {
         TabHandler.getTabHandler().ahead();
     }
 
-    @FXML private  void viewAccountMenu(ActionEvent actionEvent) {
+    @FXML private  void viewAccountMenu() {
+        if(TabHandler.getTabHandler().current() instanceof AdminAccountMenu)
+            TabHandler.getTabHandler().refresh();
+        else {
+            TabHandler.getTabHandler().push(new AdminAccountMenu());
+        }
     }
 
     @FXML private  void viewGamesAndEventMenu(ActionEvent actionEvent) {

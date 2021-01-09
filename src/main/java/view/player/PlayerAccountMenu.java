@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Entry.GameLogSummaryEntry;
 import view.Tab;
+import view.TabHandler;
 import view.ViewHandler;
 
 import java.io.IOException;
@@ -54,6 +55,7 @@ public class PlayerAccountMenu implements Tab, Initializable {
     @FXML
     private void logout() throws IOException {
         controller.logout();
+        TabHandler.getTabHandler().logout();
         ViewHandler.getViewHandler().logout();
     }
 
