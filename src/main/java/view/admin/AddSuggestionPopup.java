@@ -17,23 +17,11 @@ public class AddSuggestionPopup {
     @FXML private  TextField gameName;
     @FXML private  Label errorMsg;
     private Stage popupWindow;
-    private AdminMainMenuController controller;
+    private final AdminMainMenuController controller;
 
     public AddSuggestionPopup()
     {
         controller = new AdminMainMenuController();
-    }
-    public void add() {
-        if (!controller.isUsernameExist(playerName.getText())) {
-            errorMsg.setText("username does not exist!");
-        } else if (!controller.doesGameExist(gameName.getText())) {
-            errorMsg.setText("game does not exist!");
-        } else if (controller.playerBeenSuggested(playerName.getText(), gameName.getText())) {
-            errorMsg.setText("game has already been suggested!");
-        } else {
-            controller.addSuggestion(playerName.getText(), gameName.getText());
-            popupWindow.close();
-        }
     }
 
     public void openWindow() throws IOException {
@@ -46,4 +34,17 @@ public class AddSuggestionPopup {
         popupWindow.setResizable(false);
         popupWindow.showAndWait();
     }
+    @FXML private void add() {
+        if (!controller.isUsernameExist(playerName.getText())) {
+            errorMsg.setText("username does not exist!");
+        } else if (!controller.doesGameExist(gameName.getText())) {
+            errorMsg.setText("game does not exist!");
+        } else if (controller.playerBeenSuggested(playerName.getText(), gameName.getText())) {
+            errorMsg.setText("game has already been suggested!");
+        } else {
+            controller.addSuggestion(playerName.getText(), gameName.getText());
+            popupWindow.close();
+        }
+    }
+
 }

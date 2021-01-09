@@ -87,6 +87,21 @@ public class Controller {
         return false;
     }
 
+    public boolean checkStartDate(LocalDate date) {
+       // if (isValidDate(date)) {
+         //   LocalDate localDate = createLocalDate(date);
+            return LocalDate.now().compareTo(date) < 0;
+       // }
+       // return false;
+    }
+
+    public boolean checkEndDate(LocalDate date) {
+       // if (isValidDate(date)) {
+         //   LocalDate localDate = createLocalDate(date);
+            return LocalDate.now().compareTo(date) > 0;
+        //}
+       // return false;
+    }
     public boolean isEventIdExists(String eventId) {
         for (Event event : Event.getEvents()) {
             if (event.getEventId().equals(eventId)) {
