@@ -4,8 +4,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.*;
+import view.StartGameView;
 import view.ViewHandler;
-import view.WelcomeMenu;
+import view.login.WelcomeMenu;
 
 public class Main extends Application {
     public static Stage window;
@@ -15,7 +16,7 @@ public class Main extends Application {
         window.setOnCloseRequest(event -> Platform.exit());
         openFiles();
         ViewHandler viewHandler = ViewHandler.getViewHandler();
-        viewHandler.push(new WelcomeMenu());
+        viewHandler.push(new StartGameView());
         Main.window.show();
     }
     public static void main(String[] args) {

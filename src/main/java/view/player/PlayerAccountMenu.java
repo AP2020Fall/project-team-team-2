@@ -1,6 +1,6 @@
 package view.player;
 
-import controller.PlayerMainMenuController;
+import controller.player.PlayerMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Entry.GameLogSummaryEntry;
 import view.Tab;
+import view.TabHandler;
 import view.ViewHandler;
 
 import java.io.IOException;
@@ -47,13 +48,14 @@ public class PlayerAccountMenu implements Tab, Initializable {
 
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerAccountMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerAccountMenu.fxml"));
         loader.setController(this);
         return loader.load();
     }
     @FXML
     private void logout() throws IOException {
         controller.logout();
+        TabHandler.getTabHandler().logout();
         ViewHandler.getViewHandler().logout();
     }
 

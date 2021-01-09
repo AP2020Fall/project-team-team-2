@@ -1,7 +1,6 @@
 package view.player;
 
-import controller.PlayerMainMenuController;
-import javafx.event.ActionEvent;
+import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,7 +10,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import view.TabHandler;
 import view.View;
-import view.ViewHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,14 +25,15 @@ public class PlayerMainMenuLayout implements View, Initializable {
     private Label moneyMenuBar = new Label();
     @FXML
     private Label scoreMenuBar = new Label();
-    PlayerMainMenuController controller = new PlayerMainMenuController();
+    PlayerMainMenuController controller;
 
     public PlayerMainMenuLayout() {
+        controller = new PlayerMainMenuController();
     }
 
     @Override
     public void show(Stage window) throws IOException {
-        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/playerMainMenuLayout.fxml"));
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/player/playerMainMenuLayout.fxml"));
         root.setController(this);
         window.setTitle("Plato");
         window.setScene(new Scene(root.load()));

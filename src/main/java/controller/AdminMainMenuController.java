@@ -1,13 +1,11 @@
 package controller;
 
+import controller.risk.Controller;
 import model.*;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
-
-import static controller.Controller.generateId;
 
 public class AdminMainMenuController extends Controller {
     private Admin admin;

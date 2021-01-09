@@ -1,6 +1,6 @@
 package view;
 
-import controller.RiskGameController;
+import controller.risk.RiskGameController;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;

@@ -1,10 +1,10 @@
 package controller;
 
+import controller.risk.Controller;
 import model.Account;
-import model.GameLog;
 import model.GameLogSummary;
 import model.Player;
-import view.WelcomeMenu;
+import view.login.WelcomeMenu;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -14,7 +14,7 @@ public class AccountMenuController extends Controller {
 
     public AccountMenuController() {
 
-        this.account = Objects.requireNonNull(loggedIn, "Account passed to AccountMenuController is null.");
+      //  this.account = Objects.requireNonNull(loggedIn, "Account passed to AccountMenuController is null.");
     }
 
     public void changePassword(String newPass) {

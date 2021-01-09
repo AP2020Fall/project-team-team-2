@@ -1,18 +1,15 @@
 package view.player;
 
-import controller.ProfileViewController;
+import controller.player.PlayerProfileViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import model.Player;
 import view.Tab;
-import view.View;
 import view.ViewHandler;
 
 import java.io.IOException;
@@ -20,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayerProfileView implements Tab, Initializable {
-    private final ProfileViewController controller;
+    private final PlayerProfileViewController controller;
     @FXML
     private TextField searchUsername;
     @FXML
@@ -45,7 +42,7 @@ public class PlayerProfileView implements Tab, Initializable {
     private Button removeButton;
 
     public PlayerProfileView(Player player) {
-        controller = new ProfileViewController(player);
+        controller = new PlayerProfileViewController(player);
     }
 
     @Override
@@ -76,7 +73,7 @@ public class PlayerProfileView implements Tab, Initializable {
 
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/playerProfileView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerProfileView.fxml"));
         loader.setController(this);
         return loader.load();
     }

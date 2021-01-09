@@ -3,14 +3,11 @@ package view;
 import controller.AccountMenuController;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
-import model.Account;
-import model.Player;
+import view.login.WelcomeMenu;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
 
 public class AccountMenu implements View, Initializable {
     AccountMenuController controller;

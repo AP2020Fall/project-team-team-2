@@ -1,6 +1,6 @@
 package view.player;
 
-import controller.PlatoMessageController;
+import controller.player.PlatoMessageController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,7 +41,7 @@ public class PlatoMessageView implements View, Initializable {
 
     @Override
     public void show(Stage window) throws IOException {
-        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/platoMessageView.fxml"));
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/player/platoMessageView.fxml"));
         root.setController(this);
         window.setTitle("Plato");
         window.setScene(new Scene(root.load()));
@@ -49,7 +49,7 @@ public class PlatoMessageView implements View, Initializable {
     }
 
     public void openWindow() throws IOException {
-        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/platoMessageView.fxml"));
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/player/platoMessageView.fxml"));
         root.setController(this);
         if (popupWindow == null)
             popupWindow = new Stage(StageStyle.DECORATED);
