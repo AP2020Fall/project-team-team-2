@@ -80,7 +80,12 @@ public class AdminMainMenuLayout implements View, Initializable {
         }
     }
 
-    @FXML private  void viewPlayerList(ActionEvent actionEvent) {
+    @FXML private  void viewPlayerList() {
+        if(TabHandler.getTabHandler().current() instanceof AdminPlayerListMenu)
+            TabHandler.getTabHandler().refresh();
+        else {
+            TabHandler.getTabHandler().push(new AdminPlayerListMenu());
+        }
     }
 
     @FXML private  void viewMainMenu() {

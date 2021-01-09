@@ -3,6 +3,8 @@ package controller.admin;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Account;
+import model.Entry.PlayerEntry;
 import model.Entry.SuggestionEntry;
 import model.Game;
 import model.Player;
@@ -53,5 +55,13 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
          Objects.requireNonNull(Game.getGameByGameName(gameName),
                 "Game passed to AdminMainMenuController.playerBeenSuggested doesn't exist.");
         return player.suggestionExists(gameName);
+    }
+
+    public ObservableList<PlayerEntry> getPlayers() {
+        ObservableList<PlayerEntry> result = FXCollections.observableArrayList();
+        for (Player player : Account.getAllPlayers()) {
+            result.add(new PlayerEntry(player));
+        }
+        return result;
     }
 }
