@@ -101,6 +101,7 @@ public class Game {
             }
             //player.removeSuggestion(this);
             player.removeGameLog(this);
+            player.removeFavouriteGame(this);
         }
         //Suggestion.getSuggestions().removeIf(suggestion -> suggestion.getGameName().equals(this.name));
         Event.getEvents().removeIf(event -> event.getGameName().equals(this.name));

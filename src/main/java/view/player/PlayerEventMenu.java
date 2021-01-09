@@ -34,14 +34,14 @@ public class PlayerEventMenu implements Tab, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        InitializeInfo();
+        initializeInfo();
     }
 
     public void join() {
         controller.join();
         //todo implement
     }
-    private void InitializeInfo()
+    private void initializeInfo()
     {
         gameName.setText(controller.getGameName());
         startDate.setText(controller.getStartDate());
