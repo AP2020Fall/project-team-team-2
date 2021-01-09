@@ -1,4 +1,4 @@
-package controller;
+package controller.risk;
 
 import model.Player;
 

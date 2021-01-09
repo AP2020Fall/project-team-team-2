@@ -1,176 +1,37 @@
 package view;
 
-import controller.StartGameController;
+import controller.risk.StartGameController;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.ToggleButton;
+import javafx.stage.Stage;
 import model.Player;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class StartGameView {
+public class StartGameView implements View {
     private StartGameController startGameController;
+    @FXML
+    private ToggleButton friendToggle;
+    @FXML
+    private ToggleButton blizzardToggle;
+    @FXML
+    private ToggleButton manualPlacementToggle;
+    @FXML
+    private ToggleButton fogWarToggle;
 
-    public static void main(String[] args) {
-    }
     public StartGameView(ArrayList<Player> players){
         this.startGameController = new StartGameController(players);
-        this.startGameView();
     }
-    public void startGameView() {
-        System.out.println("Choose the setting of game");
-        /* write variables to get commands */
-        Scanner inputCommand = Menu.getScanner();
-        String inputLine = new String();
-        boolean check = false;
-        int mapNumber = 0;
-        int turnDuration = 0;
-        int playerNumbers = 0;
-
-        /* Start new risk game */
-
-        /* Different patterns of valid commands */
-        Pattern startGameCommand = Pattern.compile("(^)start risk game($)");
-        Pattern chooseMapCommand = Pattern.compile("(^)choose map\\s+(?<mapNumber>\\d+)($)");
-        Pattern placementManualTypeCommand = Pattern.compile("(^)manual placement on($)");
-        Pattern placementNonManualTypeCommand = Pattern.compile("(^)manual placement off($)");
-        Pattern alliancementOnCommand = Pattern.compile("(^)alliance on($)");
-        Pattern alliancementOffCommand = Pattern.compile("(^)alliance off($)");
-        Pattern blizardsOnCommand = Pattern.compile("(^)blizzards on($)");
-        Pattern blizardsOffCommand = Pattern.compile("(^)blizzards off($)");
-        Pattern fogOnCommand = Pattern.compile("(^)fog of war on($)");
-        Pattern fogOffCommand = Pattern.compile("(^)fog of war off($)");
-        Pattern durationTimeCommand = Pattern.compile("(^)turn duration is\\s+(?<turnDuration>\\d+)\\s+seconds($)");
-        Pattern setPlayersNumberCommand = Pattern.compile("(^)number of players are\\s+(?<playerNumbers>\\d+)($)");
-
-
-        while (inputCommand.hasNextLine()) {
-            boolean foundCommand = false;
-            /* get input command */
-            inputLine = inputCommand.nextLine().trim();
-            if (inputLine.equals("data")) {
-                foundCommand = true;
-                System.out.println(startGameController.getPrimitiveSettings());
-                continue;
-            }
-            /* check out which command is published */
-            Matcher chooseMapMatcher = chooseMapCommand.matcher(inputLine);
-            check = chooseMapMatcher.matches();
-            if (check == true) {
-                String strNumber = chooseMapMatcher.group("mapNumber");
-                this.chooseMapNumber(strNumber);
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher placementManualTypeMatcher = placementManualTypeCommand.matcher(inputLine);
-            check = placementManualTypeMatcher.matches();
-            if (check == true) {
-                placementType("on");
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher placementNonManualTypeMatcher = placementNonManualTypeCommand.matcher(inputLine);
-            check = placementNonManualTypeMatcher.matches();
-            if (check == true) {
-                placementType("off");
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher alliancementOnMatcher = alliancementOnCommand.matcher(inputLine);
-            check = alliancementOnMatcher.matches();
-            if (check == true) {
-                allianceType("on");
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher alliancementOffMatcher = alliancementOffCommand.matcher(inputLine);
-            check = alliancementOffMatcher.matches();
-            if (check == true) {
-                allianceType("off");
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher blizardsOnMatcher = blizardsOnCommand.matcher(inputLine);
-            check = blizardsOnMatcher.matches();
-            if (check == true) {
-                blizzardsType("on");
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher blizardsOffMatcher = blizardsOffCommand.matcher(inputLine);
-            check = blizardsOffMatcher.matches();
-            if (check == true) {
-                blizzardsType("off");
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher fogOnMatcher = fogOnCommand.matcher(inputLine);
-            check = fogOnMatcher.matches();
-            if (check == true) {
-                fogsType("on");
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher fogOffMatcher = fogOffCommand.matcher(inputLine);
-            check = fogOffMatcher.matches();
-            if (check == true) {
-                fogsType("off");
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher durationTimeMatcher = durationTimeCommand.matcher(inputLine);
-            check = durationTimeMatcher.matches();
-            if (check == true) {
-                String strNumber = durationTimeMatcher.group("turnDuration");
-                changeDurationTime(strNumber);
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher setPlayersNumberMatcher = setPlayersNumberCommand.matcher(inputLine);
-            check = setPlayersNumberMatcher.matches();
-            if (check == true) {
-                String strNumber = setPlayersNumberMatcher.group("playerNumbers");
-                changePlayersNumber(strNumber);
-                check = false;
-                foundCommand = true;
-                continue;
-            }
-
-            Matcher startGameMatcher = startGameCommand.matcher(inputLine);
-            check = startGameMatcher.matches();
-            if (check == true) {
-                startGameController.startGame();
-                check = false;
-                foundCommand = true;
-                break;
-            }
-
-            if (foundCommand == false) {
-                System.out.println("Invalid Command!");
-            }
-
-        }
-
+    public StartGameView() {
+        Player newPlayer1 = new Player("new" , "mew2");
+        Player newPlayer2 = new Player("new2" , "mew22");
+        ArrayList<Player> players = new ArrayList<Player>();
+        players.add(newPlayer1);
+        players.add(newPlayer2);
+        new StartGameView(players);
     }
 
     public void changePlayersNumber(String strNumber) {
@@ -212,5 +73,14 @@ public class StartGameView {
         System.out.println(callback);
     }
 
+    @Override
+    public void show(Stage window) throws IOException {
+        FXMLLoader root = new FXMLLoader(getClass().getResource("/game/startGame.fxml"));
+        root.setController(this);
+        window.setTitle("Plato");
+        window.setScene(new Scene(root.load()));
+        window.setResizable(false);
+        window.show();
+    }
 
 }

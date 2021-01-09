@@ -1,5 +1,6 @@
 package controller;
 
+import controller.risk.Controller;
 import model.Account;
 import model.GameLogSummary;
 import model.Player;

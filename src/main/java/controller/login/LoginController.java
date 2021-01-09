@@ -1,12 +1,11 @@
 package controller.login;
 
-import controller.Controller;
+import controller.risk.Controller;
 import controller.admin.AdminMainMenuLayoutController;
 import controller.player.PlayerMainMenuLayoutController;
 import model.Account;
 import model.Admin;
 import model.Player;
-import view.admin.AdminMainMenuLayout;
 
 import java.util.Objects;
 

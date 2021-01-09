@@ -1,6 +1,6 @@
 package controller.admin;
 
-import controller.Controller;
+import controller.risk.Controller;
 import model.Admin;
 
 public class AdminMainMenuLayoutController extends Controller {

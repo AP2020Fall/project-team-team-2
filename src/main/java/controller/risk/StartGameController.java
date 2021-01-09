@@ -1,22 +1,24 @@
-package controller;
+package controller.risk;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ToggleButton;
 import model.Map;
 import model.Country;
 import model.Player;
 import view.RiskGameView;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 
-public class StartGameController {
+public class StartGameController implements Initializable{
     private static java.util.Map<String, Object> primitiveSettings = new HashMap<String, Object>();
 
     {
@@ -110,15 +112,18 @@ public class StartGameController {
         int soldierNumber = 0;
         switch ((Integer)this.primitiveSettings.get("Map Number")){
             case 0: soldierNumber = 10;break;
-            case 1: soldierNumber = 20;break;
-            case 2: soldierNumber = 25;break;
+            case 1:
+            case 6:
+                soldierNumber = 20;break;
+            case 2:
+            case 4:
+                soldierNumber = 25;break;
             case 3: soldierNumber = 30;break;
-            case 4: soldierNumber = 25;break;
             case 5: soldierNumber = 15;break;
-            case 6: soldierNumber = 20;break;
-            case 7: soldierNumber = 26;break;
+            case 7:
+            case 9:
+                soldierNumber = 26;break;
             case 8: soldierNumber = 32;break;
-            case 9: soldierNumber = 26;break;
             case 10: soldierNumber = 40;break;
         }
         return soldierNumber;
@@ -187,5 +192,14 @@ public class StartGameController {
 
     public void setMapSoldiers(Country country, int soldiers) {
         country.setSoldiers(soldiers);
+    }
+    @FXML
+    public void friendAction(ActionEvent event) {
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }
