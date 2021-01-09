@@ -26,6 +26,7 @@ public class Main extends Application {
         {
             viewHandler.push(new StartGameView());
         }
+
         Main.window.show();
     }
     public static void main(String[] args) {

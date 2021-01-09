@@ -20,7 +20,7 @@ public class WelcomeMenu implements View {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/login/welcomeMenu.fxml"));
         root.setController(this);
         window.setTitle("Plato");
-        window.setScene(new Scene(root.load()));
+        window.setScene(new Scene(root.load(),580,380));
         window.setResizable(false);
     }
 
