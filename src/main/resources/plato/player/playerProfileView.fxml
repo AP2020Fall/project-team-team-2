@@ -1,19 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane prefHeight="625.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label fx:id="username" layoutX="225.0" layoutY="206.0" text="username" />
-      <Label fx:id="firstName" layoutX="225.0" layoutY="236.0" text="firstname" />
-      <Label fx:id="lastName" layoutX="225.0" layoutY="267.0" text="lastname" />
-      <Label fx:id="email" layoutX="237.0" layoutY="299.0" text="email" />
-      <Label fx:id="phoneNumber" layoutX="215.0" layoutY="320.0" text="phonenumber" />
-      <Label fx:id="daysPassed" layoutX="190.0" layoutY="341.0" text="days passed register" />
-      <Button fx:id="addButton" layoutX="742.0" layoutY="80.0" mnemonicParsing="false" onAction="#addFriend" text="Add friend" />
-      <Button fx:id="removeButton" layoutX="727.0" layoutY="130.0" mnemonicParsing="false" onAction="#removeFriend" text="Remove Friend" />
-      <Label fx:id="friendRequestPending" layoutX="704.0" layoutY="181.0" prefHeight="25.0" prefWidth="165.0" text="Friend Request Pending" />
-   </children>
+    <children>
+        <Label fx:id="username" layoutX="355.0" layoutY="54.0" text="username">
+            <font>
+                <Font name="Arial" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="firstName" layoutX="356.0" layoutY="87.0" text="firstname">
+            <font>
+                <Font name="Arial" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="lastName" layoutX="357.0" layoutY="121.0" text="lastname">
+            <font>
+                <Font name="Arial" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="email" layoutX="356.0" layoutY="154.0" text="email">
+            <font>
+                <Font name="Arial" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="phoneNumber" layoutX="355.0" layoutY="183.0" text="phonenumber">
+            <font>
+                <Font name="Arial" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="daysPassed" layoutX="357.0" layoutY="210.0" text="days passed register">
+            <font>
+                <Font name="Arial" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="friendRequestPending" layoutX="631.0" layoutY="148.0" prefHeight="25.0" prefWidth="127.0" text="Friend Request Pending" />
+        <ImageView fitHeight="150.0" fitWidth="165.0" layoutX="42.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/blankProfile.png" />
+            </image>
+        </ImageView>
+        <Label layoutX="234.0" layoutY="54.0" text="Username:">
+            <font>
+                <Font name="Arial" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="234.0" layoutY="87.0" text="First Name:">
+            <font>
+                <Font name="Arial" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="234.0" layoutY="122.0" text="Last Name:">
+            <font>
+                <Font name="Arial" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="235.0" layoutY="152.0" text="Email:">
+            <font>
+                <Font name="Arial" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="234.0" layoutY="183.0" text="Phone Number:">
+            <font>
+                <Font name="Arial" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="235.0" layoutY="210.0" text="Days of Register:">
+            <font>
+                <Font name="Arial" size="14.0" />
+            </font>
+        </Label>
+        <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="631.0" layoutY="75.0" onAction="#addFriend" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="Add Friend" textFill="WHITE" />
+        <JFXButton fx:id="removeButton" buttonType="RAISED" layoutX="631.0" layoutY="109.0" onAction="#removeFriend" style="-fx-background-color: red;" text="Remove Friend" />
+    </children>
 </Pane>
