@@ -1,6 +1,10 @@
 package controller.player;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.Entry.GameLogSummaryEntry;
 import model.FriendRequest;
+import model.GameLogSummary;
 import model.Player;
 
 import java.util.Objects;
@@ -13,7 +17,7 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
         this.player = Objects.requireNonNull(player,
                 "Players passed to ProfileViewController is null");
         this.logged = Objects.requireNonNull(loggedIn,
-                "Players passed to ProfileViewController is null");
+                "Logged passed to ProfileViewController is null");
     }
 
     public String getUsername() {
@@ -38,6 +42,10 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
 
     public String getDaysPassed() {
         return String.valueOf(player.getDayOfRegister());
+    }
+
+    public String getBio(){
+        return player.getBio();
     }
 
     public boolean areFriends() {
@@ -69,4 +77,18 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
     public boolean areTheSame() {
         return logged.getUsername().equals(player.getUsername());
     }
+
+    public ObservableList<GameLogSummaryEntry> getGameHistory() {
+        ObservableList<GameLogSummaryEntry> result = FXCollections.observableArrayList();
+        for (GameLogSummary gameLog : player.getGameLogSummaries())
+            result.add(new GameLogSummaryEntry(gameLog));
+        return result;
+    }
+    public String getWins() {
+        return String.valueOf(player.getNumberOfWins());
+    }
+    public String getFriendCount() {
+        return String.valueOf(player.getFriends().size());
+    }
+
 }

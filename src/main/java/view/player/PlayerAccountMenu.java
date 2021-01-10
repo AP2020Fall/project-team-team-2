@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.Entry.GameLogSummaryEntry;
 import view.Tab;
 import view.TabHandler;
@@ -38,13 +39,15 @@ public class PlayerAccountMenu implements Tab, Initializable {
     @FXML
     private Label username = new Label();
     @FXML
-    private Label firstname = new Label();
+    private Label firstName = new Label();
     @FXML
-    private Label lastname = new Label();
+    private Label lastName = new Label();
     @FXML
     private Label email = new Label();
     @FXML
     private Label phoneNumber = new Label();
+    @FXML
+    private ImageView avatar;
     private PlayerMainMenuController controller;
     public PlayerAccountMenu() {
         controller = new PlayerMainMenuController();
@@ -75,15 +78,15 @@ public class PlayerAccountMenu implements Tab, Initializable {
     }
     private void initializedInfo() {
         username.setText(controller.getPlayer().getUsername());
-        firstname.setText(controller.getPlayer().getFirstName());
-        lastname.setText(controller.getPlayer().getLastName());
+        firstName.setText(controller.getPlayer().getFirstName());
+        lastName.setText(controller.getPlayer().getLastName());
         email.setText(controller.getPlayer().getEmail());
         phoneNumber.setText(controller.getPlayer().getPhoneNumber());
         score.setText(controller.showPoints());
         bio.setText(controller.getBio());
         money.setText(controller.getMoney());
         date.setText(controller.getDate());
-        wins.setText(controller.getWins());
+        wins.setText(controller.getWins() + " Wins");
         friends.setText(controller.getFriendCount());
     }
 
