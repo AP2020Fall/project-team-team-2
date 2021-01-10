@@ -3,22 +3,23 @@ package controller.admin;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Account;
+import model.*;
 import model.Entry.PlayerEntry;
 import model.Entry.SuggestionEntry;
-import model.Game;
-import model.Player;
-import model.Suggestion;
 
 import java.util.Objects;
 
 public class AdminMainMenuController extends AdminMainMenuLayoutController {
-   // private final Admin admin;
+    private final Admin admin;
 
     public AdminMainMenuController()
     {
-       // admin = Objects.requireNonNull(loggedIn,
-         //       "Admin passed to AdminMainMenuController is null.");
+        this.admin = Objects.requireNonNull(loggedIn,
+                "Admin passed to AdminMainMenuController is null.");
+    }
+
+    public Admin getAdmin(){
+        return admin;
     }
 
     public ObservableList<SuggestionEntry> getSuggestions() {
