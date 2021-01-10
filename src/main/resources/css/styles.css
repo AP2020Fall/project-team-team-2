@@ -16,6 +16,7 @@
     -fx-text-fill: #333;
     -fx-border-style: solid;
 }
+
 .mainMenuButton{
     -fx-background-color: #ff55a0;
 }
@@ -43,3 +44,12 @@
 #plateMessageTable{
 -fx-background-color: #ff55a0;
 }
+
+.country:hover{
+    -fx-fill: linear-gradient(
+            yellow,
+            yellow 10px,
+            red 10px
+    );
+}
+
