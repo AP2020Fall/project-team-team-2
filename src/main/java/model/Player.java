@@ -14,7 +14,6 @@ public class Player extends Account {
     private int loses;
     private int wins;
     private int draws;
-    private String bio;
     private ArrayList<GameLogSummary> gameLogSummaries;
     private ArrayList<String> friends;
     private ArrayList<String> receivedFriendRequests;
@@ -61,20 +60,12 @@ public class Player extends Account {
         return score;
     }
 
-    public String getBio() {
-        return bio;
-    }
-
     public void setMoney(double money) {
         this.money = money;
     }
 
     public void setScore(int score) {
         this.score += score;
-    }
-
-    private void setBio(String bio) {
-        this.bio = bio;
     }
 
     public ArrayList<GameLogSummary> getGameLogSummaries() {
