@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public abstract class Account {
     protected static ArrayList<Account> allAccounts = new ArrayList<>();
+    private String bio;
     private String firstName;
     private String lastName;
     private String username;
@@ -24,6 +25,14 @@ public abstract class Account {
     public Account(String botName, String username) {
         this.firstName = botName;
         this.username = username;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public Account(String firstName, String lastName, String accountName, String accountId, String password, String email, String phoneNumber) {

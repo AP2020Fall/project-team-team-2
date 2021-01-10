@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXTextField;
 import controller.login.LoginController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -14,8 +15,10 @@ import view.admin.AdminMainMenuLayout;
 import view.player.PlayerMainMenuLayout;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginMenu implements View {
+public class LoginMenu implements View, Initializable {
     @FXML
     private Label errorMsg = new Label();
     @FXML
@@ -24,6 +27,8 @@ public class LoginMenu implements View {
     private JFXPasswordField password;
 
     LoginController controller;
+    private static String rememberUsername;
+    private static String rememberPassword;
 
     public LoginMenu() {
         controller = new LoginController();
@@ -73,7 +78,21 @@ public class LoginMenu implements View {
     }
 
     @FXML
+    private void rememberMe() {
+        rememberUsername = this.username.getText();
+        rememberPassword = this.password.getText();
+    }
+
+    @FXML
     private void back() {
         ViewHandler.getViewHandler().pop();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if (rememberUsername != null && rememberPassword != null) {
+            username.setText(rememberUsername);
+            password.setText(rememberPassword);
+        }
     }
 }
