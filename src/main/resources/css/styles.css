@@ -20,7 +20,7 @@
     -fx-background-color: #ff55a0;
 }
 .mainMenuRegion{
- -fx-background-color: #ff00f0
+ -fx-background-color: #ff00f0;
  }
 #gameLogSummaryTable{
 -fx-background-color: #00ff00;
@@ -35,11 +35,11 @@
 -fx-background-color: #0000f0;
 }
 #friendTreeTable{
--fx-background-color: #ffff00
+-fx-background-color: #ffff00;
 }
 #friendRequestTable{
--fx-background-color: #ffaa50
+-fx-background-color: #ffaa50;
 }
 #plateMessageTable{
--fx-background-color: #ff55a0
+-fx-background-color: #ff55a0;
 }
