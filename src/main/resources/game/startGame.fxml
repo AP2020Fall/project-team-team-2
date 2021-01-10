@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="640.0" prefWidth="924.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="640.0" prefWidth="924.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ToggleButton fx:id="friendToggle" layoutX="137.0" layoutY="68.0" mnemonicParsing="false" onAction="#action" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Friend" />
-      <ToggleButton fx:id="manualPlacementToggle" contentDisplay="CENTER" layoutX="625.0" layoutY="68.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Manual &#10;Placement" textAlignment="CENTER" />
-      <ToggleButton fx:id="blizzardToggle" layoutX="386.0" layoutY="68.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Bilzzard" />
-      <Button fx:id="startButton" layoutX="386.0" layoutY="492.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="194.0" styleClass="buttons" text="Start" />
-      <ToggleButton fx:id="fogWarToggle" contentDisplay="CENTER" layoutX="386.0" layoutY="229.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Fog of&#10;War" textAlignment="CENTER" />
-      <TextField fx:id="playerNum" alignment="CENTER" layoutX="137.0" layoutY="366.0" prefHeight="90.0" prefWidth="194.0" promptText="Players Num" styleClass="textFields" />
-      <TextField fx:id="mapNum" alignment="CENTER" layoutX="386.0" layoutY="366.0" prefHeight="90.0" prefWidth="194.0" promptText="Map Num" styleClass="textFields" />
-      <TextField fx:id="limitTimeNum" alignment="CENTER" layoutX="625.0" layoutY="366.0" prefHeight="90.0" prefWidth="194.0" promptText="Limit Time" styleClass="textFields">
+      <ToggleButton fx:id="friendToggle" layoutX="137.0" layoutY="68.0" mnemonicParsing="false" onAction="#friendAction" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Friend" />
+      <ToggleButton fx:id="manualPlacementToggle" contentDisplay="CENTER" layoutX="625.0" layoutY="68.0" mnemonicParsing="false" onAction="#manualPlacement" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Manual &#10;Placement" textAlignment="CENTER" />
+      <ToggleButton fx:id="blizzardToggle" layoutX="386.0" layoutY="68.0" mnemonicParsing="false" onAction="#blizzardAction" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Bilzzard" />
+      <Button fx:id="startButton" layoutX="386.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#startButtonClick" prefHeight="90.0" prefWidth="194.0" styleClass="buttons" text="Start" />
+      <ToggleButton fx:id="fogWarToggle" contentDisplay="CENTER" layoutX="386.0" layoutY="229.0" mnemonicParsing="false" onAction="#fogWar" prefHeight="90.0" prefWidth="194.0" styleClass="toggleButton" text="Fog of&#10;War" textAlignment="CENTER" />
+      <TextField fx:id="playerNum" alignment="CENTER" layoutX="137.0" layoutY="366.0" onAction="#playersNum" prefHeight="90.0" prefWidth="194.0" promptText="Players Num" styleClass="textFields" />
+      <TextField fx:id="mapNum" alignment="CENTER" layoutX="386.0" layoutY="366.0" onAction="#mapNum" prefHeight="90.0" prefWidth="194.0" promptText="Map Num" styleClass="textFields" />
+      <TextField fx:id="limitTimeNum" alignment="CENTER" layoutX="625.0" layoutY="366.0" onAction="#limitNum" prefHeight="90.0" prefWidth="194.0" promptText="Limit Time" styleClass="textFields">
          <font>
             <Font size="9.0" />
          </font>
