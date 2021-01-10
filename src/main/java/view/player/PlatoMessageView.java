@@ -20,7 +20,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlatoMessageView implements View, Initializable {
-    @FXML private Button backButton = new Button();
     private static Stage popupWindow;
     private final PlatoMessageController controller;
     @FXML
@@ -32,7 +31,6 @@ public class PlatoMessageView implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        backButton.setVisible(false);
         TableColumn<PlatoMessageEntry, String> messageColumn = new TableColumn<>();
         messageColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
         messageTable.getColumns().addAll(messageColumn);
@@ -51,7 +49,7 @@ public class PlatoMessageView implements View, Initializable {
     public void openWindow() throws IOException {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/player/platoMessageView.fxml"));
         root.setController(this);
-        if (popupWindow == null)
+        if (popupWindow == null )
             popupWindow = new Stage(StageStyle.DECORATED);
         popupWindow.setTitle("PlatoBot Message");
         popupWindow.setScene(new Scene(root.load()));
@@ -61,6 +59,6 @@ public class PlatoMessageView implements View, Initializable {
 
     @FXML
     private void back() {
-        ViewHandler.getViewHandler().mainMenuBack();
+        popupWindow.close();
     }
 }

@@ -1,5 +1,6 @@
 package view.player;
 
+import com.jfoenix.controls.JFXTreeTableView;
 import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +19,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayerMainMenu implements Tab, Initializable {
+
     @FXML
     private TreeTableView<GameEntry> gamesList;
+
 
     PlayerMainMenuController controller;
 

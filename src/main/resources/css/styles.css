@@ -15,5 +15,24 @@
     -fx-text-fill: #333;
     -fx-border-style: solid;
 }
-#gameLogTable{
+#gameLogSummaryTable{
+-fx-background-color: #00ff00
+}
+#gameTreeTable{
+-fx-background-color: #00aa50
+}
+#gameTable{
+-fx-background-color: #0055a0
+}
+#eventTreeTable{
+-fx-background-color: #0000f0
+}
+#friendTreeTable{
+-fx-background-color: #ffff00
+}
+#friendRequestTable{
+-fx-background-color: #ffaa50
+}
+#plateMessageTable{
+-fx-background-color: #ff55a0
 }
