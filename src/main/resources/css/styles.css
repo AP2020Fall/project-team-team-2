@@ -7,6 +7,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
     -fx-font-size: 25px;
 }
+
 .toggleButton:hover , .buttons:hover , .textFields:hover{
     -fx-background-color: #444;
 }
@@ -15,17 +16,23 @@
     -fx-text-fill: #333;
     -fx-border-style: solid;
 }
+.mainMenuButton{
+    -fx-background-color: #ff55a0;
+}
+.mainMenuRegion{
+ -fx-background-color: #ff00f0
+ }
 #gameLogSummaryTable{
--fx-background-color: #00ff00
+-fx-background-color: #00ff00;
 }
 #gameTreeTable{
--fx-background-color: #00aa50
+-fx-background-color: #00aa50;
 }
 #gameTable{
--fx-background-color: #0055a0
+-fx-background-color: #0055a0;
 }
 #eventTreeTable{
--fx-background-color: #0000f0
+-fx-background-color: #0000f0;
 }
 #friendTreeTable{
 -fx-background-color: #ffff00
