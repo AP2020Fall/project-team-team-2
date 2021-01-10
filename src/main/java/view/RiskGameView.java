@@ -1,24 +1,29 @@
 package view;
 
 import controller.risk.RiskGameController;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RiskGameView {
+public class RiskGameView implements View, Initializable {
     private final RiskGameController riskGameController;
+    private final String mapNum;
 
-    public RiskGameView(Map<String, Object> primitiveSettings, String gameID, int soldiers) {
-        this.riskGameController = new RiskGameController(primitiveSettings, gameID, soldiers);
+    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers , int mapNum) {
+        this.riskGameController = new RiskGameController(primitiveSettings, soldiers);
+        this.mapNum = String.valueOf(mapNum);
         if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
             autoPlace();
         }
-        /* Show Map at Start */
-        this.showMap();
-        /* Show Turn at Start*/
-        this.showTurn();
-        this.riskGameView();
     }
 
 
@@ -27,48 +32,48 @@ public class RiskGameView {
     }
 
     public void riskGameView() {
-        /* write variables to get commands */
+        /* write variables to get commands *//*
         Scanner inputCommand = Menu.getScanner();
         String inputLine = new String();
         boolean check = false;
         boolean matchCardEnable = false;
         boolean draftMode = false;
         boolean fortifyMode = false;
-        /* Different patterns of valid match cards commands */
+        *//* Different patterns of valid match cards commands *//*
         Pattern matchCardsCommand = Pattern.compile("(^)match cards($)");
-        /*Typical 1*/
+        *//*Typical 1*//*
         Pattern type1MatchCommand = Pattern.compile("(^)1-type1,type1,type1 score:4($)");
-        /*Typical 2*/
+        *//*Typical 2*//*
         Pattern type2MatchCommand = Pattern.compile("(^)2-type2,type2,type2 score:6($)");
-        /*Typical 3*/
+        *//*Typical 3*//*
         Pattern type3MatchCommand = Pattern.compile("(^)3-type3,type3,type3 score:8($)");
-        /*Typical 4*/
+        *//*Typical 4*//*
         Pattern differentTypeMatchCommand = Pattern.compile("(^)4-type1,type2,type3 score:10($)");
 
 
-        /* Pattern to place soldier in manual placement*/
+        *//* Pattern to place soldier in manual placement*//*
         Pattern placeSoldierManual = Pattern.compile("(^)place soldier in (?<countryDetails>\\w+\\.\\d+)($)");
-        /* Pattern to draft soldier */
+        *//* Pattern to draft soldier *//*
         Pattern placeSoldier = Pattern
                 .compile("(^)place (?<soldierNumber>\\d+) soldiers in (?<countryDetails>\\w+\\.\\d+)($)");
-        /* Pattern to Attac*/
+        *//* Pattern to Attac*//*
         Pattern attackPattern = Pattern
                 .compile("(^)attack from (?<sourceCountry>\\w+\\.\\d+) with (?<soldierNumber>\\d+) soldiers to (?<destinationCountry>\\w+\\.\\d+)($)");
 
-        /* Pattern to fortify*/
+        *//* Pattern to fortify*//*
         Pattern fortifyPattern = Pattern
                 .compile("(^)move (?<soldierNumber>\\d+) soldiers from (?<sourceCountry>\\w+\\.\\d+) to (?<destinationCountry>\\w+\\.\\d+)($)");
-        /* Sow Map Pattern */
+        *//* Sow Map Pattern *//*
         Pattern showMapPattern = Pattern.compile("(^)show map($)");
-        /* get input command */
+        *//* get input command *//*
         while (inputCommand.hasNextLine() && riskGameController.getGameIsPlaying()) {
             boolean placementStatus = riskGameController.getPlacementFinished();
-            /* get input command */
-            /* Command Found*/
+            *//* get input command *//*
+            *//* Command Found*//*
             boolean commandFound = false;
 
             inputLine = inputCommand.nextLine().trim();
-            /* Check manual placement*/
+            *//* Check manual placement*//*
             Matcher manualPlacementMatcher = placeSoldierManual.matcher(inputLine);
             check = manualPlacementMatcher.matches();
             if (check == true && !placementStatus) {
@@ -76,7 +81,7 @@ public class RiskGameView {
                 placeSoldier(countryDetails, 1);
                 commandFound = true;
             }
-            /* Show Map Match*/
+            *//* Show Map Match*//*
             Matcher showMapMatcher = showMapPattern.matcher(inputLine);
             check = showMapMatcher.matches();
             if (check == true) {
@@ -84,7 +89,7 @@ public class RiskGameView {
                 check = false;
                 commandFound = true;
             }
-            /* Check draft mode*/
+            *//* Check draft mode*//*
             Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
             check = placeSoldierMatcher.matches();
             if (riskGameController.getAttackWon() && placementStatus) {
@@ -105,7 +110,7 @@ public class RiskGameView {
                 draft(countryDetails, soldierNumber);
                 commandFound = true;
             }
-            /* Check attack mode */
+            *//* Check attack mode *//*
             Matcher attackMatcher = attackPattern.matcher(inputLine);
             check = attackMatcher.matches();
             if (check == true && placementStatus) {
@@ -115,7 +120,7 @@ public class RiskGameView {
                 attack(sourceCountry, destinationCountry, soldierNumber);
                 commandFound = true;
             }
-            /* Check fortify mode*/
+            *//* Check fortify mode*//*
             Matcher fortifyMatcher = fortifyPattern.matcher(inputLine);
             check = fortifyMatcher.matches();
             if (check == true && placementStatus) {
@@ -127,7 +132,7 @@ public class RiskGameView {
             }
 
 
-            /* Check match cards */
+            *//* Check match cards *//*
             Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
             check = matchCardsMatcher.matches();
             if (check == true && placementStatus) {
@@ -183,7 +188,7 @@ public class RiskGameView {
             if (commandFound == false) {
                 System.out.println("Invalid Command!");
             }
-        }
+        }*/
     }
 
     private void showWhatToDo() {
@@ -248,5 +253,20 @@ public class RiskGameView {
     public void draftAfterWin(String countryDetails, int soldiers) {
         String toPrint = riskGameController.draftAfterWin(countryDetails, soldiers);
         System.out.println(toPrint);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    @Override
+    public void show(Stage window) throws IOException {
+        String fileAddress = "/game/maps/map_" + mapNum + ".fxml";
+        FXMLLoader root = new FXMLLoader(getClass().getResource(fileAddress));
+        root.setController(this);
+        window.setTitle("Game Started");
+        window.setScene(new Scene(root.load()));
+        window.setResizable(false);
     }
 }

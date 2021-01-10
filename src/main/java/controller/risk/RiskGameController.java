@@ -31,10 +31,9 @@ public class RiskGameController extends Controller {
     private MatchCardController matchCardController = new MatchCardController(currentPlayer);
     private Player winner;
 
-    public RiskGameController(java.util.Map<String, Object> primitiveSettings, String gameID, int soldiers) {
+    public RiskGameController(java.util.Map<String, Object> primitiveSettings, int soldiers) {
         this.primitiveSettings = primitiveSettings;
         this.players = (ArrayList<Player>) primitiveSettings.get("Players");
-        this.gameID = gameID;
         this.startSoldiers = soldiers;
         setStartSoldiers();
         /* Shaping Map*/

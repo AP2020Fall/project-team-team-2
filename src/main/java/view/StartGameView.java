@@ -3,15 +3,21 @@ package view;
 import controller.risk.StartGameController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import model.Player;
+import view.login.LoginMenu;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class StartGameView implements View {
+public class StartGameView implements View, Initializable {
     private StartGameController startGameController;
     @FXML
     private ToggleButton friendToggle;
@@ -21,21 +27,80 @@ public class StartGameView implements View {
     private ToggleButton manualPlacementToggle;
     @FXML
     private ToggleButton fogWarToggle;
+    @FXML
+    private TextField playerNum;
+    @FXML
+    private TextField mapNum;
+    @FXML
+    private TextField limitTimeNum;
+    @FXML
+    private Button startButton;
 
-    public StartGameView(ArrayList<Player> players){
+
+    public StartGameView(ArrayList<Player> players) {
         this.startGameController = new StartGameController(players);
     }
-    public StartGameView() {
-        Player newPlayer1 = new Player("new" , "mew2");
-        Player newPlayer2 = new Player("new2" , "mew22");
-        ArrayList<Player> players = new ArrayList<Player>();
-        players.add(newPlayer1);
-        players.add(newPlayer2);
-        new StartGameView(players);
+
+    @FXML
+    public void friendAction() {
+        allianceType(checkToggle(!friendToggle.isSelected()));
     }
-    public void action()
-    {
-        System.out.println("this action works");
+
+    @FXML
+    public void blizzardAction() {
+        blizzardsType(checkToggle(!blizzardToggle.isSelected()));
+    }
+
+    @FXML
+    public void manualPlacement() {
+        placementType(checkToggle(!manualPlacementToggle.isSelected()));
+    }
+
+    @FXML
+    public void fogWar() {
+        fogsType(checkToggle(!fogWarToggle.isSelected()));
+    }
+
+    @FXML
+    public void playersNum() {
+        String playersNum = playerNum.getText();
+        changePlayersNumber(playersNum);
+    }
+
+    @FXML
+    public void mapNum() {
+        String mapsNum = mapNum.getText();
+        changePlayersNumber(mapsNum);
+    }
+
+    @FXML
+    public void limitNum() {
+        String limitTime = limitTimeNum.getText();
+        changeDurationTime(limitTime);
+    }
+
+    @FXML
+    public void startButtonClick() {
+        if (!checkIntInput(limitTimeNum.getText())) {
+
+        } else if (!checkIntInput(mapNum.getText())) {
+
+        } else if (!checkIntInput(playerNum.getText())) {
+
+        } else {
+            int mapNum = (int) startGameController.getPrimitiveSettings().get("Map Number");
+            if(mapNum <= 10 && mapNum >= 1) {
+                ViewHandler.getViewHandler().push(this.startGameController.startGame(mapNum));
+            }
+        }
+    }
+
+    public boolean checkIntInput(Object input) {
+        if (input instanceof Integer) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void changePlayersNumber(String strNumber) {
@@ -57,24 +122,20 @@ public class StartGameView implements View {
         System.out.println(callback);
     }
 
-    public void placementType(String type) {
-        String callback = startGameController.setPlacementType(type);
-        System.out.println(callback);
+    public void placementType(boolean type) {
+        startGameController.setPlacementType(type);
     }
 
-    public void allianceType(String type) {
-        String callback = startGameController.setAllianceType(type);
-        System.out.println(callback);
+    public void allianceType(boolean selected) {
+        startGameController.setAllianceType(selected);
     }
 
-    public void blizzardsType(String type) {
-        String callback = startGameController.setBlizzardsType(type);
-        System.out.println(callback);
+    public void blizzardsType(boolean type) {
+        startGameController.setBlizzardsType(type);
     }
 
-    public void fogsType(String type) {
-        String callback = startGameController.setFogType(type);
-        System.out.println(callback);
+    public void fogsType(boolean type) {
+        startGameController.setFogType(type);
     }
 
     @Override
@@ -87,4 +148,16 @@ public class StartGameView implements View {
         window.show();
     }
 
+    public static boolean checkToggle(boolean inputBoolean) {
+        if (inputBoolean) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }

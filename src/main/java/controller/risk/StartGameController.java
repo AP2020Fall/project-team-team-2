@@ -3,18 +3,12 @@ package controller.risk;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ToggleButton;
 import model.Map;
 import model.Country;
 import model.Player;
 import view.RiskGameView;
 
-import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -37,18 +31,8 @@ public class StartGameController implements Initializable{
     }
     public static void main(String[] args) {}
 
-    public void startGame() {
-        String gameId = generateGameId();
-        String filename = "src/main/resources/gameIDs/" + gameId + ".txt";
-        System.out.println("Game Started with ID " + gameId);
-        Path path = Paths.get(filename);
-        try {
-            Files.write(path, Collections.singleton("start"), StandardCharsets.UTF_8);
-        } catch (IOException ex) {
-            // Handle exception
-        }
-        RiskGameView riskGame = new RiskGameView(this.primitiveSettings, generateGameId() , generateSoldiersNumber());
-        riskGame.riskGameView();
+    public RiskGameView startGame(int mapNum) {
+        return new RiskGameView(this.primitiveSettings , generateSoldiersNumber() , mapNum);
     }
 
     public static java.util.Map<String, Object> getPrimitiveSettings() {
@@ -91,22 +75,12 @@ public class StartGameController implements Initializable{
         return callback;
     }
 
-    public String setFogType(String type) {
-        String callback = "";
-        switch (type.toLowerCase()) {
-            case "on":
-                setPrimitiveSettings("Fog of War", true);
-                callback = "Fog type changed to " + type;
-                break;
-            case "off":
-                setPrimitiveSettings("Fog of War", false);
-                callback = "Fog type changed to " + type;
-                break;
-            default:
-                callback = "Please choose between 'on' And 'off'";
-                break;
+    public void setFogType(boolean type) {
+        if(type){
+            setPrimitiveSettings("Fog of War", true);
+        }else{
+            setPrimitiveSettings("Fog of War", false);
         }
-        return callback;
     }
     public int generateSoldiersNumber(){
         int soldierNumber = 0;
@@ -128,58 +102,27 @@ public class StartGameController implements Initializable{
         }
         return soldierNumber;
     }
-    public String setAllianceType(String type) {
-        String callback = "";
-        switch (type.toLowerCase()) {
-            case "on":
-                setPrimitiveSettings("Alliance", true);
-                callback = "Alliance changed to " + type;
-                break;
-            case "off":
-                setPrimitiveSettings("Alliance", false);
-                callback = "Alliance changed to " + type;
-                break;
-            default:
-                callback = "Please choose between 'on' And 'off'";
-                break;
+    public void setAllianceType(boolean type) {
+        if(type){
+            setPrimitiveSettings("Alliance", true);
+        }else{
+            setPrimitiveSettings("Alliance", false);
         }
-        return callback;
+    }
+    public void setBlizzardsType(boolean type) {
+        if(type){
+            setPrimitiveSettings("Blizzards", true);
+        }else{
+            setPrimitiveSettings("Blizzards", false);
+        }
     }
 
-    public String setBlizzardsType(String type) {
-        String callback = "";
-        switch (type) {
-            case "on":
-                setPrimitiveSettings("Blizzards", true);
-                callback = "Blizzards changed to " + type;
-                break;
-            case "off":
-                setPrimitiveSettings("Blizzards", false);
-                callback = "Blizzards changed to " + type;
-                break;
-            default:
-                callback = "Please choose between 'on' And 'off'";
-                break;
+    public void setPlacementType(boolean type) {
+        if(type){
+            setPrimitiveSettings("Placement", true);
+        }else{
+            setPrimitiveSettings("Placement", false);
         }
-        return callback;
-    }
-
-    public String setPlacementType(String type) {
-        String callback = "";
-        switch (type) {
-            case "on":
-                setPrimitiveSettings("Placement", true);
-                callback = "Placement changed to " + type;
-                break;
-            case "off":
-                setPrimitiveSettings("Placement", false);
-                callback = "Placement changed to " + type;
-                break;
-            default:
-                callback = "Please choose between 'on' And 'off'";
-                break;
-        }
-        return callback;
     }
 
     public void setPrimitiveSettings(String index, Object value) {
