@@ -72,9 +72,28 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
     public String getFriendCount() {
         return String.valueOf(player.getFriends().size());
     }
-    public Player getPlayer(){
-        return player;
+    public String getUsername(){
+        return player.getUsername();
     }
+    public String getPassword(){
+        return player.getPassword();
+    }
+    public String getPhoneNumber() {
+        return player.getPhoneNumber();
+    }
+    public String getEmail()
+    {
+        return player.getEmail();
+    }
+    public String getFirstName()
+    {
+        return player.getFirstName();
+    }
+    public String getLastName()
+    {
+        return player.getLastName();
+    }
+
 
 
 
@@ -98,4 +117,27 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
         return String.valueOf( Objects.requireNonNull(player,
                 "Logged in account in Controller.showPoints is null").getScore());
     }
+
+    public void setUsername(String username) {
+        player.setUsername(username);
+    }
+    public void setPassword(String password) {
+        player.setPassword(password);
+    }
+    public void setFirstName(String firstName) {
+        player.setFirstName(firstName);
+    }
+    public void setLastName(String lastName) {
+        player.setLastName(lastName);
+    }
+    public void setEmail(String email) {
+        player.setEmail(email);
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        player.setPhoneNumber(phoneNumber);
+    }
+    public void setBio(String bio) {
+        player.setBio(bio);
+    }
+
 }
