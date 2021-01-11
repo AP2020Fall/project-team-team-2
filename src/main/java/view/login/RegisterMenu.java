@@ -8,13 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Admin;
+import view.AlertMaker;
 import view.View;
 import view.ViewHandler;
 import view.admin.AdminMainMenuLayout;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class RegisterMenu  implements View {
     @FXML
-    private Label errorMsg;
+    private StackPane stackRoot;
     @FXML
     private JFXTextField username;
     @FXML
@@ -59,22 +59,46 @@ public class RegisterMenu  implements View {
 
     private ArrayList<String> getAdditionalInfo() {
         ArrayList<String> inputs = new ArrayList<>();
+        if(firstName.getText().isEmpty())
+        {
+            setFirstNameColourRed();
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
+                    "Okay","Invalid Information","Invalid first name.");
+            return null;
+        }
         inputs.add(firstName.getText());
+        if(lastName.getText().isEmpty())
+        {
+            setLastNameColourRed();
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
+                    "Okay","Invalid Information","Invalid last name.");
+            return null;
+        }
         inputs.add(lastName.getText());
-        if (controller.checkEmail(email.getText())) {
-            inputs.add(email.getText());
-        } else {
-            errorMsg.setText("invalid email");
+        if (!controller.checkPhoneNumber(phoneNumber.getText())) {
+            setPhoneNumberColourRed();
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
+                    "Okay","Invalid Information","Invalid phone number.");
             return null;
         }
-        if (controller.checkPhoneNumber(phoneNumber.getText())) {
-            inputs.add(phoneNumber.getText());
-        } else {
-            errorMsg.setText("invalid phone number");
+        inputs.add(phoneNumber.getText());
+
+        if (!controller.checkEmail(email.getText())) {
+            setEmailColourRed();
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
+                    "Okay","Invalid Information","Invalid email.");
             return null;
         }
+        inputs.add(email.getText());
 
         if (Admin.isAdminExist()) {
+            if(!controller.checkMoney(money.getText()))
+            {
+                setMoneyColourRed();
+                AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
+                        "Okay","Invalid Information","Invalid amount for money.");
+                return null;
+            }
             inputs.add(money.getText());
         }
         return inputs;
@@ -83,19 +107,20 @@ public class RegisterMenu  implements View {
     @FXML
     private void register() {
         if (!controller.isUsernameExist(username.getText())) {
-            //todo get the info and wait for submit button with an animation
+            money.setVisible(Admin.isAdminExist());
             animate(-1);
-            money.setVisible(Admin.isAdminExist()); //todo must be add before the animation
         } else {
-            errorMsg.setText("username exists!");
+            setCredentialsColourRed();
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
+                    "Okay","Invalid Credentials","Username is already taken.");
         }
     }
 
     public void submit(ActionEvent actionEvent) throws IOException {
         ArrayList<String> additionalInfo = getAdditionalInfo();
         if (additionalInfo != null) {
-            errorMsg.setText(username.getText() + " registered successfully");
             if (controller.createAccount(username.getText(), password.getText(), additionalInfo)) {
+                //todo fix the code (add to the controller)
                 ViewHandler.getViewHandler().push(new AdminMainMenuLayout());
             } else {
                 ViewHandler.getViewHandler().push(new PlayerMainMenuLayout());
@@ -125,5 +150,37 @@ public class RegisterMenu  implements View {
         email.clear();
         money.clear();
     }
+    private void setCredentialsColourRed()
+    {
+        username.setUnFocusColor(Paint.valueOf("ff0000"));
+        username.setFocusColor(Paint.valueOf("ff0000"));
+        password.setUnFocusColor(Paint.valueOf("ff0000"));
+        password.setFocusColor(Paint.valueOf("ff0000"));
 
+    }
+    private void setEmailColourRed()
+    {
+        email.setUnFocusColor(Paint.valueOf("ff0000"));
+        email.setFocusColor(Paint.valueOf("ff0000"));
+    }
+    private void setPhoneNumberColourRed()
+    {
+        phoneNumber.setUnFocusColor(Paint.valueOf("ff0000"));
+        phoneNumber.setFocusColor(Paint.valueOf("ff0000"));
+    }
+    private void setFirstNameColourRed()
+    {
+        firstName.setUnFocusColor(Paint.valueOf("ff0000"));
+        firstName.setFocusColor(Paint.valueOf("ff0000"));
+    }
+    private void setLastNameColourRed()
+    {
+        lastName.setUnFocusColor(Paint.valueOf("ff0000"));
+        lastName.setFocusColor(Paint.valueOf("ff0000"));
+    }
+    private void setMoneyColourRed()
+    {
+        money.setUnFocusColor(Paint.valueOf("ff0000"));
+        money.setFocusColor(Paint.valueOf("ff0000"));
+    }
 }

@@ -1,6 +1,5 @@
 package controller;
 
-import controller.risk.Controller;
 import model.*;
 
 import java.time.LocalDate;

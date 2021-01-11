@@ -7,8 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import view.AlertMaker;
 import view.View;
 import view.ViewHandler;
 import view.admin.AdminMainMenuLayout;
@@ -20,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class LoginMenu implements View, Initializable {
     @FXML
-    private Label errorMsg = new Label();
+    private StackPane root;
     @FXML
     private JFXTextField username;
     @FXML
@@ -46,11 +48,15 @@ public class LoginMenu implements View, Initializable {
     @FXML
     private void loginAccount() {
         if (!controller.isUsernameExist(username.getText())) {
-            errorMsg.setText("username does not exist");
+            setColourRed();
+            AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
+                    , "Invalid Credentials", "Username does not exist.");
         } else {
 
             if (!controller.isUsernameAndPasswordMatch(username.getText(), password.getText())) {
-                errorMsg.setText("username and password are not match");
+                setColourRed();
+                AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
+                        , "Invalid Credentials", "Username and password are not match.");
             } else {
                 if (controller.login(username.getText())) {
                     ViewHandler.getViewHandler().push(new AdminMainMenuLayout());
@@ -64,15 +70,23 @@ public class LoginMenu implements View, Initializable {
     @FXML
     private void deleteAccount() {
         if (!controller.isUsernameExist(username.getText())) {
-            errorMsg.setText("username does not exist");
+            setColourRed();
+            AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
+                    , "Invalid Credentials", "Username does not exist.");
         } else if (!controller.isUsernamePlayer(username.getText())) {
-            errorMsg.setText("Admin account can't be deleted");
+            setColourRed();
+            AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
+                    , "Invalid Credentials", "Admin account can't be deleted.");
         } else {
             if (!controller.isUsernameAndPasswordMatch(username.getText(), password.getText())) {
-                errorMsg.setText("username and password are not match");
+                setColourRed();
+                AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
+                        , "Invalid Credentials", "Username and password are not match.");
             } else {
                 controller.delete(username.getText());
-                errorMsg.setText(username.getText() + " deleted successfully!");
+                AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
+                        , "Invalid Credentials", username.getText() +
+                                " deleted successfully!");
             }
         }
     }
@@ -94,5 +108,13 @@ public class LoginMenu implements View, Initializable {
             username.setText(rememberUsername);
             password.setText(rememberPassword);
         }
+    }
+    private void setColourRed()
+    {
+        username.setUnFocusColor(Paint.valueOf("ff0000"));
+        username.setFocusColor(Paint.valueOf("ff0000"));
+        password.setUnFocusColor(Paint.valueOf("ff0000"));
+        password.setFocusColor(Paint.valueOf("ff0000"));
+
     }
 }

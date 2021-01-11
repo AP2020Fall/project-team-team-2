@@ -7,7 +7,6 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
     -fx-font-size: 25px;
 }
-
 .toggleButton:hover , .buttons:hover , .textFields:hover{
     -fx-background-color: #444;
 }
@@ -45,6 +44,13 @@
 -fx-background-color: #ff55a0;
 }
 
+#gameLogTreeTable{
+-fx-background-color: #ff00f0;
+}
+#scoreboardTable{
+-fx-background-color: #aaff00;
+}
+
 .country:hover{
     -fx-fill: linear-gradient(
             yellow,
@@ -52,4 +58,5 @@
             red 10px
     );
 }
+
 

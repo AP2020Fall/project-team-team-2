@@ -2,6 +2,7 @@ package controller.risk;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import controller.Controller;
 import model.*;
 
 

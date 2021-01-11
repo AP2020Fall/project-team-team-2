@@ -60,7 +60,6 @@ public class PlayerMainMenuLayout implements View, Initializable {
     @FXML
     private void platoMessage() throws IOException {
         new PlatoMessageView().openWindow();
-        //ViewHandler.getViewHandler().push(new PlatoMessageView());
     }
 
     @FXML
