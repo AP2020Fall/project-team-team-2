@@ -7,7 +7,6 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
     -fx-font-size: 25px;
 }
-
 .toggleButton:hover , .buttons:hover , .textFields:hover{
     -fx-background-color: #444;
 }
@@ -16,6 +15,7 @@
     -fx-text-fill: #333;
     -fx-border-style: solid;
 }
+
 .mainMenuButton{
     -fx-background-color: #ff55a0;
 }
@@ -48,4 +48,11 @@
 }
 #scoreboardTable{
 -fx-background-color: #aaff00;
+}
+.country:hover{
+    -fx-fill: linear-gradient(
+            yellow,
+            yellow 10px,
+            red 10px
+    );
 }

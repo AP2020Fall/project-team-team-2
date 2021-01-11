@@ -1,24 +1,87 @@
 package view;
 
 import controller.risk.RiskGameController;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RiskGameView implements View, Initializable {
     private final RiskGameController riskGameController;
     private final String mapNum;
 
-    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers , int mapNum) {
+    @FXML
+    private SVGPath country_1_1;
+    @FXML
+    private SVGPath country_1_2;
+    @FXML
+    private SVGPath country_1_3;
+    @FXML
+    private SVGPath country_1_4;
+    @FXML
+    private SVGPath country_1_5;
+    @FXML
+    private SVGPath country_2_1;
+    @FXML
+    private SVGPath country_2_2;
+    @FXML
+    private SVGPath country_2_3;
+    @FXML
+    private SVGPath country_2_4;
+    @FXML
+    private SVGPath country_2_5;
+    @FXML
+    private SVGPath country_3_1;
+    @FXML
+    private SVGPath country_3_2;
+    @FXML
+    private SVGPath country_3_3;
+    @FXML
+    private SVGPath country_3_4;
+    @FXML
+    private SVGPath country_3_5;
+    @FXML
+    private SVGPath country_4_1;
+    @FXML
+    private SVGPath country_4_2;
+    @FXML
+    private SVGPath country_4_3;
+    @FXML
+    private SVGPath country_4_4;
+    @FXML
+    private SVGPath country_4_5;
+    @FXML
+    private SVGPath country_5_1;
+    @FXML
+    private SVGPath country_5_2;
+    @FXML
+    private SVGPath country_5_3;
+    @FXML
+    private SVGPath country_5_4;
+    @FXML
+    private SVGPath country_5_5;
+    @FXML
+    private void countryClick(MouseEvent e)  {
+        int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
+        System.out.println("" + indices[0] + " " + indices[1]);
+    }
+    public int[] getCountryIndices(String countryClicked){
+        String[] details = countryClicked.split("_");
+        int[] toReturn = new int[2];
+        toReturn[0] = Integer.parseInt(details[1]);
+        toReturn[1] = Integer.parseInt(details[2]);
+        return toReturn;
+    }
+    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, int mapNum) {
         this.riskGameController = new RiskGameController(primitiveSettings, soldiers);
         this.mapNum = String.valueOf(mapNum);
         if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
@@ -69,7 +132,7 @@ public class RiskGameView implements View, Initializable {
         while (inputCommand.hasNextLine() && riskGameController.getGameIsPlaying()) {
             boolean placementStatus = riskGameController.getPlacementFinished();
             *//* get input command *//*
-            *//* Command Found*//*
+         *//* Command Found*//*
             boolean commandFound = false;
 
             inputLine = inputCommand.nextLine().trim();
@@ -190,6 +253,8 @@ public class RiskGameView implements View, Initializable {
             }
         }*/
     }
+
+
 
     private void showWhatToDo() {
         String toPrint = riskGameController.showWhatToDo();
