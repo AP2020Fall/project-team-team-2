@@ -2,11 +2,7 @@ package model.Entry;
 
 import javafx.scene.control.Hyperlink;
 import model.FriendRequest;
-import view.Tab;
 import view.TabHandler;
-import view.ViewHandler;
-
-import java.io.IOException;
 
 public class FriendRequestEntry {
     private String name;
