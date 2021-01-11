@@ -1,5 +1,6 @@
 package view.admin;
 
+import com.jfoenix.controls.JFXTextField;
 import controller.admin.AdminMainMenuController;
 import controller.player.PlayerMainMenuController;
 import javafx.event.ActionEvent;
@@ -20,7 +21,8 @@ import java.util.ResourceBundle;
 
 public class AdminMainMenuLayout implements View, Initializable {
     @FXML private BorderPane borderPane;
-    @FXML private  TextField searchUsername;
+    @FXML
+    private JFXTextField searchUsername;
     private AdminMainMenuController controller;
 
     public AdminMainMenuLayout() {
@@ -38,20 +40,24 @@ public class AdminMainMenuLayout implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("1");
         TabHandler.getTabHandler().setBorderPane(borderPane);
+        System.out.println("2");
         viewMainMenu();
+        System.out.println("3");
 
     }
     @FXML private  void search(ActionEvent actionEvent) {
+        //todo add similar name instead
         if (!controller.isUsernameExist(searchUsername.getText())) {
             System.out.println("username does not exist!");
         } else {
             TabHandler.getTabHandler().push(
-                    new PlayerProfileView(controller.searchPlayer(searchUsername.getText())));
+                    new AdminProfileView(controller.searchPlayer(searchUsername.getText())));
         }
     }
 
-    @FXML private  void sendMessage(ActionEvent actionEvent) {
+    @FXML private  void platoMessage(ActionEvent actionEvent) {
     }
 
     @FXML

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="stackRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="background" stylesheets="@../../css/styles.css">
+            <children>
+                <ImageView fx:id="playerImage" fitHeight="150.0" fitWidth="150.0" layoutX="125.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/blankProfile.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="400.0" layoutY="60.0" text="Username">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="400.0" layoutY="120.0" text="Password">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="400.0" layoutY="220.0" text="First name">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="400.0" layoutY="280.0" text="Last name">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="400.0" layoutY="340.0" text="Email">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="400.0" layoutY="400.0" text="Phone number">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="20.0" />
+                    </font>
+                </Label>
+                <JFXButton layoutX="573.0" layoutY="515.0" onAction="#cancel" prefWidth="150.0" style="-fx-background-color: ffa000;" text="Cancel">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="18.0" />
+                    </font>
+                </JFXButton>
+                <JFXButton layoutX="768.0" layoutY="515.0" onAction="#save" prefWidth="150.0" style="-fx-background-color: #00bbff;" text="Save" textFill="WHITE">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="18.0" />
+                    </font>
+                </JFXButton>
+                <JFXTextField fx:id="username" labelFloat="true" layoutX="550.0" layoutY="59.0" promptText="username">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="17.0" />
+                    </font>
+                </JFXTextField>
+                <JFXPasswordField fx:id="password" labelFloat="true" layoutX="550.0" layoutY="120.0" promptText="password">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="17.0" />
+                    </font>
+                </JFXPasswordField>
+                <JFXTextField fx:id="firstName" labelFloat="true" layoutX="550.0" layoutY="220.0" promptText="first name">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="17.0" />
+                    </font>
+                </JFXTextField>
+                <JFXTextField fx:id="lastName" labelFloat="true" layoutX="550.0" layoutY="280.0" promptText="last name">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="17.0" />
+                    </font>
+                </JFXTextField>
+                <JFXTextField fx:id="email" labelFloat="true" layoutX="550.0" layoutY="340.0" promptText="email">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="17.0" />
+                    </font>
+                </JFXTextField>
+                <JFXTextField fx:id="phoneNumber" labelFloat="true" layoutX="550.0" layoutY="400.0" promptText="phone number">
+                    <font>
+                        <Font name="Geometr415 Blk BT Black" size="17.0" />
+                    </font>
+                </JFXTextField>
+                <Separator layoutX="350.0" layoutY="58.0" orientation="VERTICAL" prefHeight="510.0" prefWidth="20.0" />
+                <MaterialDesignIconView glyphName="PLUS_CIRCLE" layoutX="247.0" layoutY="221.0" onMouseClicked="#addAvatar" size="36" />
+            </children>
+        </Pane>
+    </children>
+</StackPane>

@@ -1,9 +1,4 @@
 {
-  "registerDay": {
-    "year": 2021,
-    "month": 1,
-    "day": 5
-  },
   "money": 400.0,
   "score": 0,
   "loses": 0,
@@ -38,5 +33,10 @@
   "password": "player2pass",
   "email": "alizinoghli@gmail.com",
   "phoneNumber": "09105734731",
+  "registerDay": {
+    "year": 2021,
+    "month": 1,
+    "day": 5
+  },
   "isRobot": false
 }

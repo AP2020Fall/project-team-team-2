@@ -27,12 +27,12 @@ public class Game {
         this.image = image;
     }
 
-    public Game(String name, String gameId, String details) {
+    public Game(String name, String gameId, String details,Image gameImage) {
         this.name = name;
         this.gameId = gameId;
         this.details = details;
         this.playLogs = new ArrayList<>();
-        image = new Image("/images/icon.png",150,150,true,true);
+        image = gameImage;
         scoreboard = new Scoreboard();
     }
 

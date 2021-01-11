@@ -1,19 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+
+<StackPane fx:id="stackRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <DatePicker fx:id="startDate" layoutX="103.0" layoutY="144.0" promptText="start" />
-      <DatePicker fx:id="endDate" layoutX="103.0" layoutY="202.0" prefWidth="218.0" promptText="end" />
-      <TextField fx:id="gameName" layoutX="103.0" layoutY="90.0" prefHeight="31.0" prefWidth="218.0" promptText="game" />
-      <TextField fx:id="score" layoutX="103.0" layoutY="269.0" prefHeight="31.0" prefWidth="218.0" promptText="score" />
-      <Button layoutX="49.0" layoutY="344.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-      <Button layoutX="432.0" layoutY="344.0" mnemonicParsing="false" onAction="#add" text="Add" />
-      <Label fx:id="errorMsg" layoutX="265.0" layoutY="53.0" text="ErrorMsg" textFill="RED" />
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="popupBackground" stylesheets="@../../css/styles.css">
+         <children>
+            <JFXTextField fx:id="gameName" labelFloat="true" layoutX="210.0" layoutY="30.0" promptText="game">
+               <font>
+                  <Font name="Geometr415 Blk BT Black" size="18.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="score" labelFloat="true" layoutX="210.0" layoutY="210.0" promptText="score">
+               <font>
+                  <Font name="Geometr415 Blk BT Black" size="18.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextArea fx:id="detail" layoutX="210.0" layoutY="270.0" prefHeight="60.0" prefWidth="200.0" promptText="detail">
+               <font>
+                  <Font name="Geometr415 Blk BT Black" size="18.0" />
+               </font>
+            </JFXTextArea>
+            <JFXDatePicker fx:id="startDate" layoutX="210.0" layoutY="90.0" overLay="true" promptText="start" />
+            <JFXDatePicker fx:id="endDate" layoutX="210.0" layoutY="150.0" overLay="true" promptText="end" />
+            <JFXButton layoutX="432.0" layoutY="343.0" onAction="#add" prefWidth="120.0" style="-fx-background-color: #00bbff;" text="Add" textFill="WHITE">
+               <font>
+                  <Font name="Geometr415 Blk BT Black" size="18.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="24" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="53.0" layoutY="343.0" onAction="#cancel" prefWidth="120.0" style="-fx-background-color: #00bbff;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Geometr415 Blk BT Black" size="18.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="24" />
+               </graphic>
+            </JFXButton>
+            <ImageView fx:id="avatar" fitHeight="137.0" fitWidth="147.0" layoutX="36.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/tournament.png" />
+               </image>
+            </ImageView>
+            <MaterialDesignIconView glyphName="PLUS_CIRCLE" layoutX="155.0" layoutY="179.0" onMouseClicked="#addAvatar" size="36" />
+         </children>
+      </Pane>
    </children>
-</Pane>
+</StackPane>

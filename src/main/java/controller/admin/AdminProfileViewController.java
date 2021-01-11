@@ -1,4 +1,4 @@
-package controller.player;
+package controller.admin;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,15 +10,12 @@ import model.Player;
 
 import java.util.Objects;
 
-public class PlayerProfileViewController extends PlayerMainMenuLayoutController {
+public class AdminProfileViewController extends AdminMainMenuLayoutController{
     private final Player player;
-    private final Player logged;
 
-    public PlayerProfileViewController(Player player) {
+    public AdminProfileViewController(Player player) {
         this.player = Objects.requireNonNull(player,
-                "Players passed to PlayerProfileViewController is null");
-        this.logged = Objects.requireNonNull(loggedIn,
-                "Logged passed to PlayerProfileViewController is null");
+                "Players passed to AdminProfileViewController is null");
     }
 
     public String getUsername() {
@@ -49,35 +46,6 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
         return player.getBio();
     }
 
-    public boolean areFriends() {
-        //checks if logged and player are friends.
-        return logged.getFriends().contains(player);
-    }
-
-    public void addFriend() {
-        //sends a FriendRequest to player.
-        FriendRequest friendRequest = new FriendRequest(player, logged, generateId());
-        friendRequest.sendRequest();
-    }
-
-
-    public void removeFriend() {
-        //removes logged from friends of player and removes the player from the friends of logged.
-        logged.removeFriend(player);
-        player.removeFriend(logged);
-    }
-
-    public boolean HasFriendRequestBeenSent() {
-        //checks if  logged send a friend request.
-        for (FriendRequest friendRequest : player.getReceivedFriendRequests())
-            if (friendRequest.getPlayer().getUsername().equals(logged.getUsername()))
-                return true;
-        return false;
-    }
-
-    public boolean areTheSame() {
-        return logged.getUsername().equals(player.getUsername());
-    }
 
     public ObservableList<GameLogSummaryEntry> getGameHistory() {
         ObservableList<GameLogSummaryEntry> result = FXCollections.observableArrayList();
