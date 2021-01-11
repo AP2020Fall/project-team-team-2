@@ -3,6 +3,7 @@ package model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import javax.swing.text.html.ImageView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -21,6 +22,15 @@ public abstract class Account {
     private String email;
     private String phoneNumber;
     private boolean isRobot = false;
+    private ImageView imageView;
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
 
     public Account(String botName, String username) {
         this.firstName = botName;
@@ -98,7 +108,6 @@ public abstract class Account {
     }
 
 
-
     public static ArrayList<Account> getAllAccounts() {
         return allAccounts;
     }
@@ -128,8 +137,6 @@ public abstract class Account {
                 players.add((Player) account);
         return players;
     }
-
-
 
 
     public static void save() throws IOException {
@@ -207,7 +214,6 @@ public abstract class Account {
         reader.close();
         return json;
     }
-
 
 
     @Override
