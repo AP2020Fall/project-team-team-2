@@ -42,6 +42,7 @@ public class RiskGameController extends Controller {
         /* Make Robot Players*/
 //        this.makeRobotPlayers();
         /* Set Player One */
+
         currentPlayer = players.get(0);
         /* Show Turn*/
         showTurn();
@@ -101,6 +102,10 @@ public class RiskGameController extends Controller {
                 gameCountries.get(i).add(country);
             }
         }
+    }
+
+    public List<List<Country>> getGameCountries() {
+        return gameCountries;
     }
 
     public void makeRobotPlayers() {
@@ -518,7 +523,9 @@ public class RiskGameController extends Controller {
         String toPrint = "It's " + currentPlayer.getUsername() + " Player";
         return toPrint;
     }
-
+    public Player getTurn(){
+        return currentPlayer;
+    }
     public String getStatus() {
         String toPrint = "";
         if (!draftDone) {

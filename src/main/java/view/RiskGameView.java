@@ -6,19 +6,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
+import model.Country;
+import model.Player;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 public class RiskGameView implements View, Initializable {
     private final RiskGameController riskGameController;
     private final String mapNum;
-
+    private final SVGPath[][] allPaths = new SVGPath[5][5];
+    private final Label[][] allLabels = new Label[5][5];
+    private final String[][] defaultClasses = new String[5][5];
     @FXML
     private SVGPath country_1_1;
     @FXML
@@ -70,9 +76,61 @@ public class RiskGameView implements View, Initializable {
     @FXML
     private SVGPath country_5_5;
     @FXML
+    private Label label_1_1;
+    @FXML
+    private Label label_1_2;
+    @FXML
+    private Label label_1_3;
+    @FXML
+    private Label label_1_4;
+    @FXML
+    private Label label_1_5;
+    @FXML
+    private Label label_2_1;
+    @FXML
+    private Label label_2_2;
+    @FXML
+    private Label label_2_3;
+    @FXML
+    private Label label_2_4;
+    @FXML
+    private Label label_2_5;
+    @FXML
+    private Label label_3_1;
+    @FXML
+    private Label label_3_2;
+    @FXML
+    private Label label_3_3;
+    @FXML
+    private Label label_3_4;
+    @FXML
+    private Label label_3_5;
+    @FXML
+    private Label label_4_1;
+    @FXML
+    private Label label_4_2;
+    @FXML
+    private Label label_4_3;
+    @FXML
+    private Label label_4_4;
+    @FXML
+    private Label label_4_5;
+    @FXML
+    private Label label_5_1;
+    @FXML
+    private Label label_5_2;
+    @FXML
+    private Label label_5_3;
+    @FXML
+    private Label label_5_4;
+    @FXML
+    private Label label_5_5;
+    @FXML
+
     private void countryClick(MouseEvent e)  {
         int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
-        System.out.println("" + indices[0] + " " + indices[1]);
+        SVGPath path = allPaths[indices[0]-1][indices[1]-1];
+        toggleColor(path);
     }
     public int[] getCountryIndices(String countryClicked){
         String[] details = countryClicked.split("_");
@@ -86,6 +144,19 @@ public class RiskGameView implements View, Initializable {
         this.mapNum = String.valueOf(mapNum);
         if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
             autoPlace();
+        }
+    }
+    public void toggleColor(SVGPath path){
+        String styleClass = String.valueOf(path.getStyleClass());
+        switch (styleClass){
+            case "country":
+                path.getStyleClass().clear();
+                path.getStyleClass().add("country_clicked");
+                break;
+            case "country_clicked":
+                path.getStyleClass().clear();
+                path.getStyleClass().add("country");
+                break;
         }
     }
 
@@ -322,9 +393,96 @@ public class RiskGameView implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        allPaths[0][0] = country_1_1;
+        allPaths[0][1] = country_1_2;
+        allPaths[0][2] = country_1_3;
+        allPaths[0][3] = country_1_4;
+        allPaths[0][4] = country_1_5;
+        allPaths[1][0] = country_2_1;
+        allPaths[1][1] = country_2_2;
+        allPaths[1][2] = country_2_3;
+        allPaths[1][3] = country_2_4;
+        allPaths[1][4] = country_2_5;
+        allPaths[2][0] = country_3_1;
+        allPaths[2][1] = country_3_2;
+        allPaths[2][2] = country_3_3;
+        allPaths[2][3] = country_3_4;
+        allPaths[2][4] = country_3_5;
+        allPaths[3][0] = country_4_1;
+        allPaths[3][1] = country_4_2;
+        allPaths[3][2] = country_4_3;
+        allPaths[3][3] = country_4_4;
+        allPaths[3][4] = country_4_5;
+        allPaths[4][0] = country_5_1;
+        allPaths[4][1] = country_5_2;
+        allPaths[4][2] = country_5_3;
+        allPaths[4][3] = country_5_4;
+        allPaths[4][4] = country_5_5;
+        allLabels[0][0] = label_1_1;
+        allLabels[0][1] = label_1_2;
+        allLabels[0][2] = label_1_3;
+        allLabels[0][3] = label_1_4;
+        allLabels[0][4] = label_1_5;
+        allLabels[1][0] = label_2_1;
+        allLabels[1][1] = label_2_2;
+        allLabels[1][2] = label_2_3;
+        allLabels[1][3] = label_2_4;
+        allLabels[1][4] = label_2_5;
+        allLabels[2][0] = label_3_1;
+        allLabels[2][1] = label_3_2;
+        allLabels[2][2] = label_3_3;
+        allLabels[2][3] = label_3_4;
+        allLabels[2][4] = label_3_5;
+        allLabels[3][0] = label_4_1;
+        allLabels[3][1] = label_4_2;
+        allLabels[3][2] = label_4_3;
+        allLabels[3][3] = label_4_4;
+        allLabels[3][4] = label_4_5;
+        allLabels[4][0] = label_5_1;
+        allLabels[4][1] = label_5_2;
+        allLabels[4][2] = label_5_3;
+        allLabels[4][3] = label_5_4;
+        allLabels[4][4] = label_5_5;
+        putCountryName();
+        colorizeCountry();
+        labelSetMouserTransparent();
+
 
     }
-
+    public void putCountryName(){
+        List<List<Country>> countries = this.riskGameController.getGameCountries();
+        for(int i = 0 ; i < countries.size() ; i++){
+            for(int j = 0 ; j < countries.get(i).size() ; j++){
+                allLabels[i][j].setText(countries.get(i).get(j).getName());
+            }
+        }
+    }
+    public void labelSetMouserTransparent(){
+        for(Label[] labels : allLabels){
+            for(Label label : labels){
+                if(label != null) {
+                    label.setMouseTransparent(true);
+                }
+            }
+        }
+    }
+    public void colorizeCountry(){
+        List<List<Country>> countries = this.riskGameController.getGameCountries();
+        for(int i = 0 ; i < countries.size() ; i++){
+            for(int j = 0 ; j < countries.get(i).size() ; j++){
+                Player owner = countries.get(i).get(j).getOwner();
+                if(owner != null){
+                    String toClass = "country_player_"+ owner.getPlayerNumber();
+                    System.out.println(toClass);
+                    allPaths[i][j].getStyleClass().clear();
+                    allPaths[i][j].getStyleClass().add(toClass);
+                }else{
+                    allPaths[i][j].getStyleClass().clear();
+                    allPaths[i][j].getStyleClass().add("country_no_player");
+                }
+            }
+        }
+    }
     @Override
     public void show(Stage window) throws IOException {
         String fileAddress = "/game/maps/map_" + mapNum + ".fxml";
@@ -334,4 +492,5 @@ public class RiskGameView implements View, Initializable {
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
     }
+
 }

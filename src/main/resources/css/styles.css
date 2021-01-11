@@ -1,62 +1,117 @@
 .background {
-    -fx-background-color: linear-gradient(to bottom, #b12c2c, #e73838, transparent);
+    -fx-background-color: linear-gradient(to bottom, #2c87b1, #3878e7, transparent);
 }
-.toggleButton , .buttons , .textFields{
+
+.toggleButton, .buttons, .textFields {
     -fx-background-color: #333;
     -fx-text-fill: wheat;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
     -fx-font-size: 25px;
 }
-.toggleButton:hover , .buttons:hover , .textFields:hover{
+
+.toggleButton:hover, .buttons:hover, .textFields:hover {
     -fx-background-color: #444;
 }
-.toggleButton:selected , .buttons:pressed{
+
+.toggleButton:selected, .buttons:pressed {
     -fx-background-color: wheat;
     -fx-text-fill: #333;
     -fx-border-style: solid;
 }
 
-.mainMenuButton{
+.mainMenuButton {
     -fx-background-color: #ff55a0;
 }
-.mainMenuRegion{
- -fx-background-color: #ff00f0;
- }
-#gameLogSummaryTable{
--fx-background-color: #00ff00;
-}
-#gameTreeTable{
--fx-background-color: #00aa50;
-}
-#gameTable{
--fx-background-color: #0055a0;
-}
-#eventTreeTable{
--fx-background-color: #0000f0;
-}
-#friendTreeTable{
--fx-background-color: #ffff00;
-}
-#friendRequestTable{
--fx-background-color: #ffaa50;
-}
-#plateMessageTable{
--fx-background-color: #ff55a0;
+
+.mainMenuRegion {
+    -fx-background-color: #ff00f0;
 }
 
-#gameLogTreeTable{
--fx-background-color: #ff00f0;
-}
-#scoreboardTable{
--fx-background-color: #aaff00;
+#gameLogSummaryTable {
+    -fx-background-color: #00ff00;
 }
 
-.country:hover{
-    -fx-fill: linear-gradient(
-            yellow,
-            yellow 10px,
-            red 10px
-    );
+#gameTreeTable {
+    -fx-background-color: #00aa50;
 }
 
+#gameTable {
+    -fx-background-color: #0055a0;
+}
 
+#eventTreeTable {
+    -fx-background-color: #0000f0;
+}
+
+#friendTreeTable {
+    -fx-background-color: #ffff00;
+}
+
+#friendRequestTable {
+    -fx-background-color: #ffaa50;
+}
+
+#plateMessageTable {
+    -fx-background-color: #ff55a0;
+}
+
+#gameLogTreeTable {
+    -fx-background-color: #ff00f0;
+}
+
+#scoreboardTable {
+    -fx-background-color: #aaff00;
+}
+
+/* Game Part */
+.country {
+    -fx-fill: yellow;
+}
+
+.country:hover,
+.country_entered,
+.country_player_1:hover,
+.country_player_2:hover,
+.country_player_3:hover,
+.country_player_4:hover,
+.country_player_5:hover {
+    -fx-fill: #434338;
+}
+
+.country_player_1 {
+    -fx-fill: #6B5B95;
+}
+
+.country_no_player {
+    -fx-fill: black;
+}
+
+.country_player_2 {
+    -fx-fill: #88B04B;
+}
+
+.country_player_3 {
+    -fx-fill: #1e7e9f;
+}
+
+.country_player_3 {
+    -fx-fill: #d124dd;
+}
+
+.country_player_4 {
+    -fx-fill: #e9b211;
+}
+
+.country_player_5 {
+    -fx-fill: #DD4124;
+}
+
+.country_clicked {
+    -fx-fill: green;
+}
+
+.game_labels {
+    -fx-text-fill: wheat;
+}
+
+/* Game Part */
