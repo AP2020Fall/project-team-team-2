@@ -74,14 +74,14 @@ public class PlayerAccountMenu implements Tab, Initializable {
 
     @FXML
     private void editInfo(ActionEvent actionEvent) {
-        //todo implement
+       TabHandler.getTabHandler().push(new PlayerEditProfile());
     }
     private void initializedInfo() {
-        username.setText(controller.getPlayer().getUsername());
-        firstName.setText(controller.getPlayer().getFirstName());
-        lastName.setText(controller.getPlayer().getLastName());
-        email.setText(controller.getPlayer().getEmail());
-        phoneNumber.setText(controller.getPlayer().getPhoneNumber());
+        username.setText(controller.getUsername());
+        firstName.setText(controller.getFirstName());
+        lastName.setText(controller.getLastName());
+        email.setText(controller.getEmail());
+        phoneNumber.setText(controller.getPhoneNumber());
         score.setText(controller.showPoints());
         bio.setText(controller.getBio());
         money.setText(controller.getMoney());
