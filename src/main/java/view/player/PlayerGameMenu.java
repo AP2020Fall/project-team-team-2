@@ -3,7 +3,6 @@ package view.player;
 
 import controller.player.PlayerGameMenuController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,7 +15,6 @@ import model.Entry.GameLogEntry;
 import model.Entry.ScoreboardEntry;
 import model.Game;
 import model.GameLogStates;
-import model.Scoreboard;
 import view.Tab;
 
 import java.io.IOException;
