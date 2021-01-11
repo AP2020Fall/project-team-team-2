@@ -6,7 +6,6 @@ import view.TabHandler;
 import view.player.PlayerEventMenu;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class EventEntry {
     private String name;

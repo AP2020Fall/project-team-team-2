@@ -33,7 +33,7 @@ public class Player extends Account {
         registerDay = LocalDate.now();
         this.money = money;
         this.score = 0;
-        //this.loses = this.wins = this.draws = 0;
+        ///this.loses = this.wins = this.draws = 0;
         gameLogSummaries = new ArrayList<>();
         friends = new ArrayList<>();
         receivedFriendRequests = new ArrayList<>();

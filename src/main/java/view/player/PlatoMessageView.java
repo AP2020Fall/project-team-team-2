@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,7 +12,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Entry.PlatoMessageEntry;
 import view.View;
-import view.ViewHandler;
 
 import java.io.IOException;
 import java.net.URL;
