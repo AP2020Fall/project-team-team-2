@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 
 public class Admin extends Account {
     public Admin(String firstName, String lastName, String username, String accountId, String password, String email, String phoneNumber) {
