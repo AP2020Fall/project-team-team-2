@@ -79,6 +79,7 @@ public class PlayerEditProfile implements Tab, Initializable {
             controller.setLastName(lastName.getText());
             controller.setPhoneNumber(phoneNumber.getText());
             controller.setEmail(email.getText());
+            TabHandler.getTabHandler().back();
         }
     }
     @FXML

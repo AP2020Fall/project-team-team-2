@@ -32,6 +32,7 @@ public class Game {
         this.gameId = gameId;
         this.details = details;
         this.playLogs = new ArrayList<>();
+        image = new Image("/images/icon.png",150,150,true,true);
         scoreboard = new Scoreboard();
     }
 

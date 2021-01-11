@@ -76,6 +76,7 @@ public class PlayerGameMenu implements Tab, Initializable {
     @FXML
     private void runGame() {
         //todo
+        System.out.println("run game must be implemented");
     }
 
 

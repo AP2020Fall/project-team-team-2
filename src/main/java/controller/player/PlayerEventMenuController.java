@@ -1,5 +1,6 @@
 package controller.player;
 
+import javafx.scene.image.Image;
 import model.Event;
 
 import java.util.Objects;
@@ -28,5 +29,9 @@ public class PlayerEventMenuController extends PlayerMainMenuLayoutController {
     }
 
     public void join() {
+    }
+
+    public Image getEventImage() {
+        return event.getImage();
     }
 }

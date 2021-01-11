@@ -46,7 +46,7 @@ public class AlertMaker {
         file = fileChooser.showOpenDialog(Main.window);
         if(file!=null)
         {
-           return new Image(file.toURI().toString());
+           return new Image(file.toURI().toString(),150,150,true,true);
         }
         return  null;
     }
