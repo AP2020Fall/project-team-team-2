@@ -1,85 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="625.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <Hyperlink layoutX="484.0" layoutY="224.0" onAction="#editInfo" text="edit info" />
-      <Label layoutX="235.0" layoutY="190.0" text="bio:">
+<Pane prefHeight="625.0" prefWidth="1020.0" styleClass="background" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="50.0" layoutY="360.0" text="Date:">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="bio" layoutX="356.0" layoutY="190.0" text="bio">
+      <Label fx:id="date" layoutX="146.0" layoutY="360.0" prefHeight="22.0" prefWidth="109.0" text="Date">
          <font>
-            <Font name="Arial" size="13.0" />
+            <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <ImageView fitHeight="150.0" fitWidth="165.0" layoutX="41.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="150.0" layoutX="73.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/blankProfile.png" />
          </image>
       </ImageView>
-      <Label layoutX="235.0" layoutY="35.0" text="Username:">
+      <Label layoutX="50.0" layoutY="200.0" text="First Name:">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label layoutX="235.0" layoutY="68.0" text="First Name:">
+      <Label layoutX="50.0" layoutY="240.0" text="Last Name:">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label layoutX="235.0" layoutY="103.0" text="Last Name:">
+      <Label layoutX="50.0" layoutY="280.0" text="Email:">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label layoutX="236.0" layoutY="133.0" text="Email:">
+      <Label layoutX="50.0" layoutY="320.0" text="Phone">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label layoutX="235.0" layoutY="164.0" text="Phone Number:">
+      <Label fx:id="username" layoutX="280.0" layoutY="29.0" text="Username">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="Geometr415 Blk BT Black" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="username" layoutX="356.0" layoutY="34.0" text="Label">
+      <Label fx:id="firstName" layoutX="148.0" layoutY="200.0" prefHeight="22.0" prefWidth="109.0" text="First Name">
          <font>
-            <Font size="13.0" />
+            <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="firstname" layoutX="356.0" layoutY="68.0" text="Label">
+      <Label fx:id="lastName" layoutX="148.0" layoutY="240.0" prefHeight="16.0" prefWidth="109.0" text="Last Name">
          <font>
-            <Font size="13.0" />
+            <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="lastname" layoutX="356.0" layoutY="103.0" text="Label">
+      <Label fx:id="email" layoutX="118.0" layoutY="280.0" prefHeight="22.0" prefWidth="139.0" text="Email@email.com">
          <font>
-            <Font size="13.0" />
+            <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="email" layoutX="356.0" layoutY="133.0" text="Label">
+      <Label fx:id="phoneNumber" layoutX="118.0" layoutY="320.0" prefHeight="22.0" prefWidth="139.0" text="Phone Number">
          <font>
-            <Font size="13.0" />
+            <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="phoneNumber" layoutX="356.0" layoutY="164.0" text="Label">
+      <JFXButton buttonType="RAISED" layoutX="58.0" layoutY="549.0" onAction="#logout" prefHeight="37.0" prefWidth="150.0" style="-fx-background-color: ffa000;" text="Log out">
          <font>
-            <Font size="13.0" />
-         </font>
-      </Label>
-      <JFXButton buttonType="RAISED" layoutX="57.0" layoutY="235.0" onAction="#logout" prefHeight="25.0" prefWidth="119.0" style="-fx-background-color: red;" text="Log out">
-         <font>
-            <Font name="Arial" size="16.0" />
+            <Font name="Geometr415 Blk BT Black" size="20.0" />
          </font>
       </JFXButton>
-    </children>
+      <Separator layoutX="262.0" layoutY="184.0" prefHeight="16.0" prefWidth="713.0" />
+      <Separator layoutX="259.0" layoutY="190.0" orientation="VERTICAL" prefHeight="403.0" prefWidth="0.0" />
+      <JFXButton buttonType="RAISED" layoutX="825.0" layoutY="131.0" onAction="#editInfo" prefHeight="37.0" prefWidth="150.0" style="-fx-background-color: #00bbff;" text="Edit Profile" textFill="WHITE">
+         <font>
+            <Font name="Geometr415 Blk BT Black" size="20.0" />
+         </font>
+      </JFXButton>
+   </children>
 </Pane>

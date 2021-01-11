@@ -3,6 +3,7 @@ package controller.admin;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 import model.*;
 import model.Entry.PlayerEntry;
 import model.Entry.SuggestionEntry;
@@ -18,9 +19,34 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
                 "Admin passed to AdminMainMenuController is null.");
     }
 
-    public Admin getAdmin(){
-        return admin;
+    public String getUsername(){
+        return admin.getUsername();
     }
+
+    public String getDate(){
+        return String.valueOf(admin.getDayOfRegister());
+    }
+
+    public String getFirstName(){
+        return admin.getFirstName();
+    }
+
+    public String getLastName(){
+        return admin.getLastName();
+    }
+
+    public String getEmail(){
+        return admin.getEmail();
+    }
+
+    public String getPhoneNumber(){
+        return admin.getPhoneNumber();
+    }
+
+    public Image getImage(){
+        return admin.getImage();
+    }
+
 
     public ObservableList<SuggestionEntry> getSuggestions() {
         ObservableList<SuggestionEntry> result = FXCollections.observableArrayList();

@@ -6,12 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import model.Entry.GameEntry;
+import model.Entry.SuggestionEntry;
 import view.Tab;
 
 import java.io.IOException;
@@ -23,6 +21,8 @@ public class PlayerMainMenu implements Tab, Initializable {
     @FXML
     private TreeTableView<GameEntry> gamesList;
 
+    @FXML
+    private TableView<SuggestionEntry> suggestionTable;
 
     PlayerMainMenuController controller;
 
@@ -39,6 +39,7 @@ public class PlayerMainMenu implements Tab, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        initializedSuggestionTable();
         initializeTreeGamesList();
     }
 
@@ -67,6 +68,10 @@ public class PlayerMainMenu implements Tab, Initializable {
         gamesList.setRoot(gameRoot);
         gamesList.setShowRoot(false);
         gamesList.getColumns().addAll(gameName, gameOpen);
+    }
+    private void initializedSuggestionTable()
+    {
+        //todo
     }
 
 

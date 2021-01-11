@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,6 +24,7 @@ public abstract class Account {
     private String password;
     private String email;
     private String phoneNumber;
+    private LocalDate registerDay;
     private boolean isRobot = false;
     private Image image;
 
@@ -36,6 +39,9 @@ public abstract class Account {
     public Account(String botName, String username) {
         this.firstName = botName;
         this.username = username;
+    }
+    public int getDayOfRegister() {
+        return (int) ChronoUnit.DAYS.between(registerDay, LocalDate.now());
     }
 
     public String getBio() {

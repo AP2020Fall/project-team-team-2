@@ -63,6 +63,23 @@
     -fx-background-color: #aaff00;
 }
 
+#playerListTable{
+    -fx-background-color: #aaaa50;
+}
+#adminSuggestionTable{
+    -fx-background-color: #aa55a0;
+}
+#playerSuggestionTable{
+    -fx-background-color: #aa00f0;
+}
+#adminGameTable{
+    -fx-background-color: #55ff00;
+}
+#adminEventTable
+{
+    -fx-background-color: #55aa50;
+
+}
 /* Game Part */
 .country {
     -fx-fill: yellow;

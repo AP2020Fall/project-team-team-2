@@ -49,6 +49,7 @@ public class PlayerMainMenuLayout implements View, Initializable {
 
     @FXML
     private void search() {
+        //todo add similar name
         if (!controller.isUsernameExist(searchUsername.getText())) {
             System.out.println("username does not exist!");
         } else {

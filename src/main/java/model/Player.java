@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.Objects;
 
 public class Player extends Account {
-    private LocalDate registerDay;
     private double money;
     private int score;
     private int loses;
@@ -30,7 +29,6 @@ public class Player extends Account {
     public Player(String firstName, String lastName, String username, String accountId,
                   String password, String email, String phoneNumber, double money) {
         super(firstName, lastName, username, accountId, password, email, phoneNumber);
-        registerDay = LocalDate.now();
         this.money = money;
         this.score = 0;
         ///this.loses = this.wins = this.draws = 0;
@@ -46,10 +44,6 @@ public class Player extends Account {
 
     public Player(String botName, String username) {
         super(botName, username);
-    }
-
-    public int getDayOfRegister() {
-        return (int) ChronoUnit.DAYS.between(registerDay, LocalDate.now());
     }
 
     public double getMoney() {

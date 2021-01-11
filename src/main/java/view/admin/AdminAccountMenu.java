@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import view.Tab;
 import view.TabHandler;
 import view.ViewHandler;
@@ -17,21 +18,25 @@ import java.util.ResourceBundle;
 
 public class AdminAccountMenu implements Tab, Initializable {
     @FXML
-    private Label bio = new Label();
-    @FXML
     private Label date = new Label();
     @FXML
     private Label username = new Label();
     @FXML
-    private Label firstname = new Label();
+    private Label firstName = new Label();
     @FXML
-    private Label lastname = new Label();
+    private Label lastName= new Label();
+    @FXML
+    private ImageView avatar;
     @FXML
     private Label email = new Label();
     @FXML
     private Label phoneNumber = new Label();
 
     private AdminMainMenuController controller;
+
+
+
+
 
     public AdminAccountMenu() {
         controller = new AdminMainMenuController();
@@ -51,6 +56,7 @@ public class AdminAccountMenu implements Tab, Initializable {
 
     @FXML
     private void editInfo(ActionEvent actionEvent) {
+        //todo implement
     }
 
     @FXML
@@ -61,11 +67,12 @@ public class AdminAccountMenu implements Tab, Initializable {
     }
 
     private void initializedInfo() {
-        username.setText(controller.getAdmin().getUsername());
-        firstname.setText(controller.getAdmin().getFirstName());
-        lastname.setText(controller.getAdmin().getLastName());
-        email.setText(controller.getAdmin().getEmail());
-        phoneNumber.setText(controller.getAdmin().getPhoneNumber());
-        bio.setText(controller.getAdmin().getBio());
+        username.setText(controller.getUsername());
+        firstName.setText(controller.getFirstName());
+        lastName.setText(controller.getLastName());
+        email.setText(controller.getEmail());
+        phoneNumber.setText(controller.getPhoneNumber());
+        date.setText(controller.getDate());
+        avatar.setImage(controller.getImage());
     }
 }
