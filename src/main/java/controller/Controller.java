@@ -1,4 +1,4 @@
-package controller.risk;
+package controller;
 
 import model.*;
 
@@ -151,4 +151,8 @@ public class Controller {
         return Player.getPlayerByUsername(username);
     }
 
+
+    public boolean checkMoney(String money) {
+        return money.matches("^\\d+");
+    }
 }

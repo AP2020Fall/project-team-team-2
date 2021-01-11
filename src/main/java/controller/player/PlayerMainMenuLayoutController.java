@@ -1,6 +1,6 @@
 package controller.player;
 
-import controller.risk.Controller;
+import controller.Controller;
 import model.Player;
 
 public class PlayerMainMenuLayoutController extends Controller {

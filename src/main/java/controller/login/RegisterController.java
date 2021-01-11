@@ -1,7 +1,7 @@
 package controller.login;
 
 
-import controller.risk.Controller;
+import controller.Controller;
 import controller.admin.AdminMainMenuLayoutController;
 import controller.player.PlayerMainMenuLayoutController;
 import model.Account;
@@ -41,4 +41,6 @@ public class RegisterController extends Controller {
         Account.getAllAccounts().add(admin);
         return admin;
     }
+
+
 }

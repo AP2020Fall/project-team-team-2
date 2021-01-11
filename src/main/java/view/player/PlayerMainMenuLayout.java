@@ -42,14 +42,9 @@ public class PlayerMainMenuLayout implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("*0");
         initializeMenuBar();
-        System.out.println("*1");
         TabHandler.getTabHandler().setBorderPane(borderPane);
-        System.out.println("*2");
         viewMainMenu();
-        System.out.println("*3");
-
     }
 
     @FXML
@@ -65,7 +60,6 @@ public class PlayerMainMenuLayout implements View, Initializable {
     @FXML
     private void platoMessage() throws IOException {
         new PlatoMessageView().openWindow();
-        //ViewHandler.getViewHandler().push(new PlatoMessageView());
     }
 
     @FXML

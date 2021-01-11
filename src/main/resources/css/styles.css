@@ -43,3 +43,9 @@
 #plateMessageTable{
 -fx-background-color: #ff55a0;
 }
+#gameLogTreeTable{
+-fx-background-color: #ff00f0;
+}
+#scoreboardTable{
+-fx-background-color: #aaff00;
+}
