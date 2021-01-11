@@ -1,5 +1,6 @@
 package view.admin;
 
+import com.jfoenix.controls.JFXTextField;
 import controller.admin.AdminMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,15 +8,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import view.AlertMaker;
 
 import java.io.IOException;
 
 public class AddSuggestionPopup {
-    @FXML private TextField playerName;
-    @FXML private  TextField gameName;
-    @FXML private  Label errorMsg;
+    @FXML
+    private JFXTextField playerName;
+    @FXML
+    private JFXTextField gameName;
+    @FXML
+    private StackPane stackRoot;
+
     private Stage popupWindow;
     private final AdminMainMenuController controller;
 
@@ -36,15 +44,28 @@ public class AddSuggestionPopup {
     }
     @FXML private void add() {
         if (!controller.isUsernameExist(playerName.getText())) {
-            errorMsg.setText("username does not exist!");
+            setInfoColourRed();
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
+                    "Invalid information","username does not exist.");
         } else if (!controller.doesGameExist(gameName.getText())) {
-            errorMsg.setText("game does not exist!");
+            setInfoColourRed();
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
+                    "Invalid information","game does not exist.");
         } else if (controller.playerBeenSuggested(playerName.getText(), gameName.getText())) {
-            errorMsg.setText("game has already been suggested!");
+            setInfoColourRed();
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
+                    "Invalid information","game has already been suggested.");
         } else {
             controller.addSuggestion(playerName.getText(), gameName.getText());
             popupWindow.close();
         }
+    }
+    private void setInfoColourRed()
+    {
+        playerName.setFocusColor(Paint.valueOf("#ff0000"));
+        playerName.setUnFocusColor(Paint.valueOf("#ff0000"));
+        gameName.setFocusColor(Paint.valueOf("#ff0000"));
+        gameName.setUnFocusColor(Paint.valueOf("#ff0000"));
     }
 
 }

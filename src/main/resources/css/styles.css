@@ -18,6 +18,9 @@
     -fx-text-fill: #333;
     -fx-border-style: solid;
 }
+.popupBackground{
+    -fx-background-color: #a0a0a0;
+}
 
 .mainMenuButton {
     -fx-background-color: #ff55a0;

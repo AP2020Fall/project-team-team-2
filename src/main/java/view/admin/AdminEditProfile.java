@@ -51,7 +51,7 @@ public class AdminEditProfile implements Tab, Initializable {
 
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerEditProfile.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/admin/adminEditProfile.fxml"));
         loader.setController(this);
         return loader.load();
     }
@@ -83,7 +83,6 @@ public class AdminEditProfile implements Tab, Initializable {
             playerImage.setImage(givenImage);
             controller.setPlayerImage(givenImage);
         }
-        System.out.println("add avatar must be implemented.");
     }
 
     private void initializedPlayerInfo() {

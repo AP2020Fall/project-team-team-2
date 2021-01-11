@@ -1,5 +1,7 @@
 package view.admin;
 
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import controller.admin.AdminGamesMenuController;
 import controller.admin.AdminMainMenuController;
 import javafx.event.ActionEvent;
@@ -9,19 +11,27 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import view.AlertMaker;
 
 import java.io.IOException;
 
 public class AddGamePopup {
     @FXML
-    private TextArea gameDetail;
+    private JFXTextArea gameDetail;
     @FXML
-    private TextField gameName;
+    private JFXTextField gameName;
     @FXML
-    private Label errorMsg;
+    private StackPane stackRoot;
     private Stage popupWindow;
+    @FXML
+    private ImageView avatar;
 
     private AdminGamesMenuController controller;
 
@@ -45,16 +55,34 @@ public class AddGamePopup {
     @FXML
     void add() {
         if (controller.doesGameExist(gameName.getText())) {
-            errorMsg.setText("game exists!");
+            setInfoColourRed();
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
+            "Invalid information","The game already exists.");
         }
         else{
-            controller.addGame(gameName.getText(), gameDetail.getText());
+            controller.addGame(gameName.getText(), gameDetail.getText(),avatar.getImage());
             popupWindow.close();
+        }
+    }
+
+    @FXML
+    void addAvatar(MouseEvent event) {
+        Image givenImage = AlertMaker.getImageFromUser();
+        if(givenImage != null)
+        {
+            avatar.setImage(givenImage);
         }
     }
 
     @FXML
     void cancel() {
         popupWindow.close();
+    }
+    private void setInfoColourRed()
+    {
+        gameDetail.setFocusColor(Paint.valueOf("#ff0000"));
+        gameDetail.setUnFocusColor(Paint.valueOf("#ff0000"));
+        gameName.setFocusColor(Paint.valueOf("#ff0000"));
+        gameName.setUnFocusColor(Paint.valueOf("#ff0000"));
     }
 }

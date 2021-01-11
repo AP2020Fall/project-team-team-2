@@ -62,7 +62,7 @@ public class AdminProfileView implements Tab, Initializable {
 
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerProfileView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/admin/adminProfileView.fxml"));
         loader.setController(this);
         return loader.load();
     }

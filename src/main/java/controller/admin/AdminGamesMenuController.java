@@ -2,6 +2,7 @@ package controller.admin;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 import model.Entry.EventEntry;
 import model.Entry.GameEntry;
 import model.Event;
@@ -28,9 +29,9 @@ public class AdminGamesMenuController extends AdminMainMenuLayoutController{
         Objects.requireNonNull(Game.getGameByGameName(gameEntry.getName()),
                 "Game passed to AdminMainMenuController.removeGame doesn't exist.").delete();
     }
-    public void addGame(String gameName, String gameDetail) {
+    public void addGame(String gameName, String gameDetail, Image gameImage) {
         //creates a game and adds it to the list of games
-        Game game = new Game(gameName, generateId(), gameDetail);
+        Game game = new Game(gameName, generateId(), gameDetail,gameImage);
         Game.addGame(game);
     }
 
