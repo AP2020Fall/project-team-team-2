@@ -40,8 +40,11 @@ public class AdminMainMenuLayout implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("1");
         TabHandler.getTabHandler().setBorderPane(borderPane);
+        System.out.println("2");
         viewMainMenu();
+        System.out.println("3");
 
     }
     @FXML private  void search(ActionEvent actionEvent) {
@@ -54,7 +57,7 @@ public class AdminMainMenuLayout implements View, Initializable {
         }
     }
 
-    @FXML private  void sendMessage(ActionEvent actionEvent) {
+    @FXML private  void platoMessage(ActionEvent actionEvent) {
     }
 
     @FXML

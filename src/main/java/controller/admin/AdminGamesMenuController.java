@@ -72,11 +72,11 @@ public class AdminGamesMenuController extends AdminMainMenuLayoutController{
         Objects.requireNonNull(Event.getEventById(eventEntry.getEventId()),
                 "EventId passed AdminMainMenuController.removeEvent doesn't exist.").delete();
     }
-    public void addEvent(String gameName, LocalDate start, LocalDate end, int score) {
+    public void addEvent(String gameName, LocalDate start, LocalDate end, int score,Image image) {
         //creates a new event and adds it to the list of events.
         //LocalDate startDate = createLocalDate(start);
        // LocalDate endDate = createLocalDate(end);
-        Event event = new Event(gameName, start, end, score, generateId());
+        Event event = new Event(gameName, start, end, score, generateId(),image);
         Event.addEvent(event);
     }
 }

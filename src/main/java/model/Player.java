@@ -31,7 +31,6 @@ public class Player extends Account {
         super(firstName, lastName, username, accountId, password, email, phoneNumber);
         this.money = money;
         this.score = 0;
-        ///this.loses = this.wins = this.draws = 0;
         gameLogSummaries = new ArrayList<>();
         friends = new ArrayList<>();
         receivedFriendRequests = new ArrayList<>();

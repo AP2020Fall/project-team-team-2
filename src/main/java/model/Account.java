@@ -61,6 +61,7 @@ public abstract class Account {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.image = new Image("/images/blankProfile.png");
+        registerDay = LocalDate.now();
     }
 
     public String getFirstName() {

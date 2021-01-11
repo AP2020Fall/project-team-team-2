@@ -20,13 +20,15 @@ public class Event {
     private LocalDate end;
     private int score;
     private String eventId;
+    private Image image;
 
-    public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId) {
+    public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId,Image image) {
         this.gameName = gameName;
         this.start = start;
         this.end = end;
         this.score = score;
         this.eventId = eventId;
+        this.image = image;
     }
 
 

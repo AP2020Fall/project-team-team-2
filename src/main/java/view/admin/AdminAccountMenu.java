@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import view.Tab;
 import view.TabHandler;
 import view.ViewHandler;
+import view.player.PlayerEditProfile;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,9 +36,6 @@ public class AdminAccountMenu implements Tab, Initializable {
     private AdminMainMenuController controller;
 
 
-
-
-
     public AdminAccountMenu() {
         controller = new AdminMainMenuController();
     }
@@ -55,8 +53,8 @@ public class AdminAccountMenu implements Tab, Initializable {
     }
 
     @FXML
-    private void editInfo(ActionEvent actionEvent) {
-        //todo implement
+    private void editInfo() {
+        TabHandler.getTabHandler().push(new AdminEditProfile());
     }
 
     @FXML
@@ -72,7 +70,10 @@ public class AdminAccountMenu implements Tab, Initializable {
         lastName.setText(controller.getLastName());
         email.setText(controller.getEmail());
         phoneNumber.setText(controller.getPhoneNumber());
+        System.out.println("6");
         date.setText(controller.getDate());
+        System.out.println("5");
         avatar.setImage(controller.getImage());
+        System.out.println("4");
     }
 }
