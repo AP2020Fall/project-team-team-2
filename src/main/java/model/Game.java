@@ -1,6 +1,7 @@
 package model;
 
 import com.google.gson.GsonBuilder;
+import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,6 +17,15 @@ public class Game {
     private final ArrayList<PlayLog> playLogs;
     private String details;
     private final Scoreboard scoreboard;
+    private Image image;
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
 
     public Game(String name, String gameId, String details) {
         this.name = name;

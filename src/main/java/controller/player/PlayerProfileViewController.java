@@ -2,6 +2,7 @@ package controller.player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 import model.Entry.GameLogSummaryEntry;
 import model.FriendRequest;
 import model.GameLogSummary;
@@ -91,4 +92,7 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
         return String.valueOf(player.getFriends().size());
     }
 
+    public Image getPlayerImage() {
+        return player.getImage();
+    }
 }

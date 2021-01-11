@@ -1,5 +1,6 @@
 package controller.player;
 
+import javafx.scene.image.Image;
 import model.Entry.GameLogEntry;
 import model.Game;
 import model.GameLog;
@@ -84,30 +85,7 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         return player.getFavouriteGames().contains(game);
     }
 
-/*
-    public int showPoints() {
-        //returns the score of player in the game.
-        //throws NullPointerException if the player hasn't played the game.
-        return Objects.requireNonNull(player.getGameHistory(game.getName()),
-                "Player hasn't played this game.").getScore();
-    }*/
-
-    /*public ArrayList<String> showLog() {
-    //returns the game's logs.
-    ArrayList<String> result = new ArrayList<>();
-    for(PlayLog playLog : game.getPlayLogs())
-        result.add(playLog.toString());
-    return result;
-}*/
-   /* public boolean canRunGame()
-    {
-        return game.getName().equals("Risk");
+    public Image getGameImage() {
+        return game.getImage();
     }
-
-    public boolean hasPlayedGame()
-    {
-        return player.getGameHistory(game.getName()) != null;
-    }
-*/
-
 }

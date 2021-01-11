@@ -9,6 +9,7 @@ import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -19,16 +20,36 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import main.Main;
+
 import javax.imageio.ImageIO;
 //import library.assistant.util.LibraryAssistantUtil;
 
 public class AlertMaker {
+
+
+    public static Image getImageFromUser()
+    {
+        File file;
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image files","*.png","*.jpeg","*.jpg"));
+
+        file = fileChooser.showOpenDialog(Main.window);
+        if(file!=null)
+        {
+           return new Image(file.toURI().toString());
+        }
+        return  null;
+    }
 
     public static void showSimpleAlert(String title, String content) {
         Alert alert = new Alert(AlertType.INFORMATION);
