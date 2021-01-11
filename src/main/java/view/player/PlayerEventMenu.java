@@ -41,6 +41,7 @@ public class PlayerEventMenu implements Tab, Initializable {
         controller.join();
         //todo implement
     }
+
     private void initializeInfo()
     {
         gameName.setText(controller.getGameName());
