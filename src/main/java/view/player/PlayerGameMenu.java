@@ -76,6 +76,7 @@ public class PlayerGameMenu implements Tab, Initializable {
     @FXML
     private void runGame() {
         //todo
+        System.out.println("run game must be implemented");
     }
 
 
@@ -83,6 +84,8 @@ public class PlayerGameMenu implements Tab, Initializable {
         detail.setText(controller.getDetails());
         frequency.setText(controller.getPlayedFrequency());
         win.setText(controller.getWinsCount());
+        gameImage.setImage(controller.getGameImage());
+
     }
 
     private void initializeTreeGameLogList() {

@@ -1,6 +1,7 @@
 package model;
 
 import com.google.gson.GsonBuilder;
+import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Event {
@@ -59,6 +61,11 @@ public class Event {
 
     public String getEventId() {
         return eventId;
+    }
+
+    public Image getImage() {
+        return Objects.requireNonNull( Game.getGameByGameName(gameName),
+                "Game passed to Event model is null").getImage();
     }
 
     public void setGameName(String gameName) {
@@ -137,4 +144,5 @@ public class Event {
                 ", eventId='" + eventId + '\'' +
                 '}';
     }
+
 }

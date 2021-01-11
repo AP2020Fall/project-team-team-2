@@ -9,14 +9,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
+import main.Main;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
+import view.ViewHandler;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -74,11 +79,18 @@ public class PlayerEditProfile implements Tab, Initializable {
             controller.setLastName(lastName.getText());
             controller.setPhoneNumber(phoneNumber.getText());
             controller.setEmail(email.getText());
+            TabHandler.getTabHandler().back();
         }
     }
     @FXML
     private void addAvatar(MouseEvent event) {
         //todo
+        Image givenImage = AlertMaker.getImageFromUser();
+        if(givenImage != null)
+        {
+            playerImage.setImage(givenImage);
+            controller.setPlayerImage(givenImage);
+        }
         System.out.println("add avatar must be implemented.");
     }
 
@@ -91,6 +103,7 @@ public class PlayerEditProfile implements Tab, Initializable {
         bio.setText(controller.getBio());
         email.setText(controller.getEmail());
         phoneNumber.setText(controller.getPhoneNumber());
+        playerImage.setImage(controller.getPlayerImage());
     }
 
     private void setUsernameColourRed() {

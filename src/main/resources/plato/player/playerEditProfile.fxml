@@ -17,7 +17,7 @@
    <children>
       <Pane prefHeight="200.0" prefWidth="200.0" styleClass="background" stylesheets="@../../css/styles.css">
          <children>
-            <ImageView fx:id="playerImage" fitHeight="150.0" fitWidth="200.0" layoutX="125.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="playerImage" fitHeight="150.0" fitWidth="150.0" layoutX="125.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/blankProfile.png" />
                </image>
@@ -67,12 +67,12 @@
                   <Font name="Geometr415 Blk BT Black" size="18.0" />
                </font>
             </JFXButton>
-            <JFXTextField fx:id="username" labelFloat="true" layoutX="554.0" layoutY="59.0" promptText="username">
+            <JFXTextField fx:id="username" labelFloat="true" layoutX="550.0" layoutY="59.0" promptText="username">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>
             </JFXTextField>
-            <JFXPasswordField fx:id="password" labelFloat="true" layoutX="554.0" layoutY="120.0" promptText="password">
+            <JFXPasswordField fx:id="password" labelFloat="true" layoutX="550.0" layoutY="120.0" promptText="password">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>
@@ -82,22 +82,22 @@
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>
             </JFXTextArea>
-            <JFXTextField fx:id="firstName" labelFloat="true" layoutX="553.0" layoutY="220.0" promptText="first name">
+            <JFXTextField fx:id="firstName" labelFloat="true" layoutX="550.0" layoutY="220.0" promptText="first name">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="lastName" labelFloat="true" layoutX="553.0" layoutY="280.0" promptText="last name">
+            <JFXTextField fx:id="lastName" labelFloat="true" layoutX="550.0" layoutY="280.0" promptText="last name">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="email" labelFloat="true" layoutX="545.0" layoutY="340.0" promptText="email">
+            <JFXTextField fx:id="email" labelFloat="true" layoutX="550.0" layoutY="340.0" promptText="email">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="phoneNumber" labelFloat="true" layoutX="553.0" layoutY="400.0" promptText="phone number">
+            <JFXTextField fx:id="phoneNumber" labelFloat="true" layoutX="550.0" layoutY="400.0" promptText="phone number">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>

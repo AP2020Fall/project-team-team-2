@@ -48,7 +48,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="165.0" layoutX="73.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="150.0" layoutX="73.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/blankProfile.png" />
          </image>

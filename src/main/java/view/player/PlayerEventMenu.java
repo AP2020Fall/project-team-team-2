@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import model.Event;
 import view.Tab;
 
@@ -19,6 +20,8 @@ public class PlayerEventMenu implements Tab, Initializable {
     @FXML private Label startDate;
     @FXML private Label endDate;
     @FXML private Label score;
+    @FXML
+    private ImageView eventImage;
     PlayerEventMenuController controller;
 
     public PlayerEventMenu(Event event) {
@@ -48,5 +51,6 @@ public class PlayerEventMenu implements Tab, Initializable {
         startDate.setText(controller.getStartDate());
         endDate.setText(controller.getEndDate());
         score.setText(controller.getScore());
+        eventImage.setImage(controller.getEventImage());
     }
 }

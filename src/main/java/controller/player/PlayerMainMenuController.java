@@ -2,6 +2,7 @@ package controller.player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 import model.*;
 import model.Entry.*;
 
@@ -140,4 +141,11 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
         player.setBio(bio);
     }
 
+    public void setPlayerImage(Image givenImage) {
+        player.setImage(givenImage);
+
+    }
+    public Image getPlayerImage() {
+        return player.getImage();
+    }
 }

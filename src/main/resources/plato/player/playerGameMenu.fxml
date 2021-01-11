@@ -48,7 +48,7 @@
          </font>
       </JFXButton>
       <FontAwesomeIconView fx:id="favorite" fill="TRANSPARENT" glyphName="STAR" layoutX="510.0" layoutY="75.0" onMouseClicked="#addToFavorite" size="48" stroke="#ffc000" strokeWidth="4.0" />
-      <ImageView fx:id="gameImage" fitHeight="141.0" fitWidth="148.0" layoutX="39.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="gameImage" fitHeight="150.0" fitWidth="150.0" layoutX="32.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/icon.png" />
          </image>

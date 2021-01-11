@@ -2,6 +2,7 @@ package model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.scene.image.Image;
 
 import javax.swing.text.html.ImageView;
 import java.io.File;
@@ -22,14 +23,14 @@ public abstract class Account {
     private String email;
     private String phoneNumber;
     private boolean isRobot = false;
-    private ImageView imageView;
+    private Image image;
 
-    public ImageView getImageView() {
-        return imageView;
+    public Image getImage() {
+        return image;
     }
 
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public Account(String botName, String username) {
@@ -53,6 +54,7 @@ public abstract class Account {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.image = new Image("/images/blankProfile.png");
     }
 
     public String getFirstName() {
