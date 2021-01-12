@@ -6,7 +6,7 @@
     -fx-background-color: linear-gradient(to bottom, #2c87b1, #3878e7, transparent);
 }
 
-.toggleButton, .buttons, .textFields {
+.toggleButton, .buttons, .textFields ,#inputNumber{
     -fx-background-color: #333;
     -fx-text-fill: wheat;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
@@ -31,7 +31,7 @@
     -fx-background-color: #62727b;
     -fx-text-fill: #ffffff;
 }
-.mainMenuButton: hover{
+.mainMenuButton:hover{
     -fx-background-color: #383838;
 }
 .blueButton{
@@ -127,7 +127,26 @@
 .country_player_5:hover {
     -fx-fill: #434338;
 }
-
+.country:pressed,
+.country_entered,
+.country_player_1:pressed,
+.country_player_2:pressed,
+.country_player_3:pressed,
+.country_player_4:pressed,
+.country_player_5:pressed{
+    -fx-fill: #06e7a7;
+}
+.draft_mode,
+.attack_mode,
+.fortify_mode{
+    -fx-fill: #333;
+}
+.status_on{
+    -fx-fill:green;
+}
+.none_active{
+    -fx-fill: #333;
+}
 .country_player_1 {
     -fx-fill: #6B5B95;
 }

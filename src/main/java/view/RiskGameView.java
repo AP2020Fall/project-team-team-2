@@ -5,22 +5,29 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import model.Country;
 import model.Player;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -30,7 +37,12 @@ public class RiskGameView implements View, Initializable {
     private final String mapNum;
     private final SVGPath[][] allPaths = new SVGPath[5][5];
     private final Label[][] allLabels = new Label[5][5];
+    private final List<Circle> playersCircles = new ArrayList<Circle>();
     private final String[][] defaultClasses = new String[5][5];
+    @FXML
+    private Rectangle nextTurn;
+    @FXML
+    private TextField inputNumber;
     @FXML
     private Circle draftCircleImage;
     @FXML
@@ -148,11 +160,19 @@ public class RiskGameView implements View, Initializable {
     @FXML
     private Label label_5_5;
     @FXML
-
     private void countryClick(MouseEvent e)  {
-        int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
-        SVGPath path = allPaths[indices[0]-1][indices[1]-1];
-        toggleColor(path);
+//        int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
+//        SVGPath path = allPaths[indices[0]-1][indices[1]-1];
+//        toggleColor(path);
+        try {
+            System.out.println(inputNumber.getText());
+        }catch (Exception exception){
+
+        }
+    }
+    @FXML
+    private void nextTurnHandler(MouseEvent e){
+
     }
     public int[] getCountryIndices(String countryClicked){
         String[] details = countryClicked.split("_");
@@ -344,9 +364,8 @@ public class RiskGameView implements View, Initializable {
 
 
 
-    private void showWhatToDo() {
-        String toPrint = riskGameController.showWhatToDo();
-        System.out.println(toPrint);
+    private String showWhatToDo() {
+        return riskGameController.showWhatToDo();
     }
 
     public void showMap() {
@@ -411,6 +430,13 @@ public class RiskGameView implements View, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         rightVBox.setSpacing(5);
+        try {
+            makeRightHBox();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        setColorTurn();
+        setColorMode();
         allPaths[0][0] = country_1_1;
         allPaths[0][1] = country_1_2;
         allPaths[0][2] = country_1_3;
@@ -500,20 +526,80 @@ public class RiskGameView implements View, Initializable {
             }
         }
     }
-    public void insertImage(Circle circle , String imageAddress){
-        Image image = new Image(getClass().getResource(imageAddress).getFile());
-        circle.setFill(new ImagePattern(image));
-        circle.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
+    public void setColorMode(){
+        setClassForShape(draftModeShape , "none_active");
+        setClassForShape(attackModeShape , "none_active");
+        setClassForShape(fortifyModeShape , "none_active");
+        switch (showWhatToDo()){
+            case "Draft":
+                draftModeShape.getStyleClass().clear();
+                draftModeShape.getStyleClass().add("status_on");
+                break;
+            case "Attack":
+                attackModeShape.getStyleClass().clear();
+                attackModeShape.getStyleClass().add("status_on");
+                break;
+            case "Fortify":
+                fortifyModeShape.getStyleClass().clear();
+                fortifyModeShape.getStyleClass().add("status_on");
+                break;
+        }
+    }
+    public void setColorTurn(){
+        setDefaultClasses(playersCircles  , "none_active");
+        int turnIndex = riskGameController.getCurrentPlayerIndex();
+        playersCircles.get(turnIndex).getStyleClass().clear();
+        playersCircles.get(turnIndex).getStyleClass().add("status_on");
+    }
+    public void setClassForShape(Shape shape , String className){
+        shape.getStyleClass().clear();
+        shape.getStyleClass().add(className);
+    }
+    public void setDefaultClasses(List<Circle> shapes , String defaltClassName){
+        for(Shape shape : shapes){
+            setClassForShape(shape , defaltClassName);
+        }
+    }
+    public void makeRightHBox() throws URISyntaxException {
+        int i = 0;
+        String playerImageAddress = "/images/player_";
+        for(Player  player : riskGameController.getPlayers()) {
+            i++;
+            Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress+i+".png").toURI()));
+            Circle littleCircle = new Circle(10);
+            littleCircle.getStyleClass().add("none_active");
+            playersCircles.add(littleCircle);
+            Circle bigCircle = new Circle(100);
+            bigCircle.setFill(new ImagePattern(image));
+            bigCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
+            HBox tempHBox = new HBox(littleCircle,bigCircle);
+            tempHBox.setAlignment(Pos.CENTER);
+            tempHBox.setSpacing(10);
+            rightVBox.getChildren().add(tempHBox);
+        }
+    }
+    public void insertImage(Shape shape , String imageAddress) throws URISyntaxException {
+        Image image = new Image(String.valueOf(getClass().getResource(imageAddress).toURI()));
+        shape.setFill(new ImagePattern(image));
+        shape.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
     }
     @Override
     public void show(Stage window) throws IOException {
+
         String fileAddress = "/game/maps/map_" + mapNum + ".fxml";
         FXMLLoader root = new FXMLLoader(getClass().getResource(fileAddress));
         root.setController(this);
         window.setTitle("Game Started");
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
-        insertImage(draftCircleImage ,"/images/attack.png");
+        try {
+            insertImage(draftCircleImage ,"/images/draft.png");
+            insertImage(attackCircleImage ,"/images/attack.png");
+            insertImage(fortifyCircleImage ,"/images/fortify.png");
+            insertImage(nextTurn , "/images/next.png");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
 }

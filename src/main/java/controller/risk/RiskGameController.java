@@ -32,6 +32,10 @@ public class RiskGameController extends Controller {
     private MatchCardController matchCardController = new MatchCardController(currentPlayer);
     private Player winner;
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
     public RiskGameController(java.util.Map<String, Object> primitiveSettings, int soldiers) {
         this.primitiveSettings = primitiveSettings;
         this.players = (ArrayList<Player>) primitiveSettings.get("Players");
@@ -863,7 +867,14 @@ public class RiskGameController extends Controller {
     public boolean getAttackWon() {
         return this.attackWon;
     }
-
+    public int getCurrentPlayerIndex(){
+        for(int i = 0 ; i < players.size() ; i++){
+            if(currentPlayer.equals(players.get(i))){
+                return i;
+            }
+        }
+        return 0;
+    }
     public String draftAfterWin(String countryDetails, int soldiers) {
         String toPrint = "";
         String[] details = countryDetails.split("\\.");
@@ -911,7 +922,7 @@ public class RiskGameController extends Controller {
     }
 
     public String showWhatToDo() {
-        String toPrint = "Playing status : ";
+        String toPrint = "";
         if(!draftDone){
             toPrint += "Draft";
         }else if(!attackDone){
