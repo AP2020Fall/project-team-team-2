@@ -1,8 +1,11 @@
 package model;
 
 import com.google.gson.GsonBuilder;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -125,6 +128,9 @@ public class Event {
         FileWriter file = new FileWriter("database" + "\\" + "events" + "\\" + event.getEventId() + ".json");
         file.write(jsonAccount);
         file.close();
+        System.out.println("saving ended " + event.getEventId());
+        saveImageToFile(event.getImage(),event.getEventId());
+        System.out.println("saving image ended " + event.getEventId());
     }
 
     public static void open() throws FileNotFoundException {
@@ -136,6 +142,19 @@ public class Event {
                 events.add(openEvent(file));
             }
         }
+    }
+
+    public static void saveImageToFile(Image image,String accountId) {
+        File outputFile = new File("/database/"+accountId+".jpg");
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+        try {
+            ImageIO.write(bImage, "jpg", outputFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void openFileToImage(Image image,Account account) {
+        account.setImage(new Image("/database/"+account.getAccountId()+".jpg"));
     }
 
     @Override
