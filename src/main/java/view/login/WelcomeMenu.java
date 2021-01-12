@@ -24,17 +24,6 @@ public class WelcomeMenu implements View {
         window.setResizable(false);
     }
 
-    private void saveFiles() {
-        try {
-            Account.save();
-            Event.save();
-            Suggestion.save();
-            Game.save();
-            FriendRequest.save();
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-    }
 
     @FXML
     private void openLoginMenu() {
@@ -48,7 +37,6 @@ public class WelcomeMenu implements View {
 
     @FXML
     private void exit() {
-        saveFiles();
         ViewHandler.getViewHandler().exit();
         System.exit(1);
     }
