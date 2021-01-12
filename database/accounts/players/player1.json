@@ -5,11 +5,17 @@
   "wins": 0,
   "draws": 0,
   "gameLogSummaries": [],
-  "friends": [],
+  "friends": [
+    "player2"
+  ],
   "receivedFriendRequests": [],
-  "sentFriendRequests": [],
+  "sentFriendRequests": [
+    "D3141B9D"
+  ],
   "messages": [],
-  "favouriteGames": [],
+  "favouriteGames": [
+    "5B3AC261"
+  ],
   "suggestions": [
     "CD2820D1"
   ],
