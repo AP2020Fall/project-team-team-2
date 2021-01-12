@@ -43,6 +43,7 @@ public abstract class Account {
         this.firstName = botName;
         this.username = username;
     }
+
     public int getDayOfRegister() {
         return (int) ChronoUnit.DAYS.between(registerDay, LocalDate.now());
     }
@@ -172,7 +173,7 @@ public abstract class Account {
         file.write(jsonAccount);
         file.close();
         System.out.println("saving ended " + player.getUsername());
-        saveImageToFile(player.getImage(),player.getAccountId());
+        saveImageToFile(player.getImage(), player.getAccountId());
         System.out.println("saving image ended " + player.getUsername());
     }
 
@@ -183,7 +184,7 @@ public abstract class Account {
         file.write(jsonAccount);
         file.close();
         System.out.println("saving ended admin");
-        saveImageToFile(admin.getImage(),admin.getAccountId());
+        saveImageToFile(admin.getImage(), admin.getAccountId());
         System.out.println("saving image ended admin");
 
     }
@@ -232,8 +233,8 @@ public abstract class Account {
         reader.close();
         return json;
     }
-    public static void saveImageToFile(Image image,String accountId) {
-        File outputFile = new File("/database/"+accountId+".jpg");
+    public static void saveImageToFile(Image image, String accountId) {
+        File outputFile = new File("/database/" + accountId + ".jpg");
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
             ImageIO.write(bImage, "jpg", outputFile);
@@ -241,8 +242,8 @@ public abstract class Account {
             throw new RuntimeException(e);
         }
     }
-    public static void openFileToImage(Image image,Account account) {
-       account.setImage(new Image("/database/"+account.getAccountId()+".jpg"));
+    public static void openFileToImage(Image image, Account account) {
+        account.setImage(new Image("/database/" + account.getAccountId() + ".jpg"));
     }
 
     @Override
