@@ -5,7 +5,9 @@
   "wins": 0,
   "draws": 0,
   "gameLogSummaries": [],
-  "friends": [],
+  "friends": [
+    "player1"
+  ],
   "receivedFriendRequests": [],
   "sentFriendRequests": [],
   "messages": [],

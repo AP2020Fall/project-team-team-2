@@ -1,29 +1,26 @@
 package view.player;
 
-import com.jfoenix.controls.JFXTreeTableView;
 import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import model.Entry.GameEntry;
-import model.Entry.SuggestionEntry;
 import view.Tab;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayerMainMenu implements Tab, Initializable {
-
     @FXML
     private TreeTableView<GameEntry> gamesList;
-
-    @FXML
-    private TableView<SuggestionEntry> suggestionTable;
-
     PlayerMainMenuController controller;
 
     public PlayerMainMenu() {
@@ -39,7 +36,6 @@ public class PlayerMainMenu implements Tab, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializedSuggestionTable();
         initializeTreeGamesList();
     }
 
@@ -59,6 +55,8 @@ public class PlayerMainMenu implements Tab, Initializable {
         for (GameEntry gameEntry : controller.adminsSuggestions()) {
             suggested.getChildren().add(new TreeItem<>(gameEntry));
         }
+        TreeTableColumn<GameEntry, ImageView> gameAvatar = new TreeTableColumn<>("Avatar");
+        gameAvatar.setCellValueFactory(new TreeItemPropertyValueFactory<>("avatar"));
         TreeTableColumn<GameEntry, String> gameName = new TreeTableColumn<>("Name");
         gameName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
         TreeTableColumn<GameEntry, Hyperlink> gameOpen = new TreeTableColumn<>("Open game");
@@ -67,15 +65,8 @@ public class PlayerMainMenu implements Tab, Initializable {
         gameRoot.getChildren().addAll(favourite, recently, suggested);
         gamesList.setRoot(gameRoot);
         gamesList.setShowRoot(false);
-        gamesList.getColumns().addAll(gameName, gameOpen);
+        gamesList.getColumns().addAll(gameAvatar,gameName, gameOpen);
     }
-    private void initializedSuggestionTable()
-    {
-        //todo
-    }
-
-
-
 }
 
 
