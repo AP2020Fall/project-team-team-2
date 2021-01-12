@@ -89,7 +89,7 @@ public class PlayerEditProfile implements Tab, Initializable {
         if(givenImage != null)
         {
             playerImage.setImage(givenImage);
-            controller.setPlayerImage(givenImage);
+          //  controller.setPlayerImage(givenImage);
         }
         System.out.println("add avatar must be implemented.");
     }
@@ -103,7 +103,7 @@ public class PlayerEditProfile implements Tab, Initializable {
         bio.setText(controller.getBio());
         email.setText(controller.getEmail());
         phoneNumber.setText(controller.getPhoneNumber());
-        playerImage.setImage(controller.getPlayerImage());
+       // playerImage.setImage(controller.getPlayerImage());
     }
 
     private void setUsernameColourRed() {

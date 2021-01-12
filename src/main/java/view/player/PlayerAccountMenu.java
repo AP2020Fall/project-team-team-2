@@ -88,7 +88,7 @@ public class PlayerAccountMenu implements Tab, Initializable {
         date.setText(controller.getDate());
         wins.setText(controller.getWins() + " Wins");
         friends.setText(controller.getFriendCount());
-        avatar.setImage(controller.getPlayerImage());
+       // avatar.setImage(controller.getPlayerImage());
     }
 
     private void initializeTableGameHistoryList() {

@@ -73,7 +73,7 @@ public class AdminAccountMenu implements Tab, Initializable {
         System.out.println("6");
         date.setText(controller.getDate());
         System.out.println("5");
-        avatar.setImage(controller.getImage());
+       // avatar.setImage(controller.getImage());
         System.out.println("4");
     }
 }

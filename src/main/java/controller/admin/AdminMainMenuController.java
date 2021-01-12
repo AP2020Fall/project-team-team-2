@@ -43,9 +43,9 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         return admin.getPhoneNumber();
     }
 
-    public Image getImage(){
-        return admin.getImage();
-    }
+//    public Image getImage(){
+//        return admin.getImage();
+//    }
 
 
     public ObservableList<SuggestionEntry> getSuggestions() {
