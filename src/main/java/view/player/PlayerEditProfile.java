@@ -89,7 +89,7 @@ public class PlayerEditProfile implements Tab, Initializable {
         if(givenImage != null)
         {
             playerImage.setImage(givenImage);
-            controller.setPlayerImage(givenImage);
+            //controller.setPlayerImage(givenImage);
         }
         System.out.println("add avatar must be implemented.");
     }
