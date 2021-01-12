@@ -146,7 +146,13 @@ public class Event {
     }
 
     public static void saveImageToFile(Image image, String eventId) {
-        File outputFile = new File("/database/" + eventId + ".jpg");
+
+        File folder = new File("database\\events\\images");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        File outputFile = new File("database\\events\\images\\" + eventId + ".jpg");
+
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
             ImageIO.write(bImage, "jpg", outputFile);

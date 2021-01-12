@@ -160,7 +160,13 @@ public class Game {
     }
 
     public static void saveImageToFile(Image image, String gameId) {
-        File outputFile = new File("/database/" + gameId + ".jpg");
+
+        File folder = new File("database\\games\\images");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        File outputFile = new File("database\\games\\images\\" + gameId + ".jpg");
+
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
             ImageIO.write(bImage, "jpg", outputFile);
