@@ -13,62 +13,70 @@ import java.util.Objects;
 public class AdminMainMenuController extends AdminMainMenuLayoutController {
     private final Admin admin;
 
-    public AdminMainMenuController()
-    {
+    public AdminMainMenuController() {
         this.admin = Objects.requireNonNull(loggedIn,
                 "Admin passed to AdminMainMenuController is null.");
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return admin.getUsername();
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return admin.getPassword();
     }
 
-    public String getDate(){
+    public String getDate() {
         return String.valueOf(admin.getDayOfRegister());
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         return admin.getFirstName();
     }
 
-    public String getLastName(){
+    public String getLastName() {
         return admin.getLastName();
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return admin.getEmail();
     }
 
-    public String getPhoneNumber(){
+    public String getPhoneNumber() {
         return admin.getPhoneNumber();
     }
-/*
-    public Image getImage(){
-        return admin.getImage();
-    }*/
 
-    public void setUsername(String username){admin.setUsername(username);}
+    public Image getImage() {
+        return admin.getImage();
+    }
+
+    public void setUsername(String username) {
+        admin.setUsername(username);
+    }
+
     public void setPassword(String password) {
         admin.setPassword(password);
     }
+
     public void setFirstName(String firstName) {
         admin.setFirstName(firstName);
     }
+
     public void setLastName(String lastName) {
         admin.setLastName(lastName);
     }
+
     public void setEmail(String email) {
         admin.setEmail(email);
     }
+
     public void setPhoneNumber(String phoneNumber) {
         admin.setPhoneNumber(phoneNumber);
     }
-    public void setImage(Image image){//admin.setImage(image);
-         }
+
+    public void setImage(Image image) {
+        admin.setImage(image);
+    }
 
 
     public ObservableList<SuggestionEntry> getSuggestions() {
@@ -97,12 +105,13 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         player.addSuggestion(suggestion);
         Suggestion.addSuggestion(suggestion);
     }
+
     public boolean playerBeenSuggested(String username, String gameName) {
         //checks if gameName been suggested to username
         //throws NullPointerException if username doesn't exist or game doesn't exist.
         Player player = Objects.requireNonNull(Player.getPlayerByUsername(username),
                 "Username passed to AdminMainMenuController.playerBeenSuggested doesn't exist.");
-         Objects.requireNonNull(Game.getGameByGameName(gameName),
+        Objects.requireNonNull(Game.getGameByGameName(gameName),
                 "Game passed to AdminMainMenuController.playerBeenSuggested doesn't exist.");
         return player.suggestionExists(gameName);
     }

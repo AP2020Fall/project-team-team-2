@@ -37,7 +37,7 @@ public class RegisterController extends Controller {
     private Admin createAdmin(String username, String password, ArrayList<String> additionalInfo) {
         //creates an admin object and returns it
         Admin admin = new Admin(additionalInfo.get(0), additionalInfo.get(1), username,
-                generateId(), password, additionalInfo.get(2), additionalInfo.get(3));
+                generateId(), password,  additionalInfo.get(3),additionalInfo.get(2));
         Account.getAllAccounts().add(admin);
         return admin;
     }
