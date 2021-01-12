@@ -38,6 +38,5 @@ public class WelcomeMenu implements View {
     @FXML
     private void exit() {
         ViewHandler.getViewHandler().exit();
-        System.exit(1);
     }
 }
