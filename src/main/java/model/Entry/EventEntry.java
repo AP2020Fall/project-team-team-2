@@ -1,6 +1,7 @@
 package model.Entry;
 
 import javafx.scene.control.Hyperlink;
+import javafx.scene.image.ImageView;
 import model.Event;
 import view.TabHandler;
 import view.player.PlayerEventMenu;
@@ -15,7 +16,7 @@ public class EventEntry {
     private LocalDate end;
     private String eventId;
     private String score;
-    //ImageView avatar;
+    private ImageView imageView;
     public EventEntry(Event event)
     {
         name= event.getGameName();
@@ -23,7 +24,9 @@ public class EventEntry {
         end  = event.getEnd();
         score = String.valueOf( event.getScore());
         eventId = event.getEventId();
-
+        imageView = new ImageView(event.getImage());
+        imageView.setFitHeight(48);
+        imageView.setFitWidth(48);
         link = new Hyperlink("open");
         link.setOnAction(events ->
         {
@@ -71,5 +74,9 @@ public class EventEntry {
 
     public String getEventId() {
         return eventId;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
     }
 }

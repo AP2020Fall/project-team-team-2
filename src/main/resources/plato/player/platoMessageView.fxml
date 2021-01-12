@@ -12,7 +12,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <JFXButton layoutX="27.0" layoutY="14.0" onAction="#back" style="-fx-background-color: #00bbff;" text="Back" textFill="WHITE">
+      <JFXButton layoutX="27.0" layoutY="14.0" onAction="#back" styleClass="orangeButton" stylesheets="@../../css/styles.css" text="Back" textFill="WHITE">
          <font>
             <Font name="Geometr415 Blk BT Black" size="20.0" />
          </font>

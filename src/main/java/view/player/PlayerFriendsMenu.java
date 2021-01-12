@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.image.ImageView;
 import model.Entry.FriendEntry;
 import model.Entry.FriendRequestEntry;
 import view.Tab;
@@ -42,6 +43,9 @@ public class PlayerFriendsMenu implements Tab, Initializable {
     }
 
     private void initializeTreeFriendsList() {
+        TreeTableColumn<FriendEntry, ImageView>  friendAvatarColumn = new TreeTableColumn<>("Avatar");
+        friendAvatarColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("imageView"));
+
         TreeTableColumn<FriendEntry, String> friendNames = new TreeTableColumn<>("Name");
         friendNames.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
         TreeTableColumn<FriendEntry, Hyperlink> friendView = new TreeTableColumn<>("View");
@@ -53,7 +57,7 @@ public class PlayerFriendsMenu implements Tab, Initializable {
         friendRoot.getChildren().addAll(controller.getFriends());
         friendsList.setRoot(friendRoot);
         friendsList.setShowRoot(false);
-        friendsList.getColumns().addAll(friendNames, friendView, friendRemove);
+        friendsList.getColumns().addAll(friendAvatarColumn,friendNames, friendView, friendRemove);
     }
 
     private void initializeTableFriendRequestList() {
