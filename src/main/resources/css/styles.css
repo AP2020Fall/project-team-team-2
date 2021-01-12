@@ -80,8 +80,23 @@
 #friendTreeTable .table-column {
   -fx-alignment: CENTER-RIGHT;
 }
-#friendRequestTable {
-    -fx-background-color: #ffaa50;
+.table {
+    -fx-background-color: #819ca9;
+    -fx-background-radius: 20;
+}
+.table .column-header-background{
+    -fx-background-color: #29434e;
+    -fx-background-radius: 20;
+    -fx-background-insets: 0 0 10 0;
+    -fx-padding: 0 0 10 0;
+}
+.table .column-header, .friendRequestTable .filter{
+    -fx-size: 35;
+    -fx-background-width: 0 0 10 0;
+    -fx-background-color: transparent;
+}
+.table .column-header .label{
+    -fx-text-fill: #ffffff;
 }
 
 #plateMessageTable {
@@ -113,6 +128,11 @@
     -fx-background-color: #55aa50;
 
 }
+
+
+
+
+
 /* Game Part */
 .country {
     -fx-fill: yellow;

@@ -6,12 +6,12 @@
 
 <Pane prefHeight="620.0" prefWidth="1020.0" styleClass="background" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView id="gameTable" fx:id="gamesListGamesMenu" layoutX="15.0" layoutY="15.0" prefHeight="600.0" prefWidth="560.0" stylesheets="@../../css/styles.css">
+      <TableView fx:id="gamesListGamesMenu" layoutX="15.0" layoutY="15.0" prefHeight="600.0" prefWidth="560.0" styleClass="table" stylesheets="@../../css/styles.css">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TreeTableView id="eventTreeTable" fx:id="eventList" layoutX="600.0" layoutY="15.0" prefHeight="600.0" prefWidth="400.0" stylesheets="@../../css/styles.css">
+      <TreeTableView fx:id="eventList" layoutX="600.0" layoutY="10.0" prefHeight="600.0" prefWidth="400.0" styleClass="table" stylesheets="@../../css/styles.css">
          <columnResizePolicy>
             <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
