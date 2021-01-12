@@ -24,7 +24,8 @@ public class Event {
     private int score;
     private String eventId;
 
-    private transient  Image avatar;
+    private transient Image avatar;
+
     public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId, Image image) {
         this.gameName = gameName;
         this.start = start;
@@ -129,7 +130,7 @@ public class Event {
         file.write(jsonAccount);
         file.close();
         System.out.println("saving ended " + event.getEventId());
-        saveImageToFile(event.getImage(),event.getEventId());
+        saveImageToFile(event.getImage(), event.getEventId());
         System.out.println("saving image ended " + event.getEventId());
     }
 
@@ -144,8 +145,8 @@ public class Event {
         }
     }
 
-    public static void saveImageToFile(Image image,String accountId) {
-        File outputFile = new File("/database/"+accountId+".jpg");
+    public static void saveImageToFile(Image image, String eventId) {
+        File outputFile = new File("/database/" + eventId + ".jpg");
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
             ImageIO.write(bImage, "jpg", outputFile);
@@ -153,8 +154,9 @@ public class Event {
             throw new RuntimeException(e);
         }
     }
-    public static void openFileToImage(Image image,Account account) {
-        account.setImage(new Image("/database/"+account.getAccountId()+".jpg"));
+
+    public static void openFileToImage(Image image, Event event) {
+        event.setImage(new Image("/database/" + event.getEventId() + ".jpg"));
     }
 
     @Override

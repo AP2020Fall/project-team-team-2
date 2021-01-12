@@ -1,8 +1,11 @@
 package model;
 
 import com.google.gson.GsonBuilder;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -17,9 +20,9 @@ public class Game {
     private final ArrayList<PlayLog> playLogs;
     private String details;
     private final Scoreboard scoreboard;
-    private transient  Image avatar;
+    private transient Image avatar;
 
-    public  Image getImage() {
+    public Image getImage() {
         return avatar;
     }
 
@@ -27,7 +30,7 @@ public class Game {
         this.avatar = image;
     }
 
-    public Game(String name, String gameId, String details,Image gameImage) {
+    public Game(String name, String gameId, String details, Image gameImage) {
         this.name = name;
         this.gameId = gameId;
         this.details = details;
@@ -48,8 +51,7 @@ public class Game {
         return playLogs;
     }
 
-    public void addPlayLog(PlayLog playLog)
-    {
+    public void addPlayLog(PlayLog playLog) {
         playLogs.add(playLog);
         scoreboard.updateScoreboard(playLog);
     }
@@ -152,6 +154,23 @@ public class Game {
         FileWriter file = new FileWriter("database" + "\\" + "games" + "\\" + game.getGameId() + ".json");
         file.write(jsonAccount);
         file.close();
+        System.out.println("saving ended " + game.getGameId());
+        saveImageToFile(game.getImage(), game.getGameId());
+        System.out.println("saving image ended " + game.getGameId());
+    }
+
+    public static void saveImageToFile(Image image, String gameId) {
+        File outputFile = new File("/database/" + gameId + ".jpg");
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+        try {
+            ImageIO.write(bImage, "jpg", outputFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void openFileToImage(Image image, Game game) {
+        game.setImage(new Image("/database/" + game.getGameId() + ".jpg"));
     }
 
     @Override
