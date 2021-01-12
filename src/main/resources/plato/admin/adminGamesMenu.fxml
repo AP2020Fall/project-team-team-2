@@ -5,34 +5,41 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1020.0" styleClass="background" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="gameList" layoutX="15.0" layoutY="15.0" prefHeight="600.0" prefWidth="460.0" styleClass="table" stylesheets="@../../css/styles.css">
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-         <contextMenu>
-            <ContextMenu>
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#addGame" text="Add" />
-                  <MenuItem mnemonicParsing="false" onAction="#deleteGame" text="Delete" />
-              </items>
-            </ContextMenu>
-         </contextMenu>
-      </TableView>
-      <TreeTableView fx:id="eventList" editable="true" layoutX="500.0" layoutY="15.0" prefHeight="600.0" prefWidth="500.0" styleClass="table" stylesheets="@../../css/styles.css">
-         <columnResizePolicy>
-            <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-         <contextMenu>
-            <ContextMenu>
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#addEvent" text="Add" />
-                  <MenuItem mnemonicParsing="false" onAction="#deleteEvent" text="Delete" />
-              </items>
-            </ContextMenu>
-         </contextMenu>
-      </TreeTableView>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1020.0" styleClass="background" stylesheets="@../../css/styles.css">
+         <children>
+            <TableView fx:id="gameList" layoutX="15.0" layoutY="15.0" prefHeight="600.0" prefWidth="460.0" styleClass="table" stylesheets="@../../css/styles.css">
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <contextMenu>
+                  <ContextMenu>
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#addGame" text="Add" />
+                        <MenuItem mnemonicParsing="false" onAction="#deleteGame" text="Delete" />
+                        <MenuItem mnemonicParsing="false" onAction="#editGame" text="Edit" />
+                     </items>
+                  </ContextMenu>
+               </contextMenu>
+            </TableView>
+            <TreeTableView fx:id="eventList" layoutX="500.0" layoutY="15.0" prefHeight="600.0" prefWidth="500.0" styleClass="table" stylesheets="@../../css/styles.css">
+               <columnResizePolicy>
+                  <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <contextMenu>
+                  <ContextMenu>
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#addEvent" text="Add" />
+                        <MenuItem mnemonicParsing="false" onAction="#deleteEvent" text="Delete" />
+                        <MenuItem mnemonicParsing="false" onAction="#editEvent" text="Edit" />
+                     </items>
+                  </ContextMenu>
+               </contextMenu>
+            </TreeTableView>
+         </children>
+      </Pane>
    </children>
-</Pane>
+</StackPane>

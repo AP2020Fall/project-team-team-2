@@ -1,0 +1,16 @@
+{
+  "gameName": "Risk",
+  "start": {
+    "year": 2021,
+    "month": 1,
+    "day": 14
+  },
+  "end": {
+    "year": 2021,
+    "month": 1,
+    "day": 16
+  },
+  "score": 20,
+  "eventId": "94B1F46B",
+  "comment": "initial tournament\n"
+}

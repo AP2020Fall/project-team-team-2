@@ -33,7 +33,7 @@
             </JFXTextArea>
             <JFXDatePicker fx:id="startDate" layoutX="210.0" layoutY="90.0" overLay="true" promptText="start" />
             <JFXDatePicker fx:id="endDate" layoutX="210.0" layoutY="150.0" overLay="true" promptText="end" />
-            <JFXButton layoutX="432.0" layoutY="343.0" onAction="#add" prefWidth="120.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Add" textFill="WHITE">
+            <JFXButton fx:id="addButton" layoutX="432.0" layoutY="343.0" onAction="#add" prefWidth="120.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Add" textFill="WHITE">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="18.0" />
                </font>
@@ -55,6 +55,14 @@
                </image>
             </ImageView>
             <MaterialDesignIconView glyphName="PLUS_CIRCLE" layoutX="155.0" layoutY="179.0" onMouseClicked="#addAvatar" size="36" />
+            <JFXButton fx:id="editButton" layoutX="432.0" layoutY="343.0" onAction="#edit" prefWidth="120.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Edit" textFill="WHITE">
+               <font>
+                  <Font name="Geometr415 Blk BT Black" size="18.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="24" />
+               </graphic>
+            </JFXButton>
          </children>
       </Pane>
    </children>

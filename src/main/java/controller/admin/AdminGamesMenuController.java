@@ -24,7 +24,7 @@ public class AdminGamesMenuController extends AdminMainMenuLayoutController{
     }
 
     public void deleteGame(GameEntry gameEntry) {
-        //removes gameName from the list.
+        //removes the selected games from the list.
         //throws NullPointerException if gameName doesn't exist.
         Objects.requireNonNull(Game.getGameByGameName(gameEntry.getName()),
                 "Game passed to AdminMainMenuController.removeGame doesn't exist.").delete();
@@ -67,16 +67,30 @@ public class AdminGamesMenuController extends AdminMainMenuLayoutController{
     }
 
     public void deleteEvent(EventEntry eventEntry) {
-        //removes eventId from the list
+        //removes the selected events from the list
         //throws NullPointerException if eventId doesn't exist.
         Objects.requireNonNull(Event.getEventById(eventEntry.getEventId()),
-                "EventId passed AdminMainMenuController.removeEvent doesn't exist.").delete();
+                "Event passed AdminMainMenuController.deleteEvent doesn't exist.").delete();
     }
-    public void addEvent(String gameName, LocalDate start, LocalDate end, int score,Image image) {
+    public void addEvent(String gameName, LocalDate start, LocalDate end, int score,String comment,Image image) {
         //creates a new event and adds it to the list of events.
         //LocalDate startDate = createLocalDate(start);
        // LocalDate endDate = createLocalDate(end);
-        Event event = new Event(gameName, start, end, score, generateId(),image);
+        Event event = new Event(gameName, start, end, score, generateId(),comment,image);
         Event.addEvent(event);
+    }
+
+    public Event getEvent(EventEntry eventEntry) {
+        //gets the selected event
+        //throws NullPointerException if eventId doesn't exist.
+        return  Objects.requireNonNull(Event.getEventById(eventEntry.getEventId()),
+                "Event passed AdminMainMenuController.getEvent doesn't exist.");
+    }
+
+    public Game getGame(GameEntry gameEntry) {
+        //gets the selected event
+        //throws NullPointerException if eventId doesn't exist.
+        return  Objects.requireNonNull(Game.getGameByGameName(gameEntry.getName()),
+                "Game passed AdminMainMenuController.getGame doesn't exist.");
     }
 }
