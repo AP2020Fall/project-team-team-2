@@ -23,6 +23,10 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         return admin.getUsername();
     }
 
+    public String getPassword(){
+        return admin.getPassword();
+    }
+
     public String getDate(){
         return String.valueOf(admin.getDayOfRegister());
     }
@@ -63,7 +67,8 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
     public void setPhoneNumber(String phoneNumber) {
         admin.setPhoneNumber(phoneNumber);
     }
-    public void setImage(Image image){admin.setImage(image);}
+    public void setImage(Image image){//admin.setImage(image);
+         }
 
 
     public ObservableList<SuggestionEntry> getSuggestions() {

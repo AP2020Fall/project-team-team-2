@@ -94,7 +94,7 @@ public class AdminEditProfile implements Tab, Initializable {
         lastName.setText(controller.getLastName());
         email.setText(controller.getEmail());
         phoneNumber.setText(controller.getPhoneNumber());
-        playerImage.setImage(controller.getImage());
+       // playerImage.setImage(controller.getImage());
        // playerImage.setImage(controller.getPlayerImage());
     }
 
