@@ -18,10 +18,12 @@ public class RiskGameController extends Controller {
     private boolean gameIsPlaying = true;
     private boolean draftDone;
     private boolean attackDone;
+    private Integer i;
+    private Integer j;
     private boolean fortifyDone;
     private Country sourceCountryWinner;
     private boolean attackWon = false;
-    private String attackDestination;
+    private Country attackDestination;
     private boolean turnDone;
     private int startSoldiers;
     private boolean gotCards = false;
@@ -138,14 +140,11 @@ public class RiskGameController extends Controller {
         }
     }
 
-    public String draft(String countryDetails, int soldiers) {
+    public String draft(int i , int j, int soldiers) {
 
         String toPrint = "";
         if(!draftDone) {
-            String[] details = countryDetails.split("\\.");
-            String countryName = details[0];
-            int continentNumber = Integer.parseInt(details[1]);
-            Country destination = getCountryByDetails(countryName, continentNumber);
+            Country destination = getCountryByDetails(i, j);
             if (soldiers > currentPlayer.getDraftSoldiers() || soldiers < 1) {
                 toPrint = "Soldiers are not enough or invalid";
             } else if (destination.getName().equals("")) {
@@ -154,9 +153,9 @@ public class RiskGameController extends Controller {
                 if (!destination.getOwner().equals(getCurrentPlayer())) {
                     toPrint = "This country is not yours";
                 } else {
-                    placeSoldier(countryDetails, soldiers);
+                    placeSoldier(i , j, soldiers);
                     currentPlayer.addDraftSoldier(-1 * soldiers);
-                    toPrint = "" + soldiers + " soldiers added to " + countryDetails + " successfully";
+                    toPrint = "" + soldiers + " soldiers added to " + destination.getName() + " successfully";
                     draftDone = true;
                 }
             }
@@ -166,19 +165,13 @@ public class RiskGameController extends Controller {
         return toPrint;
     }
 
-    public String attack(String sourceCountry, String destinyCountry, int soldiers) {
+    public String attack(int sourceI , int sourceJ, int destI , int destJ, int soldiers) {
         String toPrint = "";
         if(!attackDone) {
-            String[] sourceDetails = sourceCountry.split("\\.");
-            String[] destinationDetails = destinyCountry.split("\\.");
-            String sourceCountryName = sourceDetails[0];
-            int sourceNumber = Integer.parseInt(sourceDetails[1]);
-            String destinationCountryName = destinationDetails[0];
-            int destinationNumber = Integer.parseInt(destinationDetails[1]);
             boolean sourceCountryValid = false;
             boolean destinationCountryValid = false;
-            Country source = getCountryByDetails(sourceCountryName, sourceNumber);
-            Country destination = getCountryByDetails(destinationCountryName, destinationNumber);
+            Country source = getCountryByDetails(sourceI, sourceJ);
+            Country destination = getCountryByDetails(destI, destJ);
             boolean errorFound = false;
             if (!source.getName().equals("")) {
                 if (source.getOwner().equals(currentPlayer)) {
@@ -249,12 +242,13 @@ public class RiskGameController extends Controller {
                             } else {
                                 destination.setOwner(currentPlayer);
                                 this.attackWon = true;
-                                this.attackDestination = destinyCountry;
+                                this.attackDestination = destination;
                                 toPrint += "\nYou now should add one to " + (source.getSoldiers() - 1) + " soldiers to "
-                                        + destinyCountry;
+                                        + destination.getName();
                                 sourceCountryWinner = source;
                             }
-
+                            i = null;
+                            j = null;
                         }
                     }
                 } while (inWar);
@@ -267,19 +261,13 @@ public class RiskGameController extends Controller {
         return toPrint;
     }
 
-    public String fortify(String sourceCountry, String destinyCountry, int soldiers) {
+    public String fortify(int sourceI , int sourceJ , int  destI , int destJ, int soldiers) {
         String toPrint = "";
         if (!fortifyDone) {
-            String[] sourceDetails = sourceCountry.split("\\.");
-            String[] destinationDetails = destinyCountry.split("\\.");
-            String sourceCountryName = sourceDetails[0];
-            int sourceNumber = Integer.parseInt(sourceDetails[1]);
-            String destinationCountryName = destinationDetails[0];
-            int destinationNumber = Integer.parseInt(destinationDetails[1]);
             boolean sourceCountryValid = false;
             boolean destinationCountryValid = false;
-            Country source = getCountryByDetails(sourceCountryName, sourceNumber);
-            Country destination = getCountryByDetails(destinationCountryName, destinationNumber);
+            Country source = getCountryByDetails(sourceI, sourceJ);
+            Country destination = getCountryByDetails(destI, destJ);
             if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
                 sourceCountryValid = true;
             }
@@ -296,8 +284,10 @@ public class RiskGameController extends Controller {
                 turnDone = true;
                 source.addSoldiers(-1 * soldiers);
                 destination.addSoldiers(soldiers);
-                toPrint = "Move " + soldiers + " soldiers from " + sourceCountryName + " to " + destinationCountryName;
+                toPrint = "Move " + soldiers + " soldiers from " + source.getName() + " to " + destination.getName();
                 setFortifyDone(true);
+                i = null;
+                j = null;
             } else {
                 toPrint = "there is not any path between source and destination country";
             }
@@ -434,16 +424,13 @@ public class RiskGameController extends Controller {
         return currentPlayer;
     }
 
-    public String placeSoldier(String countryDetails, int soldiers) {
+    public String placeSoldier(int i , int j, int soldiers) {
         String toPrint = "";
-        String[] countryDetails2 = countryDetails.split("\\.");
-        String countryContinent = countryDetails2[0];
         if (soldiers > getCurrentPlayer().getDraftSoldiers()) {
             toPrint = "You do not have enough soldiers";
             return toPrint;
         }
-        int countryContinentNumber = Integer.parseInt(countryDetails2[1]);
-        Country toCheckCountry = this.getCountryByDetails(countryContinent, countryContinentNumber);
+        Country toCheckCountry = this.getCountryByDetails(i, j);
         if (!this.getDraftDone()) {
             if (toCheckCountry.getName().equals("")) {
                 toPrint = "Chosen country is invalid. Please try again";
@@ -509,18 +496,18 @@ public class RiskGameController extends Controller {
         matchCardController.incPlayerSoldier(currentPlayer, soldiersNumber);
     }
 
-    public Country getCountryByDetails(String shortName, int countryContinentNumber) {
-        Country toReturnCountry = new Country();
-        for (List<Country> countries : this.gameCountries) {
-            for (Country country : countries) {
-                if (country.getNumberOfContinentCountry() == countryContinentNumber && country.getContinent()
-                        .substring(0, 2).toUpperCase().equals(shortName)) {
-
-                    toReturnCountry = country;
-                }
-            }
-        }
-        return toReturnCountry;
+    public Country getCountryByDetails(int i , int j) {
+        return gameCountries.get(i-1).get(j-1);
+//        Country toReturnCountry = new Country();
+//        for (List<Country> countries : this.gameCountries) {
+//            for (Country country : countries) {
+//                if (country.getNumberOfContinentCountry() == countryContinentNumber && country.getContinent()
+//                        .substring(0, 2).toUpperCase().equals(shortName)) {
+//
+//                    toReturnCountry = country;
+//                }
+//            }
+//        }
     }
 
     public String showTurn() {
@@ -784,6 +771,8 @@ public class RiskGameController extends Controller {
         } else {
             if (draftDone) {
                 toPrint = "If you wanna change your turn, you should use 'turn over'";
+            }else{
+                toPrint = "You should draft your ";
             }
         }
         return toPrint;
@@ -875,12 +864,9 @@ public class RiskGameController extends Controller {
         }
         return 0;
     }
-    public String draftAfterWin(String countryDetails, int soldiers) {
+    public String draftAfterWin(int i , int j, int soldiers) {
         String toPrint = "";
-        String[] details = countryDetails.split("\\.");
-        String countryName = details[0];
-        int continentNumber = Integer.parseInt(details[1]);
-        Country destination = getCountryByDetails(countryName, continentNumber);
+        Country destination = getCountryByDetails(i, j);
         if (soldiers > sourceCountryWinner.getSoldiers() - 1 || soldiers < 1) {
             toPrint = "Soldiers are not enough or invalid, Please try between one and "
                     + (sourceCountryWinner.getSoldiers() - 1);
@@ -890,10 +876,10 @@ public class RiskGameController extends Controller {
             if (!destination.getOwner().equals(getCurrentPlayer())) {
                 toPrint = "This country is not yours";
             } else {
-                if (countryDetails.equals(this.attackDestination)) {
+                if (destination.equals(this.attackDestination)) {
                     destination.addSoldiers(soldiers);
                     sourceCountryWinner.addSoldiers(-1 * soldiers);
-                    toPrint = "" + soldiers + " soldiers added to " + countryDetails + " successfully";
+                    toPrint = "" + soldiers + " soldiers added to " + destination.getName() + " successfully";
                     attackWon = false;
                     attackDestination = null;
                     sourceCountryWinner = null;
@@ -931,5 +917,21 @@ public class RiskGameController extends Controller {
             toPrint += "Fortify";
         }
         return toPrint;
+    }
+
+    public Integer getI() {
+        return i;
+    }
+
+    public void setI(Integer i) {
+        this.i = i;
+    }
+
+    public Integer getJ() {
+        return j;
+    }
+
+    public void setJ(Integer j) {
+        this.j = j;
     }
 }

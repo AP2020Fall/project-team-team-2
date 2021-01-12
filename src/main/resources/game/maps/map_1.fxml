@@ -69,5 +69,6 @@
          </font>
       </TextField>
       <Rectangle fx:id="nextTurn" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="667.0" layoutY="24.0" onMouseClicked="#nextTurnHandler" stroke="#ffffff00" strokeType="INSIDE" width="90.0" />
+      <Label id="game_notifs" fx:id="gameNotifs" alignment="CENTER" layoutX="829.0" layoutY="587.0" prefHeight="186.0" prefWidth="300.0" />
    </children>
 </AnchorPane>
