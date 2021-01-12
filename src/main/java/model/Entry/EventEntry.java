@@ -24,7 +24,7 @@ public class EventEntry {
         end  = event.getEnd();
         score = String.valueOf( event.getScore());
         eventId = event.getEventId();
-        imageView = new ImageView(event.getImage());
+       // imageView = new ImageView(event.getImage());
         imageView.setFitHeight(48);
         imageView.setFitWidth(48);
         link = new Hyperlink("open");

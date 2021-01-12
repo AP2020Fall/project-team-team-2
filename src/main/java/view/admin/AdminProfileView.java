@@ -79,7 +79,7 @@ public class AdminProfileView implements Tab, Initializable {
         date.setText(controller.getDaysPassed());
         friends.setText(controller.getFriendCount());
         bio.setText(controller.getBio());
-        avatar.setImage(controller.getPlayerImage());
+       // avatar.setImage(controller.getPlayerImage());
     }
 
     private void initializedTableGameLog()

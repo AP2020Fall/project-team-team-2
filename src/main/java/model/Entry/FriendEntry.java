@@ -14,7 +14,7 @@ public class FriendEntry {
     private ImageView imageView;
     public FriendEntry(Player friend,Player player) {
         name = friend.getUsername();
-        imageView = new ImageView(friend.getImage());
+       // imageView = new ImageView(friend.getImage());
         imageView.setFitHeight(48);
         imageView.setFitWidth(48);
         remove.setOnAction(event -> {

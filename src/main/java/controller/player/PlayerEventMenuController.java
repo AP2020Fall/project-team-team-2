@@ -31,7 +31,7 @@ public class PlayerEventMenuController extends PlayerMainMenuLayoutController {
     public void join() {
     }
 
-    public Image getEventImage() {
-        return event.getImage();
-    }
+//    public Image getEventImage() {
+//        return event.getImage();
+//    }
 }

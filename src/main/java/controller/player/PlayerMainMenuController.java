@@ -141,11 +141,11 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
         player.setBio(bio);
     }
 
-    public void setPlayerImage(Image givenImage) {
-        player.setImage(givenImage);
-
-    }
-    public Image getPlayerImage() {
-        return player.getImage();
-    }
+//    public void setPlayerImage(Image givenImage) {
+//        player.setImage(givenImage);
+//
+//    }
+//    public Image getPlayerImage() {
+//        return player.getImage();
+//    }
 }
