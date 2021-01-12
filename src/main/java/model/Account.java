@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -219,12 +220,18 @@ public abstract class Account {
 
     private static Player openPlayer(File file) throws FileNotFoundException {
         StringBuilder json = fileToString(file);
-        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Player.class);
+        Player player = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Player.class);
+        openFileToImage((Account) player);
+        System.out.println("pl open ended");
+        return player;
     }
 
     private static Admin openAdmin(File file) throws FileNotFoundException {
         StringBuilder json = fileToString(file);
-        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Admin.class);
+        Admin admin = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Admin.class);
+        openFileToImage((Account) admin);
+        System.out.println("a openEnded");
+        return admin;
     }
 
     private static StringBuilder fileToString(File file) throws FileNotFoundException {
@@ -251,8 +258,9 @@ public abstract class Account {
         }
     }
 
-    public static void openFileToImage(Image image, Account account) {
-        account.setImage(new Image("/database/" + account.getAccountId() + ".jpg"));
+    public static void openFileToImage(Account account) {
+        File file = new File("database\\accounts\\images\\"+account.getAccountId()+".jpg");
+        account.setImage(new Image(file.toURI().toString()));
     }
 
     @Override
