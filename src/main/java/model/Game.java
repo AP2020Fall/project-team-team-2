@@ -97,7 +97,7 @@ public class Game {
 
 
     public void delete() {
-        File file = new File("database" + "\\" + "games" + "\\" + this.getGameId() + ".json");
+        File file = new File("database" + "\\" + "games" + "\\game\\" + this.getGameId() + ".json");
         try {
             if (file.exists())
                 file.delete();

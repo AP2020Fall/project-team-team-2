@@ -9,9 +9,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import model.Entry.EventEntry;
 import model.Entry.GameEntry;
 import model.Event;
+import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
 
@@ -26,9 +29,10 @@ public class AdminGamesMenu implements Tab, Initializable {
     @FXML
     private TreeTableView<EventEntry> eventList;
     private AdminGamesMenuController controller;
+    @FXML
+    private StackPane stackRoot;
 
-    public AdminGamesMenu()
-    {
+    public AdminGamesMenu() {
         controller = new AdminGamesMenuController();
     }
 
@@ -44,60 +48,85 @@ public class AdminGamesMenu implements Tab, Initializable {
         initializeTableGameList();
         initializedTreeEventList();
     }
+
     @FXML
     private void addGame() throws IOException {
-        new AddGamePopup().openWindow();
+        new AddGamePopup(false, null).openWindow();
         TabHandler.getTabHandler().refresh();
     }
 
     @FXML
+    private void editGame() throws IOException {
+        if (gameList.getSelectionModel().getSelectedItems().size() == 1) {
+            GameEntry gameEntry = gameList.getSelectionModel().getSelectedItems().get(0);
+            new AddGamePopup(true, controller.getGame(gameEntry)).openWindow();
+            TabHandler.getTabHandler().refresh();
+        } else {
+            System.out.println("it is working");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay", "Invalid Request"
+                    , "Cannot edit more one event at a time.");
+        }
+    }
+
+    @FXML
     private void deleteGame() {
-        for (GameEntry gameEntry: gameList.getSelectionModel().getSelectedItems())
-        {
+        for (GameEntry gameEntry : gameList.getSelectionModel().getSelectedItems()) {
             controller.deleteGame(gameEntry);
         }
         TabHandler.getTabHandler().refresh();
 
     }
 
-
     @FXML
     private void addEvent() throws IOException {
-        new AddEventPopup().openWindow();
+        new AddEventPopup(false, null).openWindow();
         TabHandler.getTabHandler().refresh();
+    }
+
+    @FXML
+    private void editEvent() throws IOException {
+        if (eventList.getSelectionModel().getSelectedItems().size() == 1) {
+            EventEntry eventEntry = eventList.getSelectionModel().getSelectedItems().get(0).getValue();
+            new AddEventPopup(true, controller.getEvent(eventEntry)).openWindow();
+            TabHandler.getTabHandler().refresh();
+        } else {
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay", "Invalid Request"
+                    , "Cannot edit more one event at a time.");
+        }
     }
 
     @FXML
     private void deleteEvent() {
-        for (TreeItem<EventEntry> eventEntry: eventList.getSelectionModel().getSelectedItems())
-        {
-            if(!eventEntry.getParent().equals(eventList.getRoot()))
+        for (TreeItem<EventEntry> eventEntry : eventList.getSelectionModel().getSelectedItems()) {
+            if (!eventEntry.getParent().equals(eventList.getRoot()))
                 controller.deleteEvent(eventEntry.getValue());
         }
         TabHandler.getTabHandler().refresh();
     }
-    private void initializeTableGameList()
-    {
+
+    private void initializeTableGameList() {
+        TableColumn<GameEntry, ImageView> gameAvatarColumn = new TableColumn<>("Avatar");
+        gameAvatarColumn.setCellValueFactory(new PropertyValueFactory<>("avatar"));
         TableColumn<GameEntry, String> gameNameColumn = new TableColumn<>("Name");
         gameNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        gameNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        /*gameNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         gameNameColumn.setOnEditCommit(event ->
-                event.getTableView().getItems().get(event.getTablePosition().getRow()).setName(event.getNewValue()));
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setName(event.getNewValue()));*/
 
         TableColumn<GameEntry, String> gameDetailColumn = new TableColumn<>("Detail");
         gameDetailColumn.setCellValueFactory(new PropertyValueFactory<>("detail"));
-        gameDetailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        /*gameDetailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         gameDetailColumn.setOnEditCommit(event ->
-                event.getTableView().getItems().get(event.getTablePosition().getRow()).setDetail(event.getNewValue()));
+                event.getTableView().getItems().get(event.getTablePosition().getRow()).setDetail(event.getNewValue()));*/
 
         gameList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        gameList.setEditable(true);
-        gameList.getColumns().addAll(gameNameColumn, gameDetailColumn);
+        // gameList.setEditable(true);
+        gameList.getColumns().addAll(gameAvatarColumn, gameNameColumn, gameDetailColumn);
         gameList.getItems().addAll(controller.getGames());
     }
-    private void initializedTreeEventList()
-    {
+
+    private void initializedTreeEventList() {
         TreeItem<EventEntry> ongoing = new TreeItem<>(new EventEntry("Ongoing"));
         ongoing.setExpanded(true);
         for (EventEntry eventEntry : controller.getOngoingEvents()) {
@@ -117,6 +146,8 @@ public class AdminGamesMenu implements Tab, Initializable {
             past.getChildren().add(new TreeItem<>(eventEntry));
         }
 
+        TreeTableColumn<EventEntry, ImageView> eventAvatar = new TreeTableColumn<>("Avatar");
+        eventAvatar.setCellValueFactory(new TreeItemPropertyValueFactory<>("avatar"));
         TreeTableColumn<EventEntry, String> eventGameName = new TreeTableColumn<>("Game");
         eventGameName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
 
@@ -126,15 +157,13 @@ public class AdminGamesMenu implements Tab, Initializable {
         eventEnd.setCellValueFactory(new TreeItemPropertyValueFactory<>("end"));
         TreeTableColumn<EventEntry, String> eventScore = new TreeTableColumn<>("Score");
         eventScore.setCellValueFactory(new TreeItemPropertyValueFactory<>("score"));
-        TreeTableColumn<EventEntry, Hyperlink> eventEdit = new TreeTableColumn<>("Edit");
-        eventEdit.setCellValueFactory(new TreeItemPropertyValueFactory<>("edit"));
 
         TreeItem<EventEntry> gameRoot = new TreeItem<>();
         gameRoot.getChildren().addAll(ongoing, upcoming, past);
         eventList.setRoot(gameRoot);
         eventList.setShowRoot(false);
         eventList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        eventList.getColumns().addAll(eventGameName,eventStart,eventEnd,eventScore, eventEdit);
+        eventList.getColumns().addAll(eventAvatar, eventGameName, eventStart, eventEnd, eventScore);
     }
 
 }
