@@ -20,41 +20,47 @@
             <Region prefHeight="639.0" prefWidth="27.0" styleClass="mainMenuRegion" stylesheets="@../../css/styles.css" BorderPane.alignment="CENTER" />
          </left>
          <bottom>
-            <Region prefHeight="13.0" prefWidth="1080.0" styleClass="mainMenuRegion" stylesheets="@../../css/styles.css" BorderPane.alignment="CENTER" />
+            <Region prefHeight="12.0" prefWidth="1080.0" styleClass="mainMenuRegion" stylesheets="@../../css/styles.css" BorderPane.alignment="CENTER" />
          </bottom>
          <right>
             <Region prefHeight="614.0" prefWidth="33.0" styleClass="mainMenuRegion" stylesheets="@../../css/styles.css" BorderPane.alignment="CENTER" />
          </right>
          <center>
-            <Pane maxHeight="625.0" prefHeight="625.0" prefWidth="1020.0" styleClass="background" stylesheets="@../../css/styles.css" BorderPane.alignment="CENTER" />
+            <Pane maxHeight="620.0" prefHeight="620.0" prefWidth="1020.0" styleClass="background" stylesheets="@../../css/styles.css" BorderPane.alignment="CENTER" />
          </center>
          <top>
             <VBox BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1078.0" styleClass="mainMenuRegion" stylesheets="@../../css/styles.css">
+                  <HBox alignment="CENTER_LEFT" styleClass="mainMenuRegion" stylesheets="@../../css/styles.css">
                      <children>
-                        <Region prefHeight="45.0" prefWidth="868.0" styleClass="mainMenuRegion" stylesheets="@../../css/styles.css" />
-                        <JFXButton buttonType="RAISED" onAction="#platoMessage" prefHeight="34.0" prefWidth="169.0" style="-fx-background-color: #00bbff;" text="Send Message" textFill="WHITE">
+                        <Region prefHeight="23.0" prefWidth="868.0" styleClass="mainMenuRegion" stylesheets="@../../css/styles.css" />
+                        <JFXButton buttonType="RAISED" onAction="#platoMessage" prefHeight="34.0" prefWidth="169.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Send Message" textFill="WHITE">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                            <graphic>
-                              <MaterialDesignIconView glyphName="EMAIL" size="24" />
+                              <MaterialDesignIconView fill="WHITE" glyphName="EMAIL" size="24" />
                            </graphic>
                            <font>
                               <Font name="Geometr415 Blk BT Black" size="17.0" />
                            </font>
                         </JFXButton>
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="36.0" styleClass="mainMenuRegion" stylesheets="@../../css/styles.css">
+                  <HBox alignment="CENTER_LEFT" styleClass="mainMenuRegion" stylesheets="@../../css/styles.css">
                      <children>
-                        <MaterialDesignIconView glyphName="ARROW_LEFT" onMouseClicked="#back" size="24">
+                        <MaterialDesignIconView fill="WHITE" glyphName="ARROW_LEFT" onMouseClicked="#back" size="24" styleClass="directionButton">
                            <HBox.margin>
                               <Insets left="30.0" right="10.0" />
                            </HBox.margin>
                         </MaterialDesignIconView>
-                        <MaterialDesignIconView glyphName="ARROW_RIGHT" onMouseClicked="#ahead" size="24">
+                        <MaterialDesignIconView fill="WHITE" glyphName="ARROW_RIGHT" onMouseClicked="#ahead" size="24" styleClass="directionButton">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
@@ -91,7 +97,7 @@
                               <Font name="Geometr415 Blk BT Black" size="17.0" />
                            </font>
                         </JFXButton>
-                        <JFXTextField fx:id="searchUsername" alignment="CENTER" onAction="#search" prefHeight="25.0" prefWidth="183.0" promptText="Search Player" style="-fx-background-color: #99bbff;" unFocusColor="BLACK">
+                        <JFXTextField fx:id="searchUsername" alignment="CENTER" onAction="#search" prefHeight="34.0" prefWidth="183.0" promptText="search player" style="-fx-background-color: #5ddef4;" unFocusColor="BLACK">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
@@ -99,12 +105,12 @@
                               <Font name="Geometr415 Blk BT Black" size="14.0" />
                            </font>
                         </JFXTextField>
-                        <JFXButton buttonType="RAISED" onAction="#search" prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: #00bbff;" text="Search" textFill="WHITE">
+                        <JFXButton buttonType="RAISED" onAction="#search" prefHeight="25.0" prefWidth="116.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Search" textFill="WHITE">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                            <graphic>
-                              <FontAwesomeIconView glyphName="SEARCH" size="24" />
+                              <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" size="24" />
                            </graphic>
                            <font>
                               <Font name="Geometr415 Blk BT Black" size="17.0" />
@@ -114,6 +120,9 @@
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
                   </HBox>
                </children>
             </VBox>

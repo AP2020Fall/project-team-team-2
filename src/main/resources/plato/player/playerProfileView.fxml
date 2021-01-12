@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="625.0" prefWidth="1020.0" styleClass="background" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="620.0" prefWidth="1020.0" styleClass="background" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Label fx:id="bio" alignment="TOP_LEFT" layoutX="280.0" layoutY="79.0" prefHeight="77.0" prefWidth="212.0" text="No bio is given." wrapText="true">
             <font>
