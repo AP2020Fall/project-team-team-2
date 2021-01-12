@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -233,7 +234,13 @@ public abstract class Account {
         return json;
     }
     public static void saveImageToFile(Image image,String accountId) {
-        File outputFile = new File("/database/"+accountId+".jpg");
+
+        File folder = new File("database\\accounts\\images");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        File outputFile = new File("database\\accounts\\images\\"+accountId+".jpg");
+
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
             ImageIO.write(bImage, "jpg", outputFile);
@@ -241,6 +248,7 @@ public abstract class Account {
             throw new RuntimeException(e);
         }
     }
+
     public static void openFileToImage(Image image,Account account) {
        account.setImage(new Image("/database/"+account.getAccountId()+".jpg"));
     }
