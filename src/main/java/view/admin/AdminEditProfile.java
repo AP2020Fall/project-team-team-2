@@ -95,6 +95,7 @@ public class AdminEditProfile implements Tab, Initializable {
         email.setText(controller.getEmail());
         phoneNumber.setText(controller.getPhoneNumber());
         playerImage.setImage(controller.getImage());
+       // playerImage.setImage(controller.getPlayerImage());
     }
 
     private void setUsernameColourRed() {

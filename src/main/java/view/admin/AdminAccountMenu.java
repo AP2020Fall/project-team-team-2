@@ -71,6 +71,6 @@ public class AdminAccountMenu implements Tab, Initializable {
         email.setText(controller.getEmail());
         phoneNumber.setText(controller.getPhoneNumber());
         date.setText(controller.getDate());
-        avatar.setImage(controller.getImage());
+        //avatar.setImage(controller.getImage());
     }
 }

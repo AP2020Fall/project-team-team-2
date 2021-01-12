@@ -20,15 +20,15 @@ public class Event {
     private LocalDate end;
     private int score;
     private String eventId;
-    private Image image;
 
-    public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId,Image image) {
+    //    private Image image;
+    public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId, Image image) {
         this.gameName = gameName;
         this.start = start;
         this.end = end;
         this.score = score;
         this.eventId = eventId;
-        this.image = image;
+      //  this.image = image;
     }
 
 
@@ -65,10 +65,10 @@ public class Event {
         return eventId;
     }
 
-    public Image getImage() {
-        return Objects.requireNonNull( Game.getGameByGameName(gameName),
-                "Game passed to Event model is null").getImage();
-    }
+//    public Image getImage() {
+//        return Objects.requireNonNull(Game.getGameByGameName(gameName),
+//                "Game passed to Event model is null").getImage();
+//    }
 
     public void setGameName(String gameName) {
         this.gameName = gameName;
@@ -101,8 +101,7 @@ public class Event {
         return null;
     }
 
-    public void delete()
-    {
+    public void delete() {
         events.remove(this);
         File file = new File("database" + "\\" + "events" + "\\" + eventId + ".json");
         try {

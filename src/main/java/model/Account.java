@@ -26,15 +26,15 @@ public abstract class Account {
     private String phoneNumber;
     private LocalDate registerDay;
     private boolean isRobot = false;
-    private Image image;
+    //private Image image;
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
+//    public Image getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(Image image) {
+//        this.image = image;
+//    }
 
     public Account(String botName, String username) {
         this.firstName = botName;
@@ -60,7 +60,7 @@ public abstract class Account {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.image = new Image("/images/blankProfile.png");
+        //this.image = new Image("/images/blankProfile.png");
         registerDay = LocalDate.now();
     }
 
