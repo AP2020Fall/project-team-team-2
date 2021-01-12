@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -59,6 +60,7 @@ public class AdminMainMenu implements Tab, Initializable {
         TableColumn<SuggestionEntry, String> suggestionPlayerNameColumn = new TableColumn<>("Player");
         suggestionPlayerNameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
 
+        suggestionList.setPlaceholder(new Label("No suggestion has been made."));
         suggestionList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         suggestionList.getColumns().addAll(suggestionIdColumn, suggestionGameNameColumn,suggestionPlayerNameColumn);
         suggestionList.getItems().addAll(controller.getSuggestions());

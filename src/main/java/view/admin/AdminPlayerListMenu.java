@@ -15,6 +15,7 @@ import model.Entry.GameEntry;
 import model.Entry.PlayerEntry;
 import view.Tab;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -39,13 +40,15 @@ public class AdminPlayerListMenu implements Tab, Initializable {
         return loader.load();
     }
     private void initializeTableAccountList() {
+        TableColumn<PlayerEntry, ImageView> playerAvatar = new TableColumn<>("Avatar");
+        playerAvatar.setCellValueFactory(new PropertyValueFactory<>("avatar"));
         TableColumn<PlayerEntry, String> playerName = new TableColumn<>("Name");
         playerName.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn<PlayerEntry, Hyperlink> playerView = new TableColumn<>("View");
         playerView.setCellValueFactory(new PropertyValueFactory<>("view"));
 
         playerList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        playerList.getColumns().addAll(playerName, playerView);
+        playerList.getColumns().addAll(playerAvatar,playerName, playerView);
         playerList.getItems().addAll(controller.getPlayers());
     }
 }

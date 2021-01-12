@@ -70,14 +70,14 @@
             <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <JFXButton buttonType="RAISED" layoutX="58.0" layoutY="549.0" onAction="#logout" prefHeight="37.0" prefWidth="150.0" style="-fx-background-color: ffa000;" text="Log out">
+      <JFXButton buttonType="RAISED" layoutX="58.0" layoutY="549.0" onAction="#logout" prefHeight="37.0" prefWidth="150.0" styleClass="orangeButton" stylesheets="@../../css/styles.css" text="Log out">
          <font>
             <Font name="Geometr415 Blk BT Black" size="20.0" />
          </font>
       </JFXButton>
       <Separator layoutX="262.0" layoutY="184.0" prefHeight="16.0" prefWidth="713.0" />
       <Separator layoutX="259.0" layoutY="190.0" orientation="VERTICAL" prefHeight="403.0" prefWidth="0.0" />
-      <JFXButton buttonType="RAISED" layoutX="825.0" layoutY="131.0" onAction="#editInfo" prefHeight="37.0" prefWidth="150.0" style="-fx-background-color: #00bbff;" text="Edit Profile" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="825.0" layoutY="131.0" onAction="#editInfo" prefHeight="37.0" prefWidth="150.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Edit Profile" textFill="WHITE">
          <font>
             <Font name="Geometr415 Blk BT Black" size="20.0" />
          </font>

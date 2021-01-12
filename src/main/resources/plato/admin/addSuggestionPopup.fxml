@@ -7,27 +7,34 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane fx:id="stackRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" styleClass="popupBackground" stylesheets="@../../css/styles.css">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="234.0" prefWidth="600.0" styleClass="popupBackground" stylesheets="@../../css/styles.css">
          <children>
-            <JFXTextField fx:id="playerName" labelFloat="true" layoutX="20.0" layoutY="45.0" promptText="player name">
+            <JFXTextField fx:id="playerName" labelFloat="true" layoutX="20.0" layoutY="90.0" promptText="player name">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="gameName" labelFloat="true" layoutX="230.0" layoutY="45.0" promptText="game name">
+            <JFXTextField fx:id="gameName" labelFloat="true" layoutX="230.0" layoutY="90.0" promptText="game name">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>
             </JFXTextField>
-            <JFXButton layoutX="452.0" layoutY="45.0" onAction="#add" prefWidth="120.0" style="-fx-background-color: #00bbff;" text="Add" textFill="WHITE">
+            <JFXButton layoutX="452.0" layoutY="90.0" onAction="#add" prefWidth="120.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Add" textFill="WHITE">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="18.0" />
                </font>
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="24" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="452.0" layoutY="153.0" onAction="#cancel" prefWidth="120.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Geometr415 Blk BT Black" size="18.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="24" />
                </graphic>
             </JFXButton>
          </children>
