@@ -21,14 +21,14 @@ public class Event {
     private int score;
     private String eventId;
 
-    //    private Image image;
+    private transient  Image avatar;
     public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId, Image image) {
         this.gameName = gameName;
         this.start = start;
         this.end = end;
         this.score = score;
         this.eventId = eventId;
-      //  this.image = image;
+        this.avatar = image;
     }
 
 
@@ -65,10 +65,13 @@ public class Event {
         return eventId;
     }
 
-//    public Image getImage() {
-//        return Objects.requireNonNull(Game.getGameByGameName(gameName),
-//                "Game passed to Event model is null").getImage();
-//    }
+    public Image getImage() {
+        return avatar;
+    }
+
+    public void setImage(Image avatar) {
+        this.avatar = avatar;
+    }
 
     public void setGameName(String gameName) {
         this.gameName = gameName;

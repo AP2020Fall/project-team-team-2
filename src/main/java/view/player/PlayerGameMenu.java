@@ -84,7 +84,7 @@ public class PlayerGameMenu implements Tab, Initializable {
         detail.setText(controller.getDetails());
         frequency.setText(controller.getPlayedFrequency());
         win.setText(controller.getWinsCount());
-       // gameImage.setImage(controller.getGameImage());
+        gameImage.setImage(controller.getGameImage());
 
     }
 

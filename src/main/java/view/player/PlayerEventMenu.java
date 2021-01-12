@@ -51,6 +51,6 @@ public class PlayerEventMenu implements Tab, Initializable {
         startDate.setText(controller.getStartDate());
         endDate.setText(controller.getEndDate());
         score.setText(controller.getScore());
-      //  eventImage.setImage(controller.getEventImage());
+        eventImage.setImage(controller.getEventImage());
     }
 }

@@ -85,7 +85,7 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         return player.getFavouriteGames().contains(game);
     }
 
-//    public Image getGameImage() {
-//        return game.getImage();
-//    }
+    public Image getGameImage() {
+        return game.getImage();
+    }
 }

@@ -60,7 +60,7 @@ public class AdminProfileViewController extends AdminMainMenuLayoutController{
         return String.valueOf(player.getFriends().size());
     }
 
-//    public Image getPlayerImage() {
-//        return player.getImage();
-//    }
+    public Image getPlayerImage() {
+        return player.getImage();
+    }
 }

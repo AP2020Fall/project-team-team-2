@@ -92,7 +92,7 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
         return String.valueOf(player.getFriends().size());
     }
 
-//    public Image getPlayerImage() {
-//        return player.getImage();
-//    }
+    public Image getPlayerImage() {
+        return player.getImage();
+    }
 }

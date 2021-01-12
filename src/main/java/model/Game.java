@@ -17,22 +17,22 @@ public class Game {
     private final ArrayList<PlayLog> playLogs;
     private String details;
     private final Scoreboard scoreboard;
-  //  private Image image;
+    private transient  Image avatar;
 
-//    public Image getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(Image image) {
-//        this.image = image;
-//    }
+    public  Image getImage() {
+        return avatar;
+    }
+
+    public void setImage(Image image) {
+        this.avatar = image;
+    }
 
     public Game(String name, String gameId, String details,Image gameImage) {
         this.name = name;
         this.gameId = gameId;
         this.details = details;
         this.playLogs = new ArrayList<>();
-      //  image = gameImage;
+        avatar = gameImage;
         scoreboard = new Scoreboard();
     }
 

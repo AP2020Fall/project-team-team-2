@@ -2,9 +2,12 @@ package model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
+import javax.imageio.ImageIO;
 import javax.swing.text.html.ImageView;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -26,15 +29,15 @@ public abstract class Account {
     private String phoneNumber;
     private LocalDate registerDay;
     private boolean isRobot = false;
-    //private Image image;
+    private transient Image avatar;
 
-//    public Image getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(Image image) {
-//        this.image = image;
-//    }
+    public Image getImage() {
+        return avatar;
+    }
+
+    public void setImage(Image image) {
+        this.avatar = image;
+    }
 
     public Account(String botName, String username) {
         this.firstName = botName;
@@ -60,7 +63,7 @@ public abstract class Account {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        //this.image = new Image("/images/blankProfile.png");
+        this.avatar = new Image("/images/blankProfile.png");
         registerDay = LocalDate.now();
     }
 
@@ -168,6 +171,9 @@ public abstract class Account {
         FileWriter file = new FileWriter("database" + "\\" + "accounts" + "\\" + "players" + "\\" + account.getUsername() + ".json");
         file.write(jsonAccount);
         file.close();
+        System.out.println("saving ended " + player.getUsername());
+        saveImageToFile(player.getImage(),player.getAccountId());
+        System.out.println("saving image ended " + player.getUsername());
     }
 
     private static void saveAdmin(Account account) throws IOException {
@@ -176,6 +182,9 @@ public abstract class Account {
         FileWriter file = new FileWriter("database" + "\\" + "accounts" + "\\" + "admin" + "\\" + account.getUsername() + ".json");
         file.write(jsonAccount);
         file.close();
+        System.out.println("saving ended admin");
+        saveImageToFile(admin.getImage(),admin.getAccountId());
+        System.out.println("saving image ended admin");
 
     }
 
@@ -223,7 +232,18 @@ public abstract class Account {
         reader.close();
         return json;
     }
-
+    public static void saveImageToFile(Image image,String accountId) {
+        File outputFile = new File("/database/"+accountId+".jpg");
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+        try {
+            ImageIO.write(bImage, "jpg", outputFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void openFileToImage(Image image,Account account) {
+       account.setImage(new Image("/database/"+account.getAccountId()+".jpg"));
+    }
 
     @Override
     public String toString() {
