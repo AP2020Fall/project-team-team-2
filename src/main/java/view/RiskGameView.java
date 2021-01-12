@@ -7,7 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import model.Country;
@@ -25,6 +31,22 @@ public class RiskGameView implements View, Initializable {
     private final SVGPath[][] allPaths = new SVGPath[5][5];
     private final Label[][] allLabels = new Label[5][5];
     private final String[][] defaultClasses = new String[5][5];
+    @FXML
+    private Circle draftCircleImage;
+    @FXML
+    private Circle draftModeShape;
+    @FXML
+    private Circle attackCircleImage;
+    @FXML
+    private Circle attackModeShape;
+    @FXML
+    private Circle fortifyCircleImage;
+    @FXML
+    private Circle fortifyModeShape;
+    @FXML
+    private VBox rightVBox;
+    private double rightVBoxWidth = 300;
+    private double RightVBoxHeight = 600;
     @FXML
     private SVGPath country_1_1;
     @FXML
@@ -158,11 +180,6 @@ public class RiskGameView implements View, Initializable {
                 path.getStyleClass().add("country");
                 break;
         }
-    }
-
-
-    public static void main(String[] args) {
-        String check = "hi";
     }
 
     public void riskGameView() {
@@ -393,6 +410,7 @@ public class RiskGameView implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        rightVBox.setSpacing(5);
         allPaths[0][0] = country_1_1;
         allPaths[0][1] = country_1_2;
         allPaths[0][2] = country_1_3;
@@ -473,7 +491,6 @@ public class RiskGameView implements View, Initializable {
                 Player owner = countries.get(i).get(j).getOwner();
                 if(owner != null){
                     String toClass = "country_player_"+ owner.getPlayerNumber();
-                    System.out.println(toClass);
                     allPaths[i][j].getStyleClass().clear();
                     allPaths[i][j].getStyleClass().add(toClass);
                 }else{
@@ -483,6 +500,11 @@ public class RiskGameView implements View, Initializable {
             }
         }
     }
+    public void insertImage(Circle circle , String imageAddress){
+        Image image = new Image(getClass().getResource(imageAddress).getFile());
+        circle.setFill(new ImagePattern(image));
+        circle.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
+    }
     @Override
     public void show(Stage window) throws IOException {
         String fileAddress = "/game/maps/map_" + mapNum + ".fxml";
@@ -491,6 +513,7 @@ public class RiskGameView implements View, Initializable {
         window.setTitle("Game Started");
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
+        insertImage(draftCircleImage ,"/images/attack.png");
     }
 
 }

@@ -3,7 +3,7 @@ package view.player;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.xml.internal.ws.api.model.SEIModel;
+//import com.sun.xml.internal.ws.api.model.SEIModel;
 import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
