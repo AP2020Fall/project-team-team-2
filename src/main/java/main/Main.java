@@ -2,6 +2,7 @@ package main;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import model.*;
 import view.RiskGameView;
@@ -42,6 +43,7 @@ public class Main extends Application {
         ViewHandler viewHandler = ViewHandler.getViewHandler();
         System.out.println("1- Plato\n2- Risk");
         Scanner input = new Scanner(System.in);
+
         if (input.nextInt() == 1)
             viewHandler.push(new WelcomeMenu());
         else {
