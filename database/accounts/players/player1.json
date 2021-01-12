@@ -10,7 +10,9 @@
   "sentFriendRequests": [],
   "messages": [],
   "favouriteGames": [],
-  "suggestions": [],
+  "suggestions": [
+    "CD2820D1"
+  ],
   "cards": [],
   "newSoldiers": 0,
   "playerNumber": 0,

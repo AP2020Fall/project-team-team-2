@@ -21,7 +21,7 @@
                </image>
             </ImageView>
             <MaterialDesignIconView glyphName="PLUS_CIRCLE" layoutX="136.0" layoutY="177.0" onMouseClicked="#addAvatar" size="36" />
-            <JFXButton layoutX="84.0" layoutY="346.0" onAction="#cancel" prefWidth="120.0" style="-fx-background-color: #00bbff;" text="Cancel" textFill="WHITE">
+            <JFXButton layoutX="84.0" layoutY="346.0" onAction="#cancel" prefWidth="120.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="18.0" />
                </font>
@@ -29,7 +29,7 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="24" />
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="433.0" layoutY="346.0" onAction="#add" prefWidth="120.0" style="-fx-background-color: #00bbff;" text="Add" textFill="WHITE">
+            <JFXButton layoutX="433.0" layoutY="346.0" onAction="#add" prefWidth="120.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Add" textFill="WHITE">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="18.0" />
                </font>

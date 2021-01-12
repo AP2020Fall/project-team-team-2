@@ -230,7 +230,7 @@ public abstract class Account {
         StringBuilder json = fileToString(file);
         Admin admin = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Admin.class);
         openFileToImage((Account) admin);
-        System.out.println("a openEnded");
+        System.out.println("adm open ended");
         return admin;
     }
 

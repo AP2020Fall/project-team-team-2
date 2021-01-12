@@ -10,7 +10,9 @@
   "sentFriendRequests": [],
   "messages": [],
   "favouriteGames": [],
-  "suggestions": [],
+  "suggestions": [
+    "1378DF5E"
+  ],
   "cards": [],
   "newSoldiers": 0,
   "playerNumber": 0,

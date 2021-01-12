@@ -23,7 +23,7 @@
     -fx-border-style: solid;
 }
 .popupBackground{
-    -fx-background-color: #37474f;
+    -fx-background-color: white;
 
 }
 
@@ -36,12 +36,14 @@
 }
 .blueButton{
     -fx-background-color: #00acc1;
+    -fx-text-fill: white;
 }
 .blueButton:hover{
     -fx-background-color: #007c91;
 }
 .orangeButton{
     -fx-background-color: #ffa000;
+    -fx-text-fill: black;
 }
 .orangeButton:hover{
     -fx-background-color:#ffd149;
@@ -58,28 +60,6 @@
     -fx-background-color: #37474f;
 }
 
-#gameLogSummaryTable {
-    -fx-background-color: #00ff00;
-}
-
-#gameTreeTable {
-    -fx-background-color: #00aa50;
-}
-
-#gameTable {
-    -fx-background-color: #0055a0;
-}
-
-#eventTreeTable {
-    -fx-background-color: #0000f0;
-}
-
-#friendTreeTable {
-    -fx-background-color: #ffff00;
-}
-#friendTreeTable .table-column {
-  -fx-alignment: CENTER-RIGHT;
-}
 .table {
     -fx-background-color: #819ca9;
     -fx-background-radius: 20;
@@ -90,43 +70,39 @@
     -fx-background-insets: 0 0 10 0;
     -fx-padding: 0 0 10 0;
 }
-.table .column-header, .friendRequestTable .filter{
+.table-column{
+    -fx-alignment: CENTER;
+}
+.table .column-header, .table .filter{
     -fx-size: 35;
     -fx-background-width: 0 0 10 0;
     -fx-background-color: transparent;
 }
 .table .column-header .label{
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: white;
+}
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #546e7a;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+
 }
 
-#plateMessageTable {
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #819ca9;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #005797;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.plateMessageTable {
     -fx-background-color: #ff55a0;
-}
-
-#gameLogTreeTable {
-    -fx-background-color: #ff00f0;
-}
-
-#scoreboardTable {
-    -fx-background-color: #aaff00;
-}
-
-#playerListTable{
-    -fx-background-color: #aaaa50;
-}
-#adminSuggestionTable{
-    -fx-background-color: #aa55a0;
-}
-#playerSuggestionTable{
-    -fx-background-color: #aa00f0;
-}
-#adminGameTable{
-    -fx-background-color: #55ff00;
-}
-#adminEventTable
-{
-    -fx-background-color: #55aa50;
-
+    -fx-background-radius: 20;
 }
 
 

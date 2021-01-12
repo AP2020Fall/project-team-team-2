@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane fx:id="stackRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="popupBackground" stylesheets="@../../css/styles.css">
@@ -34,7 +33,7 @@
             </JFXTextArea>
             <JFXDatePicker fx:id="startDate" layoutX="210.0" layoutY="90.0" overLay="true" promptText="start" />
             <JFXDatePicker fx:id="endDate" layoutX="210.0" layoutY="150.0" overLay="true" promptText="end" />
-            <JFXButton layoutX="432.0" layoutY="343.0" onAction="#add" prefWidth="120.0" style="-fx-background-color: #00bbff;" text="Add" textFill="WHITE">
+            <JFXButton layoutX="432.0" layoutY="343.0" onAction="#add" prefWidth="120.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Add" textFill="WHITE">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="18.0" />
                </font>
@@ -42,7 +41,7 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="24" />
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="53.0" layoutY="343.0" onAction="#cancel" prefWidth="120.0" style="-fx-background-color: #00bbff;" text="Cancel" textFill="WHITE">
+            <JFXButton layoutX="53.0" layoutY="343.0" onAction="#cancel" prefWidth="120.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="18.0" />
                </font>
