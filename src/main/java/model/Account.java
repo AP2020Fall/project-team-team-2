@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public abstract class Account {
         this.firstName = botName;
         this.username = username;
     }
+
     public int getDayOfRegister() {
         return (int) ChronoUnit.DAYS.between(registerDay, LocalDate.now());
     }
@@ -64,7 +66,7 @@ public abstract class Account {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.avatar = new Image("/images/blankProfile.png");
+        this.avatar = new Image("/images/blankProfile.jpg");
         registerDay = LocalDate.now();
     }
 
@@ -173,7 +175,7 @@ public abstract class Account {
         file.write(jsonAccount);
         file.close();
         System.out.println("saving ended " + player.getUsername());
-        saveImageToFile(player.getImage(),player.getAccountId());
+        saveImageToFile(player.getImage(), player.getAccountId());
         System.out.println("saving image ended " + player.getUsername());
     }
 
@@ -184,7 +186,7 @@ public abstract class Account {
         file.write(jsonAccount);
         file.close();
         System.out.println("saving ended admin");
-        saveImageToFile(admin.getImage(),admin.getAccountId());
+        saveImageToFile(admin.getImage(), admin.getAccountId());
         System.out.println("saving image ended admin");
 
     }
@@ -218,12 +220,18 @@ public abstract class Account {
 
     private static Player openPlayer(File file) throws FileNotFoundException {
         StringBuilder json = fileToString(file);
-        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Player.class);
+        Player player = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Player.class);
+        openFileToImage((Account) player);
+        System.out.println("pl open ended");
+        return player;
     }
 
     private static Admin openAdmin(File file) throws FileNotFoundException {
         StringBuilder json = fileToString(file);
-        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Admin.class);
+        Admin admin = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Admin.class);
+        openFileToImage((Account) admin);
+        System.out.println("a openEnded");
+        return admin;
     }
 
     private static StringBuilder fileToString(File file) throws FileNotFoundException {
@@ -233,13 +241,14 @@ public abstract class Account {
         reader.close();
         return json;
     }
-    public static void saveImageToFile(Image image,String accountId) {
+
+    public static void saveImageToFile(Image image, String accountId) {
 
         File folder = new File("database\\accounts\\images");
         if (!folder.exists()) {
             folder.mkdirs();
         }
-        File outputFile = new File("database\\accounts\\images\\"+accountId+".jpg");
+        File outputFile = new File("database\\accounts\\images\\" + accountId + ".jpg");
 
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
@@ -249,8 +258,9 @@ public abstract class Account {
         }
     }
 
-    public static void openFileToImage(Image image,Account account) {
-       account.setImage(new Image("/database/"+account.getAccountId()+".jpg"));
+    public static void openFileToImage(Account account) {
+        File file = new File("database\\accounts\\images\\"+account.getAccountId()+".jpg");
+        account.setImage(new Image(file.toURI().toString()));
     }
 
     @Override

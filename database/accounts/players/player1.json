@@ -1,0 +1,31 @@
+{
+  "money": 121.0,
+  "score": 0,
+  "loses": 0,
+  "wins": 0,
+  "draws": 0,
+  "gameLogSummaries": [],
+  "friends": [],
+  "receivedFriendRequests": [],
+  "sentFriendRequests": [],
+  "messages": [],
+  "favouriteGames": [],
+  "suggestions": [],
+  "cards": [],
+  "newSoldiers": 0,
+  "playerNumber": 0,
+  "draftSoldiers": 0,
+  "firstName": "player1",
+  "lastName": "player1",
+  "username": "player1",
+  "accountId": "88FF5CA6",
+  "password": "player1pass",
+  "email": "pl@gmial.com",
+  "phoneNumber": "09121234567",
+  "registerDay": {
+    "year": 2021,
+    "month": 1,
+    "day": 12
+  },
+  "isRobot": false
+}
