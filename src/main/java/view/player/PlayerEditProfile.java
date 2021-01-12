@@ -102,7 +102,9 @@ public class PlayerEditProfile implements Tab, Initializable {
         lastName.setText(controller.getLastName());
         bio.setText(controller.getBio());
         email.setText(controller.getEmail());
+        System.out.println(controller.getEmail());
         phoneNumber.setText(controller.getPhoneNumber());
+        System.out.println(controller.getPhoneNumber());
         playerImage.setImage(controller.getPlayerImage());
     }
 

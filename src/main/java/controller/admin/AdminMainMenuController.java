@@ -23,29 +23,45 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         return admin.getUsername();
     }
 
+    public String getPassword() {
+        return admin.getPassword();
+    }
     public String getDate(){
         return String.valueOf(admin.getDayOfRegister());
     }
-
     public String getFirstName(){
         return admin.getFirstName();
     }
-
     public String getLastName(){
         return admin.getLastName();
     }
-
     public String getEmail(){
         return admin.getEmail();
     }
-
     public String getPhoneNumber(){
         return admin.getPhoneNumber();
     }
-
     public Image getImage(){
         return admin.getImage();
     }
+
+    public void setUsername(String username){admin.setUsername(username);}
+    public void setPassword(String password) {
+        admin.setPassword(password);
+    }
+    public void setFirstName(String firstName) {
+        admin.setFirstName(firstName);
+    }
+    public void setLastName(String lastName) {
+        admin.setLastName(lastName);
+    }
+    public void setEmail(String email) {
+        admin.setEmail(email);
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        admin.setPhoneNumber(phoneNumber);
+    }
+    public void setImage(Image image){admin.setImage(image);}
 
 
     public ObservableList<SuggestionEntry> getSuggestions() {
@@ -91,4 +107,5 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         }
         return result;
     }
+
 }
