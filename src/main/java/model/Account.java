@@ -65,7 +65,7 @@ public abstract class Account {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.avatar = new Image("/images/blankProfile.png");
+        this.avatar = new Image("/images/blankProfile.jpg");
         registerDay = LocalDate.now();
     }
 

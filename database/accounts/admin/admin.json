@@ -1,0 +1,15 @@
+{
+  "firstName": "admin",
+  "lastName": "admin",
+  "username": "admin",
+  "accountId": "06C0C815",
+  "password": "adminpass",
+  "email": "as@gmial.com",
+  "phoneNumber": "09121234567",
+  "registerDay": {
+    "year": 2021,
+    "month": 1,
+    "day": 12
+  },
+  "isRobot": false
+}
