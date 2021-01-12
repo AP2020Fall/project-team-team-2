@@ -38,7 +38,9 @@ public class Event {
 
     private static Event openEvent(File file) throws FileNotFoundException {
         StringBuilder json = fileToString(file);
-        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Event.class);
+        Event event = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Event.class);
+        openFileToImage(event);
+        return event;
     }
 
     private static StringBuilder fileToString(File file) throws FileNotFoundException {
@@ -161,8 +163,9 @@ public class Event {
         }
     }
 
-    public static void openFileToImage(Image image, Event event) {
-        event.setImage(new Image("/database/" + event.getEventId() + ".jpg"));
+    public static void openFileToImage(Event event) {
+        File file = new File("database\\events\\images\\" + event.getEventId() + ".jpg");
+        event.setImage(new Image(file.toURI().toString()));
     }
 
     @Override

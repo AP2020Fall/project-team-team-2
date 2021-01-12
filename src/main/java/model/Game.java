@@ -132,7 +132,9 @@ public class Game {
 
     private static Game openGame(File file) throws FileNotFoundException {
         StringBuilder json = fileToString(file);
-        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Game.class);
+        Game game = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Game.class);
+        openFileToImage(game);
+        return game;
     }
 
     private static StringBuilder fileToString(File file) throws FileNotFoundException {
@@ -175,8 +177,9 @@ public class Game {
         }
     }
 
-    public static void openFileToImage(Image image, Game game) {
-        game.setImage(new Image("/database/" + game.getGameId() + ".jpg"));
+    public static void openFileToImage(Game game) {
+        File file = new File("database\\games\\images\\" + game.getGameId() + ".jpg");
+        game.setImage(new Image(file.toURI().toString()));
     }
 
     @Override
