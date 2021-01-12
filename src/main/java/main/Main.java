@@ -41,10 +41,6 @@ public class Main extends Application {
         openFiles();
         Runtime.getRuntime().addShutdownHook(new Thread(Main::saveFiles));
         ViewHandler viewHandler = ViewHandler.getViewHandler();
-
-        AudioClip audioClip = new AudioClip(getClass().getResource("/sounds/soundtrack.mp3").toString());
-        audioClip.play();
-
         System.out.println("1- Plato\n2- Risk");
         Scanner input = new Scanner(System.in);
 

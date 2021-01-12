@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import view.AlertMaker;
@@ -45,8 +46,14 @@ public class LoginMenu implements View, Initializable {
         window.setResizable(false);
     }
 
+    private void playClickSound(){
+        AudioClip audioClip = new AudioClip(getClass().getResource("/sounds/click.mp3").toString());
+        audioClip.play();
+    }
+
     @FXML
     private void loginAccount() {
+        playClickSound();
         if (!controller.isUsernameExist(username.getText())) {
             setColourRed();
             AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
@@ -69,6 +76,7 @@ public class LoginMenu implements View, Initializable {
 
     @FXML
     private void deleteAccount() {
+        playClickSound();
         if (!controller.isUsernameExist(username.getText())) {
             setColourRed();
             AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
@@ -99,6 +107,7 @@ public class LoginMenu implements View, Initializable {
 
     @FXML
     private void back() {
+        playClickSound();
         ViewHandler.getViewHandler().pop();
     }
 
