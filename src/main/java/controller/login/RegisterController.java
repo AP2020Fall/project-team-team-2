@@ -28,7 +28,7 @@ public class RegisterController extends Controller {
     private Player createPlayer(String username, String password, ArrayList<String> additionalInfo) {
         //creates a player object and returns it
         Player player = new Player(additionalInfo.get(0), additionalInfo.get(1), username, generateId(),
-                password, additionalInfo.get(2), additionalInfo.get(3),
+                password,additionalInfo.get(3), additionalInfo.get(2),
                 Double.parseDouble(additionalInfo.get(4)));
         Account.getAllAccounts().add(player);
         return player;

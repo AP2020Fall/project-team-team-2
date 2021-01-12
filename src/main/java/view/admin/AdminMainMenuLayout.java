@@ -40,12 +40,8 @@ public class AdminMainMenuLayout implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("1");
         TabHandler.getTabHandler().setBorderPane(borderPane);
-        System.out.println("2");
         viewMainMenu();
-        System.out.println("3");
-
     }
     @FXML private  void search(ActionEvent actionEvent) {
         //todo add similar name instead

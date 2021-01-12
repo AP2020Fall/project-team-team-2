@@ -3,6 +3,7 @@ package view.admin;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import controller.admin.AdminMainMenuController;
 import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,10 +39,10 @@ public class AdminEditProfile implements Tab, Initializable {
     private JFXTextField email;
     @FXML
     private JFXTextField phoneNumber;
-    private final PlayerMainMenuController controller;
+    private final AdminMainMenuController controller;
 
     public AdminEditProfile() {
-        controller = new PlayerMainMenuController();
+        controller = new AdminMainMenuController();
     }
 
     @Override
@@ -81,7 +82,7 @@ public class AdminEditProfile implements Tab, Initializable {
         if(givenImage != null)
         {
             playerImage.setImage(givenImage);
-         //   controller.setPlayerImage(givenImage);
+            controller.setImage(givenImage);
         }
     }
 
@@ -93,6 +94,7 @@ public class AdminEditProfile implements Tab, Initializable {
         lastName.setText(controller.getLastName());
         email.setText(controller.getEmail());
         phoneNumber.setText(controller.getPhoneNumber());
+       // playerImage.setImage(controller.getImage());
        // playerImage.setImage(controller.getPlayerImage());
     }
 
