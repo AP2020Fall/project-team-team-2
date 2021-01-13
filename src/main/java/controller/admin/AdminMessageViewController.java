@@ -37,7 +37,7 @@ public class AdminMessageViewController extends AdminMainMenuLayoutController {
             result.add(platoMessageEntries);
         }
 
-        return result;
+        return result;//
     }
     public PlatoMessageEntry getMessageRoot()
     {
