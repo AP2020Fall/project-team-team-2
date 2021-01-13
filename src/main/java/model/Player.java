@@ -3,9 +3,7 @@ package model;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 
 public class Player extends Account {
     private double money;
@@ -20,6 +18,8 @@ public class Player extends Account {
     private ArrayList<Message> messages;
     private ArrayList<String> favouriteGames;
     private ArrayList<String> suggestions;
+    private List<Player> alliance = new ArrayList<Player>();
+
 
     private ArrayList<Card> cards = new ArrayList<Card>();
     private int newSoldiers;
@@ -235,7 +235,9 @@ public class Player extends Account {
         return null;
     }
 
-
+    public List<Player> getAlliance() {
+        return alliance;
+    }
     public int getNumberOfWins() {
         int wins = 0;
         for (GameLogSummary gameLogSummary : gameLogSummaries)

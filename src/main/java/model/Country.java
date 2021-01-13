@@ -31,7 +31,6 @@ public class Country {
     public Player getOwner() {
         return Owner;
     }
-
     public void addSoldiers(int soldiers) {
         this.soldiers += soldiers;
     }
