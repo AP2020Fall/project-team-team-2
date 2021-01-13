@@ -577,6 +577,41 @@ public class RiskGameController extends Controller {
         this.placementFinished = placementFinished;
     }
 
+    public int[][] setFogOfWarMap(Player currentPlayer) {
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
+        int[][] countryNumbers = new int[row][column];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (gameCountries.get(i).get(j).getOwner().getUsername().equals(currentPlayer.getUsername())) {
+                    countryNumbers[i][j] = 1;
+                } else if (countryNumbers[i-1][j-1] == 1) {
+                    countryNumbers[i][j] = 2;
+                } else if (countryNumbers[i-1][j] == 1) {
+                    countryNumbers[i][j] = 2;
+                } else if (countryNumbers[i-1][j+1] == 1) {
+                    countryNumbers[i][j] = 2;
+                } else if (countryNumbers[i][j-1] == 1) {
+                    countryNumbers[i][j] = 2;
+                } else if (countryNumbers[i][j] == 1) {
+                    countryNumbers[i][j] = 2;
+                } else if (countryNumbers[i][j+1] == 1) {
+                    countryNumbers[i][j] = 2;
+                } else if (countryNumbers[i+1][j-1] == 1) {
+                    countryNumbers[i][j] = 2;
+                } else if (countryNumbers[i+1][j] == 1) {
+                    countryNumbers[i][j] = 2;
+                } else if (countryNumbers[i+1][j+1] == 1) {
+                    countryNumbers[i][j] = 2;
+                } else {
+                    countryNumbers[i][j] = 0;
+                }
+            }
+        }
+
+        return countryNumbers;
+    }
 
     public boolean isPath(int CountryNumbers[][], int n, int m) {
         // Defining visited array to keep
