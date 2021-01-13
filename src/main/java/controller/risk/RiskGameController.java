@@ -653,6 +653,10 @@ public class RiskGameController extends Controller {
 */
     public void setBlizzard(){
 
+        int rndRow = new Random().nextInt(gameCountries.size());
+        int rndCol = new Random().nextInt(gameCountries.get(0).size());
+        gameCountries.get(rndRow).get(rndCol).enableBlizzard();
+
     }
     public boolean isPath(int CountryNumbers[][], int n, int m) {
         // Defining visited array to keep
