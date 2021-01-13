@@ -46,16 +46,14 @@ public class AdminPlayerListMenu implements Tab, Initializable {
         playerAvatar.setCellValueFactory(new PropertyValueFactory<>("avatar"));
         TableColumn<PlayerEntry, String> playerName = new TableColumn<>("Name");
         playerName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn<PlayerEntry, Hyperlink> playerView = new TableColumn<>("View");
-        playerView.setCellValueFactory(new PropertyValueFactory<>("view"));
 
         playerList.setPlaceholder(new Label("No player has registered."));
         playerList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        playerList.getColumns().addAll(playerAvatar,playerName, playerView);
+        playerList.getColumns().addAll(playerAvatar,playerName);
         playerList.getItems().addAll(controller.getPlayers());
     }
     @FXML
-    void friendRequestTableSelected(MouseEvent event) {
+    void playerTableSelected(MouseEvent event) {
         if(event.getButton().equals(MouseButton.PRIMARY)){
             if(event.getClickCount() == 2){
                 if(playerList.getSelectionModel().getSelectedItems().size() != 0)

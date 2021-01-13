@@ -83,13 +83,19 @@ public class AddEventPopup implements Initializable {
     @FXML
     void add() {
         //todo check date
-        //if (!controller.checkStartDate(startDate.getValue()) || !controller.checkEndDate(endDate.getValue())) {
-        //    System.out.println("invalid date!");
-        // } else
-        if (Integer.parseInt(score.getText()) <= 0) {
+        if (!controller.checkStartDate(startDate.getValue()) || !controller.checkEndDate(endDate.getValue())) {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
-                    "Invalid Information", "score should be positive.");
+                    "Invalid Information", "Invalid dates.");
+         } else if (!controller.checkRelativeDate(startDate.getValue(),endDate.getValue()))
+        {
+            setInfoColourRed();
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid Information", "Start date can not be after end.");
+        }else if (controller.isNumber(score.getText()) &&  Integer.parseInt(score.getText()) <= 0) {
+            setInfoColourRed();
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid Information", "Score should be positive number.");
         } else if (!controller.doesGameExist(gameName.getText())) {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
@@ -133,10 +139,6 @@ public class AddEventPopup implements Initializable {
     private void setInfoColourRed() {
         gameName.setFocusColor(Paint.valueOf("#ff0000"));
         gameName.setUnFocusColor(Paint.valueOf("#ff0000"));
-        if (!edit) {
-            startDate.getEditor().clear();
-            endDate.getEditor().clear();
-        }
         score.setFocusColor(Paint.valueOf("#ff0000"));
         score.setUnFocusColor(Paint.valueOf("#ff0000"));
         detail.setFocusColor(Paint.valueOf("#ff0000"));
