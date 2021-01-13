@@ -21,7 +21,7 @@ public class Player extends Account {
     private ArrayList<String> favouriteGames;
     private ArrayList<String> suggestions;
 
-    private ArrayList<Card> cards;
+    private ArrayList<Card> cards = new ArrayList<Card>();
     private int newSoldiers;
     private int playerNumber;
     private int draftSoldiers = 0;

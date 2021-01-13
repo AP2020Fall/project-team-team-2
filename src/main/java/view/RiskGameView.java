@@ -177,7 +177,11 @@ public class RiskGameView implements View, Initializable {
             switch (showWhatToDo()) {
                 case "Draft":
                     if (!inputNumber.getText().isEmpty()) {
-                        changeNotifText(draft(i, j, soliders));
+                        if(!riskGameController.getAttackWon()) {
+                            changeNotifText(draft(i, j, soliders));
+                        }else{
+                            changeNotifText(draftAfterWin(i , j , soliders));
+                        }
                     }
                     break;
                 case "Attack":
@@ -218,12 +222,14 @@ public class RiskGameView implements View, Initializable {
         }
         colorizeCountry();
         setColorMode();
+        putCountryName();
 
     }
     @FXML
     private void nextStatus(MouseEvent e){
         changeNotifText(next());
         setColorMode();
+        colorizeCountry();
     }
     @FXML
     private void nextTurnHandler(MouseEvent e) {
@@ -495,9 +501,9 @@ public class RiskGameView implements View, Initializable {
         System.out.println(toPrint);
     }
 
-    public void draftAfterWin(int i, int j, int soldiers) {
+    public String draftAfterWin(int i, int j, int soldiers) {
         String toPrint = riskGameController.draftAfterWin(i, j, soldiers);
-        System.out.println(toPrint);
+        return toPrint;
     }
 
     @Override
@@ -571,7 +577,8 @@ public class RiskGameView implements View, Initializable {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
-                allLabels[i][j].setText(countries.get(i).get(j).getName());
+                allLabels[i][j].setText("");
+                allLabels[i][j].setText(countries.get(i).get(j).getName()+"\n"+countries.get(i).get(j).getSoldiers());
             }
         }
     }
@@ -622,7 +629,9 @@ public class RiskGameView implements View, Initializable {
                 break;
         }
     }
-
+    public void resetInput(){
+        inputNumber.setText("");
+    }
     public void setColorTurn() {
         setDefaultClasses(playersCircles, "none_active");
         int turnIndex = riskGameController.getCurrentPlayerIndex();
