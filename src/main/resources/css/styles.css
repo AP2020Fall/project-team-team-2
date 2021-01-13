@@ -226,31 +226,32 @@
 .none_active{
     -fx-fill: #333;
 }
-.country_player_1 {
-    -fx-fill: #6B5B95;
-}
-
 .country_no_player {
     -fx-fill: black;
 }
 
-.country_player_2 {
+.country_player_1,.country_player_color_1 {
+    -fx-fill: #6B5B95;
+}
+
+
+.country_player_2,.country_player_color_2 {
     -fx-fill: #88B04B;
 }
 
-.country_player_3 {
+.country_player_3,.country_player_color_3 {
     -fx-fill: #1e7e9f;
 }
 
-.country_player_3 {
+.country_player_3,.country_player_color_4 {
     -fx-fill: #d124dd;
 }
 
-.country_player_4 {
+.country_player_4,.country_player_color_5 {
     -fx-fill: #e9b211;
 }
 
-.country_player_5 {
+.country_player_5,.country_player_color_6 {
     -fx-fill: #DD4124;
 }
 
@@ -261,5 +262,12 @@
 .game_labels {
     -fx-text-fill: wheat;
 }
-
+.player_label{
+    -fx-font-size: 20px;
+    -fx-font-style: italic;
+}
+#cardsMenuLabel{
+    -fx-font-size: 25px;
+    -fx-font-style: italic bold;
+}
 /* Game Part */

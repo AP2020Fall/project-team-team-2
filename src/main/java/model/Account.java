@@ -21,6 +21,8 @@ import java.util.Scanner;
 
 public abstract class Account {
     protected static ArrayList<Account> allAccounts = new ArrayList<>();
+    private static String rememberMeUsername;
+    private static String rememberMePassword;
     private String bio;
     private String firstName;
     private String lastName;
@@ -38,6 +40,23 @@ public abstract class Account {
             if(account instanceof Admin)
                 return (Admin)account;
             return null;
+    }
+
+
+    public static String getRememberMePassword() {
+        return rememberMePassword;
+    }
+
+    public static String getRememberMeUsername() {
+        return rememberMeUsername;
+    }
+
+    public static void setRememberMePassword(String rememberMePassword) {
+        Account.rememberMePassword = rememberMePassword;
+    }
+
+    public static void setRememberMeUsername(String rememberMeUsername) {
+        Account.rememberMeUsername = rememberMeUsername;
     }
 
     public Image getImage() {

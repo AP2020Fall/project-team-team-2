@@ -27,7 +27,7 @@ public class Main extends Application {
         players.add(newPlayer2);
         HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
         primitiveSettings.put("Map Number", 1);
-        primitiveSettings.put("Placement", false);
+        primitiveSettings.put("Placement", true);
         primitiveSettings.put("Alliance", false);
         primitiveSettings.put("Blizzards", false);
         primitiveSettings.put("Fog of War", false);

@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import model.Account;
 import view.AlertMaker;
 import view.View;
 import view.ViewHandler;
@@ -30,8 +31,6 @@ public class LoginMenu implements View, Initializable {
     private JFXPasswordField password;
 
     LoginController controller;
-    private static String rememberUsername;
-    private static String rememberPassword;
 
     public LoginMenu() {
         controller = new LoginController();
@@ -46,7 +45,7 @@ public class LoginMenu implements View, Initializable {
         window.setResizable(false);
     }
 
-    private void playClickSound(){
+    private void playClickSound() {
         AudioClip audioClip = new AudioClip(getClass().getResource("/sounds/click.mp3").toString());
         audioClip.play();
     }
@@ -101,8 +100,8 @@ public class LoginMenu implements View, Initializable {
 
     @FXML
     private void rememberMe() {
-        rememberUsername = this.username.getText();
-        rememberPassword = this.password.getText();
+        Account.setRememberMeUsername(this.username.getText());
+        Account.setRememberMePassword(this.password.getText());
     }
 
     @FXML
@@ -113,13 +112,13 @@ public class LoginMenu implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (rememberUsername != null && rememberPassword != null) {
-            username.setText(rememberUsername);
-            password.setText(rememberPassword);
+        if (Account.getRememberMeUsername() != null && Account.getRememberMePassword() != null) {
+            username.setText(Account.getRememberMeUsername());
+            password.setText(Account.getRememberMePassword());
         }
     }
-    private void setColourRed()
-    {
+
+    private void setColourRed() {
         username.setUnFocusColor(Paint.valueOf("ff0000"));
         username.setFocusColor(Paint.valueOf("ff0000"));
         password.setUnFocusColor(Paint.valueOf("ff0000"));
