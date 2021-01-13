@@ -44,7 +44,7 @@ public class PlayerFriendsMenu implements Tab, Initializable {
 
     private void initializeTreeFriendsList() {
         TreeTableColumn<FriendEntry, ImageView>  friendAvatarColumn = new TreeTableColumn<>("Avatar");
-        friendAvatarColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("image"));
+        friendAvatarColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("avatar"));
         TreeTableColumn<FriendEntry, String> friendNames = new TreeTableColumn<>("Name");
         friendNames.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
         TreeTableColumn<FriendEntry, Hyperlink> friendView = new TreeTableColumn<>("View");

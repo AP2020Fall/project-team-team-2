@@ -2,9 +2,14 @@ package controller.player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import model.*;
 import model.Entry.*;
+import view.TabHandler;
+import view.admin.AdminProfileView;
+import view.player.PlayerProfileView;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -147,5 +152,22 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
     }
     public Image getPlayerImage() {
         return player.getImage();
+    }
+
+    public ObservableList<MenuItem> getSearchQuery(String searchQuery) {
+        ObservableList<MenuItem> result = FXCollections.observableArrayList();
+        ArrayList<Player> top5Players = usernameFuzzySearchTop5(searchQuery);
+        for(Player player: top5Players)
+        {
+            MenuItem menuItem = new MenuItem();
+            menuItem.setOnAction(event -> TabHandler.getTabHandler().push(new PlayerProfileView(player)));
+            menuItem.setText(player.getUsername());
+            result.add(menuItem);
+        }
+        if(result.isEmpty())
+        {
+            result.add(new Menu("No similar user found."));
+        }
+        return result;
     }
 }

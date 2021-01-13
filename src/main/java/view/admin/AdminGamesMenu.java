@@ -29,8 +29,7 @@ public class AdminGamesMenu implements Tab, Initializable {
     @FXML
     private TreeTableView<EventEntry> eventList;
     private AdminGamesMenuController controller;
-    @FXML
-    private StackPane stackRoot;
+
 
     public AdminGamesMenu() {
         controller = new AdminGamesMenuController();
@@ -63,7 +62,8 @@ public class AdminGamesMenu implements Tab, Initializable {
             TabHandler.getTabHandler().refresh();
         } else {
             System.out.println("it is working");
-            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay", "Invalid Request"
+            AlertMaker.showMaterialDialog(TabHandler.getTabHandler().getStackRoot(),
+                    TabHandler.getTabHandler().getStackRoot().getChildren().get(0), "Okay", "Invalid Request"
                     , "Cannot edit more one event at a time.");
         }
     }
@@ -90,7 +90,8 @@ public class AdminGamesMenu implements Tab, Initializable {
             new AddEventPopup(true, controller.getEvent(eventEntry)).openWindow();
             TabHandler.getTabHandler().refresh();
         } else {
-            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay", "Invalid Request"
+            AlertMaker.showMaterialDialog(TabHandler.getTabHandler().getStackRoot(),
+                    TabHandler.getTabHandler().getStackRoot().getChildren().get(0), "Okay", "Invalid Request"
                     , "Cannot edit more one event at a time.");
         }
     }

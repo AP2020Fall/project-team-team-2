@@ -3,11 +3,17 @@ package controller.admin;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import model.*;
 import model.Entry.PlayerEntry;
 import model.Entry.SuggestionEntry;
+import view.TabHandler;
+import view.admin.AdminProfileView;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 
 public class AdminMainMenuController extends AdminMainMenuLayoutController {
@@ -120,6 +126,23 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         ObservableList<PlayerEntry> result = FXCollections.observableArrayList();
         for (Player player : Account.getAllPlayers()) {
             result.add(new PlayerEntry(player));
+        }
+        return result;
+    }
+
+    public ObservableList<MenuItem> getSearchQuery(String searchQuery) {
+        ObservableList<MenuItem> result = FXCollections.observableArrayList();
+        ArrayList<Player> top5Players = usernameFuzzySearchTop5(searchQuery);
+        for(Player player: top5Players)
+        {
+            MenuItem menuItem = new MenuItem();
+            menuItem.setOnAction(event -> TabHandler.getTabHandler().push(new AdminProfileView(player)));
+            menuItem.setText(player.getUsername());
+            result.add(menuItem);
+        }
+        if(result.isEmpty())
+        {
+            result.add(new Menu("No similar user found."));
         }
         return result;
     }
