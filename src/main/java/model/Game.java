@@ -112,9 +112,9 @@ public class Game {
         }
         playLogs.clear();
         for (Player player : Player.getAllPlayers()) {
-            Suggestion suggestion = player.getSuggestionByGameName(this.name);
-            if (suggestion != null) {
-                suggestion.delete();
+            //Suggestion suggestion = player.getSuggestionByGameName(this.name);
+            if (player.getSuggestionByGameName(this.name) != null) {
+                player.getSuggestionByGameName(this.name).delete();
             }
             //player.removeSuggestion(this);
             player.removeGameLog(this);
@@ -128,7 +128,7 @@ public class Game {
     private void removeEvents() {
         ArrayList<Event> eventsMustDelete = new ArrayList<>();
         for (Event event : Event.getEvents()) {
-            if (event.getGameName().equals(this.name)){
+            if (event.getGameName().equals(this.name)) {
                 eventsMustDelete.add(event);
             }
         }

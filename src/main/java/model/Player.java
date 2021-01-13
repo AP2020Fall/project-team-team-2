@@ -173,8 +173,8 @@ public class Player extends Account {
 
     public Suggestion getSuggestionByGameName(String gameName) {
         for (String suggestionId : suggestions) {
-            Suggestion suggestion = Objects.requireNonNull(Suggestion.getSuggestionById(suggestionId));
-            if (suggestion.getGameName().equals(gameName))
+            Suggestion suggestion = Suggestion.getSuggestionById(suggestionId);
+            if (suggestion != null && suggestion.getGameName().equals(gameName))
                 return suggestion;
         }
         return null;

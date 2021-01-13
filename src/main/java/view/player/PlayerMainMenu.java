@@ -46,15 +46,17 @@ public class PlayerMainMenu implements Tab, Initializable {
 
             favourite.getChildren().add(new TreeItem<>(gameEntry));
         }
+        System.out.println("0");
         TreeItem<GameEntry> recently = new TreeItem<>(new GameEntry("Recently Played"));
         recently.setExpanded(true);
         recently.getChildren().add(new TreeItem<>(controller.lastGamePlayed()));
         TreeItem<GameEntry> suggested = new TreeItem<>(new GameEntry("Suggested"));
         suggested.setExpanded(true);
-
+        System.out.println("1");
         for (GameEntry gameEntry : controller.adminsSuggestions()) {
             suggested.getChildren().add(new TreeItem<>(gameEntry));
         }
+        System.out.println("2");
         TreeTableColumn<GameEntry, ImageView> gameAvatar = new TreeTableColumn<>("Avatar");
         gameAvatar.setCellValueFactory(new TreeItemPropertyValueFactory<>("avatar"));
         TreeTableColumn<GameEntry, String> gameName = new TreeTableColumn<>("Name");
@@ -62,6 +64,7 @@ public class PlayerMainMenu implements Tab, Initializable {
         TreeTableColumn<GameEntry, Hyperlink> gameOpen = new TreeTableColumn<>("Open game");
         gameOpen.setCellValueFactory(new TreeItemPropertyValueFactory<>("link"));
         TreeItem<GameEntry> gameRoot = new TreeItem<>();
+        System.out.println("3");
         gameRoot.getChildren().addAll(favourite, recently, suggested);
         gamesList.setRoot(gameRoot);
         gamesList.setShowRoot(false);

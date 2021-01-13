@@ -59,6 +59,7 @@ public class AdminAccountMenu implements Tab, Initializable {
 
     @FXML
     private void logout(ActionEvent actionEvent) {
+        AdminMainMenuLayout.getAudioClip().stop();
         controller.logout();
         TabHandler.getTabHandler().logout();
         ViewHandler.getViewHandler().logout();

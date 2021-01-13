@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import view.AlertMaker;
 import view.TabHandler;
@@ -34,7 +35,7 @@ public class PlayerMainMenuLayout implements View, Initializable {
     @FXML
     private ContextMenu searchContextMenu;
     PlayerMainMenuController controller;
-
+    private static AudioClip audioClip;
     public PlayerMainMenuLayout() {
         controller = new PlayerMainMenuController();
     }
@@ -44,10 +45,21 @@ public class PlayerMainMenuLayout implements View, Initializable {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/player/playerMainMenuLayout.fxml"));
         root.setController(this);
         window.setTitle("Plato");
+        playSoundtrack();
         Scene scene = new Scene(root.load());
         scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         window.setScene(scene);
         window.setResizable(false);
+    }
+
+    public static AudioClip getAudioClip() {
+        return audioClip;
+    }
+
+    private void playSoundtrack() {
+        audioClip = new AudioClip(getClass().getResource("/sounds/playerSound.mp3").toString());
+        audioClip.setCycleCount(audioClip.INDEFINITE);
+        audioClip.play();
     }
 
     @Override
