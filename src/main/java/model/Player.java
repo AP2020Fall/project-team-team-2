@@ -81,7 +81,7 @@ public class Player extends Account {
         return null;
     }
 
-    public static void addGameLog(ArrayList<Player> players, Game game,GameStates gameState,Player winner) {
+    public static void addGameLog(ArrayList<Player> players, Game game, GameStates gameState, Player winner) {
         //todo
     }
 
@@ -214,10 +214,10 @@ public class Player extends Account {
     public void addFavouriteGame(Game game) {
         favouriteGames.add(game.getGameId());
     }
+
     public void removeFavouriteGame(Game game) {
         favouriteGames.remove(game.getGameId());
     }
-
 
 
     public static Player getPlayerById(String id) {
@@ -252,6 +252,16 @@ public class Player extends Account {
                 file.delete();
         } catch (Exception ignored) {
         }
+
+        File imageFile = new File("database" + "\\" + "accounts" + "\\" + "images" + "\\" +
+                this.getAccountId() + ".jpg");
+        try {
+            if (file.exists())
+                file.delete();
+        } catch (Exception ignored) {
+            System.out.println("image not found!");
+        }
+
         gameLogSummaries.clear();
         for (String username : friends) {
             Player friend = Objects.requireNonNull(Player.getPlayerByUsername(username));
