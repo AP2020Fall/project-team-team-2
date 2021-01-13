@@ -44,7 +44,12 @@ public class RiskGameView implements View, Initializable {
     private final List<Circle> playerColors = new ArrayList<Circle>();
     private final List<Label> playerLabels = new ArrayList<Label>();
     private final String[][] defaultClasses = new String[5][5];
-
+    @FXML
+    private Circle aClub;
+    @FXML
+    private Circle aHeart;
+    @FXML
+    private Circle aDiamond;
     @FXML
     private Rectangle nextTurn;
     @FXML
@@ -172,7 +177,11 @@ public class RiskGameView implements View, Initializable {
     @FXML
     private Label label_5_5;
     @FXML
-    private void cardsMenuHandler(MouseEvent e) throws IOException {
+    private void matchHandler(MouseEvent e){
+        String id = e.getPickResult().getIntersectedNode().getId();
+    }
+    @FXML
+    private void cardsMenuHandler(MouseEvent e) throws IOException, URISyntaxException {
         Stage aboutStage = new Stage();
         FXMLLoader aboutRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
         aboutRoot.setController(this);
@@ -180,6 +189,9 @@ public class RiskGameView implements View, Initializable {
         aboutStage.setResizable(false);
         aboutStage.initModality(Modality.WINDOW_MODAL);
         aboutStage.initOwner(gameWindow);
+        insertImage(aHeart , "/images/A_heart.png");
+        insertImage(aClub , "/images/A_club.png");
+        insertImage(aDiamond , "/images/A_diamond.png");
         aboutStage.show();
     }
     @FXML
@@ -725,7 +737,6 @@ public class RiskGameView implements View, Initializable {
 
     @Override
     public void show(Stage window) throws IOException {
-
         String fileAddress = "/game/maps/map_" + mapNum + ".fxml";
         FXMLLoader root = new FXMLLoader(getClass().getResource(fileAddress));
         root.setController(this);
