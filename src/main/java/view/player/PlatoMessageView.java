@@ -5,34 +5,60 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.Entry.GameLogEntry;
 import model.Entry.PlatoMessageEntry;
 import view.View;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PlatoMessageView implements View, Initializable {
     private static Stage popupWindow;
     private final PlatoMessageController controller;
     @FXML
-    private TableView<PlatoMessageEntry> messageTable;
-
+    private TreeTableView<PlatoMessageEntry> messageTable;
     public PlatoMessageView() {
         controller = new PlatoMessageController();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        TableColumn<PlatoMessageEntry, String> messageColumn = new TableColumn<>();
-        messageColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
-        messageTable.getColumns().addAll(messageColumn);
-        messageTable.getItems().addAll(controller.platoBotsMessages());
+        initializeMessageTreeTable();
+    }
+
+    private void initializeMessageTreeTable() {
+        TreeTableColumn<PlatoMessageEntry, ImageView> avatarColumn = new TreeTableColumn<>("avatar");
+        avatarColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("avatar"));
+        TreeTableColumn<PlatoMessageEntry, String> messageColumn = new TreeTableColumn<>("text");
+        messageColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("text"));
+        TreeTableColumn<PlatoMessageEntry, LocalDate> timeColumn = new TreeTableColumn<>("time");
+        timeColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("time"));
+
+
+        TreeItem<PlatoMessageEntry> messageRoot = new TreeItem<>(controller.getMessageRoot());
+        if (controller.hasMessage()) {
+            for (ArrayList<PlatoMessageEntry> messageEntries : controller.platoBotsMessages()) {
+                TreeItem<PlatoMessageEntry> dayRoot = new TreeItem<>();
+                for(PlatoMessageEntry messageEntry: messageEntries)
+                    dayRoot.getChildren().add(new TreeItem<>(messageEntry));
+                messageRoot.getChildren().add(dayRoot);
+            }
+            messageTable.setRoot(messageRoot);
+            messageTable.setShowRoot(true);
+
+        } else {
+            messageTable.setPlaceholder(new Label("No messages."));
+        }
+        messageTable.getColumns().addAll(avatarColumn, messageColumn, timeColumn);
     }
 
     @Override

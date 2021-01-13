@@ -12,7 +12,110 @@
   "sentFriendRequests": [
     "D3141B9D"
   ],
-  "messages": [],
+  "messages": [
+    {
+      "message": "hello people",
+      "messageId": "1190AD7F",
+      "time": {
+        "date": {
+          "year": 2021,
+          "month": 1,
+          "day": 13
+        },
+        "time": {
+          "hour": 15,
+          "minute": 54,
+          "second": 35,
+          "nano": 683000000
+        }
+      }
+    },
+    {
+      "message": "good morning",
+      "messageId": "D637BC4D",
+      "time": {
+        "date": {
+          "year": 2021,
+          "month": 1,
+          "day": 13
+        },
+        "time": {
+          "hour": 16,
+          "minute": 2,
+          "second": 11,
+          "nano": 818000000
+        }
+      }
+    },
+    {
+      "message": "today is a good day\n",
+      "messageId": "E37202A8",
+      "time": {
+        "date": {
+          "year": 2021,
+          "month": 1,
+          "day": 13
+        },
+        "time": {
+          "hour": 16,
+          "minute": 5,
+          "second": 8,
+          "nano": 976000000
+        }
+      }
+    },
+    {
+      "message": "pls refresh",
+      "messageId": "B326546F",
+      "time": {
+        "date": {
+          "year": 2021,
+          "month": 1,
+          "day": 13
+        },
+        "time": {
+          "hour": 16,
+          "minute": 7,
+          "second": 59,
+          "nano": 450000000
+        }
+      }
+    },
+    {
+      "message": "this is from future\n",
+      "messageId": "5EB0E883",
+      "time": {
+        "date": {
+          "year": 2021,
+          "month": 1,
+          "day": 15
+        },
+        "time": {
+          "hour": 16,
+          "minute": 8,
+          "second": 32,
+          "nano": 217000000
+        }
+      }
+    },
+    {
+      "message": "it works",
+      "messageId": "36901CE6",
+      "time": {
+        "date": {
+          "year": 2021,
+          "month": 1,
+          "day": 15
+        },
+        "time": {
+          "hour": 16,
+          "minute": 17,
+          "second": 1,
+          "nano": 525000000
+        }
+      }
+    }
+  ],
   "favouriteGames": [
     "5B3AC261"
   ],

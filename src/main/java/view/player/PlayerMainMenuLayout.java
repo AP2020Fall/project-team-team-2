@@ -4,10 +4,13 @@ import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import view.AlertMaker;
 import view.TabHandler;
 import view.View;
 
@@ -20,12 +23,16 @@ public class PlayerMainMenuLayout implements View, Initializable {
     @FXML
     private BorderPane borderPane;
     @FXML
-    private TextField searchUsername;
+    private StackPane stackRoot;
 
+    @FXML
+    private TextField searchUsername;
     @FXML
     private Label moneyMenuBar = new Label();
     @FXML
     private Label scoreMenuBar = new Label();
+    @FXML
+    private ContextMenu searchContextMenu;
     PlayerMainMenuController controller;
 
     public PlayerMainMenuLayout() {
@@ -47,18 +54,27 @@ public class PlayerMainMenuLayout implements View, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initializeMenuBar();
         TabHandler.getTabHandler().setBorderPane(borderPane);
+        TabHandler.getTabHandler().setStackPane(stackRoot);
         viewMainMenu();
     }
 
     @FXML
     private void search() {
-        //todo add similar name
         if (!controller.isUsernameExist(searchUsername.getText())) {
-            System.out.println("username does not exist!");
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
+                    "Invalid username","Username does not exist!");
         } else {
             TabHandler.getTabHandler().push(
                     new PlayerProfileView(controller.searchPlayer(searchUsername.getText())));
         }
+    }
+    @FXML
+    void updateContextMenu() {
+        String searchQuery = searchUsername.getText();
+        searchContextMenu.getItems().clear();
+        searchContextMenu.getItems().addAll(controller.getSearchQuery(searchQuery));
+        searchContextMenu.show(searchUsername, Side.BOTTOM,0,0);
+
     }
 
     @FXML

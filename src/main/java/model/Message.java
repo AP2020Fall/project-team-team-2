@@ -16,6 +16,7 @@ public class Message {
     public void sendMessage() {
         for(Player player: Player.getAllPlayers())
             player.getMessages().add(this);
+        Account.getAdmin().getSentMessages().add(this);
     }
 
     @Override
@@ -26,5 +27,9 @@ public class Message {
 
     public String getMessage() {
         return message;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
     }
 }

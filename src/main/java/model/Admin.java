@@ -1,9 +1,13 @@
 package model;
 
 
+import java.util.ArrayList;
+
 public class Admin extends Account {
+    private ArrayList<Message> sentMessages;
     public Admin(String firstName, String lastName, String username, String accountId, String password, String email, String phoneNumber) {
         super(firstName, lastName, username, accountId, password, email, phoneNumber);
+        sentMessages = new ArrayList<>();
     }
 
     public static boolean isAdminExist() {
@@ -15,4 +19,7 @@ public class Admin extends Account {
         return false;
     }
 
+    public ArrayList<Message> getSentMessages() {
+        return sentMessages;
+    }
 }

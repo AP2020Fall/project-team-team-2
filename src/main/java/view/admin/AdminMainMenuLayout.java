@@ -7,23 +7,37 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import main.Main;
+import model.Player;
+import view.AlertMaker;
 import view.TabHandler;
 import view.View;
+import view.player.PlatoMessageView;
 import view.player.PlayerProfileView;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AdminMainMenuLayout implements View, Initializable {
     @FXML private BorderPane borderPane;
     @FXML
     private JFXTextField searchUsername;
+    @FXML
+    private ContextMenu searchContextMenu;
     private AdminMainMenuController controller;
+    @FXML
+    private StackPane stackRoot;
+
 
     public AdminMainMenuLayout() {
         controller = new AdminMainMenuController();
@@ -43,19 +57,28 @@ public class AdminMainMenuLayout implements View, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         TabHandler.getTabHandler().setBorderPane(borderPane);
+        TabHandler.getTabHandler().setStackPane(stackRoot);
         viewMainMenu();
     }
     @FXML private  void search(ActionEvent actionEvent) {
-        //todo add similar name instead
         if (!controller.isUsernameExist(searchUsername.getText())) {
-            System.out.println("username does not exist!");
+            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
+                    "Invalid username","Username does not exist!");
         } else {
             TabHandler.getTabHandler().push(
                     new AdminProfileView(controller.searchPlayer(searchUsername.getText())));
         }
     }
+    @FXML
+    void updateContextMenu() {
+        String searchQuery = searchUsername.getText();
+        searchContextMenu.getItems().clear();
+        searchContextMenu.getItems().addAll(controller.getSearchQuery(searchQuery));
+        searchContextMenu.show(searchUsername, Side.BOTTOM,0,0);
 
-    @FXML private  void platoMessage(ActionEvent actionEvent) {
+    }
+    @FXML private  void platoMessage() throws IOException {
+        new AdminMessageView().openWindow();
     }
 
     @FXML

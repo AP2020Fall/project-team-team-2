@@ -1,6 +1,7 @@
 package view;
 
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ public class TabHandler {
     private static TabHandler TabHandler;
     private BorderPane borderPane;
     private static int index;
+    private StackPane stackRoot;
+
     private TabHandler() {
         index = -1;
     }
@@ -70,5 +73,14 @@ public class TabHandler {
         viewArrayList.clear();
         index= -1;
         borderPane = null;
+        stackRoot=null;
+    }
+
+    public void setStackPane(StackPane stackRoot) {
+        this.stackRoot = stackRoot;
+    }
+
+    public StackPane getStackRoot() {
+        return stackRoot;
     }
 }
