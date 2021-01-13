@@ -113,7 +113,12 @@
 .country {
     -fx-fill: yellow;
 }
+.country_selected_source{
 
+}
+.country_selected_destination{
+
+}
 .country:hover,
 .country_entered,
 .country_player_1:hover,

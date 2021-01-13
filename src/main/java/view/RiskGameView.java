@@ -42,6 +42,10 @@ public class RiskGameView implements View, Initializable {
     @FXML
     private Rectangle nextTurn;
     @FXML
+    private Circle nextStatus;
+    @FXML
+    private Circle deselectIcon;
+    @FXML
     private TextField inputNumber;
     @FXML
     private Circle draftCircleImage;
@@ -170,46 +174,63 @@ public class RiskGameView implements View, Initializable {
         int soliders = 0;
         try {
             soliders = Integer.parseInt(inputNumber.getText());
-        } catch (NumberFormatException ex) {
-            System.out.println("please insert a number");
-        }
-        switch (showWhatToDo()) {
-            case "Draft":
-                if (!inputNumber.getText().isEmpty()) {
-                    changeNotifText(draft(i, j, soliders));
-                }
-                break;
-            case "Attack":
-                if (riskGameController.getI() == null || riskGameController.getJ() == null) {
-                    riskGameController.setI(i);
-                    riskGameController.setJ(j);
-                } else {
+            switch (showWhatToDo()) {
+                case "Draft":
                     if (!inputNumber.getText().isEmpty()) {
-                        changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
-                                i, j, soliders));
+                        changeNotifText(draft(i, j, soliders));
                     }
-                }
-                break;
-            case "Fortify":
-                if (riskGameController.getI() == null || riskGameController.getJ() == null) {
-                    riskGameController.setI(i);
-                    riskGameController.setJ(j);
-                } else {
-                    if (!inputNumber.getText().isEmpty()) {
-                        changeNotifText(fortify(riskGameController.getI(), riskGameController.getJ(),
-                                i, j, soliders));
+                    break;
+                case "Attack":
+                    if (riskGameController.getI() == null || riskGameController.getJ() == null) {
+                        riskGameController.setI(i);
+                        riskGameController.setJ(j);
+                    } else {
+                        if (!inputNumber.getText().isEmpty()) {
+                            changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
+                                    i, j, soliders));
+                        }
                     }
-                }
-                break;
+                    break;
+                case "Fortify":
+                    if (riskGameController.getI() == null || riskGameController.getJ() == null) {
+                        riskGameController.setI(i);
+                        riskGameController.setJ(j);
+                    } else {
+                        if (!inputNumber.getText().isEmpty()) {
+                            changeNotifText(fortify(riskGameController.getI(), riskGameController.getJ(),
+                                    i, j, soliders));
+                        }
+                    }
+                    break;
 
+            }
         }
+        catch (NumberFormatException ex) {
+            changeNotifText("please insert a number");
+        }
+        colorizeCountry();
         setColorMode();
 
     }
-
+    @FXML
+    private void nextStatus(MouseEvent e){
+        changeNotifText(next());
+        setColorMode();
+    }
     @FXML
     private void nextTurnHandler(MouseEvent e) {
-            nextTurn();
+        nextTurn();
+        colorizeCountry();
+        setColorTurn();
+        setColorMode();
+    }
+    @FXML
+    private void deselectHandler(MouseEvent e){
+        deselect();
+    }
+
+    private void deselect() {
+        riskGameController.deselect();
     }
 
     public int[] getCountryIndices(String countryClicked) {
@@ -436,9 +457,9 @@ public class RiskGameView implements View, Initializable {
         return toPrint;
     }
 
-    public void next() {
+    public String next() {
         String toPrint = riskGameController.next();
-        System.out.println(toPrint);
+        return toPrint;
     }
 
     public void autoPlace() {
@@ -555,7 +576,6 @@ public class RiskGameView implements View, Initializable {
             }
         }
     }
-
     public void colorizeCountry() {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
         for (int i = 0; i < countries.size(); i++) {
@@ -650,6 +670,7 @@ public class RiskGameView implements View, Initializable {
             insertImage(attackCircleImage, "/images/attack.png");
             insertImage(fortifyCircleImage, "/images/fortify.png");
             insertImage(nextTurn, "/images/next.png");
+            insertImage(nextStatus , "/images/next_status.png");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

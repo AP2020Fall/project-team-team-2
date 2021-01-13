@@ -934,4 +934,9 @@ public class RiskGameController extends Controller {
     public void setJ(Integer j) {
         this.j = j;
     }
+
+    public void deselect() {
+        i = null;
+        j = null;
+    }
 }
