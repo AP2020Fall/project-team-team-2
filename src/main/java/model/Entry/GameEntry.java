@@ -8,7 +8,6 @@ import view.player.PlayerGameMenu;
 
 public class GameEntry {
    private  String name;
-   private Hyperlink link;
    private  String detail;
    private ImageView avatar;
     public GameEntry(Game game)
@@ -17,12 +16,7 @@ public class GameEntry {
         detail = game.getDetails();
         avatar = new ImageView(game.getImage());
         avatar.setFitHeight(48);
-        avatar.setFitHeight(48);
-        link = new Hyperlink("Open");
-        link.setOnAction(event ->
-        {
-            TabHandler.getTabHandler().push(new PlayerGameMenu(game));
-        });
+        avatar.setFitWidth(48);
     }
 
 
@@ -33,10 +27,6 @@ public class GameEntry {
     }
     public String getName() {
         return name;
-    }
-
-    public Hyperlink getLink() {
-        return link;
     }
 
     public String getDetail() {

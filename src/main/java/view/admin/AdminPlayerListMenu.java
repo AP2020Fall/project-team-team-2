@@ -5,15 +5,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import model.Entry.FriendRequestEntry;
 import model.Entry.GameEntry;
 import model.Entry.PlayerEntry;
 import view.Tab;
+import view.TabHandler;
+import view.player.PlayerProfileView;
 
 import javax.swing.text.html.ImageView;
 import java.io.IOException;
@@ -47,8 +49,22 @@ public class AdminPlayerListMenu implements Tab, Initializable {
         TableColumn<PlayerEntry, Hyperlink> playerView = new TableColumn<>("View");
         playerView.setCellValueFactory(new PropertyValueFactory<>("view"));
 
+        playerList.setPlaceholder(new Label("No player has registered."));
         playerList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         playerList.getColumns().addAll(playerAvatar,playerName, playerView);
         playerList.getItems().addAll(controller.getPlayers());
+    }
+    @FXML
+    void friendRequestTableSelected(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(playerList.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    PlayerEntry playerEntry = playerList.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new AdminProfileView(controller.getPlayer(playerEntry)));
+                }
+            }
+
+        }
     }
 }

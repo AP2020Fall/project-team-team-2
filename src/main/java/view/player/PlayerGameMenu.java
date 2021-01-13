@@ -85,7 +85,8 @@ public class PlayerGameMenu implements Tab, Initializable {
         frequency.setText(controller.getPlayedFrequency());
         win.setText(controller.getWinsCount());
         gameImage.setImage(controller.getGameImage());
-
+        gameImage.setFitWidth(120);
+        gameImage.setFitHeight(120);
     }
 
     private void initializeTreeGameLogList() {

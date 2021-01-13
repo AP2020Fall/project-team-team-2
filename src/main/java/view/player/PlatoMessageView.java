@@ -50,8 +50,10 @@ public class PlatoMessageView implements View, Initializable {
                 TreeItem<PlatoMessageEntry> dayRoot = new TreeItem<>();
                 for(PlatoMessageEntry messageEntry: messageEntries)
                     dayRoot.getChildren().add(new TreeItem<>(messageEntry));
+                dayRoot.setExpanded(true);
                 messageRoot.getChildren().add(dayRoot);
             }
+            messageRoot.setExpanded(true);
             messageTable.setRoot(messageRoot);
             messageTable.setShowRoot(true);
 

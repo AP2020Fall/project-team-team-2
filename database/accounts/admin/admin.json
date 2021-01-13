@@ -1,5 +1,40 @@
 {
-  "sentMessages": [],
+  "sentMessages": [
+    {
+      "message": "Please read this message, several game have been added",
+      "messageId": "8F83E95A",
+      "time": {
+        "date": {
+          "year": 2021,
+          "month": 1,
+          "day": 13
+        },
+        "time": {
+          "hour": 18,
+          "minute": 53,
+          "second": 55,
+          "nano": 901000000
+        }
+      }
+    },
+    {
+      "message": "hello players\n",
+      "messageId": "C4379806",
+      "time": {
+        "date": {
+          "year": 2021,
+          "month": 1,
+          "day": 13
+        },
+        "time": {
+          "hour": 20,
+          "minute": 7,
+          "second": 35,
+          "nano": 345000000
+        }
+      }
+    }
+  ],
   "firstName": "admin",
   "lastName": "admin",
   "username": "admin",

@@ -1,0 +1,16 @@
+{
+  "gameName": "Risk",
+  "start": {
+    "year": 2021,
+    "month": 1,
+    "day": 15
+  },
+  "end": {
+    "year": 2021,
+    "month": 1,
+    "day": 14
+  },
+  "score": 2,
+  "eventId": "3E20206D",
+  "comment": "Risk game event\n"
+}
