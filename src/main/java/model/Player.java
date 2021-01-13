@@ -256,8 +256,8 @@ public class Player extends Account {
         File imageFile = new File("database" + "\\" + "accounts" + "\\" + "images" + "\\" +
                 this.getAccountId() + ".jpg");
         try {
-            if (file.exists())
-                file.delete();
+            if (imageFile.exists())
+                imageFile.delete();
         } catch (Exception ignored) {
             System.out.println("image not found!");
         }

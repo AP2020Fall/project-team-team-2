@@ -26,7 +26,7 @@ public class Event {
     private String comment;
     private transient Image avatar;
 
-    public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId,String comment, Image image) {
+    public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId, String comment, Image image) {
         this.gameName = gameName;
         this.start = start;
         this.end = end;
@@ -127,6 +127,14 @@ public class Event {
             if (file.exists())
                 file.delete();
         } catch (Exception ignored) {
+        }
+
+        File imageFile = new File("database\\events\\images\\" + eventId + ".jpg");
+        try {
+            if (imageFile.exists())
+                imageFile.delete();
+        } catch (Exception ignored) {
+            System.out.println("event image not found!");
         }
     }
 

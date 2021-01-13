@@ -1,0 +1,16 @@
+{
+  "sentMessages": [],
+  "firstName": "admin",
+  "lastName": "admin",
+  "username": "admin",
+  "accountId": "63FB6D26",
+  "password": "adminpass",
+  "email": "as@gmail.com",
+  "phoneNumber": "09121234567",
+  "registerDay": {
+    "year": 2021,
+    "month": 1,
+    "day": 13
+  },
+  "isRobot": false
+}
