@@ -38,9 +38,7 @@ public class AdminMainMenuLayout implements View, Initializable {
     private AdminMainMenuController controller;
     @FXML
     private StackPane stackRoot;
-
-    private static AudioClip audioClip ;
-
+    private static AudioClip audioClip;
 
     public AdminMainMenuLayout() {
         controller = new AdminMainMenuController();

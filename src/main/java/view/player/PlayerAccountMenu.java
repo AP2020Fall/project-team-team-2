@@ -49,6 +49,7 @@ public class PlayerAccountMenu implements Tab, Initializable {
     @FXML
     private ImageView avatar;
     private PlayerMainMenuController controller;
+
     public PlayerAccountMenu() {
         controller = new PlayerMainMenuController();
     }
@@ -65,8 +66,10 @@ public class PlayerAccountMenu implements Tab, Initializable {
         loader.setController(this);
         return loader.load();
     }
+
     @FXML
     private void logout() throws IOException {
+        PlayerMainMenuLayout.getAudioClip().stop();
         controller.logout();
         TabHandler.getTabHandler().logout();
         ViewHandler.getViewHandler().logout();
@@ -74,8 +77,9 @@ public class PlayerAccountMenu implements Tab, Initializable {
 
     @FXML
     private void editInfo(ActionEvent actionEvent) {
-       TabHandler.getTabHandler().push(new PlayerEditProfile());
+        TabHandler.getTabHandler().push(new PlayerEditProfile());
     }
+
     private void initializedInfo() {
         username.setText(controller.getUsername());
         firstName.setText(controller.getFirstName());
@@ -88,7 +92,7 @@ public class PlayerAccountMenu implements Tab, Initializable {
         date.setText(controller.getDate());
         wins.setText(controller.getWins() + " Wins");
         friends.setText(controller.getFriendCount());
-       avatar.setImage(controller.getPlayerImage());
+        avatar.setImage(controller.getPlayerImage());
     }
 
     private void initializeTableGameHistoryList() {
