@@ -222,6 +222,11 @@ public class RiskGameView implements View, Initializable {
                             if (!inputNumber.getText().isEmpty()) {
                                 changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
                                         i, j, soliders));
+                                try {
+                                    makeRightHBox();
+                                }catch (Exception error2){
+
+                                }
                             }
                         }
                         break;
@@ -358,17 +363,14 @@ public class RiskGameView implements View, Initializable {
 
     public void showTurn() {
         String toPrint = riskGameController.showTurn();
-        System.out.println(toPrint);
     }
 
     public void showOptions() {
         String toPrint = riskGameController.showMatchOptions();
-        System.out.println(toPrint);
     }
 
     public void matchCards(int typical) {
         String toPrint = riskGameController.matchCards(typical);
-        System.out.println(toPrint);
     }
 
     public String draftAfterWin(int i, int j, int soldiers) {
@@ -477,7 +479,6 @@ public class RiskGameView implements View, Initializable {
         int columns = countries.get(0).size();
         int[][] toShowFog = new int[row][columns];
         toShowFog = riskGameController.getFogOfWarMap(riskGameController.getCurrentPlayer());
-        System.out.println(Arrays.deepToString(toShowFog));
         boolean fogStatus = riskGameController.getFogStatus();
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
@@ -558,6 +559,8 @@ public class RiskGameView implements View, Initializable {
             bigCircleSize = 60;
         }
         rightVBox.getChildren().clear();
+        playerLabels.clear();
+        playersCircles.clear();
         for (Player player : riskGameController.getPlayers()) {
             i++;
             Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + i + ".png").toURI()));
@@ -565,9 +568,11 @@ public class RiskGameView implements View, Initializable {
             littleCircle.getStyleClass().add("none_active");
             playersCircles.add(littleCircle);
 
+
             Label playerLabel = new Label(String.valueOf(player.getDraftSoldiers()));
             playerLabel.getStyleClass().add("player_label");
             playerLabels.add(playerLabel);
+
             Circle playerColorCircle = new Circle(10);
             playerColorCircle.getStyleClass().add("country_player_color_" + player.getPlayerNumber());
             VBox verticalBox = new VBox(littleCircle, playerColorCircle, playerLabel);
@@ -582,6 +587,7 @@ public class RiskGameView implements View, Initializable {
             tempHBox.setSpacing(10);
             rightVBox.getChildren().add(tempHBox);
         }
+        setColorTurn();
     }
 
     public void updatePlayerLabels(){

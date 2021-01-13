@@ -229,8 +229,6 @@ public class RiskGameController extends Controller {
             boolean destinationCountryValid = false;
             Country source = getCountryByDetails(sourceI, sourceJ);
             Country destination = getCountryByDetails(destI, destJ);
-            System.out.println(source.getName());
-            System.out.println(destination.getName());
             boolean errorFound = false;
             if (!source.getName().equals("")) {
                 if (source.getOwner().equals(currentPlayer)) {
@@ -259,7 +257,8 @@ public class RiskGameController extends Controller {
                 toPrint = "Destination country is not valid";
                 errorFound = true;
             }
-            if (sourceCountryValid && destinationCountryValid && (soldiers > source.getSoldiers() || soldiers < 0) && !errorFound) {
+            if (sourceCountryValid && destinationCountryValid && (soldiers > source.getSoldiers() || soldiers < 0
+                    || source.getSoldiers() <= 1) && !errorFound) {
                 toPrint = "Soldiers are not enough or not valid";
                 errorFound = true;
             }
@@ -304,6 +303,7 @@ public class RiskGameController extends Controller {
                             if (source.getSoldiers() == 2) {
                                 source.addSoldiers(-1);
                                 destination.addSoldiers(+1);
+                                checkAdditionalPlayers(destination.getOwner());
                                 destination.setOwner(currentPlayer);
                             } else {
                                 destination.setOwner(currentPlayer);
@@ -314,6 +314,7 @@ public class RiskGameController extends Controller {
                                 sourceCountryWinner = source;
                                 draftDone = false;
                             }
+
                         }
                         i = null;
                         j = null;
@@ -697,7 +698,7 @@ public class RiskGameController extends Controller {
             if (inputArray[i][j] != 1) {
                 inputArray[i][j] = number;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
         }
     }
 
@@ -1001,7 +1002,23 @@ public class RiskGameController extends Controller {
         ;
         return finished;
     }
-
+    public void checkAdditionalPlayers(Player player){
+        boolean toCheck = true;
+        outerLoop:
+        for(List<Country> countries : gameCountries){
+            for(Country country : countries){
+                if(country.getOwner() != null) {
+                    if (country.getOwner().equals(player)){
+                        toCheck = false;
+                        break outerLoop;
+                    }
+                }
+            }
+        }
+        if(toCheck){
+            players.remove(player);
+        }
+    }
     public boolean getAttackWon() {
         return this.attackWon;
     }
@@ -1054,7 +1071,6 @@ public class RiskGameController extends Controller {
     public String addCard() {
         int rnd = new Random().nextInt(Card.values().length);
         Card toGetCard = Card.values()[rnd];
-        System.out.println(String.valueOf(toGetCard));
         currentPlayer.addCard(toGetCard);
         return toGetCard.name();
     }
