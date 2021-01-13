@@ -113,6 +113,13 @@
 .country {
     -fx-fill: yellow;
 }
+.country_snow{
+    -fx-fill: white;
+}
+.country_fog{
+    -fx-fill: rgba(0,255,0,0);
+    -fx-stroke: rgba(255,0,0,0);
+}
 .country_selected_source{
     -fx-fill: #D8A016;
 
