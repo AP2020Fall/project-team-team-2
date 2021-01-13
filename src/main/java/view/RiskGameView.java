@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,6 +21,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Country;
 import model.Player;
@@ -34,11 +36,15 @@ import java.util.ResourceBundle;
 
 public class RiskGameView implements View, Initializable {
     private final RiskGameController riskGameController;
+    private Stage gameWindow;
     private final String mapNum;
     private final SVGPath[][] allPaths = new SVGPath[5][5];
     private final Label[][] allLabels = new Label[5][5];
     private final List<Circle> playersCircles = new ArrayList<Circle>();
+    private final List<Circle> playerColors = new ArrayList<Circle>();
+    private final List<Label> playerLabels = new ArrayList<Label>();
     private final String[][] defaultClasses = new String[5][5];
+
     @FXML
     private Rectangle nextTurn;
     @FXML
@@ -165,7 +171,17 @@ public class RiskGameView implements View, Initializable {
     private Label label_5_4;
     @FXML
     private Label label_5_5;
-
+    @FXML
+    private void cardsMenuHandler(MouseEvent e) throws IOException {
+        Stage aboutStage = new Stage();
+        FXMLLoader aboutRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
+        aboutRoot.setController(this);
+        aboutStage.setScene(new Scene(aboutRoot.load()));
+        aboutStage.setResizable(false);
+        aboutStage.initModality(Modality.WINDOW_MODAL);
+        aboutStage.initOwner(gameWindow);
+        aboutStage.show();
+    }
     @FXML
     private void countryClick(MouseEvent e) {
         int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
@@ -174,47 +190,54 @@ public class RiskGameView implements View, Initializable {
         int soliders = 0;
         try {
             soliders = Integer.parseInt(inputNumber.getText());
-            switch (showWhatToDo()) {
-                case "Draft":
-                    if (!inputNumber.getText().isEmpty()) {
-                        if(!riskGameController.getAttackWon()) {
-                            changeNotifText(draft(i, j, soliders));
-                        }else{
-                            changeNotifText(draftAfterWin(i , j , soliders));
-                        }
-                    }
-                    break;
-                case "Attack":
-                    if (riskGameController.getI() == null || riskGameController.getJ() == null) {
-                        if(riskGameController.checkCountryIsYours(i , j)) {
-                            riskGameController.setI(i);
-                            riskGameController.setJ(j);
-                        }else{
-                            changeNotifText("This Country Is Not Yours");
-                        }
-                    } else {
+            if(riskGameController.getPlacementFinished()) {
+                switch (showWhatToDo()) {
+                    case "Draft":
                         if (!inputNumber.getText().isEmpty()) {
-                            changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
-                                    i, j, soliders));
+                            if (!riskGameController.getAttackWon()) {
+                                changeNotifText(draft(i, j, soliders));
+                            } else {
+                                changeNotifText(draftAfterWin(i, j, soliders));
+                            }
                         }
-                    }
-                    break;
-                case "Fortify":
-                    if (riskGameController.getI() == null || riskGameController.getJ() == null) {
-                        if(riskGameController.checkCountryIsYours(i , j)) {
-                            riskGameController.setI(i);
-                            riskGameController.setJ(j);
-                        }else{
-                            changeNotifText("This Country Is Not Yours");
+                        break;
+                    case "Attack":
+                        if (riskGameController.getI() == null || riskGameController.getJ() == null) {
+                            if (riskGameController.checkCountryIsYours(i, j)) {
+                                riskGameController.setI(i);
+                                riskGameController.setJ(j);
+                            } else {
+                                changeNotifText("This Country Is Not Yours");
+                            }
+                        } else {
+                            if (!inputNumber.getText().isEmpty()) {
+                                changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
+                                        i, j, soliders));
+                            }
                         }
-                    } else {
-                        if (!inputNumber.getText().isEmpty()) {
-                            changeNotifText(fortify(riskGameController.getI(), riskGameController.getJ(),
-                                    i, j, soliders));
+                        break;
+                    case "Fortify":
+                        if (riskGameController.getI() == null || riskGameController.getJ() == null) {
+                            if (riskGameController.checkCountryIsYours(i, j)) {
+                                riskGameController.setI(i);
+                                riskGameController.setJ(j);
+                            } else {
+                                changeNotifText("This Country Is Not Yours");
+                            }
+                        } else {
+                            if (!inputNumber.getText().isEmpty()) {
+                                changeNotifText(fortify(riskGameController.getI(), riskGameController.getJ(),
+                                        i, j, soliders));
+                            }
                         }
-                    }
-                    break;
-
+                        break;
+                }
+            }else{
+                if(riskGameController.getAllPlayersAdded()){
+                    riskGameController.beginDraft(i,j,soliders);
+                }else{
+                    riskGameController.beginDraft(i , j , 1);
+                }
             }
         }
         catch (NumberFormatException ex) {
@@ -223,6 +246,7 @@ public class RiskGameView implements View, Initializable {
         colorizeCountry();
         setColorMode();
         putCountryName();
+        updatePlayerLabels();
 
     }
     @FXML
@@ -230,13 +254,15 @@ public class RiskGameView implements View, Initializable {
         changeNotifText(next());
         setColorMode();
         colorizeCountry();
+        updatePlayerLabels();
     }
     @FXML
     private void nextTurnHandler(MouseEvent e) {
-        nextTurn();
+        changeNotifText(nextTurn());
         colorizeCountry();
         setColorTurn();
         setColorMode();
+        updatePlayerLabels();
     }
     @FXML
     private void deselectHandler(MouseEvent e){
@@ -481,9 +507,9 @@ public class RiskGameView implements View, Initializable {
         riskGameController.autoPlace();
     }
 
-    public void nextTurn() {
+    public String nextTurn() {
         String toPrint = riskGameController.changeTurn();
-        System.out.println(toPrint);
+        return toPrint;
     }
 
     public void showTurn() {
@@ -653,22 +679,46 @@ public class RiskGameView implements View, Initializable {
     public void makeRightHBox() throws URISyntaxException {
         int i = 0;
         String playerImageAddress = "/images/player_";
+        int bigCircleSize = 0;
+        if(riskGameController.getPlayers().size() <=3){
+            bigCircleSize = 100;
+        }else{
+            bigCircleSize = 60;
+        }
+        rightVBox.getChildren().clear();
         for (Player player : riskGameController.getPlayers()) {
             i++;
             Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + i + ".png").toURI()));
             Circle littleCircle = new Circle(10);
             littleCircle.getStyleClass().add("none_active");
             playersCircles.add(littleCircle);
-            Circle bigCircle = new Circle(100);
+
+            Label playerLabel = new Label(String.valueOf(player.getDraftSoldiers()));
+            playerLabel.getStyleClass().add("player_label");
+            playerLabels.add(playerLabel);
+            Circle playerColorCircle = new Circle(10);
+            playerColorCircle.getStyleClass().add("country_player_color_" + player.getPlayerNumber());
+            VBox verticalBox = new VBox(littleCircle, playerColorCircle, playerLabel);
+            verticalBox.setAlignment(Pos.CENTER);
+            verticalBox.setSpacing(10);
+
+            Circle bigCircle = new Circle(bigCircleSize);
             bigCircle.setFill(new ImagePattern(image));
             bigCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
-            HBox tempHBox = new HBox(littleCircle, bigCircle);
+            HBox tempHBox = new HBox(verticalBox, bigCircle);
             tempHBox.setAlignment(Pos.CENTER);
             tempHBox.setSpacing(10);
             rightVBox.getChildren().add(tempHBox);
         }
     }
 
+    public void updatePlayerLabels(){
+        int i = 0;
+        for(Label label : playerLabels){
+            label.setText(String.valueOf(riskGameController.getPlayers().get(i).getDraftSoldiers()));
+            i++;
+        }
+    }
     public void insertImage(Shape shape, String imageAddress) throws URISyntaxException {
         Image image = new Image(String.valueOf(getClass().getResource(imageAddress).toURI()));
         shape.setFill(new ImagePattern(image));
@@ -681,6 +731,7 @@ public class RiskGameView implements View, Initializable {
         String fileAddress = "/game/maps/map_" + mapNum + ".fxml";
         FXMLLoader root = new FXMLLoader(getClass().getResource(fileAddress));
         root.setController(this);
+        gameWindow = window;
         window.setTitle("Game Started");
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
