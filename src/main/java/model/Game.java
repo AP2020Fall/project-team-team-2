@@ -121,8 +121,20 @@ public class Game {
             player.removeFavouriteGame(this);
         }
         //Suggestion.getSuggestions().removeIf(suggestion -> suggestion.getGameName().equals(this.name));
-        Event.getEvents().removeIf(event -> event.getGameName().equals(this.name));
+        removeEvents();
         Game.getGames().remove(this);
+    }
+
+    private void removeEvents() {
+        ArrayList<Event> eventsMustDelete = new ArrayList<>();
+        for (Event event : Event.getEvents()) {
+            if (event.getGameName().equals(this.name)){
+                eventsMustDelete.add(event);
+            }
+        }
+        for (Event event : eventsMustDelete) {
+            event.delete();
+        }
     }
 
 
