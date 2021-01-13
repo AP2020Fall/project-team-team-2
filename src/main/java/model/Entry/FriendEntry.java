@@ -10,7 +10,6 @@ import view.ViewHandler;
 public class FriendEntry {
     private String name;
     private Hyperlink remove = new Hyperlink("Remove");
-    private Hyperlink view = new Hyperlink("View");
     private ImageView avatar;
     public FriendEntry(Player friend,Player player) {
         name = friend.getUsername();
@@ -23,10 +22,7 @@ public class FriendEntry {
             friend.removeFriend(player);
             TabHandler.getTabHandler().refresh();
         });
-        view.setOnAction(event -> {
-            //System.out.println("Viewing must be implemented");
-            TabHandler.getTabHandler().push(new PlayerProfileView(friend));
-        });
+
     }
 
     public String getName() {
@@ -35,10 +31,6 @@ public class FriendEntry {
 
     public Hyperlink getRemove() {
         return remove;
-    }
-
-    public Hyperlink getView() {
-        return view;
     }
 
     public ImageView getAvatar() {

@@ -11,12 +11,12 @@
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="234.0" prefWidth="600.0" styleClass="popupBackground" stylesheets="@../../css/styles.css">
          <children>
-            <JFXTextField fx:id="playerName" labelFloat="true" layoutX="20.0" layoutY="90.0" promptText="player name">
+            <JFXTextField fx:id="playerName" labelFloat="true" layoutX="20.0" layoutY="90.0" onAction="#add" promptText="player name">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="gameName" labelFloat="true" layoutX="230.0" layoutY="90.0" promptText="game name">
+            <JFXTextField fx:id="gameName" labelFloat="true" layoutX="230.0" layoutY="90.0" onAction="#add" promptText="game name">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="17.0" />
                </font>
