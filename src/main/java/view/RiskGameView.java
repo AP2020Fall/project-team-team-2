@@ -725,7 +725,6 @@ public class RiskGameView implements View, Initializable {
 
     @Override
     public void show(Stage window) throws IOException {
-
         String fileAddress = "/game/maps/map_" + mapNum + ".fxml";
         FXMLLoader root = new FXMLLoader(getClass().getResource(fileAddress));
         root.setController(this);
