@@ -249,6 +249,7 @@ public class RiskGameController extends Controller {
                             }
                             i = null;
                             j = null;
+                            deselect();
                         }
                     }
                 } while (inWar);
@@ -890,7 +891,13 @@ public class RiskGameController extends Controller {
         }
         return toPrint;
     }
-
+    public boolean checkCountryIsYours(int i , int j){
+        if(currentPlayer.equals(gameCountries.get(i-1).get(j-1).getOwner())){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public String addCard() {
         String toPrint = "";
         int rnd = new Random().nextInt(Card.values().length);

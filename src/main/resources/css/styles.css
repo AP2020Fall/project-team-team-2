@@ -114,6 +114,7 @@
     -fx-fill: yellow;
 }
 .country_selected_source{
+    -fx-fill: #D8A016;
 
 }
 .country_selected_destination{

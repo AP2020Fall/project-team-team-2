@@ -182,8 +182,12 @@ public class RiskGameView implements View, Initializable {
                     break;
                 case "Attack":
                     if (riskGameController.getI() == null || riskGameController.getJ() == null) {
-                        riskGameController.setI(i);
-                        riskGameController.setJ(j);
+                        if(riskGameController.checkCountryIsYours(i , j)) {
+                            riskGameController.setI(i);
+                            riskGameController.setJ(j);
+                        }else{
+                            changeNotifText("This Country Is Not Yours");
+                        }
                     } else {
                         if (!inputNumber.getText().isEmpty()) {
                             changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
@@ -193,8 +197,12 @@ public class RiskGameView implements View, Initializable {
                     break;
                 case "Fortify":
                     if (riskGameController.getI() == null || riskGameController.getJ() == null) {
-                        riskGameController.setI(i);
-                        riskGameController.setJ(j);
+                        if(riskGameController.checkCountryIsYours(i , j)) {
+                            riskGameController.setI(i);
+                            riskGameController.setJ(j);
+                        }else{
+                            changeNotifText("This Country Is Not Yours");
+                        }
                     } else {
                         if (!inputNumber.getText().isEmpty()) {
                             changeNotifText(fortify(riskGameController.getI(), riskGameController.getJ(),
@@ -227,6 +235,7 @@ public class RiskGameView implements View, Initializable {
     @FXML
     private void deselectHandler(MouseEvent e){
         deselect();
+        colorizeCountry();
     }
 
     private void deselect() {
@@ -591,6 +600,7 @@ public class RiskGameView implements View, Initializable {
                 }
             }
         }
+        addColorToSelected();
     }
 
     public void setColorMode() {
@@ -671,8 +681,17 @@ public class RiskGameView implements View, Initializable {
             insertImage(fortifyCircleImage, "/images/fortify.png");
             insertImage(nextTurn, "/images/next.png");
             insertImage(nextStatus , "/images/next_status.png");
+            insertImage(deselectIcon , "/images/deselect.png");
         } catch (URISyntaxException e) {
             e.printStackTrace();
+        }
+    }
+    public void addColorToSelected(){
+        Integer i = riskGameController.getI();
+        Integer j = riskGameController.getJ();
+        if(i != null && j != null){
+            allPaths[i-1][j-1].getStyleClass().clear();
+            allPaths[i-1][j-1].getStyleClass().add("country_selected_source");
         }
     }
 
