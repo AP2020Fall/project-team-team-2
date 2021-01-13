@@ -9,7 +9,6 @@
     "player3"
   ],
   "receivedFriendRequests": [],
-
   "sentFriendRequests": [
     "039B3BFB"
   ],
@@ -24,7 +23,6 @@
           "day": 13
         },
         "time": {
-
           "hour": 18,
           "minute": 53,
           "second": 55,
@@ -50,10 +48,8 @@
       }
     },
     {
-
       "message": "checker",
       "messageId": "6ED2C8F7",
-
       "time": {
         "date": {
           "year": 2021,
@@ -61,7 +57,6 @@
           "day": 13
         },
         "time": {
-
           "hour": 20,
           "minute": 43,
           "second": 23,

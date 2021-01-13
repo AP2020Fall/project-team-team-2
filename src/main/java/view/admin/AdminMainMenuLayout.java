@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import main.Main;
 import model.Player;
@@ -37,7 +38,7 @@ public class AdminMainMenuLayout implements View, Initializable {
     private AdminMainMenuController controller;
     @FXML
     private StackPane stackRoot;
-
+    private static AudioClip audioClip;
 
     public AdminMainMenuLayout() {
         controller = new AdminMainMenuController();
@@ -48,10 +49,21 @@ public class AdminMainMenuLayout implements View, Initializable {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/admin/adminMainMenuLayout.fxml"));
         root.setController(this);
         window.setTitle("Plato");
+        playSoundTrack();
         Scene scene = new Scene(root.load());
         scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         window.setScene(scene);
         window.setResizable(false);
+    }
+
+    private void playSoundTrack() {
+        audioClip = new AudioClip(getClass().getResource("/sounds/AdminSound.mp3").toString());
+        audioClip.setCycleCount(audioClip.INDEFINITE);
+        audioClip.play();
+    }
+
+    public static AudioClip getAudioClip() {
+        return audioClip;
     }
 
     @Override
