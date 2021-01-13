@@ -143,6 +143,7 @@ public class RiskGameController extends Controller {
     public String draft(int i , int j, int soldiers) {
 
         String toPrint = "";
+
         if(!draftDone) {
             Country destination = getCountryByDetails(i, j);
             if (soldiers > currentPlayer.getDraftSoldiers() || soldiers < 1) {
@@ -643,6 +644,16 @@ public class RiskGameController extends Controller {
         return countryNumbers;
     }
 
+/*
+    int row = gameCountries.size();
+    int column = gameCountries.get(0).size();
+    int[][] countryNumbers = new int[row][column];
+
+    countryNumbers = setFogOfWarMap(currentPlayer);
+*/
+    public void setBlizzard(){
+
+    }
     public boolean isPath(int CountryNumbers[][], int n, int m) {
         // Defining visited array to keep
         // track of already visited indexes
