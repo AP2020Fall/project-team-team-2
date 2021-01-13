@@ -34,7 +34,9 @@ public class AdminMainMenuLayout implements View, Initializable {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/admin/adminMainMenuLayout.fxml"));
         root.setController(this);
         window.setTitle("Plato");
-        window.setScene(new Scene(root.load()));
+        Scene scene = new Scene(root.load());
+        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+        window.setScene(scene);
         window.setResizable(false);
     }
 

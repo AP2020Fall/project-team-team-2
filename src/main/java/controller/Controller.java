@@ -1,11 +1,11 @@
 package controller;
 
+import me.xdrop.fuzzywuzzy.FuzzySearch;
 import model.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -154,5 +154,52 @@ public class Controller {
 
     public boolean checkMoney(String money) {
         return money.matches("^\\d+");
+    }
+
+
+    public HashMap<Player,Integer> usernameFuzzySearch(String username)
+    {
+        List<Map.Entry<Player,Integer>> list = new LinkedList<>();
+        for (Player player: Account.getAllPlayers())
+        {
+            int fuzzyVal = FuzzySearch.ratio(username,player.getUsername());
+            if(fuzzyVal > 69)
+                list.add(new AbstractMap.SimpleEntry<Player,Integer>(player,fuzzyVal));
+        }
+        list.sort(new Comparator<Map.Entry<Player, Integer>>() {
+            public int compare(Map.Entry<Player, Integer> o1,
+                               Map.Entry<Player, Integer> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+        HashMap<Player, Integer> temp = new LinkedHashMap<Player, Integer>();
+        for (Map.Entry<Player, Integer> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
+
+    }
+    public ArrayList<Player> usernameFuzzySearchTop10(String username) {
+        HashMap<Player, Integer> temp = usernameFuzzySearch(username);
+        ArrayList<Player> result = new ArrayList<>();
+        int counter = 10;
+        for (Map.Entry<Player, Integer> player : temp.entrySet()) {
+            result.add(player.getKey());
+            counter--;
+            if (counter == 0) break;
+        }
+        return result;
+    }
+    public ArrayList<Player> usernameFuzzySearchTop5(String username) {
+        HashMap<Player, Integer> temp = usernameFuzzySearch(username);
+        ArrayList<Player> result = new ArrayList<>();
+        int counter = 5;
+        for (Map.Entry<Player, Integer> player : temp.entrySet()) {
+            result.add(player.getKey());
+            counter--;
+            if (counter == 0) break;
+        }
+        return result;
+        //comment
     }
 }
