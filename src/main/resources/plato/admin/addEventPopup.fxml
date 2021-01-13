@@ -31,8 +31,8 @@
                   <Font name="Geometr415 Blk BT Black" size="18.0" />
                </font>
             </JFXTextArea>
-            <JFXDatePicker fx:id="startDate" layoutX="210.0" layoutY="90.0" overLay="true" promptText="start" />
-            <JFXDatePicker fx:id="endDate" layoutX="210.0" layoutY="150.0" overLay="true" promptText="end" />
+            <JFXDatePicker fx:id="startDate" defaultColor="#00acc1" layoutX="210.0" layoutY="90.0" overLay="true" promptText="start" />
+            <JFXDatePicker fx:id="endDate" defaultColor="#00acc1" layoutX="210.0" layoutY="150.0" overLay="true" promptText="end" />
             <JFXButton fx:id="addButton" layoutX="432.0" layoutY="343.0" onAction="#add" prefWidth="120.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Add" textFill="WHITE">
                <font>
                   <Font name="Geometr415 Blk BT Black" size="18.0" />

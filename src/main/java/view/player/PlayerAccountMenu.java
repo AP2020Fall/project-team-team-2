@@ -102,6 +102,7 @@ public class PlayerAccountMenu implements Tab, Initializable {
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
         TableColumn<GameLogSummaryEntry, LocalDateTime> lastPlayColumn = new TableColumn<>("Last Play");
         lastPlayColumn.setCellValueFactory(new PropertyValueFactory<>("lastPlay"));
+        gameHistoryList.setPlaceholder(new Label("You have not played a game."));
         gameHistoryList.getColumns().addAll(gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
         gameHistoryList.getItems().addAll(controller.getGameHistory());
     }

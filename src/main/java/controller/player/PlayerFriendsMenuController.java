@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import model.Entry.FriendEntry;
 import model.Entry.FriendRequestEntry;
+import model.Entry.PlatoMessageEntry;
+import model.Event;
 import model.FriendRequest;
 import model.Player;
 
@@ -42,5 +44,13 @@ public class PlayerFriendsMenuController extends PlayerMainMenuLayoutController 
             result.add(new FriendRequestEntry(friendRequest));
         }
         return result;
+    }
+
+    public Player getFriend(FriendEntry friendEntry) {
+        return Player.getPlayerByUsername(friendEntry.getName());
+    }
+    public Player getFriend(FriendRequestEntry friendRequestEntry)
+    {
+        return Player.getPlayerByUsername(friendRequestEntry.getName());
     }
 }

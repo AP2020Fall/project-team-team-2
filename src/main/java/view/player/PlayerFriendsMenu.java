@@ -9,9 +9,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import model.Entry.EventEntry;
 import model.Entry.FriendEntry;
 import model.Entry.FriendRequestEntry;
 import view.Tab;
+import view.TabHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,8 +51,6 @@ public class PlayerFriendsMenu implements Tab, Initializable {
         friendAvatarColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("avatar"));
         TreeTableColumn<FriendEntry, String> friendNames = new TreeTableColumn<>("Name");
         friendNames.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
-        TreeTableColumn<FriendEntry, Hyperlink> friendView = new TreeTableColumn<>("View");
-        friendView.setCellValueFactory(new TreeItemPropertyValueFactory<>("view"));
         TreeTableColumn<FriendEntry, Hyperlink> friendRemove = new TreeTableColumn<>("Remove");
         friendRemove.setCellValueFactory(new TreeItemPropertyValueFactory<>("remove"));
         TreeItem<FriendEntry> friendRoot = new TreeItem<>();
@@ -56,7 +58,8 @@ public class PlayerFriendsMenu implements Tab, Initializable {
         friendRoot.getChildren().addAll(controller.getFriends());
         friendsList.setRoot(friendRoot);
         friendsList.setShowRoot(false);
-        friendsList.getColumns().addAll(friendAvatarColumn,friendNames, friendView, friendRemove);
+        friendsList.setPlaceholder(new Label("No friends."));
+        friendsList.getColumns().addAll(friendAvatarColumn,friendNames, friendRemove);
     }
 
     private void initializeTableFriendRequestList() {
@@ -68,10 +71,39 @@ public class PlayerFriendsMenu implements Tab, Initializable {
         TableColumn<FriendRequestEntry, Hyperlink> friendRequestDecline =
                 new TableColumn<>("Decline");
         friendRequestDecline.setCellValueFactory(new PropertyValueFactory<>("decline"));
-
+        friendRequestList.setPlaceholder(new Label("No friend requests."));
         friendRequestList.getColumns().addAll(friendRequestNames, friendRequestAccept, friendRequestDecline);
         friendRequestList.getItems().addAll(controller.getFriendRequests());
     }
+    @FXML
+    void friendRequestTableSelected(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(friendRequestList.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    FriendRequestEntry friendEntry = friendRequestList.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new PlayerProfileView(controller.getFriend(friendEntry)));
+                }
+            }
+
+        }
+    }
+
+    @FXML
+    void friendTableSelected(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(friendsList.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    FriendEntry friendEntry = friendsList.getSelectionModel().getSelectedItems().get(0).getValue();
+                    TabHandler.getTabHandler().push(new PlayerProfileView(controller.getFriend(friendEntry)));
+                }
+            }
+
+        }
+    }
+
+
 
 
 }

@@ -6,19 +6,23 @@ import model.Account;
 import model.Message;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class PlatoMessageEntry {
     private String text;
-    private LocalDate time;
+    private LocalTime time;
+    private LocalDate day;
     private  ImageView avatar;
 
     public PlatoMessageEntry(Message message)
     {
         text = message.getMessage();
+        time = message.getTime().toLocalTime();
     }
     public PlatoMessageEntry(LocalDate time)
     {
-        this.time = time;
+        this.day = time;
     }
     public PlatoMessageEntry()
     {
@@ -30,8 +34,12 @@ public class PlatoMessageEntry {
         return text;
     }
 
-    public LocalDate getTime() {
+    public LocalTime getTime() {
         return time;
+    }
+
+    public LocalDate getDay() {
+        return day;
     }
 
     public ImageView getAvatar() {

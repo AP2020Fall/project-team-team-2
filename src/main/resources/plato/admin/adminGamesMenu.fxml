@@ -16,8 +16,8 @@
             <ContextMenu>
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#addGame" text="Add" />
-                  <MenuItem mnemonicParsing="false" onAction="#deleteGame" text="Delete" />
                   <MenuItem mnemonicParsing="false" onAction="#editGame" text="Edit" />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteGame" text="Delete" />
                </items>
             </ContextMenu>
          </contextMenu>
@@ -30,8 +30,8 @@
             <ContextMenu>
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#addEvent" text="Add" />
-                  <MenuItem mnemonicParsing="false" onAction="#deleteEvent" text="Delete" />
                   <MenuItem mnemonicParsing="false" onAction="#editEvent" text="Edit" />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteEvent" text="Delete" />
                </items>
             </ContextMenu>
          </contextMenu>

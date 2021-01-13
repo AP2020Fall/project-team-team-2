@@ -25,6 +25,7 @@ import view.View;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -59,7 +60,6 @@ public class AdminMessageView implements View, Initializable {
     void Send() {
         controller.sendMessage(message.getText());
         message.clear();
-       // messageTable.setRoot(null);
         messageTable.getColumns().clear();
         initializeMessageTreeTable();
     }
@@ -81,13 +81,14 @@ public class AdminMessageView implements View, Initializable {
     }
 
     private void initializeMessageTreeTable() {
-        TreeTableColumn<PlatoMessageEntry, ImageView> avatarColumn = new TreeTableColumn<>("avatar");
+        TreeTableColumn<PlatoMessageEntry, ImageView> avatarColumn = new TreeTableColumn<>();
         avatarColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("avatar"));
-        TreeTableColumn<PlatoMessageEntry, String> messageColumn = new TreeTableColumn<>("text");
+        TreeTableColumn<PlatoMessageEntry, String> messageColumn = new TreeTableColumn<>();
         messageColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("text"));
-        TreeTableColumn<PlatoMessageEntry, LocalDate> timeColumn = new TreeTableColumn<>("time");
+        TreeTableColumn<PlatoMessageEntry, LocalTime> timeColumn = new TreeTableColumn<>();
         timeColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("time"));
-
+        TreeTableColumn<PlatoMessageEntry, LocalDate> dayColumn = new TreeTableColumn<>();
+        dayColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("day"));
 
         TreeItem<PlatoMessageEntry> messageRoot = new TreeItem<>(controller.getMessageRoot());
         if (controller.hasMessage()) {
@@ -107,6 +108,6 @@ public class AdminMessageView implements View, Initializable {
         } else {
             messageTable.setPlaceholder(new Label("No messages."));
         }
-        messageTable.getColumns().addAll(avatarColumn, messageColumn, timeColumn);
+        messageTable.getColumns().addAll(avatarColumn,dayColumn, messageColumn, timeColumn);
     }
 }
