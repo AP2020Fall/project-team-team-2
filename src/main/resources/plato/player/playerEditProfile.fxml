@@ -19,7 +19,7 @@
          <children>
             <ImageView fx:id="playerImage" fitHeight="150.0" fitWidth="150.0" layoutX="125.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/blankProfile.png" />
+                  <Image url="@../../images/blankProfile.jpg" />
                </image>
             </ImageView>
             <Label layoutX="400.0" layoutY="60.0" text="Username">

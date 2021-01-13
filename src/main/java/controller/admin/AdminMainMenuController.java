@@ -146,4 +146,8 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         }
         return result;
     }
+
+    public Player getPlayer(PlayerEntry playerEntry) {
+        return Player.getPlayerByUsername(playerEntry.getName());
+    }
 }

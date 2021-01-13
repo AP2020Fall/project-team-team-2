@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 public class EventEntry {
     private String name;
-    private Hyperlink link;
     private LocalDate start;
     private LocalDate end;
     private String eventId;
@@ -26,11 +25,7 @@ public class EventEntry {
         avatar = new ImageView(event.getImage());
         avatar.setFitHeight(48);
         avatar.setFitWidth(48);
-        link = new Hyperlink("open");
-        link.setOnAction(events ->
-        {
-            TabHandler.getTabHandler().push(new PlayerEventMenu(event));
-        });
+
     }
 
     public EventEntry(String title)
@@ -45,9 +40,6 @@ public class EventEntry {
         this.name = name;
     }
 
-    public Hyperlink getLink() {
-        return link;
-    }
 
     public LocalDate getStart() {
         return start;

@@ -71,37 +71,19 @@ public class Controller {
         return true;
     }
 
-    public boolean checkStartDate(String date) {
-        if (isValidDate(date)) {
-            LocalDate localDate = createLocalDate(date);
-            return LocalDate.now().compareTo(localDate) < 0;
-        }
-        return false;
-    }
-
-    public boolean checkEndDate(String date) {
-        if (isValidDate(date)) {
-            LocalDate localDate = createLocalDate(date);
-            return LocalDate.now().compareTo(localDate) > 0;
-        }
-        return false;
+    public boolean checkRelativeDate(LocalDate start,LocalDate end)
+    {
+        return start.compareTo(end) < 0;
     }
 
     public boolean checkStartDate(LocalDate date) {
-       // if (isValidDate(date)) {
-         //   LocalDate localDate = createLocalDate(date);
-            return LocalDate.now().compareTo(date) < 0;
-       // }
-       // return false;
+            return LocalDate.now().compareTo(date) <= 0;
     }
 
     public boolean checkEndDate(LocalDate date) {
-       // if (isValidDate(date)) {
-         //   LocalDate localDate = createLocalDate(date);
-            return LocalDate.now().compareTo(date) > 0;
-        //}
-       // return false;
+            return LocalDate.now().compareTo(date) < 0;
     }
+
     public boolean isEventIdExists(String eventId) {
         for (Event event : Event.getEvents()) {
             if (event.getEventId().equals(eventId)) {
@@ -203,4 +185,7 @@ public class Controller {
     }
 
 
+    public boolean isNumber(String text) {
+        return text.matches("^\\d+");
+    }
 }

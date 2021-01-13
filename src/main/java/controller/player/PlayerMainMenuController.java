@@ -170,4 +170,11 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
         }
         return result;
     }
+
+    public Event getEvent(EventEntry eventEntry) {
+        return Event.getEventById(eventEntry.getEventId());
+    }
+    public Game getGame(GameEntry gameEntry) {
+        return Game.getGameByGameName(gameEntry.getName());
+    }
 }

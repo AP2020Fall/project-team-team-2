@@ -84,6 +84,7 @@
 .table-row-cell{
     -fx-background-color: -fx-table-cell-border-color, #546e7a;
     -fx-background-insets: 0, 0 0 1 0;
+    -fx-cell-size: 50;
     -fx-padding: 0.0em; /* 0 */
 
 }
