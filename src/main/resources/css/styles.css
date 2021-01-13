@@ -266,5 +266,8 @@
     -fx-font-size: 20px;
     -fx-font-style: italic;
 }
-
+#cardsMenuLabel{
+    -fx-font-size: 25px;
+    -fx-font-style: italic bold;
+}
 /* Game Part */

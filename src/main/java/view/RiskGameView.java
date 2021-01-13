@@ -595,8 +595,6 @@ public class RiskGameView implements View, Initializable {
         putCountryName();
         colorizeCountry();
         labelSetMouserTransparent();
-
-
     }
 
     public void putCountryName() {
