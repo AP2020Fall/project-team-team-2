@@ -147,9 +147,9 @@
 
 
 .menu-item .label {
-  -fx-fill:black;
+    -fx-fill:black;
     -fx-font-family: Geometr415 Blk BT Black;
-    -fx-font-size: 14px;;
+    -fx-font-size: 18px;;
     -fx-stroke:#C8CFD7;
     -fx-strok-width:.25;
 }
@@ -170,7 +170,7 @@
 }
 
 
-.plateMessageTable {
+.messageTable {
     -fx-background-color: #ff55a0;
     -fx-background-radius: 20;
 }

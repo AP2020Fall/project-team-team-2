@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" styleClass="background" stylesheets="@../../css/styles.css">
+         <children>
+            <JFXButton layoutX="27.0" layoutY="14.0" onAction="#back" styleClass="orangeButton" stylesheets="@../../css/styles.css" text="Back" textFill="WHITE">
+               <font>
+                  <Font name="Geometr415 Blk BT Black" size="20.0" />
+               </font>
+            </JFXButton>
+            <TreeTableView fx:id="messageTable" layoutX="16.0" layoutY="63.0" prefHeight="448.0" prefWidth="568.0" styleClass="messageTable" stylesheets="@../../css/styles.css">
+               <columnResizePolicy>
+                  <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TreeTableView>
+            <JFXButton layoutX="479.0" layoutY="626.0" onAction="#Send" prefHeight="40.0" prefWidth="71.0" styleClass="blueButton" stylesheets="@../../css/styles.css" text="Send">
+               <font>
+                  <Font name="Geometr415 Blk BT Black" size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXTextArea fx:id="message" labelFloat="true" layoutX="63.0" layoutY="534.0" prefHeight="154.0" prefWidth="372.0" promptText="message">
+               <font>
+                  <Font name="Geometr415 Blk BT Black" size="18.0" />
+               </font>
+            </JFXTextArea>
+         </children>
+      </Pane>
+   </children>
+</StackPane>
