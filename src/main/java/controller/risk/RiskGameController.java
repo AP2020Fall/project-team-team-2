@@ -18,6 +18,8 @@ public class RiskGameController extends Controller {
     private boolean gameIsPlaying = true;
     private boolean draftDone;
     private boolean attackDone;
+    private boolean beginDraftDone = false;
+    private boolean allPlayersAddedSoldier;
     private Integer i;
     private Integer j;
     private boolean fortifyDone;
@@ -141,7 +143,6 @@ public class RiskGameController extends Controller {
     }
 
     public String draft(int i , int j, int soldiers) {
-
         String toPrint = "";
 
         if(!draftDone) {
@@ -165,7 +166,53 @@ public class RiskGameController extends Controller {
         }
         return toPrint;
     }
-
+    public String beginDraft(int i , int j , int soldiers){
+        String toPrint = "";
+        if(!beginDraftDone) {
+            Country destination = getCountryByDetails(i, j);
+            if (soldiers > currentPlayer.getDraftSoldiers() || soldiers < 1) {
+                toPrint = "Soldiers are not enough or invalid";
+            } else if (destination.getName().equals("")) {
+                toPrint = "Destination country is not valid";
+            } else {
+                if(destination.getOwner() != null) {
+                    if (!destination.getOwner().equals(getCurrentPlayer())) {
+                        toPrint = "This country is not yours";
+                    } else {
+                        placeSoldier(i, j, soldiers);
+                        currentPlayer.addDraftSoldier(-1 * soldiers);
+                        toPrint = "" + soldiers + " soldiers added to " + destination.getName() + " successfully";
+                        beginDraftDone = true;
+                    }
+                }else{
+                    placeSoldier(i, j, soldiers);
+                    currentPlayer.addDraftSoldier(-1 * soldiers);
+                    toPrint = "" + soldiers + " soldiers added to " + destination.getName() + " successfully";
+                    beginDraftDone = true;
+                }
+            }
+        }else{
+            toPrint = "Draft has been done";
+        }
+        checkAllPlayersAdded();
+        return toPrint;
+    }
+    public void checkAllPlayersAdded(){
+        boolean toCheck = true;
+        outerLoop:
+        for(List<Country> countries : gameCountries){
+            for(Country country : countries){
+                if(country.getSoldiers() == 0){
+                    toCheck = false;
+                    break outerLoop;
+                }
+            }
+        }
+        allPlayersAddedSoldier = toCheck;
+    }
+    public boolean getAllPlayersAdded(){
+        return allPlayersAddedSoldier;
+    }
     public String attack(int sourceI , int sourceJ, int destI , int destJ, int soldiers) {
         String toPrint = "";
         if(!attackDone) {
@@ -312,17 +359,25 @@ public class RiskGameController extends Controller {
     /* Draf-Attck-forfeit */
     public String next() {
         String toPrint = "";
-        if (!draftDone) {
-            toPrint = "Next part, Start Attcking";
-            draftDone = true;
-        } else if (!attackDone) {
-            toPrint = "Next part, Start Fortifying";
-            attackDone = true;
-        } else if (!fortifyDone) {
-            fortifyDone = true;
-            toPrint = "Next part, Please try `turn over` to go to next turn";
-        } else {
-            toPrint = "Try `turn over`";
+        if(getPlacementFinished()) {
+            if (!draftDone) {
+                toPrint = "Next part, Start Attacking";
+                draftDone = true;
+            } else if (!attackDone) {
+                toPrint = "Next part, Start Fortifying";
+                attackDone = true;
+            } else if (!fortifyDone) {
+                fortifyDone = true;
+                toPrint = "Next part, Please try `turn over` to go to next turn";
+            } else {
+                toPrint = "Try `turn over`";
+            }
+        }else{
+            if(beginDraftDone){
+                toPrint = "Draft done, please try next turn icon";
+            }else{
+                toPrint = "You didnt draft any soldier please try draft some";
+            }
         }
         return toPrint;
     }
@@ -334,8 +389,11 @@ public class RiskGameController extends Controller {
         } else {
             this.currentPlayer = this.players.get(0);
         }
+        if(!getPlacementFinished()){
+            checkPlacementFinished();
+        }
+        beginDraftDone = false;
     }
-
     public String changeTurn() {
         String toPrint;
         boolean checkWinner = checkWinner();
@@ -348,7 +406,7 @@ public class RiskGameController extends Controller {
             return toPrint;
         }
         if (!getPlacementFinished()) {
-            if (draftDone) {
+            if (beginDraftDone) {
                 mainChangeTurn();
                 toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
                 setDraftDone(false);
@@ -382,7 +440,18 @@ public class RiskGameController extends Controller {
         }
         return toPrint;
     }
-
+    public void checkPlacementFinished(){
+        boolean toCheck = true;
+        for(Player player:getPlayers()){
+            if(player.getDraftSoldiers() != 0){
+                toCheck = false;
+                break;
+            }
+        }
+        if(toCheck){
+            placementFinished = true;
+        }
+    }
     public static java.util.Map<String, Object> getPrimitiveSettings() {
         return primitiveSettings;
     }
@@ -450,11 +519,8 @@ public class RiskGameController extends Controller {
                 if (toCheckCountry.getOwner() == null || toCheckCountry.getOwner().equals(currentPlayer)) {
                     toCheckCountry.setOwner(currentPlayer);
                     toCheckCountry.addSoldiers(soldiers);
-                    currentPlayer.addDraftSoldier(-1);
                     toPrint = currentPlayer.getPlayerNumber() + " add " + soldiers + " soldier to "
                             + toCheckCountry.getName();
-
-                    this.setDraftDone(true);
                 } else {
                     toPrint = "Please choose a country that is yours or no one has been chosen it yet";
                 }
