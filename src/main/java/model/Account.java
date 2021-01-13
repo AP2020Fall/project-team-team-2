@@ -21,6 +21,8 @@ import java.util.Scanner;
 
 public abstract class Account {
     protected static ArrayList<Account> allAccounts = new ArrayList<>();
+    private static String rememberMeUsername;
+    private static String rememberMePassword;
     private String bio;
     private String firstName;
     private String lastName;
@@ -32,6 +34,23 @@ public abstract class Account {
     private LocalDate registerDay;
     private boolean isRobot = false;
     private transient Image avatar;
+
+
+    public static String getRememberMePassword() {
+        return rememberMePassword;
+    }
+
+    public static String getRememberMeUsername() {
+        return rememberMeUsername;
+    }
+
+    public static void setRememberMePassword(String rememberMePassword) {
+        Account.rememberMePassword = rememberMePassword;
+    }
+
+    public static void setRememberMeUsername(String rememberMeUsername) {
+        Account.rememberMeUsername = rememberMeUsername;
+    }
 
     public Image getImage() {
         return avatar;
@@ -259,7 +278,7 @@ public abstract class Account {
     }
 
     public static void openFileToImage(Account account) {
-        File file = new File("database\\accounts\\images\\"+account.getAccountId()+".jpg");
+        File file = new File("database\\accounts\\images\\" + account.getAccountId() + ".jpg");
         account.setImage(new Image(file.toURI().toString()));
     }
 
