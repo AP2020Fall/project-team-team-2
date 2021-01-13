@@ -11,12 +11,11 @@ import java.time.LocalDate;
 public class EventEntry {
     private String name;
     private Hyperlink link;
-    private Hyperlink edit;
     private LocalDate start;
     private LocalDate end;
     private String eventId;
     private String score;
-    private ImageView imageView;
+    private ImageView avatar;
     public EventEntry(Event event)
     {
         name= event.getGameName();
@@ -24,19 +23,13 @@ public class EventEntry {
         end  = event.getEnd();
         score = String.valueOf( event.getScore());
         eventId = event.getEventId();
-       // imageView = new ImageView(event.getImage());
-        imageView.setFitHeight(48);
-        imageView.setFitWidth(48);
+        avatar = new ImageView(event.getImage());
+        avatar.setFitHeight(48);
+        avatar.setFitWidth(48);
         link = new Hyperlink("open");
         link.setOnAction(events ->
         {
             TabHandler.getTabHandler().push(new PlayerEventMenu(event));
-        });
-        edit = new Hyperlink("edit");
-        edit.setOnAction(events ->
-        {
-            //todo implement
-            //TabHandler.getTabHandler().push(new PlayerEventMenu(event));
         });
     }
 
@@ -68,15 +61,12 @@ public class EventEntry {
         return score;
     }
 
-    public Hyperlink getEdit() {
-        return edit;
-    }
 
     public String getEventId() {
         return eventId;
     }
 
-    public ImageView getImageView() {
-        return imageView;
+    public ImageView getAvatar() {
+        return avatar;
     }
 }

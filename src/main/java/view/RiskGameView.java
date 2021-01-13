@@ -42,6 +42,10 @@ public class RiskGameView implements View, Initializable {
     @FXML
     private Rectangle nextTurn;
     @FXML
+    private Circle nextStatus;
+    @FXML
+    private Circle deselectIcon;
+    @FXML
     private TextField inputNumber;
     @FXML
     private Circle draftCircleImage;
@@ -59,6 +63,8 @@ public class RiskGameView implements View, Initializable {
     private VBox rightVBox;
     private double rightVBoxWidth = 300;
     private double RightVBoxHeight = 600;
+    @FXML
+    private Label gameNotifs;
     @FXML
     private SVGPath country_1_1;
     @FXML
@@ -159,28 +165,101 @@ public class RiskGameView implements View, Initializable {
     private Label label_5_4;
     @FXML
     private Label label_5_5;
+
     @FXML
-    private void countryClick(MouseEvent e)  {
-//        int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
-//        SVGPath path = allPaths[indices[0]-1][indices[1]-1];
-//        toggleColor(path);
+    private void countryClick(MouseEvent e) {
+        int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
+        int i = indices[0];
+        int j = indices[1];
+        int soliders = 0;
         try {
-            System.out.println(inputNumber.getText());
-        }catch (Exception exception){
+            soliders = Integer.parseInt(inputNumber.getText());
+            switch (showWhatToDo()) {
+                case "Draft":
+                    if (!inputNumber.getText().isEmpty()) {
+                        if(!riskGameController.getAttackWon()) {
+                            changeNotifText(draft(i, j, soliders));
+                        }else{
+                            changeNotifText(draftAfterWin(i , j , soliders));
+                        }
+                    }
+                    break;
+                case "Attack":
+                    if (riskGameController.getI() == null || riskGameController.getJ() == null) {
+                        if(riskGameController.checkCountryIsYours(i , j)) {
+                            riskGameController.setI(i);
+                            riskGameController.setJ(j);
+                        }else{
+                            changeNotifText("This Country Is Not Yours");
+                        }
+                    } else {
+                        if (!inputNumber.getText().isEmpty()) {
+                            changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
+                                    i, j, soliders));
+                        }
+                    }
+                    break;
+                case "Fortify":
+                    if (riskGameController.getI() == null || riskGameController.getJ() == null) {
+                        if(riskGameController.checkCountryIsYours(i , j)) {
+                            riskGameController.setI(i);
+                            riskGameController.setJ(j);
+                        }else{
+                            changeNotifText("This Country Is Not Yours");
+                        }
+                    } else {
+                        if (!inputNumber.getText().isEmpty()) {
+                            changeNotifText(fortify(riskGameController.getI(), riskGameController.getJ(),
+                                    i, j, soliders));
+                        }
+                    }
+                    break;
 
+            }
         }
+        catch (NumberFormatException ex) {
+            changeNotifText("please insert a number");
+        }
+        colorizeCountry();
+        setColorMode();
+        putCountryName();
+
     }
     @FXML
-    private void nextTurnHandler(MouseEvent e){
-
+    private void nextStatus(MouseEvent e){
+        changeNotifText(next());
+        setColorMode();
+        colorizeCountry();
     }
-    public int[] getCountryIndices(String countryClicked){
+    @FXML
+    private void nextTurnHandler(MouseEvent e) {
+        nextTurn();
+        colorizeCountry();
+        setColorTurn();
+        setColorMode();
+    }
+    @FXML
+    private void deselectHandler(MouseEvent e){
+        deselect();
+        colorizeCountry();
+    }
+
+    private void deselect() {
+        riskGameController.deselect();
+    }
+
+    public int[] getCountryIndices(String countryClicked) {
         String[] details = countryClicked.split("_");
         int[] toReturn = new int[2];
         toReturn[0] = Integer.parseInt(details[1]);
         toReturn[1] = Integer.parseInt(details[2]);
         return toReturn;
     }
+
+    public void changeNotifText(String notifText) {
+        gameNotifs.setText(notifText);
+    }
+
     public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, int mapNum) {
         this.riskGameController = new RiskGameController(primitiveSettings, soldiers);
         this.mapNum = String.valueOf(mapNum);
@@ -188,9 +267,10 @@ public class RiskGameView implements View, Initializable {
             autoPlace();
         }
     }
-    public void toggleColor(SVGPath path){
+
+    public void toggleColor(SVGPath path) {
         String styleClass = String.valueOf(path.getStyleClass());
-        switch (styleClass){
+        switch (styleClass) {
             case "country":
                 path.getStyleClass().clear();
                 path.getStyleClass().add("country_clicked");
@@ -200,6 +280,7 @@ public class RiskGameView implements View, Initializable {
                 path.getStyleClass().add("country");
                 break;
         }
+
     }
 
     public void riskGameView() {
@@ -363,7 +444,6 @@ public class RiskGameView implements View, Initializable {
     }
 
 
-
     private String showWhatToDo() {
         return riskGameController.showWhatToDo();
     }
@@ -373,29 +453,28 @@ public class RiskGameView implements View, Initializable {
         System.out.println(toPrint);
     }
 
-    public void placeSoldier(String countryDetals, int soldiers) {
-        String toPrint = this.riskGameController.placeSoldier(countryDetals, soldiers);
-        System.out.println(toPrint);
+    public String placeSoldier(int i, int j, int soldiers) {
+        String toPrint = this.riskGameController.placeSoldier(i, j, soldiers);
+        return toPrint;    }
+
+    public String draft(int i, int j, int soldiers) {
+        String toPrint = this.riskGameController.draft(i, j, soldiers);
+        return toPrint;
     }
 
-    public void draft(String countryDetals, int soldiers) {
-        String toPrint = this.riskGameController.draft(countryDetals, soldiers);
-        System.out.println(toPrint);
+    public String attack(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
+        String toPrint = riskGameController.attack(sourceI, sourceJ, destI, destJ, soldiers);
+        return toPrint;
     }
 
-    public void attack(String sourceCountry, String destinationCountry, int soldiers) {
-        String toPrint = riskGameController.attack(sourceCountry, destinationCountry, soldiers);
-        System.out.println(toPrint);
+    public String fortify(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
+        String toPrint = this.riskGameController.fortify(sourceI, sourceJ, destI, destJ, soldiers);
+        return toPrint;
     }
 
-    public void fortify(String sourceCountry, String destinationCountry, int soldiers) {
-        String toPrint = this.riskGameController.fortify(sourceCountry, destinationCountry, soldiers);
-        System.out.println(toPrint);
-    }
-
-    public void next() {
+    public String next() {
         String toPrint = riskGameController.next();
-        System.out.println(toPrint);
+        return toPrint;
     }
 
     public void autoPlace() {
@@ -422,9 +501,9 @@ public class RiskGameView implements View, Initializable {
         System.out.println(toPrint);
     }
 
-    public void draftAfterWin(String countryDetails, int soldiers) {
-        String toPrint = riskGameController.draftAfterWin(countryDetails, soldiers);
-        System.out.println(toPrint);
+    public String draftAfterWin(int i, int j, int soldiers) {
+        String toPrint = riskGameController.draftAfterWin(i, j, soldiers);
+        return toPrint;
     }
 
     @Override
@@ -493,44 +572,49 @@ public class RiskGameView implements View, Initializable {
 
 
     }
-    public void putCountryName(){
+
+    public void putCountryName() {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
-        for(int i = 0 ; i < countries.size() ; i++){
-            for(int j = 0 ; j < countries.get(i).size() ; j++){
-                allLabels[i][j].setText(countries.get(i).get(j).getName());
+        for (int i = 0; i < countries.size(); i++) {
+            for (int j = 0; j < countries.get(i).size(); j++) {
+                allLabels[i][j].setText("");
+                allLabels[i][j].setText(countries.get(i).get(j).getName()+"\n"+countries.get(i).get(j).getSoldiers());
             }
         }
     }
-    public void labelSetMouserTransparent(){
-        for(Label[] labels : allLabels){
-            for(Label label : labels){
-                if(label != null) {
+
+    public void labelSetMouserTransparent() {
+        for (Label[] labels : allLabels) {
+            for (Label label : labels) {
+                if (label != null) {
                     label.setMouseTransparent(true);
                 }
             }
         }
     }
-    public void colorizeCountry(){
+    public void colorizeCountry() {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
-        for(int i = 0 ; i < countries.size() ; i++){
-            for(int j = 0 ; j < countries.get(i).size() ; j++){
+        for (int i = 0; i < countries.size(); i++) {
+            for (int j = 0; j < countries.get(i).size(); j++) {
                 Player owner = countries.get(i).get(j).getOwner();
-                if(owner != null){
-                    String toClass = "country_player_"+ owner.getPlayerNumber();
+                if (owner != null) {
+                    String toClass = "country_player_" + owner.getPlayerNumber();
                     allPaths[i][j].getStyleClass().clear();
                     allPaths[i][j].getStyleClass().add(toClass);
-                }else{
+                } else {
                     allPaths[i][j].getStyleClass().clear();
                     allPaths[i][j].getStyleClass().add("country_no_player");
                 }
             }
         }
+        addColorToSelected();
     }
-    public void setColorMode(){
-        setClassForShape(draftModeShape , "none_active");
-        setClassForShape(attackModeShape , "none_active");
-        setClassForShape(fortifyModeShape , "none_active");
-        switch (showWhatToDo()){
+
+    public void setColorMode() {
+        setClassForShape(draftModeShape, "none_active");
+        setClassForShape(attackModeShape, "none_active");
+        setClassForShape(fortifyModeShape, "none_active");
+        switch (showWhatToDo()) {
             case "Draft":
                 draftModeShape.getStyleClass().clear();
                 draftModeShape.getStyleClass().add("status_on");
@@ -545,44 +629,52 @@ public class RiskGameView implements View, Initializable {
                 break;
         }
     }
-    public void setColorTurn(){
-        setDefaultClasses(playersCircles  , "none_active");
+    public void resetInput(){
+        inputNumber.setText("");
+    }
+    public void setColorTurn() {
+        setDefaultClasses(playersCircles, "none_active");
         int turnIndex = riskGameController.getCurrentPlayerIndex();
         playersCircles.get(turnIndex).getStyleClass().clear();
         playersCircles.get(turnIndex).getStyleClass().add("status_on");
     }
-    public void setClassForShape(Shape shape , String className){
+
+    public void setClassForShape(Shape shape, String className) {
         shape.getStyleClass().clear();
         shape.getStyleClass().add(className);
     }
-    public void setDefaultClasses(List<Circle> shapes , String defaltClassName){
-        for(Shape shape : shapes){
-            setClassForShape(shape , defaltClassName);
+
+    public void setDefaultClasses(List<Circle> shapes, String defaltClassName) {
+        for (Shape shape : shapes) {
+            setClassForShape(shape, defaltClassName);
         }
     }
+
     public void makeRightHBox() throws URISyntaxException {
         int i = 0;
         String playerImageAddress = "/images/player_";
-        for(Player  player : riskGameController.getPlayers()) {
+        for (Player player : riskGameController.getPlayers()) {
             i++;
-            Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress+i+".png").toURI()));
+            Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + i + ".png").toURI()));
             Circle littleCircle = new Circle(10);
             littleCircle.getStyleClass().add("none_active");
             playersCircles.add(littleCircle);
             Circle bigCircle = new Circle(100);
             bigCircle.setFill(new ImagePattern(image));
             bigCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
-            HBox tempHBox = new HBox(littleCircle,bigCircle);
+            HBox tempHBox = new HBox(littleCircle, bigCircle);
             tempHBox.setAlignment(Pos.CENTER);
             tempHBox.setSpacing(10);
             rightVBox.getChildren().add(tempHBox);
         }
     }
-    public void insertImage(Shape shape , String imageAddress) throws URISyntaxException {
+
+    public void insertImage(Shape shape, String imageAddress) throws URISyntaxException {
         Image image = new Image(String.valueOf(getClass().getResource(imageAddress).toURI()));
         shape.setFill(new ImagePattern(image));
         shape.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
     }
+
     @Override
     public void show(Stage window) throws IOException {
 
@@ -593,12 +685,22 @@ public class RiskGameView implements View, Initializable {
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
         try {
-            insertImage(draftCircleImage ,"/images/draft.png");
-            insertImage(attackCircleImage ,"/images/attack.png");
-            insertImage(fortifyCircleImage ,"/images/fortify.png");
-            insertImage(nextTurn , "/images/next.png");
+            insertImage(draftCircleImage, "/images/draft.png");
+            insertImage(attackCircleImage, "/images/attack.png");
+            insertImage(fortifyCircleImage, "/images/fortify.png");
+            insertImage(nextTurn, "/images/next.png");
+            insertImage(nextStatus , "/images/next_status.png");
+            insertImage(deselectIcon , "/images/deselect.png");
         } catch (URISyntaxException e) {
             e.printStackTrace();
+        }
+    }
+    public void addColorToSelected(){
+        Integer i = riskGameController.getI();
+        Integer j = riskGameController.getJ();
+        if(i != null && j != null){
+            allPaths[i-1][j-1].getStyleClass().clear();
+            allPaths[i-1][j-1].getStyleClass().add("country_selected_source");
         }
     }
 

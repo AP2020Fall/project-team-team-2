@@ -60,6 +60,11 @@ public class AddSuggestionPopup {
             popupWindow.close();
         }
     }
+
+    @FXML
+    void cancel(ActionEvent event) {
+        popupWindow.close();
+    }
     private void setInfoColourRed()
     {
         playerName.setFocusColor(Paint.valueOf("#ff0000"));

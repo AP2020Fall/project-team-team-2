@@ -1,6 +1,7 @@
 package model.Entry;
 
 import javafx.scene.control.Hyperlink;
+import javafx.scene.image.ImageView;
 import model.Game;
 import view.TabHandler;
 import view.player.PlayerGameMenu;
@@ -9,11 +10,14 @@ public class GameEntry {
    private  String name;
    private Hyperlink link;
    private  String detail;
-    //ImageView avatar;
+   private ImageView avatar;
     public GameEntry(Game game)
     {
         name= game.getName();
         detail = game.getDetails();
+        avatar = new ImageView(game.getImage());
+        avatar.setFitHeight(48);
+        avatar.setFitHeight(48);
         link = new Hyperlink("Open");
         link.setOnAction(event ->
         {
@@ -31,10 +35,6 @@ public class GameEntry {
         return name;
     }
 
-    /*public void setName(String name) {
-        this.name = name;
-    }*/
-
     public Hyperlink getLink() {
         return link;
     }
@@ -43,12 +43,8 @@ public class GameEntry {
         return detail;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public ImageView getAvatar() {
+        return avatar;
     }
 }
 

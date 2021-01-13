@@ -14,6 +14,7 @@ import view.View;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class PlayerMainMenuLayout implements View, Initializable {
     @FXML
@@ -36,7 +37,9 @@ public class PlayerMainMenuLayout implements View, Initializable {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/player/playerMainMenuLayout.fxml"));
         root.setController(this);
         window.setTitle("Plato");
-        window.setScene(new Scene(root.load()));
+        Scene scene = new Scene(root.load());
+        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+        window.setScene(scene);
         window.setResizable(false);
     }
 

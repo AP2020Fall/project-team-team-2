@@ -11,12 +11,12 @@ public class FriendEntry {
     private String name;
     private Hyperlink remove = new Hyperlink("Remove");
     private Hyperlink view = new Hyperlink("View");
-    private ImageView imageView;
+    private ImageView avatar;
     public FriendEntry(Player friend,Player player) {
         name = friend.getUsername();
-        imageView = new ImageView(friend.getImage());
-        imageView.setFitHeight(48);
-        imageView.setFitWidth(48);
+        avatar = new ImageView(friend.getImage());
+        avatar.setFitHeight(48);
+        avatar.setFitWidth(48);
         remove.setOnAction(event -> {
             //System.out.println("Removing must be implemented");
             player.removeFriend(friend);
@@ -41,7 +41,7 @@ public class FriendEntry {
         return view;
     }
 
-    public ImageView getImageView() {
-        return imageView;
+    public ImageView getAvatar() {
+        return avatar;
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.Pane?>
 
@@ -11,10 +10,5 @@
             <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TreeTableView>
-      <TableView fx:id="suggestionTable" layoutX="600.0" layoutY="15.0" prefHeight="600.0" prefWidth="400.0" styleClass="table" stylesheets="@../../css/styles.css">
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
    </children>
 </Pane>

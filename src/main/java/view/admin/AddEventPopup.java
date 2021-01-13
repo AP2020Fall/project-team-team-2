@@ -1,12 +1,15 @@
 package view.admin;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import controller.admin.AdminEventMenuController;
 import controller.admin.AdminGamesMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -18,11 +21,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Event;
 import view.AlertMaker;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class AddEventPopup {
+public class AddEventPopup implements Initializable {
 
     @FXML
     private StackPane stackRoot;
@@ -38,14 +44,18 @@ public class AddEventPopup {
     private JFXDatePicker endDate;
     @FXML
     private ImageView avatar;
+    @FXML
+    private JFXButton addButton;
+    @FXML
+    private JFXButton editButton;
     private Stage popupWindow;
+    private final boolean edit;
+    private AdminEventMenuController controller;
 
-    private AdminGamesMenuController controller;
-
-    public AddEventPopup() {
-        controller = new AdminGamesMenuController();
+    public AddEventPopup(boolean edit, Event event) {
+        this.edit = edit;
+        controller = new AdminEventMenuController(event);
     }
-
 
     public void openWindow() throws IOException {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/admin/addEventPopup.fxml"));
@@ -57,23 +67,52 @@ public class AddEventPopup {
         popupWindow.setResizable(false);
         popupWindow.showAndWait();
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if (edit) {
+            addButton.setVisible(false);
+            editButton.setVisible(true);
+            initializeEventInfo();
+        } else {
+            addButton.setVisible(true);
+            editButton.setVisible(false);
+        }
+    }
+
     @FXML
     void add() {
         //todo check date
         //if (!controller.checkStartDate(startDate.getValue()) || !controller.checkEndDate(endDate.getValue())) {
         //    System.out.println("invalid date!");
-       // } else
+        // } else
         if (Integer.parseInt(score.getText()) <= 0) {
             setInfoColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "score should be positive.");
         } else if (!controller.doesGameExist(gameName.getText())) {
             setInfoColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Game does not exist.");
         } else {
             controller.addEvent(gameName.getText(), startDate.getValue(), endDate.getValue(),
-                    Integer.parseInt(score.getText()),avatar.getImage());
+                    Integer.parseInt(score.getText()),detail.getText(), avatar.getImage());
+            popupWindow.close();
+        }
+    }
+
+    @FXML
+    void edit() {
+        if (Integer.parseInt(score.getText()) <= 0) {
+            setInfoColourRed();
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid Information", "score should be positive.");
+        } else if (!controller.doesGameExist(gameName.getText())) {
+            setInfoColourRed();
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid Information", "Game does not exist.");
+        } else {
+            controller.edit(gameName.getText(), Integer.parseInt(score.getText()), avatar.getImage(),detail.getText());
             popupWindow.close();
         }
     }
@@ -86,22 +125,33 @@ public class AddEventPopup {
     @FXML
     void addAvatar() {
         Image givenImage = AlertMaker.getImageFromUser();
-        if(givenImage != null)
-        {
+        if (givenImage != null) {
             avatar.setImage(givenImage);
         }
     }
 
-    private void setInfoColourRed()
-    {
+    private void setInfoColourRed() {
         gameName.setFocusColor(Paint.valueOf("#ff0000"));
         gameName.setUnFocusColor(Paint.valueOf("#ff0000"));
-        startDate.setDefaultColor(Paint.valueOf("#ff0000"));
-        endDate.setDefaultColor(Paint.valueOf("#ff0000"));
+        if (!edit) {
+            startDate.getEditor().clear();
+            endDate.getEditor().clear();
+        }
         score.setFocusColor(Paint.valueOf("#ff0000"));
         score.setUnFocusColor(Paint.valueOf("#ff0000"));
         detail.setFocusColor(Paint.valueOf("#ff0000"));
         detail.setUnFocusColor(Paint.valueOf("#ff0000"));
+    }
+
+    private void initializeEventInfo() {
+        score.setText(controller.getScore());
+        startDate.setValue(controller.getStartDate());
+        endDate.setValue(controller.getEndDate());
+        startDate.setDisable(true);
+        endDate.setDisable(true);
+        gameName.setText(controller.getGameName());
+        avatar.setImage(controller.getImage());
+        detail.setText(controller.getComment());
     }
 
 }

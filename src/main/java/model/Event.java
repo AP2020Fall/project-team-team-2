@@ -23,16 +23,17 @@ public class Event {
     private LocalDate end;
     private int score;
     private String eventId;
-
+    private String comment;
     private transient Image avatar;
 
-    public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId, Image image) {
+    public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId,String comment, Image image) {
         this.gameName = gameName;
         this.start = start;
         this.end = end;
         this.score = score;
         this.eventId = eventId;
         this.avatar = image;
+        this.comment = comment;
     }
 
 
@@ -50,6 +51,7 @@ public class Event {
         reader.close();
         return json;
     }
+
 
     public String getGameName() {
         return gameName;
@@ -77,6 +79,14 @@ public class Event {
 
     public void setImage(Image avatar) {
         this.avatar = avatar;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public void setGameName(String gameName) {
@@ -112,7 +122,7 @@ public class Event {
 
     public void delete() {
         events.remove(this);
-        File file = new File("database" + "\\" + "events" + "\\" + eventId + ".json");
+        File file = new File("database" + "\\" + "events" + "\\event\\" + eventId + ".json");
         try {
             if (file.exists())
                 file.delete();
@@ -128,7 +138,7 @@ public class Event {
 
     private static void save(Event event) throws IOException {
         String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().toJson(event);
-        FileWriter file = new FileWriter("database" + "\\" + "events" + "\\" + event.getEventId() + ".json");
+        FileWriter file = new FileWriter("database" + "\\" + "events" + "\\event\\" + event.getEventId() + ".json");
         file.write(jsonAccount);
         file.close();
         System.out.println("saving ended " + event.getEventId());
@@ -137,7 +147,7 @@ public class Event {
     }
 
     public static void open() throws FileNotFoundException {
-        File folder = new File("database" + "\\" + "events");
+        File folder = new File("database" + "\\" + "events\\event");
         if (!folder.exists()) {
             folder.mkdirs();
         } else {

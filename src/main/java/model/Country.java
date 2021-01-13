@@ -10,12 +10,14 @@ public class Country {
     private int gameCountryNumber;
     private int numberOfContinentCountry = 0;
     private int soldiers = 0;
+    private boolean blizzard;
 
     public Country(){}
     public Country(String name, String continent , int gameCountryNumber) {
         this.name = name;
         this.continent = continent;
         this.gameCountryNumber = gameCountryNumber;
+        this.blizzard = false;
     }
 
     public String getName() {
@@ -45,6 +47,10 @@ public class Country {
     public String getContinent() {
         return continent;
     }
+
+    public void enableBlizzard(){ blizzard = true; }
+
+    public void desableBlizzard(){ blizzard = false; }
 
     public int getNumberOfContinentCountry() {
         return numberOfContinentCountry;

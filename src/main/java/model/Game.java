@@ -97,7 +97,7 @@ public class Game {
 
 
     public void delete() {
-        File file = new File("database" + "\\" + "games" + "\\" + this.getGameId() + ".json");
+        File file = new File("database" + "\\" + "games" + "\\game\\" + this.getGameId() + ".json");
         try {
             if (file.exists())
                 file.delete();
@@ -120,7 +120,7 @@ public class Game {
 
 
     public static void open() throws FileNotFoundException {
-        File folder = new File("database" + "\\" + "games");
+        File folder = new File("database" + "\\" + "games\\game");
         if (!folder.exists()) {
             folder.mkdirs();
         } else {
@@ -153,7 +153,7 @@ public class Game {
 
     private static void save(Game game) throws IOException {
         String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().toJson(game);
-        FileWriter file = new FileWriter("database" + "\\" + "games" + "\\" + game.getGameId() + ".json");
+        FileWriter file = new FileWriter("database" + "\\" + "games" + "\\game\\" + game.getGameId() + ".json");
         file.write(jsonAccount);
         file.close();
         System.out.println("saving ended " + game.getGameId());

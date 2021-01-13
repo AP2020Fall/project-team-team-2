@@ -48,7 +48,7 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         //throws NullPointerException if the player hasn't played the game.
         GameLogSummary gameLogSummary= player.getGameHistory(game.getName());
         if(gameLogSummary == null)
-            return "Hasn't been played";
+            return "hasn't been played";
         else
             return String.valueOf(gameLogSummary.getFrequency());
     }
@@ -58,7 +58,7 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         //throws NullPointerException if the player hasn't played the game.
         GameLogSummary gameLogSummary= player.getGameHistory(game.getName());
         if(gameLogSummary == null)
-            return "Hasn't been played";
+            return "hasn't been played";
         else
         return String.valueOf(gameLogSummary.getWins());
     }

@@ -1,12 +1,15 @@
 package view.admin;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import controller.admin.AdminGameMenuController;
 import controller.admin.AdminGamesMenuController;
 import controller.admin.AdminMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -18,11 +21,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Game;
 import view.AlertMaker;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class AddGamePopup {
+public class AddGamePopup implements Initializable {
     @FXML
     private JFXTextArea gameDetail;
     @FXML
@@ -32,11 +38,16 @@ public class AddGamePopup {
     private Stage popupWindow;
     @FXML
     private ImageView avatar;
+    @FXML
+    private JFXButton addButton;
+    @FXML
+    private JFXButton editButton;
+    private final boolean edit;
+    private AdminGameMenuController controller;
 
-    private AdminGamesMenuController controller;
-
-    public AddGamePopup() {
-        controller = new AdminGamesMenuController();
+    public AddGamePopup(boolean edit, Game game) {
+        this.edit = edit;
+        controller = new AdminGameMenuController(game);
     }
 
 
@@ -51,16 +62,45 @@ public class AddGamePopup {
         popupWindow.showAndWait();
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if (edit) {
+            addButton.setVisible(false);
+            editButton.setVisible(true);
+            initializeGameInfo();
+        } else {
+            addButton.setVisible(true);
+            editButton.setVisible(false);
+        }
+    }
+
+    private void initializeGameInfo() {
+        gameName.setText(controller.getGameName());
+        gameDetail.setText(controller.getGameDetail());
+        avatar.setImage(controller.getImage());
+    }
+
 
     @FXML
     void add() {
         if (controller.doesGameExist(gameName.getText())) {
             setInfoColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
-            "Invalid information","The game already exists.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid information", "The game already exists.");
+        } else {
+            controller.addGame(gameName.getText(), gameDetail.getText(), avatar.getImage());
+            popupWindow.close();
         }
-        else{
-            controller.addGame(gameName.getText(), gameDetail.getText(),avatar.getImage());
+    }
+
+    @FXML
+    void edit() {
+        if (controller.doesGameExist(gameName.getText()) && !controller.getGameName().equals(gameName.getText())) {
+            setInfoColourRed();
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid information", "The game already exists.");
+        } else {
+            controller.edit(gameName.getText(), gameDetail.getText(), avatar.getImage());
             popupWindow.close();
         }
     }
@@ -68,8 +108,7 @@ public class AddGamePopup {
     @FXML
     void addAvatar(MouseEvent event) {
         Image givenImage = AlertMaker.getImageFromUser();
-        if(givenImage != null)
-        {
+        if (givenImage != null) {
             avatar.setImage(givenImage);
         }
     }
@@ -78,8 +117,8 @@ public class AddGamePopup {
     void cancel() {
         popupWindow.close();
     }
-    private void setInfoColourRed()
-    {
+
+    private void setInfoColourRed() {
         gameDetail.setFocusColor(Paint.valueOf("#ff0000"));
         gameDetail.setUnFocusColor(Paint.valueOf("#ff0000"));
         gameName.setFocusColor(Paint.valueOf("#ff0000"));

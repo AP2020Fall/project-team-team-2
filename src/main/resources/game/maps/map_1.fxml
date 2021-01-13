@@ -31,12 +31,16 @@
       <Label fx:id="label_3_1" alignment="CENTER" layoutX="145.0" layoutY="442.0" prefHeight="41.0" prefWidth="55.0" styleClass="game_labels" textAlignment="CENTER" />
       <Label fx:id="label_3_2" alignment="CENTER" layoutX="325.0" layoutY="463.0" prefHeight="41.0" prefWidth="55.0" styleClass="game_labels" textAlignment="CENTER" />
       <Label fx:id="label_3_3" alignment="CENTER" layoutX="468.0" layoutY="484.0" prefHeight="41.0" prefWidth="55.0" styleClass="game_labels" textAlignment="CENTER" />
-      <VBox fx:id="rightVBox" alignment="TOP_CENTER" layoutX="838.0" layoutY="60.0" prefHeight="600.0" prefWidth="300.0" />
+      <VBox fx:id="rightVBox" alignment="TOP_CENTER" layoutX="829.0" layoutY="179.0" prefHeight="526.0" prefWidth="300.0" />
       <HBox layoutX="238.0" layoutY="608.0" prefHeight="118.0" prefWidth="594.0">
          <children>
             <VBox alignment="CENTER" prefHeight="138.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Circle fx:id="draftModeShape" fill="DODGERBLUE" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="draft_mode" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Circle fx:id="draftModeShape" fill="DODGERBLUE" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="draft_mode" />
+                     </children>
+                  </HBox>
                   <Circle fx:id="draftCircleImage" fill="DODGERBLUE" radius="62.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
                <padding>
@@ -45,7 +49,11 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="138.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Circle fx:id="attackModeShape" fill="DODGERBLUE" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="attack_mode" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Circle fx:id="attackModeShape" fill="DODGERBLUE" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="attack_mode" />
+                     </children>
+                  </HBox>
                   <Circle fx:id="attackCircleImage" fill="DODGERBLUE" radius="62.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
                <padding>
@@ -54,7 +62,11 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="138.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Circle fx:id="fortifyModeShape" fill="DODGERBLUE" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="fortify_mode" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Circle fx:id="fortifyModeShape" fill="DODGERBLUE" radius="16.0" stroke="BLACK" strokeType="INSIDE" styleClass="fortify_mode" />
+                     </children>
+                  </HBox>
                   <Circle fx:id="fortifyCircleImage" fill="DODGERBLUE" radius="62.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
                <padding>
@@ -68,6 +80,9 @@
             <Font size="7.0" />
          </font>
       </TextField>
-      <Rectangle fx:id="nextTurn" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="667.0" layoutY="24.0" onMouseClicked="#nextTurnHandler" stroke="#ffffff00" strokeType="INSIDE" width="90.0" />
+      <Rectangle fx:id="nextTurn" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="701.0" layoutY="24.0" onMouseClicked="#nextTurnHandler" stroke="#ffffff00" strokeType="INSIDE" width="90.0" />
+      <Label id="game_notifs" fx:id="gameNotifs" alignment="CENTER" layoutX="829.0" layoutY="587.0" prefHeight="186.0" prefWidth="300.0" />
+      <Circle fx:id="nextStatus" fill="DODGERBLUE" layoutX="602.0" layoutY="60.0" onMouseClicked="#nextStatus" radius="33.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="deselectIcon" fill="DODGERBLUE" layoutX="865.0" layoutY="60.0" onMouseClicked="#deselectHandler" radius="33.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </AnchorPane>
