@@ -584,28 +584,58 @@ public class RiskGameController extends Controller {
 
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
+                countryNumbers[i][j] = 0;
+            }
+        }
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
                 if (gameCountries.get(i).get(j).getOwner().getUsername().equals(currentPlayer.getUsername())) {
                     countryNumbers[i][j] = 1;
-                } else if (countryNumbers[i-1][j-1] == 1) {
-                    countryNumbers[i][j] = 2;
-                } else if (countryNumbers[i-1][j] == 1) {
-                    countryNumbers[i][j] = 2;
-                } else if (countryNumbers[i-1][j+1] == 1) {
-                    countryNumbers[i][j] = 2;
-                } else if (countryNumbers[i][j-1] == 1) {
-                    countryNumbers[i][j] = 2;
-                } else if (countryNumbers[i][j] == 1) {
-                    countryNumbers[i][j] = 2;
-                } else if (countryNumbers[i][j+1] == 1) {
-                    countryNumbers[i][j] = 2;
-                } else if (countryNumbers[i+1][j-1] == 1) {
-                    countryNumbers[i][j] = 2;
-                } else if (countryNumbers[i+1][j] == 1) {
-                    countryNumbers[i][j] = 2;
-                } else if (countryNumbers[i+1][j+1] == 1) {
-                    countryNumbers[i][j] = 2;
                 } else {
-                    countryNumbers[i][j] = 0;
+                    if (i > 0) {
+                        if (j > 0) {
+                            if (countryNumbers[i - 1][j - 1] == 1) {
+                                countryNumbers[i][j] = 2;
+                            }
+                        }
+                        if (countryNumbers[i - 1][j] == 1) {
+                            countryNumbers[i][j] = 2;
+                        }
+                        if (j < column - 1) {
+                            if (countryNumbers[i - 1][j + 1] == 1) {
+                                countryNumbers[i][j] = 2;
+                            }
+                        }
+                    }
+                    if (j>0) {
+                        if (countryNumbers[i][j - 1] == 1) {
+                            countryNumbers[i][j] = 2;
+                        }
+                    }
+                    if (countryNumbers[i][j] == 1) {
+                        countryNumbers[i][j] = 2;
+                    }
+                    if (j<column-1) {
+                        if (countryNumbers[i][j + 1] == 1) {
+                            countryNumbers[i][j] = 2;
+                        }
+                    }
+                    if (i<row-1){
+                        if (j>0) {
+                            if (countryNumbers[i + 1][j - 1] == 1) {
+                                countryNumbers[i][j] = 2;
+                            }
+                        }
+                        if (countryNumbers[i + 1][j] == 1) {
+                           countryNumbers[i][j] = 2;
+                        }
+                        if (j< column-1) {
+                            if (countryNumbers[i + 1][j + 1] == 1) {
+                                countryNumbers[i][j] = 2;
+                            }
+                        }
+                    }
                 }
             }
         }
