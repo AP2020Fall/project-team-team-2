@@ -29,10 +29,7 @@ import model.Player;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class RiskGameView implements View, Initializable {
     private final RiskGameController riskGameController;
@@ -321,174 +318,9 @@ public class RiskGameView implements View, Initializable {
 
     }
 
-    public void riskGameView() {
-        /* write variables to get commands *//*
-        Scanner inputCommand = Menu.getScanner();
-        String inputLine = new String();
-        boolean check = false;
-        boolean matchCardEnable = false;
-        boolean draftMode = false;
-        boolean fortifyMode = false;
-        *//* Different patterns of valid match cards commands *//*
-        Pattern matchCardsCommand = Pattern.compile("(^)match cards($)");
-        *//*Typical 1*//*
-        Pattern type1MatchCommand = Pattern.compile("(^)1-type1,type1,type1 score:4($)");
-        *//*Typical 2*//*
-        Pattern type2MatchCommand = Pattern.compile("(^)2-type2,type2,type2 score:6($)");
-        *//*Typical 3*//*
-        Pattern type3MatchCommand = Pattern.compile("(^)3-type3,type3,type3 score:8($)");
-        *//*Typical 4*//*
-        Pattern differentTypeMatchCommand = Pattern.compile("(^)4-type1,type2,type3 score:10($)");
-
-
-        *//* Pattern to place soldier in manual placement*//*
-        Pattern placeSoldierManual = Pattern.compile("(^)place soldier in (?<countryDetails>\\w+\\.\\d+)($)");
-        *//* Pattern to draft soldier *//*
-        Pattern placeSoldier = Pattern
-                .compile("(^)place (?<soldierNumber>\\d+) soldiers in (?<countryDetails>\\w+\\.\\d+)($)");
-        *//* Pattern to Attac*//*
-        Pattern attackPattern = Pattern
-                .compile("(^)attack from (?<sourceCountry>\\w+\\.\\d+) with (?<soldierNumber>\\d+) soldiers to (?<destinationCountry>\\w+\\.\\d+)($)");
-
-        *//* Pattern to fortify*//*
-        Pattern fortifyPattern = Pattern
-                .compile("(^)move (?<soldierNumber>\\d+) soldiers from (?<sourceCountry>\\w+\\.\\d+) to (?<destinationCountry>\\w+\\.\\d+)($)");
-        *//* Sow Map Pattern *//*
-        Pattern showMapPattern = Pattern.compile("(^)show map($)");
-        *//* get input command *//*
-        while (inputCommand.hasNextLine() && riskGameController.getGameIsPlaying()) {
-            boolean placementStatus = riskGameController.getPlacementFinished();
-            *//* get input command *//*
-         *//* Command Found*//*
-            boolean commandFound = false;
-
-            inputLine = inputCommand.nextLine().trim();
-            *//* Check manual placement*//*
-            Matcher manualPlacementMatcher = placeSoldierManual.matcher(inputLine);
-            check = manualPlacementMatcher.matches();
-            if (check == true && !placementStatus) {
-                String countryDetails = manualPlacementMatcher.group("countryDetails");
-                placeSoldier(countryDetails, 1);
-                commandFound = true;
-            }
-            *//* Show Map Match*//*
-            Matcher showMapMatcher = showMapPattern.matcher(inputLine);
-            check = showMapMatcher.matches();
-            if (check == true) {
-                this.showMap();
-                check = false;
-                commandFound = true;
-            }
-            *//* Check draft mode*//*
-            Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
-            check = placeSoldierMatcher.matches();
-            if (riskGameController.getAttackWon() && placementStatus) {
-                if (check) {
-                    String countryDetails = placeSoldierMatcher.group("countryDetails");
-                    int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
-                    draftAfterWin(countryDetails, soldierNumber);
-                    commandFound = true;
-                    check = false;
-                } else if(!commandFound) {
-                    System.out.println("Invalid command!");
-                    continue;
-                }
-            }
-            if (check == true && placementStatus) {
-                String countryDetails = placeSoldierMatcher.group("countryDetails");
-                int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
-                draft(countryDetails, soldierNumber);
-                commandFound = true;
-            }
-            *//* Check attack mode *//*
-            Matcher attackMatcher = attackPattern.matcher(inputLine);
-            check = attackMatcher.matches();
-            if (check == true && placementStatus) {
-                String sourceCountry = attackMatcher.group("sourceCountry");
-                String destinationCountry = attackMatcher.group("destinationCountry");
-                int soldierNumber = Integer.parseInt(attackMatcher.group("soldierNumber"));
-                attack(sourceCountry, destinationCountry, soldierNumber);
-                commandFound = true;
-            }
-            *//* Check fortify mode*//*
-            Matcher fortifyMatcher = fortifyPattern.matcher(inputLine);
-            check = fortifyMatcher.matches();
-            if (check == true && placementStatus) {
-                String sourceCountry = fortifyMatcher.group("sourceCountry");
-                String destinationCountry = fortifyMatcher.group("destinationCountry");
-                int soldierNumber = Integer.parseInt(fortifyMatcher.group("soldierNumber"));
-                fortify(sourceCountry, destinationCountry, soldierNumber);
-                commandFound = true;
-            }
-
-
-            *//* Check match cards *//*
-            Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
-            check = matchCardsMatcher.matches();
-            if (check == true && placementStatus) {
-                check = false;
-                showOptions();
-                commandFound = true;
-            }
-            Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
-            check = type1MatchMatcher.matches();
-            if (check == true && placementStatus) {
-                riskGameController.matchCards(1);
-                check = false;
-                commandFound = true;
-            }
-
-            Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
-            check = type2MatchMatcher.matches();
-            if (check == true && placementStatus) {
-                riskGameController.matchCards(2);
-                check = false;
-                commandFound = true;
-            }
-
-            Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
-            check = type3MatchMatcher.matches();
-            if (check == true && placementStatus) {
-                riskGameController.matchCards(3);
-                check = false;
-                commandFound = true;
-                commandFound = true;
-            }
-
-            Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
-            check = diffrentTypeMatchMatcher.matches();
-            if (check == true && placementStatus) {
-                riskGameController.matchCards(4);
-                check = false;
-                commandFound = true;
-            }
-
-            if (inputLine.equals("next")) {
-                next();
-                commandFound =true;
-            }
-            if (inputLine.equals("turn over")) {
-                nextTurn();
-                commandFound = true;
-            }
-            if(inputLine.equals("show what to do")){
-                showWhatToDo();
-                commandFound = true;
-            }
-            if (commandFound == false) {
-                System.out.println("Invalid Command!");
-            }
-        }*/
-    }
-
 
     private String showWhatToDo() {
         return riskGameController.showWhatToDo();
-    }
-
-    public void showMap() {
-        String toPrint = this.riskGameController.showMap();
-        System.out.println(toPrint);
     }
 
     public String placeSoldier(int i, int j, int soldiers) {
@@ -611,10 +443,21 @@ public class RiskGameView implements View, Initializable {
 
     public void putCountryName() {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
+        int row = countries.size();
+        int columns = countries.get(0).size();
+        int[][] toShowFog = new int[row][columns];
+        toShowFog = riskGameController.getFogOfWarMap(riskGameController.getCurrentPlayer());
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 allLabels[i][j].setText("");
-                allLabels[i][j].setText(countries.get(i).get(j).getName()+"\n"+countries.get(i).get(j).getSoldiers());
+                if(!riskGameController.getFogStatus() || !riskGameController.getPlacementFinished()) {
+                    allLabels[i][j].setText(countries.get(i).get(j).getName() + "\n" + countries.get(i).get(j).getSoldiers());
+                }else{
+                    int numberCheck = toShowFog[i][j];
+                    if(numberCheck == 1 || numberCheck == 2){
+                        allLabels[i][j].setText(countries.get(i).get(j).getName() + "\n" + countries.get(i).get(j).getSoldiers());
+                    }
+                }
             }
         }
     }
@@ -630,13 +473,32 @@ public class RiskGameView implements View, Initializable {
     }
     public void colorizeCountry() {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
+        int row = countries.size();
+        int columns = countries.get(0).size();
+        int[][] toShowFog = new int[row][columns];
+        toShowFog = riskGameController.getFogOfWarMap(riskGameController.getCurrentPlayer());
+        System.out.println(Arrays.deepToString(toShowFog));
+        boolean fogStatus = riskGameController.getFogStatus();
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 Player owner = countries.get(i).get(j).getOwner();
                 if (owner != null) {
-                    String toClass = "country_player_" + owner.getPlayerNumber();
-                    allPaths[i][j].getStyleClass().clear();
-                    allPaths[i][j].getStyleClass().add(toClass);
+                    if(fogStatus) {
+                        int statusNumber = toShowFog[i][j];
+                        if(statusNumber == 1 || statusNumber == 2) {
+                            String toClass = "country_player_" + owner.getPlayerNumber();
+                            allPaths[i][j].getStyleClass().clear();
+                            allPaths[i][j].getStyleClass().add(toClass);
+                        }else{
+                            String toClass = "country_fog";
+                            allPaths[i][j].getStyleClass().clear();
+                            allPaths[i][j].getStyleClass().add(toClass);
+                        }
+                    }else{
+                        String toClass = "country_player_" + owner.getPlayerNumber();
+                        allPaths[i][j].getStyleClass().clear();
+                        allPaths[i][j].getStyleClass().add(toClass);
+                    }
                 } else {
                     allPaths[i][j].getStyleClass().clear();
                     allPaths[i][j].getStyleClass().add("country_no_player");
