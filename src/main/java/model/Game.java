@@ -103,6 +103,13 @@ public class Game {
                 file.delete();
         } catch (Exception ignored) {
         }
+
+        File imageFile = new File("database\\games\\images\\" + gameId + ".jpg");
+        try {
+            if (imageFile.exists())
+                imageFile.delete();
+        } catch (Exception ignored) {
+        }
         playLogs.clear();
         for (Player player : Player.getAllPlayers()) {
             Suggestion suggestion = player.getSuggestionByGameName(this.name);
