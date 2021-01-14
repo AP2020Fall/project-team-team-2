@@ -356,9 +356,9 @@ public class RiskGameView implements View, Initializable {
         gameNotifs.setText(notifText);
     }
 
-    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, int mapNum) {
+    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers) {
         this.riskGameController = new RiskGameController(primitiveSettings, soldiers);
-        this.mapNum = String.valueOf(mapNum);
+        this.mapNum =String.valueOf((int) primitiveSettings.get("Map Number"));
         if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
             autoPlace();
         }
