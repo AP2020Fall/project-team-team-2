@@ -186,6 +186,7 @@ public class RiskGameView implements View, Initializable {
     private Label label_5_4;
     @FXML
     private Label label_5_5;
+
     @FXML
     private void loseManually(MouseEvent e) throws URISyntaxException {
         riskGameController.leaveTheGame();
@@ -193,28 +194,32 @@ public class RiskGameView implements View, Initializable {
         colorizeCountry();
         putCountryName();
         updatePlayerLabels();
-        if(!riskGameController.getGameIsPlaying()){
+        if (!riskGameController.getGameIsPlaying()) {
             System.out.println("Doneeeeeeeee");
         }
     }
+
     @FXML
     private void match1Handler(MouseEvent e) {
         matchCards(1);
         setMyCardsLabels();
         updatePlayerLabels();
     }
+
     @FXML
     private void match2Handler(MouseEvent e) {
         matchCards(2);
         setMyCardsLabels();
         updatePlayerLabels();
     }
+
     @FXML
     private void match3Handler(MouseEvent e) {
         matchCards(3);
         setMyCardsLabels();
         updatePlayerLabels();
     }
+
     @FXML
     private void matchAllHandler(MouseEvent e) {
         matchCards(4);
@@ -592,11 +597,11 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void setColorTurn() {
-        if(riskGameController.getGameIsPlaying()) {
+        if (riskGameController.getGameIsPlaying()) {
             setDefaultClasses(playersCircles, "none_active");
             int turnIndex = riskGameController.getCurrentPlayerIndex();
-            playersCircles.get(turnIndex).getStyleClass().clear();
-            playersCircles.get(turnIndex).getStyleClass().add("status_on");
+            playersCircles.get(turnIndex - 1).getStyleClass().clear();
+            playersCircles.get(turnIndex - 1).getStyleClass().add("status_on");
         }
     }
 
@@ -634,8 +639,7 @@ public class RiskGameView implements View, Initializable {
         playerLabels.clear();
         playersCircles.clear();
         for (Player player : riskGameController.getPlayers()) {
-            i++;
-            Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + i + ".png").toURI()));
+            Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + player.getPlayerNumber() + ".png").toURI()));
             Circle littleCircle = new Circle(10);
             littleCircle.getStyleClass().add("none_active");
             playersCircles.add(littleCircle);
@@ -647,6 +651,7 @@ public class RiskGameView implements View, Initializable {
 
             Circle playerColorCircle = new Circle(10);
             playerColorCircle.getStyleClass().add("country_player_color_" + player.getPlayerNumber());
+            System.out.println(player.getPlayerNumber());
             VBox verticalBox = new VBox(littleCircle, playerColorCircle, playerLabel);
             verticalBox.setAlignment(Pos.CENTER);
             verticalBox.setSpacing(10);
@@ -692,7 +697,7 @@ public class RiskGameView implements View, Initializable {
             insertImage(nextTurn, "/images/next.png");
             insertImage(nextStatus, "/images/next_status.png");
             insertImage(deselectIcon, "/images/deselect.png");
-            insertImage(loseManual , "/images/exit.png");
+            insertImage(loseManual, "/images/exit.png");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

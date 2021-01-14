@@ -1057,12 +1057,7 @@ public class RiskGameController extends Controller {
     }
 
     public int getCurrentPlayerIndex() {
-        for (int i = 0; i < players.size(); i++) {
-            if (currentPlayer.equals(players.get(i))) {
-                return i;
-            }
-        }
-        return 0;
+        return currentPlayer.getPlayerNumber();
     }
 
     public String draftAfterWin(int i, int j, int soldiers) {
