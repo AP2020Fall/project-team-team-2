@@ -80,10 +80,11 @@
             <Font size="7.0" />
          </font>
       </TextField>
-      <Rectangle fx:id="nextTurn" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="701.0" layoutY="24.0" onMouseClicked="#nextTurnHandler" stroke="#ffffff00" strokeType="INSIDE" width="90.0" />
+      <Rectangle fx:id="nextTurn" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="678.0" layoutY="24.0" onMouseClicked="#nextTurnHandler" stroke="#ffffff00" strokeType="INSIDE" width="90.0" />
       <Label id="game_notifs" fx:id="gameNotifs" alignment="CENTER" layoutX="829.0" layoutY="587.0" prefHeight="186.0" prefWidth="300.0" />
       <Circle fx:id="nextStatus" fill="DODGERBLUE" layoutX="602.0" layoutY="60.0" onMouseClicked="#nextStatus" radius="33.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <Circle fx:id="deselectIcon" fill="DODGERBLUE" layoutX="865.0" layoutY="60.0" onMouseClicked="#deselectHandler" radius="33.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Circle fx:id="deselectIcon" fill="DODGERBLUE" layoutX="829.0" layoutY="60.0" onMouseClicked="#deselectHandler" radius="33.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Label id="cardsMenuLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="999.0" layoutY="19.0" onMouseClicked="#cardsMenuHandler" prefHeight="56.0" prefWidth="106.0" text="Cards Menu" />
+      <Rectangle fx:id="loseManual" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="889.0" layoutY="24.0" onMouseClicked="#loseManually" stroke="#ffffff00" strokeType="INSIDE" width="90.0" />
    </children>
 </AnchorPane>

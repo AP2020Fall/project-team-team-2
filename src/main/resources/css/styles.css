@@ -268,10 +268,17 @@
     -fx-font-style: italic;
 }
 #cardsMenuLabel{
-    -fx-font-size: 25px;
+    -fx-font-size: 15px;
     -fx-font-style: italic bold;
+}
+#cardsMenuLabel:hover{
+    -fx-text-fill: wheat;
 }
 .blizzard{
     -fx-fill: white;
+}
+.cardsLabel{
+    -fx-font-style: italic bold;
+    -fx-font-size: 20px;
 }
 /* Game Part */

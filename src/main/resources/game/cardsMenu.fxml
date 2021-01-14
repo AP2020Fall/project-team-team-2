@@ -5,18 +5,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 
-
 <AnchorPane prefHeight="526.0" prefWidth="781.0" styleClass="riskBackground" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Circle fx:id="aClub" fill="DODGERBLUE" layoutX="184.0" layoutY="163.0" radius="100.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Circle fx:id="aDiamond" fill="DODGERBLUE" layoutX="612.0" layoutY="163.0" radius="100.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Circle fx:id="aHeart" fill="DODGERBLUE" layoutX="401.0" layoutY="163.0" radius="100.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <Button fx:id="match1" layoutX="128.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#matchHandler" prefHeight="65.0" prefWidth="111.0" styleClass="buttons" text="Match" />
-      <Button fx:id="math2" layoutX="345.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#matchHandler" prefHeight="65.0" prefWidth="111.0" styleClass="buttons" text="Match" />
-      <Button fx:id="match3" layoutX="556.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#matchHandler" prefHeight="65.0" prefWidth="111.0" styleClass="buttons" text="Match" />
+      <Button fx:id="match1" layoutX="128.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#match1Handler" prefHeight="65.0" prefWidth="111.0" styleClass="buttons" text="Match" />
+      <Button fx:id="match2" layoutX="345.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#match2Handler" prefHeight="65.0" prefWidth="111.0" styleClass="buttons" text="Match" />
+      <Button fx:id="match3" layoutX="556.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#match3Handler" prefHeight="65.0" prefWidth="111.0" styleClass="buttons" text="Match" />
       <Label fx:id="card1Label" alignment="CENTER" layoutX="128.0" layoutY="275.0" prefHeight="33.0" prefWidth="111.0" styleClass="cardsLabel" text="Card 1" />
       <Label fx:id="card2Label" alignment="CENTER" layoutX="345.0" layoutY="275.0" prefHeight="33.0" prefWidth="111.0" styleClass="cardsLabel" text="Card 2" />
       <Label fx:id="card3Label" alignment="CENTER" layoutX="556.0" layoutY="275.0" prefHeight="33.0" prefWidth="111.0" styleClass="cardsLabel" text="Card 3" />
-      <Button fx:id="matchAll" alignment="CENTER" contentDisplay="CENTER" layoutX="345.0" layoutY="417.0" mnemonicParsing="false" onMouseClicked="#matchHandler" prefHeight="90.0" prefWidth="111.0" styleClass="buttons" text="Match&#10;All&#10;" textAlignment="CENTER" />
+      <Button fx:id="matchAll" alignment="CENTER" contentDisplay="CENTER" layoutX="345.0" layoutY="417.0" mnemonicParsing="false" onMouseClicked="#matchAllHandler" prefHeight="90.0" prefWidth="111.0" styleClass="buttons" text="Match&#10;All&#10;" textAlignment="CENTER" />
    </children>
 </AnchorPane>

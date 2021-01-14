@@ -345,7 +345,27 @@ public class Player extends Account {
     public ArrayList<Card> getCards() {
         return cards;
     }
-
+    public int[] getCardsNumber(){
+        int[] numbers = new int[3];
+        int number1 = 0;
+        int number2 = 0;
+        int number3 = 0;
+        for(Card card : cards){
+            if(card.equals(Card.CARD_1)){
+                number1++;
+            }
+            if(card.equals(Card.CARD_2)){
+                number2++;
+            }
+            if(card.equals(Card.CARD_3)){
+                number3++;
+            }
+        }
+        numbers[0] = number1;
+        numbers[1] = number2;
+        numbers[2] = number3;
+        return numbers;
+    }
 
     public void setDraws() {
         this.draws++;

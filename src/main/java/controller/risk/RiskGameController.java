@@ -562,7 +562,28 @@ public class RiskGameController extends Controller {
         }
         return toPrint;
     }
-
+    public String leaveTheGame(){
+        Player prevPlayer = currentPlayer;
+        if(gameIsPlaying) {
+            mainChangeTurn();
+            players.remove(prevPlayer);
+            makeCountryEmpty(prevPlayer);
+            return "Player Exit The Game";
+        }else{
+            return "Player " + prevPlayer.getUsername() + " Won";
+        }
+    }
+    public void makeCountryEmpty(Player player){
+        for(List<Country> countries : gameCountries){
+            for(Country country : countries){
+                if(country.getOwner() != null){
+                    if(country.getOwner().equals(player)){
+                        country.emptyCountry();
+                    }
+                }
+            }
+        }
+    }
     public boolean getDraftDone() {
         return draftDone;
     }
@@ -952,6 +973,7 @@ public class RiskGameController extends Controller {
         }
         if (finished) {
             this.winner = currentPlayer;
+            this.gameIsPlaying = false;
             Player.addGameLog(players, Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, this.winner);
             //todo update play log
@@ -982,6 +1004,7 @@ public class RiskGameController extends Controller {
             }*/
         }
         if (!finished) {
+            finished = true;
             for (List<Country> countries : gameCountries) {
                 for (Country country : countries) {
                     if (country.getSoldiers() != 1 && country.getSoldiers() != 0) {
@@ -992,6 +1015,7 @@ public class RiskGameController extends Controller {
             }
         }
         if (finished) {
+            this.gameIsPlaying = false;
             Player.addGameLog(players, Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null);
             //todo update playlog

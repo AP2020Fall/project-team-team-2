@@ -22,9 +22,12 @@ public class Main extends Application {
         /* For Checking game GUI */
         Player newPlayer1 = new Player("new", "mew2");
         Player newPlayer2 = new Player("new2", "mew22");
+        Player newPlayer3 = new Player("new2", "mew222");
+        Player newPlayer4 = new Player("new2", "mew224");
         ArrayList<Player> players = new ArrayList<Player>();
         players.add(newPlayer1);
         players.add(newPlayer2);
+        players.add(newPlayer3);
         HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
         primitiveSettings.put("Map Number", 1);
         primitiveSettings.put("Placement", false);

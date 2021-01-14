@@ -60,7 +60,10 @@ public class Country {
     public void setNumberOfContinentCountry(int numberOfContinentCountry) {
         this.numberOfContinentCountry = numberOfContinentCountry;
     }
-
+    public void emptyCountry(){
+        Owner = null;
+        soldiers = 0;
+    }
     public int getGameCountryNumber() {
         return gameCountryNumber;
     }

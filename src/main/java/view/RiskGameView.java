@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
@@ -38,11 +39,27 @@ public class RiskGameView implements View, Initializable {
     private final List<Circle> playersCircles = new ArrayList<>();
     private final List<Label> playerLabels = new ArrayList<>();
     @FXML
+    private Rectangle loseManual;
+    @FXML
     private Circle aClub;
     @FXML
     private Circle aHeart;
     @FXML
     private Circle aDiamond;
+    @FXML
+    private Label card1Label;
+    @FXML
+    private Label card2Label;
+    @FXML
+    private Label card3Label;
+    @FXML
+    private Button match1;
+    @FXML
+    private Button match2;
+    @FXML
+    private Button match3;
+    @FXML
+    private Button matchAll;
     @FXML
     private Rectangle nextTurn;
     @FXML
@@ -170,9 +187,41 @@ public class RiskGameView implements View, Initializable {
     @FXML
     private Label label_5_5;
     @FXML
-    private void matchHandler(MouseEvent e){
-        String id = e.getPickResult().getIntersectedNode().getId();
+    private void loseManually(MouseEvent e) throws URISyntaxException {
+        riskGameController.leaveTheGame();
+        makeRightHBox();
+        colorizeCountry();
+        putCountryName();
+        updatePlayerLabels();
+        if(!riskGameController.getGameIsPlaying()){
+            System.out.println("Doneeeeeeeee");
+        }
     }
+    @FXML
+    private void match1Handler(MouseEvent e) {
+        matchCards(1);
+        setMyCardsLabels();
+        updatePlayerLabels();
+    }
+    @FXML
+    private void match2Handler(MouseEvent e) {
+        matchCards(2);
+        setMyCardsLabels();
+        updatePlayerLabels();
+    }
+    @FXML
+    private void match3Handler(MouseEvent e) {
+        matchCards(3);
+        setMyCardsLabels();
+        updatePlayerLabels();
+    }
+    @FXML
+    private void matchAllHandler(MouseEvent e) {
+        matchCards(4);
+        setMyCardsLabels();
+        updatePlayerLabels();
+    }
+
     @FXML
     private void cardsMenuHandler(MouseEvent e) throws IOException, URISyntaxException {
         Stage aboutStage = new Stage();
@@ -182,11 +231,13 @@ public class RiskGameView implements View, Initializable {
         aboutStage.setResizable(false);
         aboutStage.initModality(Modality.WINDOW_MODAL);
         aboutStage.initOwner(gameWindow);
-        insertImage(aHeart , "/images/A_heart.png");
-        insertImage(aClub , "/images/A_clubs.png");
-        insertImage(aDiamond , "/images/A_diamond.png");
+        insertImage(aHeart, "/images/A_heart.png");
+        insertImage(aClub, "/images/A_clubs.png");
+        insertImage(aDiamond, "/images/A_diamond.png");
+        setMyCardsLabels();
         aboutStage.show();
     }
+
     @FXML
     private void countryClick(MouseEvent e) {
         int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
@@ -195,7 +246,7 @@ public class RiskGameView implements View, Initializable {
         int soliders = 0;
         try {
             soliders = Integer.parseInt(inputNumber.getText());
-            if(riskGameController.getPlacementFinished()) {
+            if (riskGameController.getPlacementFinished()) {
                 switch (showWhatToDo()) {
                     case "Draft":
                         if (!inputNumber.getText().isEmpty()) {
@@ -220,7 +271,7 @@ public class RiskGameView implements View, Initializable {
                                         i, j, soliders));
                                 try {
                                     makeRightHBox();
-                                }catch (Exception error2){
+                                } catch (Exception error2) {
 
                                 }
                             }
@@ -242,15 +293,14 @@ public class RiskGameView implements View, Initializable {
                         }
                         break;
                 }
-            }else{
-                if(riskGameController.getAllPlayersAdded()){
-                    riskGameController.beginDraft(i,j,soliders);
-                }else{
-                    riskGameController.beginDraft(i , j , 1);
+            } else {
+                if (riskGameController.getAllPlayersAdded()) {
+                    riskGameController.beginDraft(i, j, soliders);
+                } else {
+                    riskGameController.beginDraft(i, j, 1);
                 }
             }
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             changeNotifText("please insert a number");
         }
         colorizeCountry();
@@ -259,14 +309,16 @@ public class RiskGameView implements View, Initializable {
         updatePlayerLabels();
 
     }
+
     @FXML
-    private void nextStatus(MouseEvent e){
+    private void nextStatus(MouseEvent e) {
         changeNotifText(next());
         setColorMode();
         colorizeCountry();
         updatePlayerLabels();
         putCountryName();
     }
+
     @FXML
     private void nextTurnHandler(MouseEvent e) {
         changeNotifText(nextTurn());
@@ -276,8 +328,9 @@ public class RiskGameView implements View, Initializable {
         updatePlayerLabels();
         putCountryName();
     }
+
     @FXML
-    private void deselectHandler(MouseEvent e){
+    private void deselectHandler(MouseEvent e) {
         deselect();
         colorizeCountry();
     }
@@ -328,7 +381,8 @@ public class RiskGameView implements View, Initializable {
 
     public String placeSoldier(int i, int j, int soldiers) {
         String toPrint = this.riskGameController.placeSoldier(i, j, soldiers);
-        return toPrint;    }
+        return toPrint;
+    }
 
     public String draft(int i, int j, int soldiers) {
         String toPrint = this.riskGameController.draft(i, j, soldiers);
@@ -367,8 +421,9 @@ public class RiskGameView implements View, Initializable {
         String toPrint = riskGameController.showMatchOptions();
     }
 
-    public void matchCards(int typical) {
+    public String matchCards(int typical) {
         String toPrint = riskGameController.matchCards(typical);
+        return toPrint;
     }
 
     public String draftAfterWin(int i, int j, int soldiers) {
@@ -450,11 +505,11 @@ public class RiskGameView implements View, Initializable {
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 allLabels[i][j].setText("");
-                if(!riskGameController.getFogStatus() || !riskGameController.getPlacementFinished()) {
+                if (!riskGameController.getFogStatus() || !riskGameController.getPlacementFinished()) {
                     allLabels[i][j].setText(countries.get(i).get(j).getName() + "\n" + countries.get(i).get(j).getSoldiers());
-                }else{
+                } else {
                     int numberCheck = toShowFog[i][j];
-                    if(numberCheck == 1 || numberCheck == 2){
+                    if (numberCheck == 1 || numberCheck == 2) {
                         allLabels[i][j].setText(countries.get(i).get(j).getName() + "\n" + countries.get(i).get(j).getSoldiers());
                     }
                 }
@@ -471,6 +526,7 @@ public class RiskGameView implements View, Initializable {
             }
         }
     }
+
     public void colorizeCountry() {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
         int row = countries.size();
@@ -482,18 +538,18 @@ public class RiskGameView implements View, Initializable {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 Player owner = countries.get(i).get(j).getOwner();
                 if (owner != null) {
-                    if(fogStatus) {
+                    if (fogStatus) {
                         int statusNumber = toShowFog[i][j];
-                        if(statusNumber == 1 || statusNumber == 2) {
+                        if (statusNumber == 1 || statusNumber == 2) {
                             String toClass = "country_player_" + owner.getPlayerNumber();
                             allPaths[i][j].getStyleClass().clear();
                             allPaths[i][j].getStyleClass().add(toClass);
-                        }else{
+                        } else {
                             String toClass = "country_fog";
                             allPaths[i][j].getStyleClass().clear();
                             allPaths[i][j].getStyleClass().add(toClass);
                         }
-                    }else{
+                    } else {
                         String toClass = "country_player_" + owner.getPlayerNumber();
                         allPaths[i][j].getStyleClass().clear();
                         allPaths[i][j].getStyleClass().add(toClass);
@@ -502,7 +558,7 @@ public class RiskGameView implements View, Initializable {
                     allPaths[i][j].getStyleClass().clear();
                     allPaths[i][j].getStyleClass().add("country_no_player");
                 }
-                if(countries.get(i).get(j).getBlizzard()){
+                if (countries.get(i).get(j).getBlizzard()) {
                     allPaths[i][j].getStyleClass().clear();
                     allPaths[i][j].getStyleClass().add("blizzard");
                 }
@@ -530,14 +586,18 @@ public class RiskGameView implements View, Initializable {
                 break;
         }
     }
-    public void resetInput(){
+
+    public void resetInput() {
         inputNumber.setText("");
     }
+
     public void setColorTurn() {
-        setDefaultClasses(playersCircles, "none_active");
-        int turnIndex = riskGameController.getCurrentPlayerIndex();
-        playersCircles.get(turnIndex).getStyleClass().clear();
-        playersCircles.get(turnIndex).getStyleClass().add("status_on");
+        if(riskGameController.getGameIsPlaying()) {
+            setDefaultClasses(playersCircles, "none_active");
+            int turnIndex = riskGameController.getCurrentPlayerIndex();
+            playersCircles.get(turnIndex).getStyleClass().clear();
+            playersCircles.get(turnIndex).getStyleClass().add("status_on");
+        }
     }
 
     public void setClassForShape(Shape shape, String className) {
@@ -551,13 +611,23 @@ public class RiskGameView implements View, Initializable {
         }
     }
 
+    public void setMyCardsLabels() {
+        int[] cardsNumbers = riskGameController.getCurrentPlayer().getCardsNumber();
+        int number1 = cardsNumbers[0];
+        int number2 = cardsNumbers[1];
+        int number3 = cardsNumbers[2];
+        card1Label.setText(String.valueOf(number1));
+        card2Label.setText(String.valueOf(number2));
+        card3Label.setText(String.valueOf(number3));
+    }
+
     public void makeRightHBox() throws URISyntaxException {
         int i = 0;
         String playerImageAddress = "/images/player_";
         int bigCircleSize = 0;
-        if(riskGameController.getPlayers().size() <=3){
+        if (riskGameController.getPlayers().size() <= 3) {
             bigCircleSize = 100;
-        }else{
+        } else {
             bigCircleSize = 60;
         }
         rightVBox.getChildren().clear();
@@ -592,13 +662,14 @@ public class RiskGameView implements View, Initializable {
         setColorTurn();
     }
 
-    public void updatePlayerLabels(){
+    public void updatePlayerLabels() {
         int i = 0;
-        for(Label label : playerLabels){
+        for (Label label : playerLabels) {
             label.setText(String.valueOf(riskGameController.getPlayers().get(i).getDraftSoldiers()));
             i++;
         }
     }
+
     public void insertImage(Shape shape, String imageAddress) throws URISyntaxException {
         Image image = new Image(String.valueOf(getClass().getResource(imageAddress).toURI()));
         shape.setFill(new ImagePattern(image));
@@ -619,18 +690,20 @@ public class RiskGameView implements View, Initializable {
             insertImage(attackCircleImage, "/images/attack.png");
             insertImage(fortifyCircleImage, "/images/fortify.png");
             insertImage(nextTurn, "/images/next.png");
-            insertImage(nextStatus , "/images/next_status.png");
-            insertImage(deselectIcon , "/images/deselect.png");
+            insertImage(nextStatus, "/images/next_status.png");
+            insertImage(deselectIcon, "/images/deselect.png");
+            insertImage(loseManual , "/images/exit.png");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
     }
-    public void addColorToSelected(){
+
+    public void addColorToSelected() {
         Integer i = riskGameController.getI();
         Integer j = riskGameController.getJ();
-        if(i != null && j != null){
-            allPaths[i-1][j-1].getStyleClass().clear();
-            allPaths[i-1][j-1].getStyleClass().add("country_selected_source");
+        if (i != null && j != null) {
+            allPaths[i - 1][j - 1].getStyleClass().clear();
+            allPaths[i - 1][j - 1].getStyleClass().add("country_selected_source");
         }
     }
 
