@@ -29,8 +29,8 @@ public class Main extends Application {
         primitiveSettings.put("Map Number", 1);
         primitiveSettings.put("Placement", false);
         primitiveSettings.put("Alliance", false);
-        primitiveSettings.put("Blizzards", false);
-        primitiveSettings.put("Fog of War", true);
+        primitiveSettings.put("Blizzards", true);
+        primitiveSettings.put("Fog of War", false);
         primitiveSettings.put("Duration", 0);
         primitiveSettings.put("PlayersNum", 2);
         primitiveSettings.put("Players", players);

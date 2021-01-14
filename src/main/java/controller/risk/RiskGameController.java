@@ -870,13 +870,19 @@ public class RiskGameController extends Controller {
 
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                if (gameCountries.get(i).get(j).getName().equals(sourceCountry.getName())) {
-                    countryNumbers[i][j] = 1;
-                } else if (gameCountries.get(i).get(j).getName().equals(destinationCountry.getName())) {
-                    countryNumbers[i][j] = 2;
-                } else if (gameCountries.get(i).get(j).getOwner().getUsername().equals(sourceCountry.getOwner().getUsername())) {
-                    countryNumbers[i][j] = 3;
-                } else {
+                if(!gameCountries.get(i).get(j).getBlizzard()) {
+                    if(gameCountries.get(i).get(j).getOwner() != null) {
+                        if (gameCountries.get(i).get(j).getName().equals(sourceCountry.getName())) {
+                            countryNumbers[i][j] = 1;
+                        } else if (gameCountries.get(i).get(j).getName().equals(destinationCountry.getName())) {
+                            countryNumbers[i][j] = 2;
+                        } else if (gameCountries.get(i).get(j).getOwner().getUsername().equals(sourceCountry.getOwner().getUsername())) {
+                            countryNumbers[i][j] = 3;
+                        } else {
+                            countryNumbers[i][j] = 0;
+                        }
+                    }
+                }else{
                     countryNumbers[i][j] = 0;
                 }
             }
@@ -921,7 +927,7 @@ public class RiskGameController extends Controller {
             }
         } else {
             if (draftDone) {
-                toPrint = "If you wanna change your turn, you should use 'turn over'";
+                toPrint = "wanna change your turn? you should use 'turn over'";
             } else {
                 toPrint = "You should draft your ";
             }
@@ -936,9 +942,11 @@ public class RiskGameController extends Controller {
         }
         for (List<Country> countries : gameCountries) {
             for (Country country : countries) {
-                if (country.getOwner() != null && !country.getOwner().equals(currentPlayer)) {
-                    finished = false;
-                    break;
+                if(country.getOwner() != null) {
+                    if (!country.getOwner().equals(currentPlayer)) {
+                        finished = false;
+                        break;
+                    }
                 }
             }
         }

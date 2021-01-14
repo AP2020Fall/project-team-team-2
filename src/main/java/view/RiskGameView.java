@@ -1,12 +1,10 @@
 package view;
 
 import controller.risk.RiskGameController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -37,10 +35,8 @@ public class RiskGameView implements View, Initializable {
     private final String mapNum;
     private final SVGPath[][] allPaths = new SVGPath[5][5];
     private final Label[][] allLabels = new Label[5][5];
-    private final List<Circle> playersCircles = new ArrayList<Circle>();
-    private final List<Circle> playerColors = new ArrayList<Circle>();
-    private final List<Label> playerLabels = new ArrayList<Label>();
-    private final String[][] defaultClasses = new String[5][5];
+    private final List<Circle> playersCircles = new ArrayList<>();
+    private final List<Label> playerLabels = new ArrayList<>();
     @FXML
     private Circle aClub;
     @FXML
