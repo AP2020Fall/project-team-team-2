@@ -23,14 +23,14 @@ public class Main extends Application {
         Player newPlayer1 = new Player("new", "mew2");
         Player newPlayer2 = new Player("new2", "mew22");
         Player newPlayer3 = new Player("new2", "mew222");
-        Player newPlayer4 = new Player("new2", "mew224");
+        Player newPlayer4 = new Player("new22", "mew224");
         ArrayList<Player> players = new ArrayList<Player>();
         players.add(newPlayer1);
         players.add(newPlayer2);
         players.add(newPlayer3);
         HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
-        primitiveSettings.put("Map Number", 1);
-        primitiveSettings.put("Placement", false);
+        primitiveSettings.put("Map Number", 2);
+        primitiveSettings.put("Placement", true);
         primitiveSettings.put("Alliance", false);
         primitiveSettings.put("Blizzards", true);
         primitiveSettings.put("Fog of War", false);
@@ -50,7 +50,7 @@ public class Main extends Application {
         if (input.nextInt() == 1)
             viewHandler.push(new WelcomeMenu());
         else {
-            viewHandler.push(new RiskGameView(primitiveSettings, 20, 1));
+            viewHandler.push(new RiskGameView(primitiveSettings, 20));
         }
 
         Main.window.show();

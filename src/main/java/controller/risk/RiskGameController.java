@@ -564,11 +564,12 @@ public class RiskGameController extends Controller {
     }
     public String leaveTheGame(){
         Player prevPlayer = currentPlayer;
+        checkWinner();
         if(gameIsPlaying) {
             mainChangeTurn();
             players.remove(prevPlayer);
             makeCountryEmpty(prevPlayer);
-            return "Player Exit The Game";
+            return "Player "+ prevPlayer.getUsername() + " Exit The Game";
         }else{
             return "Player " + prevPlayer.getUsername() + " Won";
         }

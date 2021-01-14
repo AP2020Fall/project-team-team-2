@@ -32,7 +32,7 @@ public class StartGameController implements Initializable{
     public static void main(String[] args) {}
 
     public RiskGameView startGame(int mapNum) {
-        return new RiskGameView(this.primitiveSettings , generateSoldiersNumber() , mapNum);
+        return new RiskGameView(this.primitiveSettings , generateSoldiersNumber());
     }
 
     public static java.util.Map<String, Object> getPrimitiveSettings() {
