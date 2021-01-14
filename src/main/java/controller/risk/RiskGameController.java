@@ -975,8 +975,7 @@ public class RiskGameController extends Controller {
             this.winner = currentPlayer;
             this.gameIsPlaying = false;
             Player.addGameLog(players, Objects.requireNonNull(Game.getGameByGameName("Risk"),
-                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, this.winner);
-            //todo update play log
+                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, this.winner,3,1,0);
             /*GameLogSummary gameLog = currentPlayer.getGameHistory("Risk");
             if (gameLog == null) {
                 gameLog = new GameLogSummary("Risk", generateId());
@@ -1017,8 +1016,7 @@ public class RiskGameController extends Controller {
         if (finished) {
             this.gameIsPlaying = false;
             Player.addGameLog(players, Objects.requireNonNull(Game.getGameByGameName("Risk"),
-                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null);
-            //todo update playlog
+                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,3,1,0);
             /*Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist.");
             PlayLog playLog = new PlayLog("Risk", players, null, LocalDateTime.now());

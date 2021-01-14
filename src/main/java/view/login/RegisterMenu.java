@@ -120,7 +120,6 @@ public class RegisterMenu  implements View {
         ArrayList<String> additionalInfo = getAdditionalInfo();
         if (additionalInfo != null) {
             if (controller.createAccount(username.getText(), password.getText(), additionalInfo)) {
-                //todo fix the code (add to the controller)
                 ViewHandler.getViewHandler().push(new AdminMainMenuLayout());
             } else {
                 ViewHandler.getViewHandler().push(new PlayerMainMenuLayout());
