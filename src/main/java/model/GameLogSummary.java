@@ -18,6 +18,7 @@ public class GameLogSummary {
         this.wins = 0;
         this.frequency = 0;
         this.score = 0;
+        gameLogs = new ArrayList<>();
     }
     public int getFrequency() {
         return frequency;
@@ -67,25 +68,29 @@ public class GameLogSummary {
         this.lastPlay = lastPlay;
     }
 
-    public void updateForWin(int score, LocalDateTime lastPlay)
+    public void updateForWin(int score, LocalDateTime lastPlay,GameLog gameLog)
     {
         frequency++;
         wins++;
-        score += score;
+        this.score += score;
         this.lastPlay = lastPlay;
+        gameLogs.add(gameLog);
     }
-    public void updateForLoss(int score,LocalDateTime lastPlay)
+    public void updateForLoss(int score,LocalDateTime lastPlay,GameLog gameLog)
     {
         frequency++;
-        score += score;
+        this.score += score;
         this.lastPlay= lastPlay;
+        gameLogs.add(gameLog);
     }
 
-    public void updateForDraw(int score,LocalDateTime lastPlay)
+    public void updateForDraw(int score,LocalDateTime lastPlay,GameLog gameLog)
     {
         frequency++;
-        score+= score;
+        this.score+= score;
         this.lastPlay = lastPlay;
+        gameLogs.add(gameLog);
+
     }
 
     @Override

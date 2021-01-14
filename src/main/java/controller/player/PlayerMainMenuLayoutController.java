@@ -11,6 +11,6 @@ public class PlayerMainMenuLayoutController extends Controller {
     }
     public void logout()
     {
-        //todo
+        loggedIn = null;
     }
 }

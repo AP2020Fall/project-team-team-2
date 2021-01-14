@@ -13,6 +13,6 @@ public class AdminMainMenuLayoutController extends Controller {
 
     public void logout()
     {
-        //todo
+        loggedIn = null;
     }
 }

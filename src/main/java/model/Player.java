@@ -1,7 +1,11 @@
 package model;
 
+import controller.Controller;
+import controller.player.PlayerMainMenuController;
+
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -81,8 +85,54 @@ public class Player extends Account {
         return null;
     }
 
-    public static void addGameLog(ArrayList<Player> players, Game game, GameStates gameState, Player winner) {
-        //todo
+    public static void addGameLog(ArrayList<Player> players, Game game, GameStates gameState, Player winner,
+                                  int win,int draw,int lose) {
+        if (winner != null) {
+            GameLogSummary gameLog = winner.getGameHistory("Risk");
+            if (gameLog == null) {
+                gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
+                winner.addGameLogSummary(gameLog);
+            }
+            gameLog.updateForWin(win, LocalDateTime.now(), new GameLog(winner, getEnemies(players, winner),
+                    game.getName(), GameLogStates.WON, LocalDateTime.now()));
+
+
+            for (Player player : players) {
+                if (!player.getAccountId().equals(winner.getAccountId())) {
+                    gameLog = player.getGameHistory(game.getName());
+                    if (gameLog == null) {
+                        gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
+                        player.addGameLogSummary(gameLog);
+                    }
+                    gameLog.updateForLoss(lose, LocalDateTime.now(), new GameLog(player, getEnemies(players, player),
+                            game.getName(), GameLogStates.LOST, LocalDateTime.now()));
+                }
+            }
+        } else {
+            for (Player player : players) {
+                GameLogSummary gameLog = player.getGameHistory(game.getName());
+                if (gameLog == null) {
+                    gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
+                    player.addGameLogSummary(gameLog);
+                }
+                gameLog.updateForDraw(draw, LocalDateTime.now(), new GameLog(player, getEnemies(players, player),
+                        game.getName(), GameLogStates.DRAWN, LocalDateTime.now()));
+            }
+        }
+        PlayLog playLog = new PlayLog(game.getName(), players, winner, LocalDateTime.now());
+        game.addPlayLog(playLog);
+    }
+
+    private static ArrayList<Player> getEnemies(ArrayList<Player> players, Player winner) {
+        ArrayList<Player> result = new ArrayList<>();
+        for(Player player: players)
+            if(!player.getAccountId().equals(winner.getAccountId()))
+                result.add(player);
+            return result;
+    }
+
+    private void addGameLogSummary(GameLogSummary gameLog) {
+        gameLogSummaries.add(gameLog);
     }
 
     public void removeGameLog(Game game) {

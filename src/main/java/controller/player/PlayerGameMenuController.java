@@ -1,11 +1,11 @@
 package controller.player;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import model.*;
 import model.Entry.GameLogEntry;
-import model.Game;
-import model.GameLog;
-import model.GameLogSummary;
-import model.Player;
+import model.Entry.ScoreboardEntry;
 import view.StartGameView;
 
 import java.util.ArrayList;
@@ -87,5 +87,14 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
 
     public Image getGameImage() {
         return game.getImage();
+    }
+
+    public ObservableList<ScoreboardEntry> getScoreboard() {
+        ObservableList<ScoreboardEntry> result = FXCollections.observableArrayList();
+        for(Scoreboard.Entry entry: game.getScoreboard().getScoreboard())
+        {
+            result.add(new ScoreboardEntry(entry));
+        }
+        return result;
     }
 }

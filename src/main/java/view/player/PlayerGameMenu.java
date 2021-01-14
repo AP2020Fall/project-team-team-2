@@ -8,13 +8,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
+import model.Entry.GameEntry;
 import model.Entry.GameLogEntry;
 import model.Entry.ScoreboardEntry;
 import model.Game;
 import model.GameLogStates;
+import model.Scoreboard;
 import view.Tab;
 
 import java.io.IOException;
@@ -123,6 +126,15 @@ public class PlayerGameMenu implements Tab, Initializable {
     }
 
     private void initializeScoreboardTable() {
-        //todo
+        TableColumn<ScoreboardEntry, String> scoreboardNameColumn = new TableColumn<>("Player");
+        scoreboardNameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
+        TableColumn<ScoreboardEntry, Integer> scoreboardWinsColumn = new TableColumn<>("Wins");
+        scoreboardWinsColumn.setCellValueFactory(new PropertyValueFactory<>("wins"));
+        TableColumn<ScoreboardEntry, Integer> scoreboardFrequencyColumn = new TableColumn<>("Frequency");
+        scoreboardFrequencyColumn.setCellValueFactory(new PropertyValueFactory<>("numPlayed"));
+
+        scoreboard.setPlaceholder(new Label("No one has played the game."));
+        scoreboard.getColumns().addAll(scoreboardNameColumn,scoreboardFrequencyColumn,scoreboardWinsColumn);
+        scoreboard.getItems().addAll(controller.getScoreboard());
     }
 }

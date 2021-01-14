@@ -1,0 +1,32 @@
+{
+  "money": 500.0,
+  "score": 0,
+  "loses": 0,
+  "wins": 0,
+  "draws": 0,
+  "gameLogSummaries": [],
+  "friends": [],
+  "receivedFriendRequests": [],
+  "sentFriendRequests": [],
+  "messages": [],
+  "favouriteGames": [],
+  "suggestions": [],
+  "alliance": [],
+  "cards": [],
+  "newSoldiers": 0,
+  "playerNumber": 0,
+  "draftSoldiers": 0,
+  "firstName": "player4",
+  "lastName": "player4",
+  "username": "player4",
+  "accountId": "BDEE925F",
+  "password": "player4pass",
+  "email": "eee@ee.com",
+  "phoneNumber": "09105734731",
+  "registerDay": {
+    "year": 2021,
+    "month": 1,
+    "day": 14
+  },
+  "isRobot": false
+}
