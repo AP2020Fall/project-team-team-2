@@ -19,6 +19,7 @@ import model.Game;
 import model.GameLogStates;
 import model.Scoreboard;
 import view.Tab;
+import view.TabHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -78,8 +79,7 @@ public class PlayerGameMenu implements Tab, Initializable {
 
     @FXML
     private void runGame() {
-        //todo
-        System.out.println("run game must be implemented");
+        TabHandler.getTabHandler().push(new PlayerRunGameView(controller.getGame(),null));
     }
 
 

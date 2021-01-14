@@ -123,6 +123,7 @@ public class AdminGamesMenu implements Tab, Initializable {
         gameList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         // gameList.setEditable(true);
+        gameList.setPlaceholder(new Label("No game has been added."));
         gameList.getColumns().addAll(gameAvatarColumn, gameNameColumn, gameDetailColumn);
         gameList.getItems().addAll(controller.getGames());
     }

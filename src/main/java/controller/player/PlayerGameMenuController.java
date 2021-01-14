@@ -20,11 +20,6 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         this.player = Objects.requireNonNull(loggedIn,"Player passed to GameMenuController is null.");
     }
 
-    public String showScoreBoard() {
-        //returns the string of Scoreboard
-        return game.getScoreboard().toString();
-    }
-
     public String getDetails() {
         //returns game's details.
         return game.getDetails();
@@ -71,15 +66,6 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         player.removeFavouriteGame(game);
     }
 
-    public void runGame(ArrayList<String> usernames) {
-        ArrayList<Player> players = new ArrayList<>();
-        for(String username: usernames)
-        {
-            players.add(Objects.requireNonNull(Player.getPlayerByUsername(username),
-                    "Username passed to runGame doesn't exist."));
-        }
-        new StartGameView(players);
-    }
 
     public boolean isFavorite() {
         return player.getFavouriteGames().contains(game);
@@ -96,5 +82,9 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
             result.add(new ScoreboardEntry(entry));
         }
         return result;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

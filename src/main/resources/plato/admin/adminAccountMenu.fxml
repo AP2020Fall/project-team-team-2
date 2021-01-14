@@ -10,12 +10,12 @@
 
 <Pane prefHeight="625.0" prefWidth="1020.0" styleClass="background" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="50.0" layoutY="360.0" text="Date:">
+      <Label layoutX="50.0" layoutY="380.0" text="Date:">
          <font>
             <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="date" layoutX="146.0" layoutY="360.0" prefHeight="22.0" prefWidth="109.0" text="Date">
+      <Label fx:id="date" layoutX="146.0" layoutY="380.0" prefHeight="22.0" prefWidth="109.0" text="Date">
          <font>
             <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
@@ -40,7 +40,7 @@
             <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label layoutX="50.0" layoutY="320.0" text="Phone">
+      <Label layoutX="50.0" layoutY="340.0" text="Phone">
          <font>
             <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
@@ -60,12 +60,12 @@
             <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="email" layoutX="118.0" layoutY="280.0" prefHeight="22.0" prefWidth="139.0" text="Email@email.com" wrapText="true">
+      <Label fx:id="email" alignment="TOP_LEFT" layoutX="118.0" layoutY="280.0" prefHeight="48.0" prefWidth="139.0" text="email@email.com" wrapText="true">
          <font>
             <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="phoneNumber" layoutX="118.0" layoutY="320.0" prefHeight="22.0" prefWidth="139.0" text="Phone Number">
+      <Label fx:id="phoneNumber" layoutX="118.0" layoutY="340.0" prefHeight="22.0" prefWidth="139.0" text="Phone Number">
          <font>
             <Font name="Geometr415 Blk BT Black" size="17.0" />
          </font>

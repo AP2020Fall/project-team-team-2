@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
@@ -81,7 +83,8 @@ public class PlayerMainMenuLayout implements View, Initializable {
         }
     }
     @FXML
-    void updateContextMenu() {
+    void updateContextMenu(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER) return;
         String searchQuery = searchUsername.getText();
         searchContextMenu.getItems().clear();
         searchContextMenu.getItems().addAll(controller.getSearchQuery(searchQuery));

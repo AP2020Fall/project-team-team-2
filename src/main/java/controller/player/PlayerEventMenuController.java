@@ -2,6 +2,7 @@ package controller.player;
 
 import javafx.scene.image.Image;
 import model.Event;
+import model.Game;
 
 import java.util.Objects;
 
@@ -28,10 +29,19 @@ public class PlayerEventMenuController extends PlayerMainMenuLayoutController {
         return String.valueOf( event.getScore());
     }
 
-    public void join() {
-    }
-
     public Image getEventImage() {
         return event.getImage();
+    }
+
+    public String getComment() {
+        return event.getComment();
+    }
+
+    public Game getGame() {
+        return Game.getGameByGameName(event.getGameName());
+    }
+    public Event getEvent()
+    {
+        return event;
     }
 }
