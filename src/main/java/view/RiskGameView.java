@@ -36,7 +36,7 @@ public class RiskGameView implements View, Initializable {
     private final String mapNum;
     private final SVGPath[][] allPaths = new SVGPath[5][5];
     private final Label[][] allLabels = new Label[5][5];
-    private final List<Circle> playersCircles = new ArrayList<>();
+    private final Map<Integer,Circle> playersCircles = new HashMap<>();
     private final List<Label> playerLabels = new ArrayList<>();
     @FXML
     private Rectangle loseManual;
@@ -189,7 +189,7 @@ public class RiskGameView implements View, Initializable {
 
     @FXML
     private void loseManually(MouseEvent e) throws URISyntaxException {
-        riskGameController.leaveTheGame();
+        changeNotifText(riskGameController.leaveTheGame());
         makeRightHBox();
         colorizeCountry();
         putCountryName();
@@ -598,10 +598,14 @@ public class RiskGameView implements View, Initializable {
 
     public void setColorTurn() {
         if (riskGameController.getGameIsPlaying()) {
-            setDefaultClasses(playersCircles, "none_active");
+            for (Map.Entry<Integer, Circle> entry : playersCircles.entrySet()) {
+                entry.getValue().getStyleClass().clear();
+                entry.getValue().getStyleClass().add("none_active");
+            }
+
             int turnIndex = riskGameController.getCurrentPlayerIndex();
-            playersCircles.get(turnIndex - 1).getStyleClass().clear();
-            playersCircles.get(turnIndex - 1).getStyleClass().add("status_on");
+            playersCircles.get(turnIndex).getStyleClass().clear();
+            playersCircles.get(turnIndex).getStyleClass().add("status_on");
         }
     }
 
@@ -642,7 +646,7 @@ public class RiskGameView implements View, Initializable {
             Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + player.getPlayerNumber() + ".png").toURI()));
             Circle littleCircle = new Circle(10);
             littleCircle.getStyleClass().add("none_active");
-            playersCircles.add(littleCircle);
+            playersCircles.put(player.getPlayerNumber(),littleCircle);
 
 
             Label playerLabel = new Label(String.valueOf(player.getDraftSoldiers()));
