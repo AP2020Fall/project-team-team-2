@@ -51,6 +51,7 @@ public class PlayerGamesMenu implements Tab, Initializable {
         TableColumn<GameEntry, String> gameNameColumn = new TableColumn<>("Name");
         gameNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+        gamesListGamesMenu.setPlaceholder(new Label("No game has been added."));
         gamesListGamesMenu.getColumns().addAll(gameAvatarColumn,gameNameColumn);
         gamesListGamesMenu.getItems().addAll(controller.getGames());
     }
@@ -69,6 +70,7 @@ public class PlayerGamesMenu implements Tab, Initializable {
             eventRoot.getChildren().add(new TreeItem<>(eventEntry));
         eventList.setRoot(eventRoot);
         eventList.setShowRoot(false);
+        eventList.setPlaceholder(new Label("No event has been created."));
         eventList.getColumns().addAll(eventImage, eventName,eventStart,eventEnd);
     }
     @FXML

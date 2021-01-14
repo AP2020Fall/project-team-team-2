@@ -17,7 +17,7 @@
          <font>
             <Font name="Geometr415 Blk BT Black" size="24.0" />
          </font></Label>
-      <Label layoutX="240.0" layoutY="180.0" text="StartDate:">
+      <Label layoutX="240.0" layoutY="180.0" text="Start Date:">
          <font>
             <Font name="Geometr415 Blk BT Black" size="24.0" />
          </font></Label>
@@ -25,7 +25,7 @@
          <font>
             <Font name="Geometr415 Blk BT Black" size="24.0" />
          </font></Label>
-      <Label layoutX="240.0" layoutY="240.0" text="EndDate:">
+      <Label layoutX="240.0" layoutY="240.0" text="End Date:">
          <font>
             <Font name="Geometr415 Blk BT Black" size="24.0" />
          </font></Label>
@@ -47,8 +47,18 @@
          </font></Button>
       <ImageView fx:id="eventImage" fitHeight="150.0" fitWidth="150.0" layoutX="52.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/icon.png" />
+            <Image url="@../../images/tournament.png" />
          </image>
       </ImageView>
+      <Label layoutX="240.0" layoutY="300.0" text="Comment:">
+         <font>
+            <Font name="Geometr415 Blk BT Black" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="comment" alignment="TOP_LEFT" layoutX="420.0" layoutY="300.0" prefHeight="150.0" prefWidth="250.0" text="Comment:" wrapText="true">
+         <font>
+            <Font name="Geometr415 Blk BT Black" size="18.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
@@ -82,7 +84,8 @@ public class AdminMainMenuLayout implements View, Initializable {
         }
     }
     @FXML
-    void updateContextMenu() {
+    void updateContextMenu(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER) return;
         String searchQuery = searchUsername.getText();
         searchContextMenu.getItems().clear();
         searchContextMenu.getItems().addAll(controller.getSearchQuery(searchQuery));
