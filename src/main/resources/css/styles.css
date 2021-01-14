@@ -271,4 +271,7 @@
     -fx-font-size: 25px;
     -fx-font-style: italic bold;
 }
+.blizzard{
+    -fx-fill: white;
+}
 /* Game Part */

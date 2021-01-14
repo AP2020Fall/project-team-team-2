@@ -187,7 +187,7 @@ public class RiskGameView implements View, Initializable {
         aboutStage.initModality(Modality.WINDOW_MODAL);
         aboutStage.initOwner(gameWindow);
         insertImage(aHeart , "/images/A_heart.png");
-        insertImage(aClub , "/images/A_club.png");
+        insertImage(aClub , "/images/A_clubs.png");
         insertImage(aDiamond , "/images/A_diamond.png");
         aboutStage.show();
     }
@@ -269,6 +269,7 @@ public class RiskGameView implements View, Initializable {
         setColorMode();
         colorizeCountry();
         updatePlayerLabels();
+        putCountryName();
     }
     @FXML
     private void nextTurnHandler(MouseEvent e) {
@@ -277,6 +278,7 @@ public class RiskGameView implements View, Initializable {
         setColorTurn();
         setColorMode();
         updatePlayerLabels();
+        putCountryName();
     }
     @FXML
     private void deselectHandler(MouseEvent e){
@@ -503,6 +505,10 @@ public class RiskGameView implements View, Initializable {
                 } else {
                     allPaths[i][j].getStyleClass().clear();
                     allPaths[i][j].getStyleClass().add("country_no_player");
+                }
+                if(countries.get(i).get(j).getBlizzard()){
+                    allPaths[i][j].getStyleClass().clear();
+                    allPaths[i][j].getStyleClass().add("blizzard");
                 }
             }
         }

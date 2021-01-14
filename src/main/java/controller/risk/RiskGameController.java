@@ -112,6 +112,7 @@ public class RiskGameController extends Controller {
                 gameCountries.get(i).add(country);
             }
         }
+        setBlizzard();
     }
 
     public List<List<Country>> getGameCountries() {
@@ -154,7 +155,7 @@ public class RiskGameController extends Controller {
             Country destination = getCountryByDetails(i, j);
             if (soldiers > currentPlayer.getDraftSoldiers() || soldiers < 1) {
                 toPrint = "Soldiers are not enough or invalid";
-            } else if (destination.getName().equals("")) {
+            } else if (destination.getName().equals("") || destination.getBlizzard()) {
                 toPrint = "Destination country is not valid";
             } else {
                 if (!destination.getOwner().equals(getCurrentPlayer())) {
@@ -178,7 +179,7 @@ public class RiskGameController extends Controller {
             Country destination = getCountryByDetails(i, j);
             if (soldiers > currentPlayer.getDraftSoldiers() || soldiers < 1) {
                 toPrint = "Soldiers are not enough or invalid";
-            } else if (destination.getName().equals("")) {
+            } else if (destination.getName().equals("") || destination.getBlizzard()) {
                 toPrint = "Destination country is not valid";
             } else {
                 if (destination.getOwner() != null) {
@@ -253,7 +254,7 @@ public class RiskGameController extends Controller {
                 toPrint = "Source country is not valid";
                 errorFound = true;
             }
-            if (sourceCountryValid && !destinationCountryValid && !errorFound) {
+            if (sourceCountryValid && (!destinationCountryValid || destination.getBlizzard()) && !errorFound) {
                 toPrint = "Destination country is not valid";
                 errorFound = true;
             }
@@ -345,7 +346,7 @@ public class RiskGameController extends Controller {
             }
             if (!sourceCountryValid) {
                 toPrint = "Source country is not valid";
-            } else if (sourceCountryValid && !destinationCountryValid) {
+            } else if (sourceCountryValid && (!destinationCountryValid || destination.getBlizzard())) {
                 toPrint = "Destination country is not valid";
             } else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers() - 1) || soldiers < 1)) {
                 toPrint = "Soldiers are not enough or not valid";
@@ -526,7 +527,7 @@ public class RiskGameController extends Controller {
         }
         Country toCheckCountry = this.getCountryByDetails(i, j);
         if (!this.getDraftDone()) {
-            if (toCheckCountry.getName().equals("")) {
+            if (toCheckCountry.getName().equals("") || toCheckCountry.getBlizzard()) {
                 toPrint = "Chosen country is invalid. Please try again";
             } else {
                 if (toCheckCountry.getOwner() == null || toCheckCountry.getOwner().equals(currentPlayer)) {
@@ -645,7 +646,7 @@ public class RiskGameController extends Controller {
             int randomRow = (int) (Math.random() * (rows - 0 + 1) + 0);
             int randomColumn = (int) (Math.random() * (columns + 1));
             Country getRandomCountry = gameCountries.get(randomRow).get(randomColumn);
-            if (getRandomCountry.getOwner() == null || getRandomCountry.getOwner().equals(currentPlayer)) {
+            if ((getRandomCountry.getOwner() == null || getRandomCountry.getOwner().equals(currentPlayer)) && !getRandomCountry.getBlizzard()) {
                 getRandomCountry.setOwner(currentPlayer);
                 getRandomCountry.addSoldiers(1);
                 currentPlayer.addDraftSoldier(-1);
@@ -710,11 +711,11 @@ public class RiskGameController extends Controller {
         countryNumbers = setFogOfWarMap(currentPlayer);
     */
     public void setBlizzard() {
-
-        int rndRow = new Random().nextInt(gameCountries.size());
-        int rndCol = new Random().nextInt(gameCountries.get(0).size());
-        gameCountries.get(rndRow).get(rndCol).enableBlizzard();
-
+        if((boolean) primitiveSettings.get("Blizzards")) {
+            int rndRow = new Random().nextInt(gameCountries.size());
+            int rndCol = new Random().nextInt(gameCountries.get(0).size());
+            gameCountries.get(rndRow).get(rndCol).enableBlizzard();
+        }
     }
 
     public boolean isPath(int CountryNumbers[][], int n, int m) {

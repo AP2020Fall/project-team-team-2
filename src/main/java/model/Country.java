@@ -49,8 +49,10 @@ public class Country {
 
     public void enableBlizzard(){ blizzard = true; }
 
-    public void desableBlizzard(){ blizzard = false; }
-
+    public void disableBlizzard(){ blizzard = false; }
+    public boolean getBlizzard(){
+        return blizzard;
+    }
     public int getNumberOfContinentCountry() {
         return numberOfContinentCountry;
     }
