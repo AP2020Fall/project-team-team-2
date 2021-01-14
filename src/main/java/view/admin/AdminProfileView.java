@@ -18,6 +18,7 @@ import view.Tab;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -84,6 +85,8 @@ public class AdminProfileView implements Tab, Initializable {
 
     private void initializedTableGameLog()
     {
+        TableColumn<GameLogSummaryEntry, ImageView> gameImageColumn = new TableColumn<>("Avatar");
+        gameImageColumn.setCellValueFactory(new PropertyValueFactory<>("avatar"));
         TableColumn<GameLogSummaryEntry, String> gameNameColumn = new TableColumn<>("Game");
         gameNameColumn.setCellValueFactory(new PropertyValueFactory<>("gameName"));
         TableColumn<GameLogSummaryEntry, Integer> frequencyColumn = new TableColumn<>("Frequency");
@@ -92,10 +95,10 @@ public class AdminProfileView implements Tab, Initializable {
         winsColumn.setCellValueFactory(new PropertyValueFactory<>("wins"));
         TableColumn<GameLogSummaryEntry, Integer> scoreColumn = new TableColumn<>("Score");
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
-        TableColumn<GameLogSummaryEntry, LocalDateTime> lastPlayColumn = new TableColumn<>("Last Play");
+        TableColumn<GameLogSummaryEntry, LocalDate> lastPlayColumn = new TableColumn<>("Last Play");
         lastPlayColumn.setCellValueFactory(new PropertyValueFactory<>("lastPlay"));
         gameHistoryList.setPlaceholder(new Label("Player has not played a game."));
-        gameHistoryList.getColumns().addAll(gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
+        gameHistoryList.getColumns().addAll(gameImageColumn,gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
         gameHistoryList.getItems().addAll(controller.getGameHistory());
     }
 
