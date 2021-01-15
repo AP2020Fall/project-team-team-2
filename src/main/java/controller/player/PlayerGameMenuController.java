@@ -45,7 +45,7 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         if(gameLogSummary == null)
             return "hasn't been played";
         else
-            return String.valueOf(gameLogSummary.getFrequency());
+            return String.valueOf(gameLogSummary.getWins());
     }
 
     public String getPlayedFrequency() {
@@ -55,7 +55,7 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         if(gameLogSummary == null)
             return "hasn't been played";
         else
-        return String.valueOf(gameLogSummary.getWins());
+        return String.valueOf(gameLogSummary.getFrequency());
     }
 
     public void addToFavorites() {

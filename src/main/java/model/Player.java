@@ -56,7 +56,10 @@ public class Player extends Account {
     }
 
     public int getScore() {
-        return score;
+        int result = 0;
+       for(GameLogSummary gameLogSummary: gameLogSummaries)
+           result += gameLogSummary.getScore();
+       return result;
     }
 
     public void setMoney(double money) {

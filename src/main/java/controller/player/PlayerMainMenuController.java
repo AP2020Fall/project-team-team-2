@@ -120,8 +120,7 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
 
     public String showPoints() {
         //returns the score of player.
-        return String.valueOf( Objects.requireNonNull(player,
-                "Logged in account in Controller.showPoints is null").getScore());
+        return String.valueOf( player.getScore());
     }
 
     public void setUsername(String username) {
