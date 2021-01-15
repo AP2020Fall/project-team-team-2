@@ -19,7 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        /* For Checking game GUI */
+        /* For Checking And Test game GUI */
         Player newPlayer1 = new Player("new", "mew2");
         Player newPlayer2 = new Player("new2", "mew22");
         Player newPlayer3 = new Player("new2", "mew222");
@@ -37,7 +37,7 @@ public class Main extends Application {
         primitiveSettings.put("Duration", 0);
         primitiveSettings.put("PlayersNum", 2);
         primitiveSettings.put("Players", players);
-        /* For Checking game GUI */
+        /* For Checking and Test game GUI */
 
         window = primaryStage;
         window.setOnCloseRequest(event -> Platform.exit());
