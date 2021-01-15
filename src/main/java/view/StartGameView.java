@@ -95,6 +95,7 @@ public class StartGameView implements View, Initializable {
         } else*/ {
             int mapNum = (int) startGameController.getPrimitiveSettings().get("Map Number");
             if(mapNum <= 10 && mapNum >= 1) {
+                System.out.println("run");
                 ViewHandler.getViewHandler().push(this.startGameController.startGame());
             }
         }

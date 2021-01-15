@@ -1,0 +1,32 @@
+{
+  "money": 123.0,
+  "score": 0,
+  "loses": 0,
+  "wins": 0,
+  "draws": 0,
+  "gameLogSummaries": [],
+  "friends": [],
+  "receivedFriendRequests": [],
+  "sentFriendRequests": [],
+  "messages": [],
+  "favouriteGames": [],
+  "suggestions": [],
+  "alliance": [],
+  "cards": [],
+  "newSoldiers": 0,
+  "playerNumber": 0,
+  "draftSoldiers": 0,
+  "firstName": "Amirhossein",
+  "lastName": "sklga",
+  "username": "",
+  "accountId": "7EE2E3AA",
+  "password": "",
+  "email": "msjk@amsjk.com",
+  "phoneNumber": "09012706180",
+  "registerDay": {
+    "year": 2021,
+    "month": 1,
+    "day": 15
+  },
+  "isRobot": false
+}

@@ -25,7 +25,6 @@ public class Main extends Application {
         Runtime.getRuntime().addShutdownHook(new Thread(Main::saveFiles));
         /* For Checking And Test game GUI */
         Player newPlayer1 = Player.getPlayerByUsername("player1");//new Player("new", "mew2");
-        if(newPlayer1 == null) System.out.println("fuck");
 
         Player newPlayer2 = Player.getPlayerByUsername("player2");//new Player("new2", "mew22");
         Player newPlayer3 = new Player("new2", "mew222");
@@ -36,15 +35,15 @@ public class Main extends Application {
 //        players.add(newPlayer3);
 //        players.add(newPlayer4);
 
-        HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
-        primitiveSettings.put("Map Number", 1);
-        primitiveSettings.put("Placement", false);
-        primitiveSettings.put("Alliance", false);
-        primitiveSettings.put("Blizzards", false);
-        primitiveSettings.put("Fog of War", false);
-        primitiveSettings.put("Duration", 60);
-        primitiveSettings.put("PlayersNum", 2);
-        primitiveSettings.put("Players", players);
+//        HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
+//        primitiveSettings.put("Map Number", 1);
+//        primitiveSettings.put("Placement", false);
+//        primitiveSettings.put("Alliance", false);
+//        primitiveSettings.put("Blizzards", false);
+//        primitiveSettings.put("Fog of War", false);
+//        primitiveSettings.put("Duration", 60);
+//        primitiveSettings.put("PlayersNum", 2);
+//        primitiveSettings.put("Players", players);
         /* For Checking and Test game GUI */
 
 
@@ -55,7 +54,7 @@ public class Main extends Application {
         if (input.nextInt() == 1)
             viewHandler.push(new WelcomeMenu());
         else {
-            viewHandler.push(new RiskGameView(primitiveSettings, 20));
+            viewHandler.push(new StartGameView(players));
         }
 
         Main.window.show();
