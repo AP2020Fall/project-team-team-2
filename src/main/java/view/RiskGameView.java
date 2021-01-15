@@ -251,7 +251,7 @@ public class RiskGameView implements View, Initializable {
         aboutStage.show();
     }
     @FXML
-    private void requests(MouseEvent e){
+    private void backToAbout(MouseEvent e){
 
     }
     @FXML
