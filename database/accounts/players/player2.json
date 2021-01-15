@@ -1,15 +1,15 @@
 {
-  "money": 123.0,
+  "money": 400.0,
   "score": 0,
   "loses": 0,
   "wins": 0,
   "draws": 0,
   "gameLogSummaries": [
     {
-      "frequency": 6,
-      "wins": 3,
-      "gameLogSummaryId": "73A69E06",
-      "score": 12,
+      "frequency": 2,
+      "wins": 2,
+      "gameLogSummaryId": "48D4FBF8",
+      "score": 6,
       "lastPlay": {
         "date": {
           "year": 2021,
@@ -17,17 +17,19 @@
           "day": 15
         },
         "time": {
-          "hour": 18,
-          "minute": 47,
-          "second": 24,
-          "nano": 141543700
+          "hour": 19,
+          "minute": 17,
+          "second": 58,
+          "nano": 526000000
         }
       },
       "gameName": "Risk",
       "gameLogs": [
         {
           "playerUsername": "player2",
-          "enemyUsernames": [],
+          "enemyUsernames": [
+            "player1"
+          ],
           "gameName": "Risk",
           "result": "WON",
           "timeFinished": {
@@ -37,35 +39,18 @@
               "day": 15
             },
             "time": {
-              "hour": 18,
-              "minute": 47,
-              "second": 22,
-              "nano": 934692700
+              "hour": 19,
+              "minute": 17,
+              "second": 14,
+              "nano": 541000000
             }
           }
         },
         {
           "playerUsername": "player2",
-          "enemyUsernames": [],
-          "gameName": "Risk",
-          "result": "DRAWN",
-          "timeFinished": {
-            "date": {
-              "year": 2021,
-              "month": 1,
-              "day": 15
-            },
-            "time": {
-              "hour": 18,
-              "minute": 47,
-              "second": 22,
-              "nano": 935689500
-            }
-          }
-        },
-        {
-          "playerUsername": "player2",
-          "enemyUsernames": [],
+          "enemyUsernames": [
+            "player1"
+          ],
           "gameName": "Risk",
           "result": "WON",
           "timeFinished": {
@@ -75,167 +60,20 @@
               "day": 15
             },
             "time": {
-              "hour": 18,
-              "minute": 47,
-              "second": 24,
-              "nano": 130573900
-            }
-          }
-        },
-        {
-          "playerUsername": "player2",
-          "enemyUsernames": [],
-          "gameName": "Risk",
-          "result": "DRAWN",
-          "timeFinished": {
-            "date": {
-              "year": 2021,
-              "month": 1,
-              "day": 15
-            },
-            "time": {
-              "hour": 18,
-              "minute": 47,
-              "second": 24,
-              "nano": 130573900
-            }
-          }
-        },
-        {
-          "playerUsername": "player2",
-          "enemyUsernames": [],
-          "gameName": "Risk",
-          "result": "WON",
-          "timeFinished": {
-            "date": {
-              "year": 2021,
-              "month": 1,
-              "day": 15
-            },
-            "time": {
-              "hour": 18,
-              "minute": 47,
-              "second": 24,
-              "nano": 141543700
-            }
-          }
-        },
-        {
-          "playerUsername": "player2",
-          "enemyUsernames": [],
-          "gameName": "Risk",
-          "result": "DRAWN",
-          "timeFinished": {
-            "date": {
-              "year": 2021,
-              "month": 1,
-              "day": 15
-            },
-            "time": {
-              "hour": 18,
-              "minute": 47,
-              "second": 24,
-              "nano": 141543700
+              "hour": 19,
+              "minute": 17,
+              "second": 58,
+              "nano": 526000000
             }
           }
         }
       ]
     }
   ],
-  "friends": [
-    "player3"
-  ],
+  "friends": [],
   "receivedFriendRequests": [],
-  "sentFriendRequests": [
-    "039B3BFB"
-  ],
-  "messages": [
-    {
-      "message": "Please read this message, several game have been added",
-      "messageId": "8F83E95A",
-      "time": {
-        "date": {
-          "year": 2021,
-          "month": 1,
-          "day": 13
-        },
-        "time": {
-          "hour": 18,
-          "minute": 53,
-          "second": 55,
-          "nano": 901000000
-        }
-      }
-    },
-    {
-      "message": "hello players\n",
-      "messageId": "C4379806",
-      "time": {
-        "date": {
-          "year": 2021,
-          "month": 1,
-          "day": 13
-        },
-        "time": {
-          "hour": 20,
-          "minute": 7,
-          "second": 35,
-          "nano": 345000000
-        }
-      }
-    },
-    {
-      "message": "checker",
-      "messageId": "6ED2C8F7",
-      "time": {
-        "date": {
-          "year": 2021,
-          "month": 1,
-          "day": 13
-        },
-        "time": {
-          "hour": 20,
-          "minute": 43,
-          "second": 23,
-          "nano": 924000000
-        }
-      }
-    },
-    {
-      "message": "future is nice",
-      "messageId": "F9B98186",
-      "time": {
-        "date": {
-          "year": 2021,
-          "month": 1,
-          "day": 15
-        },
-        "time": {
-          "hour": 20,
-          "minute": 44,
-          "second": 1,
-          "nano": 661000000
-        }
-      }
-    },
-    {
-      "message": "hello boys",
-      "messageId": "F8A73B8B",
-      "time": {
-        "date": {
-          "year": 2021,
-          "month": 1,
-          "day": 14
-        },
-        "time": {
-          "hour": 13,
-          "minute": 49,
-          "second": 3,
-          "nano": 648000000
-        }
-      }
-    }
-  ],
+  "sentFriendRequests": [],
+  "messages": [],
   "favouriteGames": [],
   "suggestions": [],
   "alliance": [],
@@ -243,17 +81,19 @@
   "newSoldiers": 0,
   "playerNumber": 2,
   "draftSoldiers": 3,
+  "requests": [],
+  "gameFriends": [],
   "firstName": "player2",
   "lastName": "player2",
   "username": "player2",
-  "accountId": "12A8AF93",
+  "accountId": "31DE9729",
   "password": "player2pass",
-  "email": "as@gma.com",
-  "phoneNumber": "09121234567",
+  "email": "eee@gmi.com",
+  "phoneNumber": "09105734731",
   "registerDay": {
     "year": 2021,
     "month": 1,
-    "day": 13
+    "day": 15
   },
   "isRobot": false
 }

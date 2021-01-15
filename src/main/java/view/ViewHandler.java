@@ -75,7 +75,7 @@ public class ViewHandler {
     }
     public void exitGame()
     {
-        while(!(viewStack.peek() instanceof RiskGameView || viewStack.peek() instanceof  StartGameView))
+        while((viewStack.peek() instanceof RiskGameView || viewStack.peek() instanceof  StartGameView))
         {
             viewStack.pop();
             if(viewStack.isEmpty()) break;
