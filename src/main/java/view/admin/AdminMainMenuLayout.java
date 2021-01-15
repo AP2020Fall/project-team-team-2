@@ -20,6 +20,7 @@ import model.Player;
 import view.AlertMaker;
 import view.TabHandler;
 import view.View;
+import view.player.PlatoMessageView;
 import view.player.PlayerProfileView;
 
 import java.io.IOException;
@@ -76,7 +77,8 @@ public class AdminMainMenuLayout implements View, Initializable {
         searchContextMenu.show(searchUsername, Side.BOTTOM,0,0);
 
     }
-    @FXML private  void platoMessage(ActionEvent actionEvent) {
+    @FXML private  void platoMessage() throws IOException {
+        new AdminMessageView().openWindow();
     }
 
     @FXML

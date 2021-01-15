@@ -33,6 +33,13 @@ public abstract class Account {
     private boolean isRobot = false;
     private transient Image avatar;
 
+    public static Admin getAdmin() {
+        for(Account account: allAccounts)
+            if(account instanceof Admin)
+                return (Admin)account;
+            return null;
+    }
+
     public Image getImage() {
         return avatar;
     }
