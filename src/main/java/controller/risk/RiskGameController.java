@@ -41,6 +41,10 @@ public class RiskGameController extends Controller {
     private Player winner;
     private boolean soldierPlacedAfterWin = true;
     private Event event;
+
+    //todo delete
+    private ArrayList<Player> originalPlayers;
+
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -49,6 +53,7 @@ public class RiskGameController extends Controller {
         this.primitiveSettings = primitiveSettings;
         this.event = event;
         this.players = (ArrayList<Player>) primitiveSettings.get("Players");
+        originalPlayers = new ArrayList<>(this.players);
         this.fogIsSet = (boolean) primitiveSettings.get("Fog of War");
         this.startSoldiers = soldiers;
         this.duration = (int) primitiveSettings.get("Duration");
@@ -1014,11 +1019,13 @@ public class RiskGameController extends Controller {
                 }
             }
         }
+        System.out.println("hello");
         if (finished) {
             this.winner = currentPlayer;
             this.gameIsPlaying = false;
-            Player.addGameLog(players, Objects.requireNonNull(Game.getGameByGameName("Risk"),
+            Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, this.winner,3,1,0);
+            return true;
             /*GameLogSummary gameLog = currentPlayer.getGameHistory("Risk");
             if (gameLog == null) {
                 gameLog = new GameLogSummary("Risk", generateId());
@@ -1045,6 +1052,7 @@ public class RiskGameController extends Controller {
                 return finished;
             }*/
         }
+        System.out.println("why");
         if (!finished) {
             finished = true;
             for (List<Country> countries : gameCountries) {
@@ -1058,7 +1066,7 @@ public class RiskGameController extends Controller {
         }
         if (finished) {
             this.gameIsPlaying = false;
-            Player.addGameLog(players, Objects.requireNonNull(Game.getGameByGameName("Risk"),
+            Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,3,1,0);
             /*Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist.");

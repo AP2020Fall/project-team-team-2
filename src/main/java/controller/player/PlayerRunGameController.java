@@ -73,7 +73,7 @@ public class PlayerRunGameController extends PlayerMainMenuLayoutController{
             players.add(Objects.requireNonNull(Player.getPlayerByUsername(username),
                     "Username passed to runGame doesn't exist."));
         }
-        ViewHandler.getViewHandler().push(new StartGameView(players));
+        ViewHandler.getViewHandler().push(new StartGameView(players,event));
         System.out.println("Game Finished");
     }
 }
