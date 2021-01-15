@@ -67,37 +67,15 @@ public class StartGameView implements View, Initializable {
         changePlayersNumber(playersNum);
     }
 
-    @FXML
-    public void mapNum() {
-        String mapsNum = mapNum.getText();
-        changeMapNumber(mapsNum);
-    }
 
-    private void changeMapNumber(String mapsNum) {
-        int mapNumber = Integer.parseInt(mapsNum);
-        startGameController.setMapNumber(mapNumber);
-    }
 
-    @FXML
-    public void limitNum() {
-        String limitTime = limitTimeNum.getText();
-        changeDurationTime(limitTime);
-    }
+
 
     @FXML
     public void startButtonClick() {
-        /*if (!checkIntInput(limitTimeNum.getText())) {
-
-        } else if (!checkIntInput(mapNum.getText())) {
-
-        } else if (!checkIntInput(playerNum.getText())) {
-
-        } else*/ {
-            int mapNum = (int) startGameController.getPrimitiveSettings().get("Map Number");
-            if(mapNum <= 10 && mapNum >= 1) {
-                System.out.println("run");
-                ViewHandler.getViewHandler().push(this.startGameController.startGame());
-            }
+        int mapNum = (int) startGameController.getPrimitiveSettings().get("Map Number");
+        if (mapNum <= 10 && mapNum >= 1) {
+            ViewHandler.getViewHandler().push(this.startGameController.startGame());
         }
     }
 
