@@ -253,10 +253,14 @@ public class RiskGameView implements View, Initializable {
         aboutStage.show();
     }
     @FXML
-    private void backToAbout(MouseEvent e) throws IOException {
+    private void backToAbout(MouseEvent e) throws IOException, URISyntaxException {
         FXMLLoader requestRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
         requestRoot.setController(this);
         aboutStage.setScene(new Scene(requestRoot.load()));
+        insertImage(aHeart, "/images/A_heart.png");
+        insertImage(aClub, "/images/A_clubs.png");
+        insertImage(aDiamond, "/images/A_diamond.png");
+        setMyCardsLabels();
         aboutStage.show();
     }
     @FXML
