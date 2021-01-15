@@ -23,7 +23,9 @@ public class RiskGameController extends Controller {
     private boolean allPlayersAddedSoldier;
     private Integer i;
     private Integer j;
+    private int duration;
     private boolean fortifyDone;
+    private long currentTimeStamp = System.currentTimeMillis()/1000L;
     private Country sourceCountryWinner;
     private boolean attackWon = false;
     private Country attackDestination;
@@ -48,6 +50,7 @@ public class RiskGameController extends Controller {
         this.players = (ArrayList<Player>) primitiveSettings.get("Players");
         this.fogIsSet = (boolean) primitiveSettings.get("Fog of War");
         this.startSoldiers = soldiers;
+        this.duration = (int) primitiveSettings.get("Duration");
         setStartSoldiers();
         /* Shaping Map*/
         this.shapeMap();
@@ -1227,6 +1230,15 @@ public class RiskGameController extends Controller {
             }
         }else {
             return false;
+        }
+    }
+    public boolean checkTime(){
+        if(System.currentTimeMillis()/1000L - currentTimeStamp > duration){
+            mainChangeTurn();
+            currentTimeStamp = System.currentTimeMillis()/1000L;
+            return false;
+        }else{
+            return true;
         }
     }
 }

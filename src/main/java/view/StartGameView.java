@@ -70,7 +70,12 @@ public class StartGameView implements View, Initializable {
     @FXML
     public void mapNum() {
         String mapsNum = mapNum.getText();
-        changePlayersNumber(mapsNum);
+        changeMapNumber(mapsNum);
+    }
+
+    private void changeMapNumber(String mapsNum) {
+        int mapNumber = Integer.parseInt(mapsNum);
+        startGameController.setMapNumber(mapNumber);
     }
 
     @FXML
@@ -90,7 +95,7 @@ public class StartGameView implements View, Initializable {
         } else {
             int mapNum = (int) startGameController.getPrimitiveSettings().get("Map Number");
             if(mapNum <= 10 && mapNum >= 1) {
-                ViewHandler.getViewHandler().push(this.startGameController.startGame(mapNum));
+                ViewHandler.getViewHandler().push(this.startGameController.startGame());
             }
         }
     }

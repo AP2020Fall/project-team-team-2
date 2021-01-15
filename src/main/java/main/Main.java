@@ -34,7 +34,7 @@ public class Main extends Application {
         primitiveSettings.put("Alliance", false);
         primitiveSettings.put("Blizzards", false);
         primitiveSettings.put("Fog of War", false);
-        primitiveSettings.put("Duration", 0);
+        primitiveSettings.put("Duration", 60);
         primitiveSettings.put("PlayersNum", 2);
         primitiveSettings.put("Players", players);
         /* For Checking and Test game GUI */

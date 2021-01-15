@@ -252,6 +252,7 @@ public class RiskGameView implements View, Initializable {
         setMyCardsLabels();
         aboutStage.show();
     }
+
     @FXML
     private void backToAbout(MouseEvent e) throws IOException, URISyntaxException {
         FXMLLoader requestRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
@@ -263,6 +264,7 @@ public class RiskGameView implements View, Initializable {
         setMyCardsLabels();
         aboutStage.show();
     }
+
     @FXML
     private void requestsMenu(MouseEvent e) throws IOException {
         FXMLLoader requestRoot = new FXMLLoader(getClass().getResource("/game/requests.fxml"));
@@ -271,70 +273,76 @@ public class RiskGameView implements View, Initializable {
         updateRequestsBox();
         aboutStage.show();
     }
+
     @FXML
     private void countryClick(MouseEvent e) {
-        int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
-        int i = indices[0];
-        int j = indices[1];
-        int soliders = 0;
-        try {
-            soliders = Integer.parseInt(inputNumber.getText());
-            if (riskGameController.getPlacementFinished()) {
-                switch (showWhatToDo()) {
-                    case "Draft":
-                        if (!inputNumber.getText().isEmpty()) {
-                            if (!riskGameController.getAttackWon()) {
-                                changeNotifText(draft(i, j, soliders));
-                            } else {
-                                changeNotifText(draftAfterWin(i, j, soliders));
-                            }
-                        }
-                        break;
-                    case "Attack":
-                        if (riskGameController.getI() == null || riskGameController.getJ() == null) {
-                            if (riskGameController.checkCountryIsYours(i, j)) {
-                                riskGameController.setI(i);
-                                riskGameController.setJ(j);
-                            } else {
-                                changeNotifText("This Country Is Not Yours");
-                            }
-                        } else {
+        if (riskGameController.checkTime()) {
+            int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
+            int i = indices[0];
+            int j = indices[1];
+            int soliders = 0;
+            try {
+                soliders = Integer.parseInt(inputNumber.getText());
+                if (riskGameController.getPlacementFinished()) {
+                    switch (showWhatToDo()) {
+                        case "Draft":
                             if (!inputNumber.getText().isEmpty()) {
-                                changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
-                                        i, j, soliders));
-                                try {
-                                    makeRightHBox();
-                                } catch (Exception error2) {
-
+                                if (!riskGameController.getAttackWon()) {
+                                    changeNotifText(draft(i, j, soliders));
+                                } else {
+                                    changeNotifText(draftAfterWin(i, j, soliders));
                                 }
                             }
-                        }
-                        break;
-                    case "Fortify":
-                        if (riskGameController.getI() == null || riskGameController.getJ() == null) {
-                            if (riskGameController.checkCountryIsYours(i, j)) {
-                                riskGameController.setI(i);
-                                riskGameController.setJ(j);
+                            break;
+                        case "Attack":
+                            if (riskGameController.getI() == null || riskGameController.getJ() == null) {
+                                if (riskGameController.checkCountryIsYours(i, j)) {
+                                    riskGameController.setI(i);
+                                    riskGameController.setJ(j);
+                                } else {
+                                    changeNotifText("This Country Is Not Yours");
+                                }
                             } else {
-                                changeNotifText("This Country Is Not Yours");
+                                if (!inputNumber.getText().isEmpty()) {
+                                    changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
+                                            i, j, soliders));
+                                    try {
+                                        makeRightHBox();
+                                    } catch (Exception error2) {
+
+                                    }
+                                }
                             }
-                        } else {
-                            if (!inputNumber.getText().isEmpty()) {
-                                changeNotifText(fortify(riskGameController.getI(), riskGameController.getJ(),
-                                        i, j, soliders));
+                            break;
+                        case "Fortify":
+                            if (riskGameController.getI() == null || riskGameController.getJ() == null) {
+                                if (riskGameController.checkCountryIsYours(i, j)) {
+                                    riskGameController.setI(i);
+                                    riskGameController.setJ(j);
+                                } else {
+                                    changeNotifText("This Country Is Not Yours");
+                                }
+                            } else {
+                                if (!inputNumber.getText().isEmpty()) {
+                                    changeNotifText(fortify(riskGameController.getI(), riskGameController.getJ(),
+                                            i, j, soliders));
+                                }
                             }
-                        }
-                        break;
-                }
-            } else {
-                if (riskGameController.getAllPlayersAdded()) {
-                    riskGameController.beginDraft(i, j, soliders);
+                            break;
+                    }
                 } else {
-                    riskGameController.beginDraft(i, j, 1);
+                    if (riskGameController.getAllPlayersAdded()) {
+                        riskGameController.beginDraft(i, j, soliders);
+                    } else {
+                        riskGameController.beginDraft(i, j, 1);
+                    }
                 }
+            } catch (NumberFormatException ex) {
+                changeNotifText("please insert a number");
             }
-        } catch (NumberFormatException ex) {
-            changeNotifText("please insert a number");
+        }else{
+            changeNotifText("Your time has been finished");
+            setColorTurn();
         }
         colorizeCountry();
         setColorMode();
@@ -529,6 +537,7 @@ public class RiskGameView implements View, Initializable {
         colorizeCountry();
         labelSetMouserTransparent();
     }
+
     public void putCountryName() {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
         int row = countries.size();
@@ -664,15 +673,16 @@ public class RiskGameView implements View, Initializable {
 
 
     }
-    public void updateRequestsBox(){
+
+    public void updateRequestsBox() {
         requestsHBox.getChildren().clear();
         EventHandler<MouseEvent> accept = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
                 Player player = riskGameController.getPlayerByPlayerNumber(playerNumber);
-                if(player != null){
-                    notification("Accepted!" , "You accepted this player as friend");
+                if (player != null) {
+                    notification("Accepted!", "You accepted this player as friend");
                     riskGameController.getCurrentPlayer().getRequests().remove(player);
                     riskGameController.getCurrentPlayer().getGameFriends().add(player);
                     player.getGameFriends().add(riskGameController.getCurrentPlayer());
@@ -686,16 +696,16 @@ public class RiskGameView implements View, Initializable {
             public void handle(MouseEvent event) {
                 int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
                 Player player = riskGameController.getPlayerByPlayerNumber(playerNumber);
-                if(player != null){
-                    notification("Declined!" , "You declined this friend");
+                if (player != null) {
+                    notification("Declined!", "You declined this friend");
                     riskGameController.getCurrentPlayer().getRequests().remove(player);
                     updateRequestsBox();
                 }
                 event.consume();
             }
         };
-        for(Player player : riskGameController.getCurrentPlayer().getRequests()){
-            String characterAddress = "/images/player_"+player.getPlayerNumber()+".png";
+        for (Player player : riskGameController.getCurrentPlayer().getRequests()) {
+            String characterAddress = "/images/player_" + player.getPlayerNumber() + ".png";
             Circle requestedCharacter = new Circle(60);
             try {
                 insertImage(requestedCharacter, characterAddress);
@@ -703,24 +713,25 @@ public class RiskGameView implements View, Initializable {
                 e.printStackTrace();
             }
             Button acceptButton = new Button("Accept");
-            acceptButton.setPrefSize(100,40);
+            acceptButton.setPrefSize(100, 40);
             acceptButton.getStyleClass().add("accept_button");
-            acceptButton.setId("accept_"+player.getPlayerNumber());
+            acceptButton.setId("accept_" + player.getPlayerNumber());
             acceptButton.setOnMouseClicked(accept);
 
             Button declineButton = new Button("Decline");
-            declineButton.setPrefSize(100,40);
+            declineButton.setPrefSize(100, 40);
             declineButton.getStyleClass().add("decline_button");
-            declineButton.setId("decline_"+player.getPlayerNumber());
+            declineButton.setId("decline_" + player.getPlayerNumber());
             declineButton.setOnMouseClicked(decline);
 
-            VBox playerVBox = new VBox(requestedCharacter,acceptButton,declineButton);
+            VBox playerVBox = new VBox(requestedCharacter, acceptButton, declineButton);
             playerVBox.setAlignment(Pos.CENTER);
 
             playerVBox.setSpacing(10);
             requestsHBox.getChildren().add(playerVBox);
         }
     }
+
     public void setMyCardsLabels() {
         int[] cardsNumbers = riskGameController.getCurrentPlayer().getCardsNumber();
         int number1 = cardsNumbers[0];
@@ -745,10 +756,10 @@ public class RiskGameView implements View, Initializable {
             public void handle(MouseEvent event) {
                 int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
                 Player player = riskGameController.getPlayerByPlayerNumber(playerNumber);
-                if(player != null){
-                    if(!player.equals(riskGameController.getCurrentPlayer())) {
+                if (player != null) {
+                    if (!player.equals(riskGameController.getCurrentPlayer())) {
                         changeNotifText(riskGameController.addRequest(player));
-                    }else{
+                    } else {
                         changeNotifText("You can`t send friendship to yourself");
                     }
                 }

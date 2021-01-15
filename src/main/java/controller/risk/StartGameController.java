@@ -31,7 +31,7 @@ public class StartGameController implements Initializable{
     }
     public static void main(String[] args) {}
 
-    public RiskGameView startGame(int mapNum) {
+    public RiskGameView startGame() {
         return new RiskGameView(this.primitiveSettings , generateSoldiersNumber());
     }
 
@@ -53,8 +53,8 @@ public class StartGameController implements Initializable{
 
     public String setPlayerNumber(int playerNumber) {
         String callback = "";
-        if (playerNumber > 5) {
-            callback = "Invalid Number of Player, Please try a number less than 5";
+        if (playerNumber > 3) {
+            callback = "Invalid Number of Player, Please try a number less than 3";
         } else {
             setPrimitiveSettings("PlayersNum", playerNumber);
             callback = "Players Number Set to " + playerNumber;
@@ -145,4 +145,5 @@ public class StartGameController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
 }
