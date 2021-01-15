@@ -3,6 +3,7 @@ package controller.risk;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import model.Event;
 import model.Map;
 import model.Country;
 import model.Player;
@@ -14,7 +15,7 @@ import java.util.*;
 
 public class StartGameController implements Initializable{
     private static java.util.Map<String, Object> primitiveSettings = new HashMap<String, Object>();
-
+    private Event event;
     {
         primitiveSettings.put("Map Number", 1);
         primitiveSettings.put("Placement", false);
@@ -26,13 +27,12 @@ public class StartGameController implements Initializable{
         primitiveSettings.put("Players" , null);
     }
     private static Map mainMap;
-    public StartGameController(ArrayList<Player> players){
+    public StartGameController(ArrayList<Player> players , Event event){
         setPrimitiveSettings("Players" , players);
+        this.event = event;
     }
-    public static void main(String[] args) {}
-
     public RiskGameView startGame() {
-        return new RiskGameView(this.primitiveSettings , generateSoldiersNumber());
+        return new RiskGameView(this.primitiveSettings , generateSoldiersNumber() , event);
     }
 
     public static java.util.Map<String, Object> getPrimitiveSettings() {

@@ -50,11 +50,9 @@ public class Main extends Application {
         ViewHandler viewHandler = ViewHandler.getViewHandler();
         System.out.println("1- Plato\n2- Risk");
         Scanner input = new Scanner(System.in);
-
         if (input.nextInt() == 1)
             viewHandler.push(new WelcomeMenu());
         else {
-            viewHandler.push(new StartGameView(players));
         }
 
         Main.window.show();

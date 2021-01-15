@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
+import model.Event;
 import model.Player;
 import view.login.LoginMenu;
 
@@ -37,8 +38,9 @@ public class StartGameView implements View, Initializable {
     private Button startButton;
 
 
-    public StartGameView(ArrayList<Player> players) {
-        this.startGameController = new StartGameController(players);
+    public StartGameView(ArrayList<Player> players , Event event) {
+        this.startGameController = new StartGameController(players , event);
+
     }
 
     @FXML
@@ -73,6 +75,9 @@ public class StartGameView implements View, Initializable {
 
     @FXML
     public void startButtonClick() {
+        chooseMapNumber(mapNum.getText());
+        changeDurationTime(limitTimeNum.getText());
+        changePlayersNumber(playerNum.getText());
         int mapNum = (int) startGameController.getPrimitiveSettings().get("Map Number");
         if (mapNum <= 10 && mapNum >= 1) {
             ViewHandler.getViewHandler().push(this.startGameController.startGame());

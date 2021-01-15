@@ -4,7 +4,144 @@
   "loses": 0,
   "wins": 0,
   "draws": 0,
-  "gameLogSummaries": [],
+  "gameLogSummaries": [
+    {
+      "frequency": 6,
+      "wins": 3,
+      "gameLogSummaryId": "73A69E06",
+      "score": 12,
+      "lastPlay": {
+        "date": {
+          "year": 2021,
+          "month": 1,
+          "day": 15
+        },
+        "time": {
+          "hour": 18,
+          "minute": 47,
+          "second": 24,
+          "nano": 141543700
+        }
+      },
+      "gameName": "Risk",
+      "gameLogs": [
+        {
+          "playerUsername": "player2",
+          "enemyUsernames": [],
+          "gameName": "Risk",
+          "result": "WON",
+          "timeFinished": {
+            "date": {
+              "year": 2021,
+              "month": 1,
+              "day": 15
+            },
+            "time": {
+              "hour": 18,
+              "minute": 47,
+              "second": 22,
+              "nano": 934692700
+            }
+          }
+        },
+        {
+          "playerUsername": "player2",
+          "enemyUsernames": [],
+          "gameName": "Risk",
+          "result": "DRAWN",
+          "timeFinished": {
+            "date": {
+              "year": 2021,
+              "month": 1,
+              "day": 15
+            },
+            "time": {
+              "hour": 18,
+              "minute": 47,
+              "second": 22,
+              "nano": 935689500
+            }
+          }
+        },
+        {
+          "playerUsername": "player2",
+          "enemyUsernames": [],
+          "gameName": "Risk",
+          "result": "WON",
+          "timeFinished": {
+            "date": {
+              "year": 2021,
+              "month": 1,
+              "day": 15
+            },
+            "time": {
+              "hour": 18,
+              "minute": 47,
+              "second": 24,
+              "nano": 130573900
+            }
+          }
+        },
+        {
+          "playerUsername": "player2",
+          "enemyUsernames": [],
+          "gameName": "Risk",
+          "result": "DRAWN",
+          "timeFinished": {
+            "date": {
+              "year": 2021,
+              "month": 1,
+              "day": 15
+            },
+            "time": {
+              "hour": 18,
+              "minute": 47,
+              "second": 24,
+              "nano": 130573900
+            }
+          }
+        },
+        {
+          "playerUsername": "player2",
+          "enemyUsernames": [],
+          "gameName": "Risk",
+          "result": "WON",
+          "timeFinished": {
+            "date": {
+              "year": 2021,
+              "month": 1,
+              "day": 15
+            },
+            "time": {
+              "hour": 18,
+              "minute": 47,
+              "second": 24,
+              "nano": 141543700
+            }
+          }
+        },
+        {
+          "playerUsername": "player2",
+          "enemyUsernames": [],
+          "gameName": "Risk",
+          "result": "DRAWN",
+          "timeFinished": {
+            "date": {
+              "year": 2021,
+              "month": 1,
+              "day": 15
+            },
+            "time": {
+              "hour": 18,
+              "minute": 47,
+              "second": 24,
+              "nano": 141543700
+            }
+          }
+        }
+      ]
+    }
+  ],
   "friends": [
     "player3"
   ],

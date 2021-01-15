@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXHamburger;
 import controller.risk.RiskGameController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import model.Event;
 import org.controlsfx.control.Notifications;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -204,7 +205,7 @@ public class RiskGameView implements View, Initializable {
         putCountryName();
         updatePlayerLabels();
         if (!riskGameController.getGameIsPlaying()) {
-            System.out.println("Doneeeeeeeee");
+            ViewHandler.getViewHandler().exitGame();
         }
     }
 
@@ -392,8 +393,8 @@ public class RiskGameView implements View, Initializable {
         gameNotifs.setText(notifText);
     }
 
-    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers) {
-        this.riskGameController = new RiskGameController(primitiveSettings, soldiers);
+    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers , Event event) {
+        this.riskGameController = new RiskGameController(primitiveSettings, soldiers , event);
         this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
         if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
             autoPlace();

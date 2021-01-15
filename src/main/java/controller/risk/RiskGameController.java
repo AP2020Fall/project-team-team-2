@@ -40,13 +40,14 @@ public class RiskGameController extends Controller {
     private MatchCardController matchCardController = new MatchCardController(currentPlayer);
     private Player winner;
     private boolean soldierPlacedAfterWin = true;
-
+    private Event event;
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public RiskGameController(java.util.Map<String, Object> primitiveSettings, int soldiers) {
+    public RiskGameController(java.util.Map<String, Object> primitiveSettings, int soldiers , Event event) {
         this.primitiveSettings = primitiveSettings;
+        this.event = event;
         this.players = (ArrayList<Player>) primitiveSettings.get("Players");
         this.fogIsSet = (boolean) primitiveSettings.get("Fog of War");
         this.startSoldiers = soldiers;
@@ -693,6 +694,7 @@ public class RiskGameController extends Controller {
                     allDone = true;
                 }
             }
+
             if (allDone == true) {
                 break;
             }
