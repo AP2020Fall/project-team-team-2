@@ -259,7 +259,14 @@
 .country_clicked {
     -fx-fill: green;
 }
-
+.accept_button{
+    -fx-background-color: green;
+    -fx-fill-text: wheat;
+}
+.decline_button{
+    -fx-background-color: #920404;
+    -fx-fill-text: wheat;
+}
 .game_labels {
     -fx-text-fill: wheat;
 }

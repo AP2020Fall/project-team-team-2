@@ -390,6 +390,10 @@ public class Player extends Account {
         this.playerNumber = playerNumber;
     }
 
+    public ArrayList<Player> getGameFriends() {
+        return gameFriends;
+    }
+
     public int getPlayerNumber() {
         return playerNumber;
     }

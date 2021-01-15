@@ -44,6 +44,8 @@ public class RiskGameView implements View, Initializable {
     private final List<Label> playerLabels = new ArrayList<>();
     private Stage aboutStage;
     @FXML
+    private HBox requestsHBox;
+    @FXML
     private JFXHamburger cardMenu;
     @FXML
     private Rectangle loseManual;
@@ -251,15 +253,18 @@ public class RiskGameView implements View, Initializable {
         aboutStage.show();
     }
     @FXML
-    private void backToAbout(MouseEvent e){
-
+    private void backToAbout(MouseEvent e) throws IOException {
+        FXMLLoader requestRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
+        requestRoot.setController(this);
+        aboutStage.setScene(new Scene(requestRoot.load()));
+        aboutStage.show();
     }
     @FXML
     private void requestsMenu(MouseEvent e) throws IOException {
-        Stage requestsStage = new Stage();
         FXMLLoader requestRoot = new FXMLLoader(getClass().getResource("/game/requests.fxml"));
         requestRoot.setController(this);
         aboutStage.setScene(new Scene(requestRoot.load()));
+        updateRequestsBox();
         aboutStage.show();
     }
     @FXML
@@ -655,7 +660,63 @@ public class RiskGameView implements View, Initializable {
 
 
     }
+    public void updateRequestsBox(){
+        requestsHBox.getChildren().clear();
+        EventHandler<MouseEvent> accept = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
+                Player player = riskGameController.getPlayerByPlayerNumber(playerNumber);
+                if(player != null){
+                    notification("Accepted!" , "You accepted this player as friend");
+                    riskGameController.getCurrentPlayer().getRequests().remove(player);
+                    riskGameController.getCurrentPlayer().getGameFriends().add(player);
+                    player.getGameFriends().add(riskGameController.getCurrentPlayer());
+                    updateRequestsBox();
+                }
+                event.consume();
+            }
+        };
+        EventHandler<MouseEvent> decline = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
+                Player player = riskGameController.getPlayerByPlayerNumber(playerNumber);
+                if(player != null){
+                    notification("Declined!" , "You declined this friend");
+                    riskGameController.getCurrentPlayer().getRequests().remove(player);
+                    updateRequestsBox();
+                }
+                event.consume();
+            }
+        };
+        for(Player player : riskGameController.getCurrentPlayer().getRequests()){
+            String characterAddress = "/images/player_"+player.getPlayerNumber()+".png";
+            Circle requestedCharacter = new Circle(60);
+            try {
+                insertImage(requestedCharacter, characterAddress);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            Button acceptButton = new Button("Accept");
+            acceptButton.setPrefSize(100,40);
+            acceptButton.getStyleClass().add("accept_button");
+            acceptButton.setId("accept_"+player.getPlayerNumber());
+            acceptButton.setOnMouseClicked(accept);
 
+            Button declineButton = new Button("Decline");
+            declineButton.setPrefSize(100,40);
+            declineButton.getStyleClass().add("decline_button");
+            declineButton.setId("decline_"+player.getPlayerNumber());
+            declineButton.setOnMouseClicked(decline);
+
+            VBox playerVBox = new VBox(requestedCharacter,acceptButton,declineButton);
+            playerVBox.setAlignment(Pos.CENTER);
+
+            playerVBox.setSpacing(10);
+            requestsHBox.getChildren().add(playerVBox);
+        }
+    }
     public void setMyCardsLabels() {
         int[] cardsNumbers = riskGameController.getCurrentPlayer().getCardsNumber();
         int number1 = cardsNumbers[0];
@@ -681,7 +742,11 @@ public class RiskGameView implements View, Initializable {
                 int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
                 Player player = riskGameController.getPlayerByPlayerNumber(playerNumber);
                 if(player != null){
-                    changeNotifText(riskGameController.addRequest(player));
+                    if(!player.equals(riskGameController.getCurrentPlayer())) {
+                        changeNotifText(riskGameController.addRequest(player));
+                    }else{
+                        changeNotifText("You can`t send friendship to yourself");
+                    }
                 }
                 event.consume();
             }
