@@ -394,10 +394,6 @@ public class RiskGameView implements View, Initializable {
 
     public RiskGameView(Map<String, Object> primitiveSettings, int soldiers) {
         this.riskGameController = new RiskGameController(primitiveSettings, soldiers);
-        System.out.println("fefe");
-        System.out.println(primitiveSettings.values());
-        System.out.println(soldiers);
-        System.out.println("fdef");
         this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
         if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
             autoPlace();
@@ -488,7 +484,6 @@ public class RiskGameView implements View, Initializable {
             insertImage(deselectIcon, "/images/deselect.png");
             insertImage(loseManual, "/images/exit.png");
         } catch (URISyntaxException e) {
-            System.out.println("fuuuuuuuuuuuuuuuuuuck");
             e.printStackTrace();
         }
         rightVBox.setSpacing(5);
@@ -560,7 +555,6 @@ public class RiskGameView implements View, Initializable {
         int columns = countries.get(0).size();
         int[][] toShowFog = new int[row][columns];
         toShowFog = riskGameController.getFogOfWarMap(riskGameController.getCurrentPlayer());
-        System.out.println("*1");
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 allLabels[i][j].setText("");
