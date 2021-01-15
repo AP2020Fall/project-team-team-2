@@ -394,6 +394,10 @@ public class RiskGameView implements View, Initializable {
 
     public RiskGameView(Map<String, Object> primitiveSettings, int soldiers) {
         this.riskGameController = new RiskGameController(primitiveSettings, soldiers);
+        System.out.println("fefe");
+        System.out.println(primitiveSettings.values());
+        System.out.println(soldiers);
+        System.out.println("fdef");
         this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
         if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
             autoPlace();
@@ -475,14 +479,30 @@ public class RiskGameView implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            insertImage(draftCircleImage, "/images/draft.png");
+            insertImage(attackCircleImage, "/images/attack.png");
+            insertImage(fortifyCircleImage, "/images/fortify.png");
+            insertImage(nextTurn, "/images/next.png");
+            insertImage(nextStatus, "/images/next_status.png");
+            insertImage(deselectIcon, "/images/deselect.png");
+            insertImage(loseManual, "/images/exit.png");
+        } catch (URISyntaxException e) {
+            System.out.println("fuuuuuuuuuuuuuuuuuuck");
+            e.printStackTrace();
+        }
+        System.out.println(-2);
         rightVBox.setSpacing(5);
+        System.out.println("-1");
         try {
             makeRightHBox();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+        System.out.println("0");
         setColorTurn();
         setColorMode();
+        System.out.println("1");
         allPaths[0][0] = country_1_1;
         allPaths[0][1] = country_1_2;
         allPaths[0][2] = country_1_3;
@@ -533,9 +553,13 @@ public class RiskGameView implements View, Initializable {
         allLabels[4][2] = label_5_3;
         allLabels[4][3] = label_5_4;
         allLabels[4][4] = label_5_5;
+        System.out.println("2");
         putCountryName();
+        System.out.println("3");
         colorizeCountry();
+        System.out.println("4");
         labelSetMouserTransparent();
+        System.out.println("5");
     }
 
     public void putCountryName() {
@@ -544,6 +568,7 @@ public class RiskGameView implements View, Initializable {
         int columns = countries.get(0).size();
         int[][] toShowFog = new int[row][columns];
         toShowFog = riskGameController.getFogOfWarMap(riskGameController.getCurrentPlayer());
+        System.out.println("*1");
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 allLabels[i][j].setText("");
@@ -835,17 +860,6 @@ public class RiskGameView implements View, Initializable {
         window.setTitle("Game Started");
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
-        try {
-            insertImage(draftCircleImage, "/images/draft.png");
-            insertImage(attackCircleImage, "/images/attack.png");
-            insertImage(fortifyCircleImage, "/images/fortify.png");
-            insertImage(nextTurn, "/images/next.png");
-            insertImage(nextStatus, "/images/next_status.png");
-            insertImage(deselectIcon, "/images/deselect.png");
-            insertImage(loseManual, "/images/exit.png");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
     }
 
     public void addColorToSelected() {

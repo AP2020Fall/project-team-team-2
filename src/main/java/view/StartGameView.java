@@ -86,13 +86,13 @@ public class StartGameView implements View, Initializable {
 
     @FXML
     public void startButtonClick() {
-        if (!checkIntInput(limitTimeNum.getText())) {
+        /*if (!checkIntInput(limitTimeNum.getText())) {
 
         } else if (!checkIntInput(mapNum.getText())) {
 
         } else if (!checkIntInput(playerNum.getText())) {
 
-        } else {
+        } else*/ {
             int mapNum = (int) startGameController.getPrimitiveSettings().get("Map Number");
             if(mapNum <= 10 && mapNum >= 1) {
                 ViewHandler.getViewHandler().push(this.startGameController.startGame());
@@ -150,7 +150,7 @@ public class StartGameView implements View, Initializable {
         window.setTitle("Plato");
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
-        window.show();
+        //window.show();
     }
 
     public static boolean checkToggle(boolean inputBoolean) {

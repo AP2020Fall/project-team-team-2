@@ -355,8 +355,8 @@ public class Player extends Account {
     @Override
     public String toString() {
         return super.toString()
-                + "money: " + getMoney() + "$\n"
-                + "registered: " + getDayOfRegister() + " days ago\n";
+                + "money: " + getMoney() + "$\n";
+             //   + "registered: " + getDayOfRegister() + " days ago\n";
     }
 
 

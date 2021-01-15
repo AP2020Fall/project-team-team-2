@@ -19,15 +19,23 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        window = primaryStage;
+        window.setOnCloseRequest(event -> Platform.exit());
+        openFiles();
+        Runtime.getRuntime().addShutdownHook(new Thread(Main::saveFiles));
         /* For Checking And Test game GUI */
-        Player newPlayer1 = new Player("new", "mew2");
-        Player newPlayer2 = new Player("new2", "mew22");
+        Player newPlayer1 = Player.getPlayerByUsername("player1");//new Player("new", "mew2");
+        if(newPlayer1 == null) System.out.println("fuck");
+
+        Player newPlayer2 = Player.getPlayerByUsername("player2");//new Player("new2", "mew22");
         Player newPlayer3 = new Player("new2", "mew222");
         Player newPlayer4 = new Player("new22", "mew224");
         ArrayList<Player> players = new ArrayList<Player>();
         players.add(newPlayer1);
         players.add(newPlayer2);
-        players.add(newPlayer3);
+//        players.add(newPlayer3);
+//        players.add(newPlayer4);
+
         HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
         primitiveSettings.put("Map Number", 1);
         primitiveSettings.put("Placement", false);
@@ -39,10 +47,7 @@ public class Main extends Application {
         primitiveSettings.put("Players", players);
         /* For Checking and Test game GUI */
 
-        window = primaryStage;
-        window.setOnCloseRequest(event -> Platform.exit());
-        openFiles();
-        Runtime.getRuntime().addShutdownHook(new Thread(Main::saveFiles));
+
         ViewHandler viewHandler = ViewHandler.getViewHandler();
         System.out.println("1- Plato\n2- Risk");
         Scanner input = new Scanner(System.in);
