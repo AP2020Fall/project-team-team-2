@@ -59,7 +59,6 @@ public class RiskGameController extends Controller {
         /* Set Player One */
 
         currentPlayer = players.get(0);
-        System.out.println(currentPlayer + "kofkofke");
         /* Show Turn*/
         showTurn();
 
@@ -730,7 +729,6 @@ public class RiskGameController extends Controller {
                 countryNumbers[i][j] = 0;
             }
         }
-        System.out.println("**1");
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 if (gameCountries.get(i).get(j).getOwner() != null) {

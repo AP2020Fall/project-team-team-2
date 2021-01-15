@@ -491,18 +491,14 @@ public class RiskGameView implements View, Initializable {
             System.out.println("fuuuuuuuuuuuuuuuuuuck");
             e.printStackTrace();
         }
-        System.out.println(-2);
         rightVBox.setSpacing(5);
-        System.out.println("-1");
         try {
             makeRightHBox();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        System.out.println("0");
         setColorTurn();
         setColorMode();
-        System.out.println("1");
         allPaths[0][0] = country_1_1;
         allPaths[0][1] = country_1_2;
         allPaths[0][2] = country_1_3;
@@ -553,13 +549,9 @@ public class RiskGameView implements View, Initializable {
         allLabels[4][2] = label_5_3;
         allLabels[4][3] = label_5_4;
         allLabels[4][4] = label_5_5;
-        System.out.println("2");
         putCountryName();
-        System.out.println("3");
         colorizeCountry();
-        System.out.println("4");
         labelSetMouserTransparent();
-        System.out.println("5");
     }
 
     public void putCountryName() {
