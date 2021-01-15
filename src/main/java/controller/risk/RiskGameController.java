@@ -34,6 +34,7 @@ public class RiskGameController extends Controller {
     private boolean placementFinished = false;
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
     private Player currentPlayer;
+    private boolean notifSent = false;
     private MatchCardController matchCardController = new MatchCardController(currentPlayer);
     private Player winner;
 
@@ -403,6 +404,7 @@ public class RiskGameController extends Controller {
         if (!getPlacementFinished()) {
             checkPlacementFinished();
         }
+        resetNotif();
         beginDraftDone = false;
     }
 
@@ -959,13 +961,17 @@ public class RiskGameController extends Controller {
 
     public boolean checkWinner() {
         boolean finished = true;
-        if (!getPlacementFinished()) {
+        boolean toCheck = false;
+        if(players.size() == 1){
+            toCheck = true;
+        }
+        if (!getPlacementFinished() && !toCheck) {
             return false;
         }
         for (List<Country> countries : gameCountries) {
             for (Country country : countries) {
                 if(country.getOwner() != null) {
-                    if (!country.getOwner().equals(currentPlayer)) {
+                    if (!country.getOwner().equals(currentPlayer) && !toCheck) {
                         finished = false;
                         break;
                     }
@@ -1141,5 +1147,41 @@ public class RiskGameController extends Controller {
     public void deselect() {
         i = null;
         j = null;
+    }
+
+    public boolean getCheckRequests() {
+        return currentPlayer.checkPlayerHasRequest() && (!draftDone || !beginDraftDone);
+    }
+    public String addRequest(Player player) {
+        if(!player.getRequests().contains(currentPlayer)) {
+            player.addGameRequest(currentPlayer);
+            return "Request sent successfully";
+        }else{
+            return "You have been requested to this player";
+        }
+    }
+    public void addFriend(Player player){
+        player.addGameFriend(player);
+    }
+    public void rejectRequest(Player player){
+        player.rejectRequest(player);
+    }
+
+    public Player getPlayerByPlayerNumber(int number){
+        for(Player player: players){
+            if(player.getPlayerNumber() == number){
+                return player;
+            }
+        }
+        return null;
+    }
+    public void notifSent(){
+        notifSent = true;
+    }
+    public void resetNotif(){
+        notifSent = false;
+    }
+    public boolean getNotifSent(){
+        return notifSent;
     }
 }

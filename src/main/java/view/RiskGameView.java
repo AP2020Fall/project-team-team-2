@@ -1,6 +1,10 @@
 package view;
 
+import com.jfoenix.controls.JFXHamburger;
 import controller.risk.RiskGameController;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import org.controlsfx.control.Notifications;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,8 +40,11 @@ public class RiskGameView implements View, Initializable {
     private final String mapNum;
     private final SVGPath[][] allPaths = new SVGPath[5][5];
     private final Label[][] allLabels = new Label[5][5];
-    private final Map<Integer,Circle> playersCircles = new HashMap<>();
+    private final Map<Integer, Circle> playersCircles = new HashMap<>();
     private final List<Label> playerLabels = new ArrayList<>();
+    private Stage aboutStage;
+    @FXML
+    private JFXHamburger cardMenu;
     @FXML
     private Rectangle loseManual;
     @FXML
@@ -230,6 +237,7 @@ public class RiskGameView implements View, Initializable {
     @FXML
     private void cardsMenuHandler(MouseEvent e) throws IOException, URISyntaxException {
         Stage aboutStage = new Stage();
+        this.aboutStage = aboutStage;
         FXMLLoader aboutRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
         aboutRoot.setController(this);
         aboutStage.setScene(new Scene(aboutRoot.load()));
@@ -242,7 +250,18 @@ public class RiskGameView implements View, Initializable {
         setMyCardsLabels();
         aboutStage.show();
     }
+    @FXML
+    private void requests(MouseEvent e){
 
+    }
+    @FXML
+    private void requestsMenu(MouseEvent e) throws IOException {
+        Stage requestsStage = new Stage();
+        FXMLLoader requestRoot = new FXMLLoader(getClass().getResource("/game/requests.fxml"));
+        requestRoot.setController(this);
+        aboutStage.setScene(new Scene(requestRoot.load()));
+        aboutStage.show();
+    }
     @FXML
     private void countryClick(MouseEvent e) {
         int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
@@ -358,7 +377,7 @@ public class RiskGameView implements View, Initializable {
 
     public RiskGameView(Map<String, Object> primitiveSettings, int soldiers) {
         this.riskGameController = new RiskGameController(primitiveSettings, soldiers);
-        this.mapNum =String.valueOf((int) primitiveSettings.get("Map Number"));
+        this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
         if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
             autoPlace();
         }
@@ -415,6 +434,7 @@ public class RiskGameView implements View, Initializable {
 
     public String nextTurn() {
         String toPrint = riskGameController.changeTurn();
+        sendNotif();
         return toPrint;
     }
 
@@ -500,7 +520,6 @@ public class RiskGameView implements View, Initializable {
         colorizeCountry();
         labelSetMouserTransparent();
     }
-
     public void putCountryName() {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
         int row = countries.size();
@@ -597,6 +616,7 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void setColorTurn() {
+        riskGameController.checkWinner();
         if (riskGameController.getGameIsPlaying()) {
             for (Map.Entry<Integer, Circle> entry : playersCircles.entrySet()) {
                 entry.getValue().getStyleClass().clear();
@@ -620,6 +640,22 @@ public class RiskGameView implements View, Initializable {
         }
     }
 
+    public void notification(String title, String inputText) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Notifications notify = Notifications.create().title(title)
+                        .text(inputText)
+                        .hideAfter(javafx.util.Duration.seconds(2))
+                        .position(Pos.TOP_RIGHT);
+                notify.darkStyle();
+                notify.showInformation();
+            }
+        });
+
+
+    }
+
     public void setMyCardsLabels() {
         int[] cardsNumbers = riskGameController.getCurrentPlayer().getCardsNumber();
         int number1 = cardsNumbers[0];
@@ -630,8 +666,28 @@ public class RiskGameView implements View, Initializable {
         card3Label.setText(String.valueOf(number3));
     }
 
+    public void sendNotif() {
+        boolean checkHasRequest = riskGameController.getCheckRequests();
+        if (checkHasRequest && !riskGameController.getNotifSent()) {
+            notification("Requests", "You have request(s)");
+            riskGameController.notifSent();
+        }
+    }
+
     public void makeRightHBox() throws URISyntaxException {
-        int i = 0;
+        EventHandler<MouseEvent> addFriendHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
+                Player player = riskGameController.getPlayerByPlayerNumber(playerNumber);
+                if(player != null){
+                    changeNotifText(riskGameController.addRequest(player));
+                }
+                event.consume();
+            }
+        };
+
+
         String playerImageAddress = "/images/player_";
         int bigCircleSize = 0;
         if (riskGameController.getPlayers().size() <= 3) {
@@ -643,10 +699,16 @@ public class RiskGameView implements View, Initializable {
         playerLabels.clear();
         playersCircles.clear();
         for (Player player : riskGameController.getPlayers()) {
+            Image friendImage = new Image(String.valueOf(getClass().getResource("/images/friend.png")));
+            Circle friendCircle = new Circle(20);
+            friendCircle.setFill(new ImagePattern(friendImage));
+            friendCircle.setOnMouseClicked(addFriendHandler);
+            friendCircle.setId("friend_" + player.getPlayerNumber());
+
             Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + player.getPlayerNumber() + ".png").toURI()));
             Circle littleCircle = new Circle(10);
             littleCircle.getStyleClass().add("none_active");
-            playersCircles.put(player.getPlayerNumber(),littleCircle);
+            playersCircles.put(player.getPlayerNumber(), littleCircle);
 
 
             Label playerLabel = new Label(String.valueOf(player.getDraftSoldiers()));
@@ -655,7 +717,6 @@ public class RiskGameView implements View, Initializable {
 
             Circle playerColorCircle = new Circle(10);
             playerColorCircle.getStyleClass().add("country_player_color_" + player.getPlayerNumber());
-            System.out.println(player.getPlayerNumber());
             VBox verticalBox = new VBox(littleCircle, playerColorCircle, playerLabel);
             verticalBox.setAlignment(Pos.CENTER);
             verticalBox.setSpacing(10);
@@ -663,7 +724,7 @@ public class RiskGameView implements View, Initializable {
             Circle bigCircle = new Circle(bigCircleSize);
             bigCircle.setFill(new ImagePattern(image));
             bigCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
-            HBox tempHBox = new HBox(verticalBox, bigCircle);
+            HBox tempHBox = new HBox(friendCircle, verticalBox, bigCircle);
             tempHBox.setAlignment(Pos.CENTER);
             tempHBox.setSpacing(10);
             rightVBox.getChildren().add(tempHBox);

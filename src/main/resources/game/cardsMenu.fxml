@@ -17,5 +17,6 @@
       <Label fx:id="card2Label" alignment="CENTER" layoutX="345.0" layoutY="275.0" prefHeight="33.0" prefWidth="111.0" styleClass="cardsLabel" text="Card 2" />
       <Label fx:id="card3Label" alignment="CENTER" layoutX="556.0" layoutY="275.0" prefHeight="33.0" prefWidth="111.0" styleClass="cardsLabel" text="Card 3" />
       <Button fx:id="matchAll" alignment="CENTER" contentDisplay="CENTER" layoutX="345.0" layoutY="417.0" mnemonicParsing="false" onMouseClicked="#matchAllHandler" prefHeight="90.0" prefWidth="111.0" styleClass="buttons" text="Match&#10;All&#10;" textAlignment="CENTER" />
+      <Button fx:id="match11" layoutX="603.0" layoutY="462.0" mnemonicParsing="false" onMouseClicked="#requestsMenu" prefHeight="34.0" prefWidth="170.0" styleClass="buttons" text="Requests" />
    </children>
 </AnchorPane>

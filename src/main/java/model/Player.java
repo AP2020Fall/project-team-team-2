@@ -30,6 +30,8 @@ public class Player extends Account {
     private int playerNumber;
     private int draftSoldiers = 0;
 
+    private ArrayList<Player> requests = new ArrayList<>();
+    private ArrayList<Player> gameFriends = new ArrayList<>();
     public Player(String firstName, String lastName, String username, String accountId,
                   String password, String email, String phoneNumber, double money) {
         super(firstName, lastName, username, accountId, password, email, phoneNumber);
@@ -429,5 +431,26 @@ public class Player extends Account {
         this.loses++;
     }
 
+    public void addGameRequest(Player player){
+        requests.add(player);
+    }
+    public void addGameFriend(Player player){
+        gameFriends.add(player);
+    }
+    public void rejectRequest(Player player){
+        requests.remove(player);
+    }
+
+    public ArrayList<Player> getRequests() {
+        return requests;
+    }
+
+    public boolean checkPlayerHasRequest(){
+        if(requests.size() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }

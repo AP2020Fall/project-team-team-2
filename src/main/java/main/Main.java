@@ -29,7 +29,7 @@ public class Main extends Application {
         players.add(newPlayer2);
         players.add(newPlayer3);
         HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
-        primitiveSettings.put("Map Number", 2);
+        primitiveSettings.put("Map Number", 1);
         primitiveSettings.put("Placement", true);
         primitiveSettings.put("Alliance", false);
         primitiveSettings.put("Blizzards", true);
