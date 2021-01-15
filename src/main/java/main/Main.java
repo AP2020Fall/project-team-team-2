@@ -19,7 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        /* For Checking game GUI */
+        /* For Checking And Test game GUI */
         Player newPlayer1 = new Player("new", "mew2");
         Player newPlayer2 = new Player("new2", "mew22");
         Player newPlayer3 = new Player("new2", "mew222");
@@ -29,15 +29,15 @@ public class Main extends Application {
         players.add(newPlayer2);
         players.add(newPlayer3);
         HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
-        primitiveSettings.put("Map Number", 2);
-        primitiveSettings.put("Placement", true);
+        primitiveSettings.put("Map Number", 1);
+        primitiveSettings.put("Placement", false);
         primitiveSettings.put("Alliance", false);
-        primitiveSettings.put("Blizzards", true);
+        primitiveSettings.put("Blizzards", false);
         primitiveSettings.put("Fog of War", false);
         primitiveSettings.put("Duration", 0);
         primitiveSettings.put("PlayersNum", 2);
         primitiveSettings.put("Players", players);
-        /* For Checking game GUI */
+        /* For Checking and Test game GUI */
 
         window = primaryStage;
         window.setOnCloseRequest(event -> Platform.exit());

@@ -34,8 +34,10 @@ public class RiskGameController extends Controller {
     private boolean placementFinished = false;
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
     private Player currentPlayer;
+    private boolean notifSent = false;
     private MatchCardController matchCardController = new MatchCardController(currentPlayer);
     private Player winner;
+    private boolean soldierPlacedAfterWin = true;
 
     public ArrayList<Player> getPlayers() {
         return players;
@@ -225,11 +227,13 @@ public class RiskGameController extends Controller {
 
     public String attack(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
         String toPrint = "";
+        boolean isFriend = false;
         if (!attackDone) {
             boolean sourceCountryValid = false;
             boolean destinationCountryValid = false;
             Country source = getCountryByDetails(sourceI, sourceJ);
             Country destination = getCountryByDetails(destI, destJ);
+            isFriend = checkCountryIsAlliance(destination);
             boolean errorFound = false;
             if (!source.getName().equals("")) {
                 if (source.getOwner().equals(currentPlayer)) {
@@ -267,9 +271,14 @@ public class RiskGameController extends Controller {
                 toPrint = "Draft didn't completed yet";
                 errorFound = true;
             }
-            if (errorFound) {
-                /*Do Nothing*/
-            } else if (attackNeighbourhoodCheck(source, destination)) {
+            if (isFriend && !errorFound) {
+                toPrint = "This Country is Alliance";
+                errorFound = true;
+            }
+            if(errorFound){
+
+            }
+            else if (attackNeighbourhoodCheck(source, destination)) {
                 boolean inWar = true;
                 do {
                     int randomNumberSource = (int) (Math.random() * (6 - 0 + 1)) + 0;
@@ -304,10 +313,21 @@ public class RiskGameController extends Controller {
                             if (source.getSoldiers() == 2) {
                                 source.addSoldiers(-1);
                                 destination.addSoldiers(+1);
-                                checkAdditionalPlayers(destination.getOwner());
+                                Player tempPlayer = destination.getOwner();
                                 destination.setOwner(currentPlayer);
+                                boolean playerDone = checkAdditionalPlayers(tempPlayer);
+                                if(playerDone){
+                                    addDestinationCardsToSource(source.getOwner() , tempPlayer);
+                                }
+
                             } else {
+                                Player tempPlayer = destination.getOwner();
                                 destination.setOwner(currentPlayer);
+                                boolean playerDone = checkAdditionalPlayers(tempPlayer);
+                                if(playerDone){
+                                    addDestinationCardsToSource(source.getOwner() , tempPlayer);
+                                }
+                                this.soldierPlacedAfterWin = false;
                                 this.attackWon = true;
                                 this.attackDestination = destination;
                                 toPrint += "\nYou now should add one to " + (source.getSoldiers() - 1) + " soldiers to "
@@ -329,6 +349,15 @@ public class RiskGameController extends Controller {
             toPrint = "Attack has been done";
         }
         return toPrint;
+    }
+    public boolean getSoldierPlaced() {
+        return soldierPlacedAfterWin;
+    }
+    private void addDestinationCardsToSource(Player sourcePlayer, Player destinationPlayer) {
+        for(Card card : destinationPlayer.getCards()){
+            sourcePlayer.addCard(card);
+            System.out.println("Card of destination player added to current player. Card : " + card);
+        }
     }
 
     public String fortify(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
@@ -371,17 +400,21 @@ public class RiskGameController extends Controller {
     public String next() {
         String toPrint = "";
         if (getPlacementFinished()) {
-            if (!draftDone) {
-                toPrint = "Next part, Start Attacking";
-                draftDone = true;
-            } else if (!attackDone) {
-                toPrint = "Next part, Start Fortifying";
-                attackDone = true;
-            } else if (!fortifyDone) {
-                fortifyDone = true;
-                toPrint = "Next part, Please try `turn over` to go to next turn";
-            } else {
-                toPrint = "Try `turn over`";
+            if(soldierPlacedAfterWin) {
+                if (!draftDone) {
+                    toPrint = "Next part, Start Attacking";
+                    draftDone = true;
+                } else if (!attackDone) {
+                    toPrint = "Next part, Start Fortifying";
+                    attackDone = true;
+                } else if (!fortifyDone) {
+                    fortifyDone = true;
+                    toPrint = "Next part, Please try `turn over` to go to next turn";
+                } else {
+                    toPrint = "Try `turn over`";
+                }
+            }else{
+                toPrint = "Please First try to draft in destination country";
             }
         } else {
             if (beginDraftDone) {
@@ -403,6 +436,7 @@ public class RiskGameController extends Controller {
         if (!getPlacementFinished()) {
             checkPlacementFinished();
         }
+        resetNotif();
         beginDraftDone = false;
     }
 
@@ -959,13 +993,17 @@ public class RiskGameController extends Controller {
 
     public boolean checkWinner() {
         boolean finished = true;
-        if (!getPlacementFinished()) {
+        boolean toCheck = false;
+        if(players.size() == 1){
+            toCheck = true;
+        }
+        if (!getPlacementFinished() && !toCheck) {
             return false;
         }
         for (List<Country> countries : gameCountries) {
             for (Country country : countries) {
                 if(country.getOwner() != null) {
-                    if (!country.getOwner().equals(currentPlayer)) {
+                    if (!country.getOwner().equals(currentPlayer) && !toCheck) {
                         finished = false;
                         break;
                     }
@@ -1034,7 +1072,7 @@ public class RiskGameController extends Controller {
         ;
         return finished;
     }
-    public void checkAdditionalPlayers(Player player){
+    public boolean checkAdditionalPlayers(Player player){
         boolean toCheck = true;
         outerLoop:
         for(List<Country> countries : gameCountries){
@@ -1050,6 +1088,7 @@ public class RiskGameController extends Controller {
         if(toCheck){
             players.remove(player);
         }
+        return toCheck;
     }
     public boolean getAttackWon() {
         return this.attackWon;
@@ -1079,6 +1118,7 @@ public class RiskGameController extends Controller {
                     attackDestination = null;
                     sourceCountryWinner = null;
                     draftDone = true;
+                    soldierPlacedAfterWin = true;
                 } else {
                     toPrint = "Please try the previous destination country, not others";
                 }
@@ -1141,5 +1181,52 @@ public class RiskGameController extends Controller {
     public void deselect() {
         i = null;
         j = null;
+    }
+
+    public boolean getCheckRequests() {
+        return currentPlayer.checkPlayerHasRequest() && (!draftDone || !beginDraftDone);
+    }
+    public String addRequest(Player player) {
+        if(!player.getRequests().contains(currentPlayer)) {
+            player.addGameRequest(currentPlayer);
+            return "Request sent successfully";
+        }else{
+            return "You have been requested to this player";
+        }
+    }
+    public void addFriend(Player player){
+        player.addGameFriend(player);
+    }
+    public void rejectRequest(Player player){
+        player.rejectRequest(player);
+    }
+
+    public Player getPlayerByPlayerNumber(int number){
+        for(Player player: players){
+            if(player.getPlayerNumber() == number){
+                return player;
+            }
+        }
+        return null;
+    }
+    public void notifSent(){
+        notifSent = true;
+    }
+    public void resetNotif(){
+        notifSent = false;
+    }
+    public boolean getNotifSent(){
+        return notifSent;
+    }
+    public boolean checkCountryIsAlliance(Country destination){
+        if(destination.getOwner() != null) {
+            if (currentPlayer.getGameFriends().contains(destination.getOwner())){
+                return true;
+            }else{
+                return false;
+            }
+        }else {
+            return false;
+        }
     }
 }
