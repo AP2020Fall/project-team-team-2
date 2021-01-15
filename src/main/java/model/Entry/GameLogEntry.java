@@ -1,5 +1,7 @@
 package model.Entry;
 
+import javafx.scene.image.ImageView;
+import model.Game;
 import model.GameLog;
 import model.GameLogStates;
 
@@ -10,6 +12,7 @@ public class GameLogEntry {
     private  String enemies;
     private  GameLogStates result;
     private  LocalDateTime timeFinished;
+    private ImageView avatar;
 
     public GameLogEntry(GameLog gameLog)
     {
@@ -17,6 +20,9 @@ public class GameLogEntry {
         result = gameLog.getResult();
         timeFinished = gameLog.getTimeFinished();
         gameName = gameLog.getGameName();
+        avatar = new ImageView(Game.getGameByGameName(gameLog.getGameName()).getImage());
+        avatar.setFitHeight(48);
+        avatar.setFitWidth(48);
     }
 
     public String getGameName() {
@@ -33,5 +39,9 @@ public class GameLogEntry {
 
     public LocalDateTime getTimeFinished() {
         return timeFinished;
+    }
+
+    public ImageView getAvatar() {
+        return avatar;
     }
 }

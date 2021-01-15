@@ -87,4 +87,8 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
     public Game getGame() {
         return game;
     }
+
+    public Player getPlayer(ScoreboardEntry scoreboardEntry) {
+        return Player.getPlayerByUsername(scoreboardEntry.getPlayerName());
+    }
 }

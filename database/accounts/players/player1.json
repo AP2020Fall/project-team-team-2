@@ -50,6 +50,7 @@
   "newSoldiers": 0,
   "playerNumber": 0,
   "draftSoldiers": 0,
+  "bio": "Hello world\n",
   "firstName": "pl",
   "lastName": "pl",
   "username": "player1",

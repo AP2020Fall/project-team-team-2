@@ -11,6 +11,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import model.Entry.GameLogSummaryEntry;
 import view.Tab;
 import view.TabHandler;
@@ -18,6 +20,7 @@ import view.ViewHandler;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -96,6 +99,8 @@ public class PlayerAccountMenu implements Tab, Initializable {
     }
 
     private void initializeTableGameHistoryList() {
+        TableColumn<GameLogSummaryEntry, ImageView> gameImageColumn = new TableColumn<>("Avatar");
+        gameImageColumn.setCellValueFactory(new PropertyValueFactory<>("avatar"));
         TableColumn<GameLogSummaryEntry, String> gameNameColumn = new TableColumn<>("Game");
         gameNameColumn.setCellValueFactory(new PropertyValueFactory<>("gameName"));
         TableColumn<GameLogSummaryEntry, Integer> frequencyColumn = new TableColumn<>("Frequency");
@@ -104,11 +109,25 @@ public class PlayerAccountMenu implements Tab, Initializable {
         winsColumn.setCellValueFactory(new PropertyValueFactory<>("wins"));
         TableColumn<GameLogSummaryEntry, Integer> scoreColumn = new TableColumn<>("Score");
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
-        TableColumn<GameLogSummaryEntry, LocalDateTime> lastPlayColumn = new TableColumn<>("Last Play");
+        TableColumn<GameLogSummaryEntry, LocalDate> lastPlayColumn = new TableColumn<>("Last Play");
         lastPlayColumn.setCellValueFactory(new PropertyValueFactory<>("lastPlay"));
         gameHistoryList.setPlaceholder(new Label("You have not played a game."));
-        gameHistoryList.getColumns().addAll(gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
+
+        gameHistoryList.getColumns().addAll(gameImageColumn,gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
         gameHistoryList.getItems().addAll(controller.getGameHistory());
+    }
+    @FXML
+    void gameLogSummaryTableSelected(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(gameHistoryList.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    GameLogSummaryEntry gameEntry = gameHistoryList.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame(gameEntry)));
+                }
+            }
+
+        }
     }
 
 
