@@ -177,4 +177,8 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
     public Game getGame(GameEntry gameEntry) {
         return Game.getGameByGameName(gameEntry.getName());
     }
+    public Game getGame(GameLogSummaryEntry gameEntry) {
+        return Game.getGameByGameName(gameEntry.getGameName());
+    }
+
 }
