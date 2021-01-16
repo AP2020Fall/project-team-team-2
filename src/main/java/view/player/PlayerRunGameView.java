@@ -105,6 +105,7 @@ public class PlayerRunGameView implements Tab, Initializable {
                     "Invalid username", "Username is already added!");
         } else {
             updateImageMenuContext(textField);
+            textField.setDisable(true);
         }
     }
     private void updateImage(ImageView imageView,String username)

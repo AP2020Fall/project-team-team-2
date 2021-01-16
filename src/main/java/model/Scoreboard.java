@@ -1,5 +1,6 @@
 package model;
 
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -16,7 +17,6 @@ public class Scoreboard {
             this.wins = wins;
             this.numPlayed = numPlayed;
         }
-
         public String getPlayerName() {
             return playerName;
         }
