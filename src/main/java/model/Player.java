@@ -22,16 +22,17 @@ public class Player extends Account {
     private ArrayList<Message> messages;
     private ArrayList<String> favouriteGames;
     private ArrayList<String> suggestions;
-    private List<Player> alliance = new ArrayList<Player>();
 
 
-    private ArrayList<Card> cards = new ArrayList<Card>();
-    private int newSoldiers;
-    private int playerNumber;
-    private int draftSoldiers = 0;
 
-    private ArrayList<Player> requests = new ArrayList<>();
-    private ArrayList<Player> gameFriends = new ArrayList<>();
+    private transient List<Player> alliance = new ArrayList<Player>();
+    private transient ArrayList<Card> cards = new ArrayList<Card>();
+    private transient int newSoldiers;
+    private transient int playerNumber;
+    private transient int draftSoldiers = 0;
+    private transient ArrayList<Player> requests = new ArrayList<>();
+    private transient ArrayList<Player> gameFriends = new ArrayList<>();
+
     public Player(String firstName, String lastName, String username, String accountId,
                   String password, String email, String phoneNumber, double money) {
         super(firstName, lastName, username, accountId, password, email, phoneNumber);
