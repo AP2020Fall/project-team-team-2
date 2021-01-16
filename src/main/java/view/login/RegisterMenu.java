@@ -119,6 +119,7 @@ public class RegisterMenu  implements View {
     public void submit(ActionEvent actionEvent) throws IOException {
         ArrayList<String> additionalInfo = getAdditionalInfo();
         if (additionalInfo != null) {
+            WelcomeMenu.getAudioClip().stop();
             if (controller.createAccount(username.getText(), password.getText(), additionalInfo)) {
                 ViewHandler.getViewHandler().push(new AdminMainMenuLayout());
             } else {
