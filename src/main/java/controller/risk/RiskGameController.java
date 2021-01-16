@@ -1020,10 +1020,11 @@ public class RiskGameController extends Controller {
                 }
             }
         }
-        System.out.println("hello");
         if (finished) {
             this.winner = currentPlayer;
             this.gameIsPlaying = false;
+
+
             Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, this.winner,
                     3 + event.getScore(),1 + event.getScore()/2,0);
@@ -1054,7 +1055,6 @@ public class RiskGameController extends Controller {
                 return finished;
             }*/
         }
-        System.out.println("why");
         if (!finished) {
             finished = true;
             for (List<Country> countries : gameCountries) {

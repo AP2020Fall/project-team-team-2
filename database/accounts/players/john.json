@@ -8,7 +8,7 @@
     {
       "frequency": 1,
       "wins": 0,
-      "gameLogSummaryId": "7E49C367",
+      "gameLogSummaryId": "A5339600",
       "score": 0,
       "lastPlay": {
         "date": {
@@ -26,9 +26,9 @@
       "gameName": "Risk",
       "gameLogs": [
         {
-          "playerUsername": "player2",
+          "playerUsername": "john",
           "enemyUsernames": [
-            "john",
+            "player2",
             "player3"
           ],
           "gameName": "Risk",
@@ -50,9 +50,7 @@
       ]
     }
   ],
-  "friends": [
-    "player3"
-  ],
+  "friends": [],
   "receivedFriendRequests": [],
   "sentFriendRequests": [],
   "messages": [],
@@ -61,15 +59,15 @@
   "alliance": [],
   "cards": [],
   "newSoldiers": 0,
-  "playerNumber": 2,
+  "playerNumber": 1,
   "draftSoldiers": 3,
   "requests": [],
   "gameFriends": [],
-  "firstName": "player2",
-  "lastName": "player2pass",
-  "username": "player2",
-  "accountId": "6AA69E0F",
-  "password": "player2pass",
+  "firstName": "john",
+  "lastName": "john",
+  "username": "john",
+  "accountId": "E2D49DD5",
+  "password": "johnpass",
   "email": "ee@gmail.com",
   "phoneNumber": "09105734731",
   "registerDay": {
