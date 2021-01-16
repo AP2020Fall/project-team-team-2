@@ -51,7 +51,6 @@ public class PlayerMainMenu implements Tab, Initializable {
         recently.getChildren().add(new TreeItem<>(controller.lastGamePlayed()));
         TreeItem<GameEntry> suggested = new TreeItem<>(new GameEntry("Suggested"));
         suggested.setExpanded(true);
-
         for (GameEntry gameEntry : controller.adminsSuggestions()) {
             suggested.getChildren().add(new TreeItem<>(gameEntry));
         }

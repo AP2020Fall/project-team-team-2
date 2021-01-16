@@ -73,4 +73,13 @@ public class ViewHandler {
             viewStack.pop();
         showView();
     }
+    public void exitGame()
+    {
+        while((viewStack.peek() instanceof RiskGameView || viewStack.peek() instanceof  StartGameView))
+        {
+            viewStack.pop();
+            if(viewStack.isEmpty()) break;
+        }
+        showView();
+    }
 }

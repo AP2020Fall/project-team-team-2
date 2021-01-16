@@ -77,7 +77,6 @@ public class AdminEditProfile implements Tab, Initializable {
     }
     @FXML
     private void addAvatar(MouseEvent event) {
-        //todo
         Image givenImage = AlertMaker.getImageFromUser();
         if(givenImage != null)
         {
@@ -87,7 +86,6 @@ public class AdminEditProfile implements Tab, Initializable {
     }
 
     private void initializedPlayerInfo() {
-        //todo set image
         username.setText(controller.getUsername());
         password.setText(controller.getPassword());
         firstName.setText(controller.getFirstName());

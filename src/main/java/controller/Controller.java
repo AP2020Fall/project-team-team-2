@@ -23,6 +23,16 @@ public class Controller {
             }
         }
     }
+    public static String generateId(int different) {
+        String id = "";
+        while (true) {
+            id = UUID.randomUUID().toString().toUpperCase().substring(0, 8);
+            if (!doesIdExist(id)) {
+                ids.add(id);
+                return id;
+            }
+        }
+    }
 
     public boolean isUsernameExist(String username) {
         for (Account account : Account.getAllAccounts()) {

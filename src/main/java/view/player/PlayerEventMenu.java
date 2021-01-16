@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import model.Event;
 import view.Tab;
+import view.TabHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +21,8 @@ public class PlayerEventMenu implements Tab, Initializable {
     @FXML private Label startDate;
     @FXML private Label endDate;
     @FXML private Label score;
+    @FXML
+    private Label comment;
     @FXML
     private ImageView eventImage;
     PlayerEventMenuController controller;
@@ -41,16 +44,15 @@ public class PlayerEventMenu implements Tab, Initializable {
     }
 
     public void join() {
-        controller.join();
-        //todo implement
+        TabHandler.getTabHandler().push(new PlayerRunGameView(controller.getGame(),controller.getEvent()));
     }
-    //word
     private void initializeInfo()
     {
         gameName.setText(controller.getGameName());
         startDate.setText(controller.getStartDate());
         endDate.setText(controller.getEndDate());
         score.setText(controller.getScore());
+        comment.setText(controller.getComment());
         eventImage.setImage(controller.getEventImage());
     }
 }

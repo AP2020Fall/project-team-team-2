@@ -1,11 +1,13 @@
 package model;
 
+import controller.Controller;
+import controller.player.PlayerMainMenuController;
+
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 
 public class Player extends Account {
     private double money;
@@ -21,10 +23,14 @@ public class Player extends Account {
     private ArrayList<String> favouriteGames;
     private ArrayList<String> suggestions;
 
-    private ArrayList<Card> cards = new ArrayList<Card>();
-    private int newSoldiers;
-    private int playerNumber;
-    private int draftSoldiers = 0;
+
+
+    private transient ArrayList<Card> cards = new ArrayList<Card>();
+    private transient int newSoldiers;
+    private transient int playerNumber;
+    private transient int draftSoldiers = 0;
+    private transient ArrayList<Player> requests;
+    private transient ArrayList<Player> gameFriends;
 
     public Player(String firstName, String lastName, String username, String accountId,
                   String password, String email, String phoneNumber, double money) {
@@ -50,7 +56,10 @@ public class Player extends Account {
     }
 
     public int getScore() {
-        return score;
+        int result = 0;
+       for(GameLogSummary gameLogSummary: gameLogSummaries)
+           result += gameLogSummary.getScore();
+       return result;
     }
 
     public void setMoney(double money) {
@@ -81,8 +90,54 @@ public class Player extends Account {
         return null;
     }
 
-    public static void addGameLog(ArrayList<Player> players, Game game, GameStates gameState, Player winner) {
-        //todo
+    public static void addGameLog(ArrayList<Player> players, Game game, GameStates gameState, Player winner,
+                                  int win,int draw,int lose) {
+        if (winner != null) {
+            GameLogSummary gameLog = winner.getGameHistory("Risk");
+            if (gameLog == null) {
+                gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
+                winner.addGameLogSummary(gameLog);
+            }
+            gameLog.updateForWin(win, LocalDateTime.now(), new GameLog(winner, getEnemies(players, winner),
+                    game.getName(), GameLogStates.WON, LocalDateTime.now()));
+
+
+            for (Player player : players) {
+                if (!player.getAccountId().equals(winner.getAccountId())) {
+                    gameLog = player.getGameHistory(game.getName());
+                    if (gameLog == null) {
+                        gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
+                        player.addGameLogSummary(gameLog);
+                    }
+                    gameLog.updateForLoss(lose, LocalDateTime.now(), new GameLog(player, getEnemies(players, player),
+                            game.getName(), GameLogStates.LOST, LocalDateTime.now()));
+                }
+            }
+        } else {
+            for (Player player : players) {
+                GameLogSummary gameLog = player.getGameHistory(game.getName());
+                if (gameLog == null) {
+                    gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
+                    player.addGameLogSummary(gameLog);
+                }
+                gameLog.updateForDraw(draw, LocalDateTime.now(), new GameLog(player, getEnemies(players, player),
+                        game.getName(), GameLogStates.DRAWN, LocalDateTime.now()));
+            }
+        }
+        PlayLog playLog = new PlayLog(game.getName(), players, winner, LocalDateTime.now());
+        game.addPlayLog(playLog);
+    }
+
+    private static ArrayList<Player> getEnemies(ArrayList<Player> players, Player winner) {
+        ArrayList<Player> result = new ArrayList<>();
+        for(Player player: players)
+            if(!player.getAccountId().equals(winner.getAccountId()))
+                result.add(player);
+            return result;
+    }
+
+    private void addGameLogSummary(GameLogSummary gameLog) {
+        gameLogSummaries.add(gameLog);
     }
 
     public void removeGameLog(Game game) {
@@ -235,7 +290,6 @@ public class Player extends Account {
         return null;
     }
 
-
     public int getNumberOfWins() {
         int wins = 0;
         for (GameLogSummary gameLogSummary : gameLogSummaries)
@@ -301,8 +355,8 @@ public class Player extends Account {
     @Override
     public String toString() {
         return super.toString()
-                + "money: " + getMoney() + "$\n"
-                + "registered: " + getDayOfRegister() + " days ago\n";
+                + "money: " + getMoney() + "$\n";
+             //   + "registered: " + getDayOfRegister() + " days ago\n";
     }
 
 
@@ -336,6 +390,10 @@ public class Player extends Account {
         this.playerNumber = playerNumber;
     }
 
+    public ArrayList<Player> getGameFriends() {
+        return gameFriends;
+    }
+
     public int getPlayerNumber() {
         return playerNumber;
     }
@@ -343,7 +401,27 @@ public class Player extends Account {
     public ArrayList<Card> getCards() {
         return cards;
     }
-
+    public int[] getCardsNumber(){
+        int[] numbers = new int[3];
+        int number1 = 0;
+        int number2 = 0;
+        int number3 = 0;
+        for(Card card : cards){
+            if(card.equals(Card.CARD_1)){
+                number1++;
+            }
+            if(card.equals(Card.CARD_2)){
+                number2++;
+            }
+            if(card.equals(Card.CARD_3)){
+                number3++;
+            }
+        }
+        numbers[0] = number1;
+        numbers[1] = number2;
+        numbers[2] = number3;
+        return numbers;
+    }
 
     public void setDraws() {
         this.draws++;
@@ -357,5 +435,34 @@ public class Player extends Account {
         this.loses++;
     }
 
+    public void addGameRequest(Player player){
+        requests.add(player);
+    }
+    public void addGameFriend(Player player){
+        gameFriends.add(player);
+    }
+    public void rejectRequest(Player player){
+        requests.remove(player);
+    }
+
+    public ArrayList<Player> getRequests() {
+        return requests;
+    }
+
+    public boolean checkPlayerHasRequest(){
+        if(requests.size() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public void setRequestAndFriendsList(){
+        this.requests = new ArrayList<Player>();
+        this.gameFriends = new ArrayList<Player>();
+    }
+    public void resetRequestAndFriends(){
+        this.requests.clear();
+        this.gameFriends.clear();
+    }
 
 }

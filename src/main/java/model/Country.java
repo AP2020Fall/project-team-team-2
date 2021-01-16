@@ -31,7 +31,6 @@ public class Country {
     public Player getOwner() {
         return Owner;
     }
-
     public void addSoldiers(int soldiers) {
         this.soldiers += soldiers;
     }
@@ -50,8 +49,10 @@ public class Country {
 
     public void enableBlizzard(){ blizzard = true; }
 
-    public void desableBlizzard(){ blizzard = false; }
-
+    public void disableBlizzard(){ blizzard = false; }
+    public boolean getBlizzard(){
+        return blizzard;
+    }
     public int getNumberOfContinentCountry() {
         return numberOfContinentCountry;
     }
@@ -59,7 +60,10 @@ public class Country {
     public void setNumberOfContinentCountry(int numberOfContinentCountry) {
         this.numberOfContinentCountry = numberOfContinentCountry;
     }
-
+    public void emptyCountry(){
+        Owner = null;
+        soldiers = 0;
+    }
     public int getGameCountryNumber() {
         return gameCountryNumber;
     }

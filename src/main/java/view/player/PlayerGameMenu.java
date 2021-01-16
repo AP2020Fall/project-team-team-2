@@ -8,17 +8,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
+import model.Entry.GameEntry;
 import model.Entry.GameLogEntry;
 import model.Entry.ScoreboardEntry;
+import model.Event;
 import model.Game;
 import model.GameLogStates;
+import model.Scoreboard;
 import view.Tab;
+import view.TabHandler;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -75,8 +83,9 @@ public class PlayerGameMenu implements Tab, Initializable {
 
     @FXML
     private void runGame() {
-        //todo
-        System.out.println("run game must be implemented");
+        TabHandler.getTabHandler().push(new PlayerRunGameView(controller.getGame(),new Event(
+                "Risk", LocalDate.now(),LocalDate.now(),0,"0","Casual",
+                controller.getGame().getImage())));
     }
 
 
@@ -107,10 +116,8 @@ public class PlayerGameMenu implements Tab, Initializable {
                 gameLogRoot.getChildren().add(new TreeItem<>(gameLogEntry));
             gameLog.setRoot(gameLogRoot);
             gameLog.setShowRoot(false);
-        } else {
-            gameLog.setPlaceholder(new Label("Hasn't been played."));
         }
-
+        gameLog.setPlaceholder(new Label("Hasn't been played."));
         gameLog.getColumns().addAll(gameLogGameName, gameLogEnemies, gameLogState, gameLogTime);
     }
 
@@ -123,6 +130,28 @@ public class PlayerGameMenu implements Tab, Initializable {
     }
 
     private void initializeScoreboardTable() {
-        //todo
+        TableColumn<ScoreboardEntry, String> scoreboardNameColumn = new TableColumn<>("Player");
+        scoreboardNameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
+        TableColumn<ScoreboardEntry, Integer> scoreboardWinsColumn = new TableColumn<>("Wins");
+        scoreboardWinsColumn.setCellValueFactory(new PropertyValueFactory<>("wins"));
+        TableColumn<ScoreboardEntry, Integer> scoreboardFrequencyColumn = new TableColumn<>("Frequency");
+        scoreboardFrequencyColumn.setCellValueFactory(new PropertyValueFactory<>("numPlayed"));
+
+        scoreboard.setPlaceholder(new Label("No one has played the game."));
+        scoreboard.getColumns().addAll(scoreboardNameColumn,scoreboardFrequencyColumn,scoreboardWinsColumn);
+        scoreboard.getItems().addAll(controller.getScoreboard());
+    }
+    @FXML
+    void scoreboardSelected(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(scoreboard.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    ScoreboardEntry scoreboardEntry = scoreboard.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new PlayerProfileView(controller.getPlayer(scoreboardEntry)));
+                }
+            }
+
+        }
     }
 }

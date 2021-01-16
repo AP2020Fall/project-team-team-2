@@ -1,13 +1,17 @@
 package view;
 
+import com.jfoenix.controls.JFXHamburger;
 import controller.risk.RiskGameController;
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import model.Event;
+import org.controlsfx.control.Notifications;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
@@ -29,10 +33,7 @@ import model.Player;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class RiskGameView implements View, Initializable {
     private final RiskGameController riskGameController;
@@ -40,16 +41,35 @@ public class RiskGameView implements View, Initializable {
     private final String mapNum;
     private final SVGPath[][] allPaths = new SVGPath[5][5];
     private final Label[][] allLabels = new Label[5][5];
-    private final List<Circle> playersCircles = new ArrayList<Circle>();
-    private final List<Circle> playerColors = new ArrayList<Circle>();
-    private final List<Label> playerLabels = new ArrayList<Label>();
-    private final String[][] defaultClasses = new String[5][5];
+    private final Map<Integer, Circle> playersCircles = new HashMap<>();
+    private final List<Label> playerLabels = new ArrayList<>();
+    private Stage aboutStage;
+    @FXML
+    private HBox requestsHBox;
+    @FXML
+    private JFXHamburger cardMenu;
+    @FXML
+    private Rectangle loseManual;
     @FXML
     private Circle aClub;
     @FXML
     private Circle aHeart;
     @FXML
     private Circle aDiamond;
+    @FXML
+    private Label card1Label;
+    @FXML
+    private Label card2Label;
+    @FXML
+    private Label card3Label;
+    @FXML
+    private Button match1;
+    @FXML
+    private Button match2;
+    @FXML
+    private Button match3;
+    @FXML
+    private Button matchAll;
     @FXML
     private Rectangle nextTurn;
     @FXML
@@ -176,84 +196,154 @@ public class RiskGameView implements View, Initializable {
     private Label label_5_4;
     @FXML
     private Label label_5_5;
+
     @FXML
-    private void matchHandler(MouseEvent e){
-        String id = e.getPickResult().getIntersectedNode().getId();
+    private void loseManually(MouseEvent e) throws URISyntaxException {
+        changeNotifText(riskGameController.leaveTheGame());
+        makeRightHBox();
+        colorizeCountry();
+        putCountryName();
+        updatePlayerLabels();
+        if (!riskGameController.getGameIsPlaying()) {
+            ViewHandler.getViewHandler().exitGame();
+        }
     }
+
+    @FXML
+    private void match1Handler(MouseEvent e) {
+        matchCards(1);
+        setMyCardsLabels();
+        updatePlayerLabels();
+    }
+
+    @FXML
+    private void match2Handler(MouseEvent e) {
+        matchCards(2);
+        setMyCardsLabels();
+        updatePlayerLabels();
+    }
+
+    @FXML
+    private void match3Handler(MouseEvent e) {
+        matchCards(3);
+        setMyCardsLabels();
+        updatePlayerLabels();
+    }
+
+    @FXML
+    private void matchAllHandler(MouseEvent e) {
+        matchCards(4);
+        setMyCardsLabels();
+        updatePlayerLabels();
+    }
+
     @FXML
     private void cardsMenuHandler(MouseEvent e) throws IOException, URISyntaxException {
         Stage aboutStage = new Stage();
+        this.aboutStage = aboutStage;
         FXMLLoader aboutRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
         aboutRoot.setController(this);
         aboutStage.setScene(new Scene(aboutRoot.load()));
         aboutStage.setResizable(false);
         aboutStage.initModality(Modality.WINDOW_MODAL);
         aboutStage.initOwner(gameWindow);
-        insertImage(aHeart , "/images/A_heart.png");
-        insertImage(aClub , "/images/A_club.png");
-        insertImage(aDiamond , "/images/A_diamond.png");
+        insertImage(aHeart, "/images/A_heart.png");
+        insertImage(aClub, "/images/A_clubs.png");
+        insertImage(aDiamond, "/images/A_diamond.png");
+        setMyCardsLabels();
         aboutStage.show();
     }
+
+    @FXML
+    private void backToAbout(MouseEvent e) throws IOException, URISyntaxException {
+        FXMLLoader requestRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
+        requestRoot.setController(this);
+        aboutStage.setScene(new Scene(requestRoot.load()));
+        insertImage(aHeart, "/images/A_heart.png");
+        insertImage(aClub, "/images/A_clubs.png");
+        insertImage(aDiamond, "/images/A_diamond.png");
+        setMyCardsLabels();
+        aboutStage.show();
+    }
+
+    @FXML
+    private void requestsMenu(MouseEvent e) throws IOException {
+        FXMLLoader requestRoot = new FXMLLoader(getClass().getResource("/game/requests.fxml"));
+        requestRoot.setController(this);
+        aboutStage.setScene(new Scene(requestRoot.load()));
+        updateRequestsBox();
+        aboutStage.show();
+    }
+
     @FXML
     private void countryClick(MouseEvent e) {
-        int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
-        int i = indices[0];
-        int j = indices[1];
-        int soliders = 0;
-        try {
-            soliders = Integer.parseInt(inputNumber.getText());
-            if(riskGameController.getPlacementFinished()) {
-                switch (showWhatToDo()) {
-                    case "Draft":
-                        if (!inputNumber.getText().isEmpty()) {
-                            if (!riskGameController.getAttackWon()) {
-                                changeNotifText(draft(i, j, soliders));
-                            } else {
-                                changeNotifText(draftAfterWin(i, j, soliders));
-                            }
-                        }
-                        break;
-                    case "Attack":
-                        if (riskGameController.getI() == null || riskGameController.getJ() == null) {
-                            if (riskGameController.checkCountryIsYours(i, j)) {
-                                riskGameController.setI(i);
-                                riskGameController.setJ(j);
-                            } else {
-                                changeNotifText("This Country Is Not Yours");
-                            }
-                        } else {
+        if (riskGameController.checkTime()) {
+            int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
+            int i = indices[0];
+            int j = indices[1];
+            int soliders = 0;
+            try {
+                soliders = Integer.parseInt(inputNumber.getText());
+                if (riskGameController.getPlacementFinished()) {
+                    switch (showWhatToDo()) {
+                        case "Draft":
                             if (!inputNumber.getText().isEmpty()) {
-                                changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
-                                        i, j, soliders));
+                                if (!riskGameController.getAttackWon()) {
+                                    changeNotifText(draft(i, j, soliders));
+                                } else {
+                                    changeNotifText(draftAfterWin(i, j, soliders));
+                                }
                             }
-                        }
-                        break;
-                    case "Fortify":
-                        if (riskGameController.getI() == null || riskGameController.getJ() == null) {
-                            if (riskGameController.checkCountryIsYours(i, j)) {
-                                riskGameController.setI(i);
-                                riskGameController.setJ(j);
+                            break;
+                        case "Attack":
+                            if (riskGameController.getI() == null || riskGameController.getJ() == null) {
+                                if (riskGameController.checkCountryIsYours(i, j)) {
+                                    riskGameController.setI(i);
+                                    riskGameController.setJ(j);
+                                } else {
+                                    changeNotifText("This Country Is Not Yours");
+                                }
                             } else {
-                                changeNotifText("This Country Is Not Yours");
+                                if (!inputNumber.getText().isEmpty()) {
+                                    changeNotifText(attack(riskGameController.getI(), riskGameController.getJ(),
+                                            i, j, soliders));
+                                    try {
+                                        makeRightHBox();
+                                    } catch (Exception error2) {
+
+                                    }
+                                }
                             }
-                        } else {
-                            if (!inputNumber.getText().isEmpty()) {
-                                changeNotifText(fortify(riskGameController.getI(), riskGameController.getJ(),
-                                        i, j, soliders));
+                            break;
+                        case "Fortify":
+                            if (riskGameController.getI() == null || riskGameController.getJ() == null) {
+                                if (riskGameController.checkCountryIsYours(i, j)) {
+                                    riskGameController.setI(i);
+                                    riskGameController.setJ(j);
+                                } else {
+                                    changeNotifText("This Country Is Not Yours");
+                                }
+                            } else {
+                                if (!inputNumber.getText().isEmpty()) {
+                                    changeNotifText(fortify(riskGameController.getI(), riskGameController.getJ(),
+                                            i, j, soliders));
+                                }
                             }
-                        }
-                        break;
+                            break;
+                    }
+                } else {
+                    if (riskGameController.getAllPlayersAdded()) {
+                        riskGameController.beginDraft(i, j, soliders);
+                    } else {
+                        riskGameController.beginDraft(i, j, 1);
+                    }
                 }
-            }else{
-                if(riskGameController.getAllPlayersAdded()){
-                    riskGameController.beginDraft(i,j,soliders);
-                }else{
-                    riskGameController.beginDraft(i , j , 1);
-                }
+            } catch (NumberFormatException ex) {
+                changeNotifText("please insert a number");
             }
-        }
-        catch (NumberFormatException ex) {
-            changeNotifText("please insert a number");
+        }else{
+            changeNotifText("Your time has been finished");
+            setColorTurn();
         }
         colorizeCountry();
         setColorMode();
@@ -261,13 +351,16 @@ public class RiskGameView implements View, Initializable {
         updatePlayerLabels();
 
     }
+
     @FXML
-    private void nextStatus(MouseEvent e){
+    private void nextStatus(MouseEvent e) {
         changeNotifText(next());
         setColorMode();
         colorizeCountry();
         updatePlayerLabels();
+        putCountryName();
     }
+
     @FXML
     private void nextTurnHandler(MouseEvent e) {
         changeNotifText(nextTurn());
@@ -275,9 +368,11 @@ public class RiskGameView implements View, Initializable {
         setColorTurn();
         setColorMode();
         updatePlayerLabels();
+        putCountryName();
     }
+
     @FXML
-    private void deselectHandler(MouseEvent e){
+    private void deselectHandler(MouseEvent e) {
         deselect();
         colorizeCountry();
     }
@@ -298,9 +393,9 @@ public class RiskGameView implements View, Initializable {
         gameNotifs.setText(notifText);
     }
 
-    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, int mapNum) {
-        this.riskGameController = new RiskGameController(primitiveSettings, soldiers);
-        this.mapNum = String.valueOf(mapNum);
+    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers , Event event) {
+        this.riskGameController = new RiskGameController(primitiveSettings, soldiers , event);
+        this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
         if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
             autoPlace();
         }
@@ -321,179 +416,15 @@ public class RiskGameView implements View, Initializable {
 
     }
 
-    public void riskGameView() {
-        /* write variables to get commands *//*
-        Scanner inputCommand = Menu.getScanner();
-        String inputLine = new String();
-        boolean check = false;
-        boolean matchCardEnable = false;
-        boolean draftMode = false;
-        boolean fortifyMode = false;
-        *//* Different patterns of valid match cards commands *//*
-        Pattern matchCardsCommand = Pattern.compile("(^)match cards($)");
-        *//*Typical 1*//*
-        Pattern type1MatchCommand = Pattern.compile("(^)1-type1,type1,type1 score:4($)");
-        *//*Typical 2*//*
-        Pattern type2MatchCommand = Pattern.compile("(^)2-type2,type2,type2 score:6($)");
-        *//*Typical 3*//*
-        Pattern type3MatchCommand = Pattern.compile("(^)3-type3,type3,type3 score:8($)");
-        *//*Typical 4*//*
-        Pattern differentTypeMatchCommand = Pattern.compile("(^)4-type1,type2,type3 score:10($)");
-
-
-        *//* Pattern to place soldier in manual placement*//*
-        Pattern placeSoldierManual = Pattern.compile("(^)place soldier in (?<countryDetails>\\w+\\.\\d+)($)");
-        *//* Pattern to draft soldier *//*
-        Pattern placeSoldier = Pattern
-                .compile("(^)place (?<soldierNumber>\\d+) soldiers in (?<countryDetails>\\w+\\.\\d+)($)");
-        *//* Pattern to Attac*//*
-        Pattern attackPattern = Pattern
-                .compile("(^)attack from (?<sourceCountry>\\w+\\.\\d+) with (?<soldierNumber>\\d+) soldiers to (?<destinationCountry>\\w+\\.\\d+)($)");
-
-        *//* Pattern to fortify*//*
-        Pattern fortifyPattern = Pattern
-                .compile("(^)move (?<soldierNumber>\\d+) soldiers from (?<sourceCountry>\\w+\\.\\d+) to (?<destinationCountry>\\w+\\.\\d+)($)");
-        *//* Sow Map Pattern *//*
-        Pattern showMapPattern = Pattern.compile("(^)show map($)");
-        *//* get input command *//*
-        while (inputCommand.hasNextLine() && riskGameController.getGameIsPlaying()) {
-            boolean placementStatus = riskGameController.getPlacementFinished();
-            *//* get input command *//*
-         *//* Command Found*//*
-            boolean commandFound = false;
-
-            inputLine = inputCommand.nextLine().trim();
-            *//* Check manual placement*//*
-            Matcher manualPlacementMatcher = placeSoldierManual.matcher(inputLine);
-            check = manualPlacementMatcher.matches();
-            if (check == true && !placementStatus) {
-                String countryDetails = manualPlacementMatcher.group("countryDetails");
-                placeSoldier(countryDetails, 1);
-                commandFound = true;
-            }
-            *//* Show Map Match*//*
-            Matcher showMapMatcher = showMapPattern.matcher(inputLine);
-            check = showMapMatcher.matches();
-            if (check == true) {
-                this.showMap();
-                check = false;
-                commandFound = true;
-            }
-            *//* Check draft mode*//*
-            Matcher placeSoldierMatcher = placeSoldier.matcher(inputLine);
-            check = placeSoldierMatcher.matches();
-            if (riskGameController.getAttackWon() && placementStatus) {
-                if (check) {
-                    String countryDetails = placeSoldierMatcher.group("countryDetails");
-                    int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
-                    draftAfterWin(countryDetails, soldierNumber);
-                    commandFound = true;
-                    check = false;
-                } else if(!commandFound) {
-                    System.out.println("Invalid command!");
-                    continue;
-                }
-            }
-            if (check == true && placementStatus) {
-                String countryDetails = placeSoldierMatcher.group("countryDetails");
-                int soldierNumber = Integer.parseInt(placeSoldierMatcher.group("soldierNumber"));
-                draft(countryDetails, soldierNumber);
-                commandFound = true;
-            }
-            *//* Check attack mode *//*
-            Matcher attackMatcher = attackPattern.matcher(inputLine);
-            check = attackMatcher.matches();
-            if (check == true && placementStatus) {
-                String sourceCountry = attackMatcher.group("sourceCountry");
-                String destinationCountry = attackMatcher.group("destinationCountry");
-                int soldierNumber = Integer.parseInt(attackMatcher.group("soldierNumber"));
-                attack(sourceCountry, destinationCountry, soldierNumber);
-                commandFound = true;
-            }
-            *//* Check fortify mode*//*
-            Matcher fortifyMatcher = fortifyPattern.matcher(inputLine);
-            check = fortifyMatcher.matches();
-            if (check == true && placementStatus) {
-                String sourceCountry = fortifyMatcher.group("sourceCountry");
-                String destinationCountry = fortifyMatcher.group("destinationCountry");
-                int soldierNumber = Integer.parseInt(fortifyMatcher.group("soldierNumber"));
-                fortify(sourceCountry, destinationCountry, soldierNumber);
-                commandFound = true;
-            }
-
-
-            *//* Check match cards *//*
-            Matcher matchCardsMatcher = matchCardsCommand.matcher(inputLine);
-            check = matchCardsMatcher.matches();
-            if (check == true && placementStatus) {
-                check = false;
-                showOptions();
-                commandFound = true;
-            }
-            Matcher type1MatchMatcher = type1MatchCommand.matcher(inputLine);
-            check = type1MatchMatcher.matches();
-            if (check == true && placementStatus) {
-                riskGameController.matchCards(1);
-                check = false;
-                commandFound = true;
-            }
-
-            Matcher type2MatchMatcher = type2MatchCommand.matcher(inputLine);
-            check = type2MatchMatcher.matches();
-            if (check == true && placementStatus) {
-                riskGameController.matchCards(2);
-                check = false;
-                commandFound = true;
-            }
-
-            Matcher type3MatchMatcher = type3MatchCommand.matcher(inputLine);
-            check = type3MatchMatcher.matches();
-            if (check == true && placementStatus) {
-                riskGameController.matchCards(3);
-                check = false;
-                commandFound = true;
-                commandFound = true;
-            }
-
-            Matcher diffrentTypeMatchMatcher = differentTypeMatchCommand.matcher(inputLine);
-            check = diffrentTypeMatchMatcher.matches();
-            if (check == true && placementStatus) {
-                riskGameController.matchCards(4);
-                check = false;
-                commandFound = true;
-            }
-
-            if (inputLine.equals("next")) {
-                next();
-                commandFound =true;
-            }
-            if (inputLine.equals("turn over")) {
-                nextTurn();
-                commandFound = true;
-            }
-            if(inputLine.equals("show what to do")){
-                showWhatToDo();
-                commandFound = true;
-            }
-            if (commandFound == false) {
-                System.out.println("Invalid Command!");
-            }
-        }*/
-    }
-
 
     private String showWhatToDo() {
         return riskGameController.showWhatToDo();
     }
 
-    public void showMap() {
-        String toPrint = this.riskGameController.showMap();
-        System.out.println(toPrint);
-    }
-
     public String placeSoldier(int i, int j, int soldiers) {
         String toPrint = this.riskGameController.placeSoldier(i, j, soldiers);
-        return toPrint;    }
+        return toPrint;
+    }
 
     public String draft(int i, int j, int soldiers) {
         String toPrint = this.riskGameController.draft(i, j, soldiers);
@@ -521,22 +452,21 @@ public class RiskGameView implements View, Initializable {
 
     public String nextTurn() {
         String toPrint = riskGameController.changeTurn();
+        sendNotif();
         return toPrint;
     }
 
     public void showTurn() {
         String toPrint = riskGameController.showTurn();
-        System.out.println(toPrint);
     }
 
     public void showOptions() {
         String toPrint = riskGameController.showMatchOptions();
-        System.out.println(toPrint);
     }
 
-    public void matchCards(int typical) {
+    public String matchCards(int typical) {
         String toPrint = riskGameController.matchCards(typical);
-        System.out.println(toPrint);
+        return toPrint;
     }
 
     public String draftAfterWin(int i, int j, int soldiers) {
@@ -546,6 +476,17 @@ public class RiskGameView implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            insertImage(draftCircleImage, "/images/draft.png");
+            insertImage(attackCircleImage, "/images/attack.png");
+            insertImage(fortifyCircleImage, "/images/fortify.png");
+            insertImage(nextTurn, "/images/next.png");
+            insertImage(nextStatus, "/images/next_status.png");
+            insertImage(deselectIcon, "/images/deselect.png");
+            insertImage(loseManual, "/images/exit.png");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         rightVBox.setSpacing(5);
         try {
             makeRightHBox();
@@ -611,10 +552,21 @@ public class RiskGameView implements View, Initializable {
 
     public void putCountryName() {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
+        int row = countries.size();
+        int columns = countries.get(0).size();
+        int[][] toShowFog = new int[row][columns];
+        toShowFog = riskGameController.getFogOfWarMap(riskGameController.getCurrentPlayer());
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 allLabels[i][j].setText("");
-                allLabels[i][j].setText(countries.get(i).get(j).getName()+"\n"+countries.get(i).get(j).getSoldiers());
+                if (!riskGameController.getFogStatus() || !riskGameController.getPlacementFinished()) {
+                    allLabels[i][j].setText(countries.get(i).get(j).getName() + "\n" + countries.get(i).get(j).getSoldiers());
+                } else {
+                    int numberCheck = toShowFog[i][j];
+                    if (numberCheck == 1 || numberCheck == 2) {
+                        allLabels[i][j].setText(countries.get(i).get(j).getName() + "\n" + countries.get(i).get(j).getSoldiers());
+                    }
+                }
             }
         }
     }
@@ -628,18 +580,41 @@ public class RiskGameView implements View, Initializable {
             }
         }
     }
+
     public void colorizeCountry() {
         List<List<Country>> countries = this.riskGameController.getGameCountries();
+        int row = countries.size();
+        int columns = countries.get(0).size();
+        int[][] toShowFog = new int[row][columns];
+        toShowFog = riskGameController.getFogOfWarMap(riskGameController.getCurrentPlayer());
+        boolean fogStatus = riskGameController.getFogStatus();
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 Player owner = countries.get(i).get(j).getOwner();
                 if (owner != null) {
-                    String toClass = "country_player_" + owner.getPlayerNumber();
-                    allPaths[i][j].getStyleClass().clear();
-                    allPaths[i][j].getStyleClass().add(toClass);
+                    if (fogStatus) {
+                        int statusNumber = toShowFog[i][j];
+                        if (statusNumber == 1 || statusNumber == 2) {
+                            String toClass = "country_player_" + owner.getPlayerNumber();
+                            allPaths[i][j].getStyleClass().clear();
+                            allPaths[i][j].getStyleClass().add(toClass);
+                        } else {
+                            String toClass = "country_fog";
+                            allPaths[i][j].getStyleClass().clear();
+                            allPaths[i][j].getStyleClass().add(toClass);
+                        }
+                    } else {
+                        String toClass = "country_player_" + owner.getPlayerNumber();
+                        allPaths[i][j].getStyleClass().clear();
+                        allPaths[i][j].getStyleClass().add(toClass);
+                    }
                 } else {
                     allPaths[i][j].getStyleClass().clear();
                     allPaths[i][j].getStyleClass().add("country_no_player");
+                }
+                if (countries.get(i).get(j).getBlizzard()) {
+                    allPaths[i][j].getStyleClass().clear();
+                    allPaths[i][j].getStyleClass().add("blizzard");
                 }
             }
         }
@@ -665,14 +640,28 @@ public class RiskGameView implements View, Initializable {
                 break;
         }
     }
-    public void resetInput(){
+
+    public void resetInput() {
         inputNumber.setText("");
     }
+
     public void setColorTurn() {
-        setDefaultClasses(playersCircles, "none_active");
-        int turnIndex = riskGameController.getCurrentPlayerIndex();
-        playersCircles.get(turnIndex).getStyleClass().clear();
-        playersCircles.get(turnIndex).getStyleClass().add("status_on");
+        riskGameController.checkWinner();
+        if (riskGameController.getGameIsPlaying()) {
+            for (Map.Entry<Integer, Circle> entry : playersCircles.entrySet()) {
+                entry.getValue().getStyleClass().clear();
+                entry.getValue().getStyleClass().add("none_active");
+            }
+
+            int turnIndex = riskGameController.getCurrentPlayerIndex();
+            playersCircles.get(turnIndex).getStyleClass().clear();
+            playersCircles.get(turnIndex).getStyleClass().add("status_on");
+            for(Player player : riskGameController.getCurrentPlayer().getFriends()){
+                int playerNumber = player.getPlayerNumber();
+                playersCircles.get(playerNumber-1).getStyleClass().clear();
+                playersCircles.get(playerNumber-1).getStyleClass().add("friend");
+            }
+        }
     }
 
     public void setClassForShape(Shape shape, String className) {
@@ -686,26 +675,143 @@ public class RiskGameView implements View, Initializable {
         }
     }
 
+    public void notification(String title, String inputText) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Notifications notify = Notifications.create().title(title)
+                        .text(inputText)
+                        .hideAfter(javafx.util.Duration.seconds(2))
+                        .position(Pos.TOP_RIGHT);
+                notify.darkStyle();
+                notify.showInformation();
+            }
+        });
+
+
+    }
+
+    public void updateRequestsBox() {
+        requestsHBox.getChildren().clear();
+        EventHandler<MouseEvent> accept = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
+                Player player = riskGameController.getPlayerByPlayerNumber(playerNumber);
+                if (player != null) {
+                    notification("Accepted!", "You accepted this player as friend");
+                    riskGameController.getCurrentPlayer().getRequests().remove(player);
+                    riskGameController.getCurrentPlayer().getGameFriends().add(player);
+                    player.getGameFriends().add(riskGameController.getCurrentPlayer());
+                    updateRequestsBox();
+                }
+                event.consume();
+            }
+        };
+        EventHandler<MouseEvent> decline = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
+                Player player = riskGameController.getPlayerByPlayerNumber(playerNumber);
+                if (player != null) {
+                    notification("Declined!", "You declined this friend");
+                    riskGameController.getCurrentPlayer().getRequests().remove(player);
+                    updateRequestsBox();
+                }
+                event.consume();
+            }
+        };
+        for (Player player : riskGameController.getCurrentPlayer().getRequests()) {
+            String characterAddress = "/images/player_" + player.getPlayerNumber() + ".png";
+            Circle requestedCharacter = new Circle(60);
+            try {
+                insertImage(requestedCharacter, characterAddress);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            Button acceptButton = new Button("Accept");
+            acceptButton.setPrefSize(100, 40);
+            acceptButton.getStyleClass().add("accept_button");
+            acceptButton.setId("accept_" + player.getPlayerNumber());
+            acceptButton.setOnMouseClicked(accept);
+
+            Button declineButton = new Button("Decline");
+            declineButton.setPrefSize(100, 40);
+            declineButton.getStyleClass().add("decline_button");
+            declineButton.setId("decline_" + player.getPlayerNumber());
+            declineButton.setOnMouseClicked(decline);
+
+            VBox playerVBox = new VBox(requestedCharacter, acceptButton, declineButton);
+            playerVBox.setAlignment(Pos.CENTER);
+
+            playerVBox.setSpacing(10);
+            requestsHBox.getChildren().add(playerVBox);
+        }
+    }
+
+    public void setMyCardsLabels() {
+        int[] cardsNumbers = riskGameController.getCurrentPlayer().getCardsNumber();
+        int number1 = cardsNumbers[0];
+        int number2 = cardsNumbers[1];
+        int number3 = cardsNumbers[2];
+        card1Label.setText(String.valueOf(number1));
+        card2Label.setText(String.valueOf(number2));
+        card3Label.setText(String.valueOf(number3));
+    }
+
+    public void sendNotif() {
+        boolean checkHasRequest = riskGameController.getCheckRequests();
+        if (checkHasRequest && !riskGameController.getNotifSent()) {
+            notification("Requests", "You have request(s)");
+            riskGameController.notifSent();
+        }
+    }
+
     public void makeRightHBox() throws URISyntaxException {
-        int i = 0;
+        EventHandler<MouseEvent> addFriendHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
+                Player player = riskGameController.getPlayerByPlayerNumber(playerNumber);
+                if (player != null) {
+                    if (!player.equals(riskGameController.getCurrentPlayer())) {
+                        changeNotifText(riskGameController.addRequest(player));
+                    } else {
+                        changeNotifText("You can`t send friendship to yourself");
+                    }
+                }
+                event.consume();
+            }
+        };
+
+
         String playerImageAddress = "/images/player_";
         int bigCircleSize = 0;
-        if(riskGameController.getPlayers().size() <=3){
+        if (riskGameController.getPlayers().size() <= 3) {
             bigCircleSize = 100;
-        }else{
+        } else {
             bigCircleSize = 60;
         }
         rightVBox.getChildren().clear();
+        playerLabels.clear();
+        playersCircles.clear();
         for (Player player : riskGameController.getPlayers()) {
-            i++;
-            Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + i + ".png").toURI()));
+            Image friendImage = new Image(String.valueOf(getClass().getResource("/images/friend.png")));
+            Circle friendCircle = new Circle(20);
+            friendCircle.setFill(new ImagePattern(friendImage));
+            friendCircle.setOnMouseClicked(addFriendHandler);
+            friendCircle.setId("friend_" + player.getPlayerNumber());
+
+            Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + player.getPlayerNumber() + ".png").toURI()));
             Circle littleCircle = new Circle(10);
             littleCircle.getStyleClass().add("none_active");
-            playersCircles.add(littleCircle);
+            playersCircles.put(player.getPlayerNumber(), littleCircle);
+
 
             Label playerLabel = new Label(String.valueOf(player.getDraftSoldiers()));
             playerLabel.getStyleClass().add("player_label");
             playerLabels.add(playerLabel);
+
             Circle playerColorCircle = new Circle(10);
             playerColorCircle.getStyleClass().add("country_player_color_" + player.getPlayerNumber());
             VBox verticalBox = new VBox(littleCircle, playerColorCircle, playerLabel);
@@ -713,22 +819,24 @@ public class RiskGameView implements View, Initializable {
             verticalBox.setSpacing(10);
 
             Circle bigCircle = new Circle(bigCircleSize);
-            bigCircle.setFill(new ImagePattern(image));
+            bigCircle.setFill(new ImagePattern(player.getImage()));
             bigCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
-            HBox tempHBox = new HBox(verticalBox, bigCircle);
+            HBox tempHBox = new HBox(friendCircle, verticalBox, bigCircle);
             tempHBox.setAlignment(Pos.CENTER);
             tempHBox.setSpacing(10);
             rightVBox.getChildren().add(tempHBox);
         }
+        setColorTurn();
     }
 
-    public void updatePlayerLabels(){
+    public void updatePlayerLabels() {
         int i = 0;
-        for(Label label : playerLabels){
+        for (Label label : playerLabels) {
             label.setText(String.valueOf(riskGameController.getPlayers().get(i).getDraftSoldiers()));
             i++;
         }
     }
+
     public void insertImage(Shape shape, String imageAddress) throws URISyntaxException {
         Image image = new Image(String.valueOf(getClass().getResource(imageAddress).toURI()));
         shape.setFill(new ImagePattern(image));
@@ -744,23 +852,14 @@ public class RiskGameView implements View, Initializable {
         window.setTitle("Game Started");
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
-        try {
-            insertImage(draftCircleImage, "/images/draft.png");
-            insertImage(attackCircleImage, "/images/attack.png");
-            insertImage(fortifyCircleImage, "/images/fortify.png");
-            insertImage(nextTurn, "/images/next.png");
-            insertImage(nextStatus , "/images/next_status.png");
-            insertImage(deselectIcon , "/images/deselect.png");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
     }
-    public void addColorToSelected(){
+
+    public void addColorToSelected() {
         Integer i = riskGameController.getI();
         Integer j = riskGameController.getJ();
-        if(i != null && j != null){
-            allPaths[i-1][j-1].getStyleClass().clear();
-            allPaths[i-1][j-1].getStyleClass().add("country_selected_source");
+        if (i != null && j != null) {
+            allPaths[i - 1][j - 1].getStyleClass().clear();
+            allPaths[i - 1][j - 1].getStyleClass().add("country_selected_source");
         }
     }
 

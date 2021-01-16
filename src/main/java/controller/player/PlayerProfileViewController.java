@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import model.Entry.GameLogSummaryEntry;
 import model.FriendRequest;
+import model.Game;
 import model.GameLogSummary;
 import model.Player;
 
@@ -94,5 +95,8 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
 
     public Image getPlayerImage() {
         return player.getImage();
+    }
+    public Game getGame(GameLogSummaryEntry gameEntry) {
+        return Game.getGameByGameName(gameEntry.getGameName());
     }
 }

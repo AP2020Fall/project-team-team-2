@@ -1,11 +1,11 @@
 package controller.player;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import model.*;
 import model.Entry.GameLogEntry;
-import model.Game;
-import model.GameLog;
-import model.GameLogSummary;
-import model.Player;
+import model.Entry.ScoreboardEntry;
 import view.StartGameView;
 
 import java.util.ArrayList;
@@ -18,11 +18,6 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
     public PlayerGameMenuController(Game game) {
         this.game = Objects.requireNonNull(game, "Game passed to GameMenuController is null.");
         this.player = Objects.requireNonNull(loggedIn,"Player passed to GameMenuController is null.");
-    }
-
-    public String showScoreBoard() {
-        //returns the string of Scoreboard
-        return game.getScoreboard().toString();
     }
 
     public String getDetails() {
@@ -50,7 +45,7 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         if(gameLogSummary == null)
             return "hasn't been played";
         else
-            return String.valueOf(gameLogSummary.getFrequency());
+            return String.valueOf(gameLogSummary.getWins());
     }
 
     public String getPlayedFrequency() {
@@ -60,7 +55,7 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         if(gameLogSummary == null)
             return "hasn't been played";
         else
-        return String.valueOf(gameLogSummary.getWins());
+        return String.valueOf(gameLogSummary.getFrequency());
     }
 
     public void addToFavorites() {
@@ -71,15 +66,6 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
         player.removeFavouriteGame(game);
     }
 
-    public void runGame(ArrayList<String> usernames) {
-        ArrayList<Player> players = new ArrayList<>();
-        for(String username: usernames)
-        {
-            players.add(Objects.requireNonNull(Player.getPlayerByUsername(username),
-                    "Username passed to runGame doesn't exist."));
-        }
-        new StartGameView(players);
-    }
 
     public boolean isFavorite() {
         return player.getFavouriteGames().contains(game);
@@ -87,5 +73,22 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
 
     public Image getGameImage() {
         return game.getImage();
+    }
+
+    public ObservableList<ScoreboardEntry> getScoreboard() {
+        ObservableList<ScoreboardEntry> result = FXCollections.observableArrayList();
+        for(Scoreboard.Entry entry: game.getScoreboard().getScoreboard())
+        {
+            result.add(new ScoreboardEntry(entry));
+        }
+        return result;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public Player getPlayer(ScoreboardEntry scoreboardEntry) {
+        return Player.getPlayerByUsername(scoreboardEntry.getPlayerName());
     }
 }

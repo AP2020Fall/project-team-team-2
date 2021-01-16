@@ -1,10 +1,11 @@
 package model;
 
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Scoreboard {
-    private class Entry {
+    public class Entry {
         private String playerName;
         //private int score;
         private int wins;
@@ -16,7 +17,6 @@ public class Scoreboard {
             this.wins = wins;
             this.numPlayed = numPlayed;
         }
-
         public String getPlayerName() {
             return playerName;
         }
@@ -71,14 +71,12 @@ public class Scoreboard {
                 entry.setNumPlayed(entry.getNumPlayed()+1);
             }
         }
-       // System.out.println("why");
         //increment the wins of the winner
         if(playLog.getWinner() != null) {
             Entry entry = Objects.requireNonNull(findPlayerEntry(playLog.getWinner().getUsername()),
                     "Invalid PlayLog has been passed to Scoreboard.");
             entry.setWins(entry.getWins() + 1);
         }
-        //System.out.println("no");
         entries.sort((a,b) -> (a.getWins() != b.getWins() ? Integer.compare(b.getWins(),a.getWins())
                 : (a.getNumPlayed() != b.getNumPlayed() ? Integer.compare(a.getNumPlayed(),b.getNumPlayed())
                 : a.getPlayerName().compareTo(b.getPlayerName()))));
@@ -90,6 +88,10 @@ public class Scoreboard {
             if (entry.getPlayerName().equals(playerName))
                 return entry;
         return null;
+    }
+
+    public ArrayList<Entry> getScoreboard() {
+        return entries;
     }
 
     @Override

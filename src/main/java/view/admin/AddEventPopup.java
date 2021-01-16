@@ -82,7 +82,6 @@ public class AddEventPopup implements Initializable {
 
     @FXML
     void add() {
-        //todo check date
         if (!controller.checkStartDate(startDate.getValue()) || !controller.checkEndDate(endDate.getValue())) {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",

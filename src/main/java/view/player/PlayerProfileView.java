@@ -9,14 +9,20 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import model.Entry.GameEntry;
 import model.Entry.GameLogEntry;
 import model.Entry.GameLogSummaryEntry;
+import model.GameLogSummary;
 import model.Player;
 import view.Tab;
+import view.TabHandler;
 import view.ViewHandler;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -126,11 +132,23 @@ public class PlayerProfileView implements Tab, Initializable {
         winsColumn.setCellValueFactory(new PropertyValueFactory<>("wins"));
         TableColumn<GameLogSummaryEntry, Integer> scoreColumn = new TableColumn<>("Score");
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
-        TableColumn<GameLogSummaryEntry, LocalDateTime> lastPlayColumn = new TableColumn<>("Last Play");
+        TableColumn<GameLogSummaryEntry, LocalDate> lastPlayColumn = new TableColumn<>("Last Play");
         lastPlayColumn.setCellValueFactory(new PropertyValueFactory<>("lastPlay"));
         gameHistoryList.setPlaceholder(new Label("Player has not played a game."));
         gameHistoryList.getColumns().addAll(gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
         gameHistoryList.getItems().addAll(controller.getGameHistory());
     }
+    @FXML
+    void gameLogSummaryTableSelected(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(gameHistoryList.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    GameLogSummaryEntry gameEntry = gameHistoryList.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame(gameEntry)));
+                }
+            }
 
+        }
+    }
 }

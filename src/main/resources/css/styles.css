@@ -244,22 +244,29 @@
     -fx-fill: #1e7e9f;
 }
 
-.country_player_3,.country_player_color_4 {
+.country_player_4,.country_player_color_4 {
     -fx-fill: #d124dd;
 }
 
-.country_player_4,.country_player_color_5 {
+.country_player_5,.country_player_color_5 {
     -fx-fill: #e9b211;
 }
 
-.country_player_5,.country_player_color_6 {
+.country_player_6,.country_player_color_6 {
     -fx-fill: #DD4124;
 }
 
 .country_clicked {
     -fx-fill: green;
 }
-
+.accept_button{
+    -fx-background-color: green;
+    -fx-fill-text: wheat;
+}
+.decline_button{
+    -fx-background-color: #920404;
+    -fx-fill-text: wheat;
+}
 .game_labels {
     -fx-text-fill: wheat;
 }
@@ -268,7 +275,20 @@
     -fx-font-style: italic;
 }
 #cardsMenuLabel{
-    -fx-font-size: 25px;
+    -fx-font-size: 15px;
     -fx-font-style: italic bold;
+}
+#cardsMenuLabel:hover{
+    -fx-text-fill: wheat;
+}
+.friend{
+    -fx-fill: #00ffeb;
+}
+.blizzard{
+    -fx-fill: white;
+}
+.cardsLabel{
+    -fx-font-style: italic bold;
+    -fx-font-size: 20px;
 }
 /* Game Part */

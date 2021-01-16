@@ -19,37 +19,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        /* For Checking game GUI */
-        Player newPlayer1 = new Player("new", "mew2");
-        Player newPlayer2 = new Player("new2", "mew22");
-        ArrayList<Player> players = new ArrayList<Player>();
-        players.add(newPlayer1);
-        players.add(newPlayer2);
-        HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
-        primitiveSettings.put("Map Number", 1);
-        primitiveSettings.put("Placement", true);
-        primitiveSettings.put("Alliance", false);
-        primitiveSettings.put("Blizzards", false);
-        primitiveSettings.put("Fog of War", false);
-        primitiveSettings.put("Duration", 0);
-        primitiveSettings.put("PlayersNum", 2);
-        primitiveSettings.put("Players", players);
-        /* For Checking game GUI */
-
         window = primaryStage;
         window.setOnCloseRequest(event -> Platform.exit());
         openFiles();
         Runtime.getRuntime().addShutdownHook(new Thread(Main::saveFiles));
-        ViewHandler viewHandler = ViewHandler.getViewHandler();
-        System.out.println("1- Plato\n2- Risk");
-        Scanner input = new Scanner(System.in);
-
-        if (input.nextInt() == 1)
-            viewHandler.push(new WelcomeMenu());
-        else {
-            viewHandler.push(new RiskGameView(primitiveSettings, 20, 1));
-        }
-
+        ViewHandler.getViewHandler().push(new WelcomeMenu());
         Main.window.show();
     }
 
