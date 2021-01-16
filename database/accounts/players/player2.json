@@ -1,15 +1,15 @@
 {
-  "money": 400.0,
+  "money": 123456.0,
   "score": 0,
   "loses": 0,
   "wins": 0,
   "draws": 0,
   "gameLogSummaries": [
     {
-      "frequency": 2,
-      "wins": 0,
-      "gameLogSummaryId": "7D7BF410",
-      "score": 0,
+      "frequency": 1,
+      "wins": 1,
+      "gameLogSummaryId": "D7F3E59D",
+      "score": 3,
       "lastPlay": {
         "date": {
           "year": 2021,
@@ -17,10 +17,10 @@
           "day": 16
         },
         "time": {
-          "hour": 20,
-          "minute": 37,
-          "second": 40,
-          "nano": 830000000
+          "hour": 21,
+          "minute": 47,
+          "second": 58,
+          "nano": 212000000
         }
       },
       "gameName": "Risk",
@@ -31,7 +31,7 @@
             "player1"
           ],
           "gameName": "Risk",
-          "result": "LOST",
+          "result": "WON",
           "timeFinished": {
             "date": {
               "year": 2021,
@@ -39,31 +39,10 @@
               "day": 16
             },
             "time": {
-              "hour": 20,
-              "minute": 36,
-              "second": 11,
-              "nano": 435000000
-            }
-          }
-        },
-        {
-          "playerUsername": "player2",
-          "enemyUsernames": [
-            "player1"
-          ],
-          "gameName": "Risk",
-          "result": "LOST",
-          "timeFinished": {
-            "date": {
-              "year": 2021,
-              "month": 1,
-              "day": 16
-            },
-            "time": {
-              "hour": 20,
-              "minute": 37,
-              "second": 40,
-              "nano": 830000000
+              "hour": 21,
+              "minute": 47,
+              "second": 58,
+              "nano": 212000000
             }
           }
         }
@@ -76,20 +55,13 @@
   "messages": [],
   "favouriteGames": [],
   "suggestions": [],
-  "alliance": [],
-  "cards": [],
-  "newSoldiers": 0,
-  "playerNumber": 2,
-  "draftSoldiers": 3,
-  "requests": [],
-  "gameFriends": [],
   "firstName": "player2",
-  "lastName": "player2",
+  "lastName": "player2`",
   "username": "player2",
-  "accountId": "6DF603C4",
-  "password": "player2pass",
-  "email": "eee@gmail.com",
-  "phoneNumber": "09105734731",
+  "accountId": "FB64EDA8",
+  "password": "player2",
+  "email": "wtu@yaho.com",
+  "phoneNumber": "09121256782",
   "registerDay": {
     "year": 2021,
     "month": 1,

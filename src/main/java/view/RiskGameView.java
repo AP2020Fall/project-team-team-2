@@ -819,7 +819,7 @@ public class RiskGameView implements View, Initializable {
             verticalBox.setSpacing(10);
 
             Circle bigCircle = new Circle(bigCircleSize);
-            bigCircle.setFill(new ImagePattern(image));
+            bigCircle.setFill(new ImagePattern(player.getImage()));
             bigCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
             HBox tempHBox = new HBox(friendCircle, verticalBox, bigCircle);
             tempHBox.setAlignment(Pos.CENTER);

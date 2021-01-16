@@ -25,13 +25,12 @@ public class Player extends Account {
 
 
 
-    private transient List<Player> alliance = new ArrayList<Player>();
     private transient ArrayList<Card> cards = new ArrayList<Card>();
     private transient int newSoldiers;
     private transient int playerNumber;
     private transient int draftSoldiers = 0;
-    private transient ArrayList<Player> requests = new ArrayList<>();
-    private transient ArrayList<Player> gameFriends = new ArrayList<>();
+    private transient ArrayList<Player> requests;
+    private transient ArrayList<Player> gameFriends;
 
     public Player(String firstName, String lastName, String username, String accountId,
                   String password, String email, String phoneNumber, double money) {
@@ -291,9 +290,6 @@ public class Player extends Account {
         return null;
     }
 
-    public List<Player> getAlliance() {
-        return alliance;
-    }
     public int getNumberOfWins() {
         int wins = 0;
         for (GameLogSummary gameLogSummary : gameLogSummaries)
@@ -459,6 +455,14 @@ public class Player extends Account {
         }else{
             return false;
         }
+    }
+    public void setRequestAndFriendsList(){
+        this.requests = new ArrayList<Player>();
+        this.gameFriends = new ArrayList<Player>();
+    }
+    public void resetRequestAndFriends(){
+        this.requests.clear();
+        this.gameFriends.clear();
     }
 
 }

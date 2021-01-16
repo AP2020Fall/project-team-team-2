@@ -57,6 +57,9 @@ public class RiskGameController extends Controller {
         this.fogIsSet = (boolean) primitiveSettings.get("Fog of War");
         this.startSoldiers = soldiers;
         this.duration = (int) primitiveSettings.get("Duration");
+        for(Player player:players){
+            player.setRequestAndFriendsList();
+        }
         setStartSoldiers();
         /* Shaping Map*/
         this.shapeMap();
@@ -741,7 +744,7 @@ public class RiskGameController extends Controller {
             for (int j = 0; j < column; j++) {
                 if (gameCountries.get(i).get(j).getOwner() != null) {
                     if (gameCountries.get(i).get(j).getOwner().getUsername().equals(currentPlayer.getUsername())
-                            || gameCountries.get(i).get(j).getOwner().getAlliance().contains(currentPlayer)
+                            || gameCountries.get(i).get(j).getOwner().getFriends().contains(currentPlayer)
                     ) {
                         countryNumbers[i][j] = 1;
                         changeNumberElement(i - 1, j - 1, countryNumbers, 2);
@@ -1023,7 +1026,9 @@ public class RiskGameController extends Controller {
         if (finished) {
             this.winner = currentPlayer;
             this.gameIsPlaying = false;
-
+            for(Player player:players){
+                player.resetRequestAndFriends();
+            }
 
             Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, this.winner,
@@ -1067,6 +1072,9 @@ public class RiskGameController extends Controller {
             }
         }
         if (finished) {
+            for(Player player:players){
+                player.resetRequestAndFriends();
+            }
             this.gameIsPlaying = false;
             Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,
@@ -1244,6 +1252,7 @@ public class RiskGameController extends Controller {
             return false;
         }
     }
+
     public boolean checkTime(){
         if(System.currentTimeMillis()/1000L - currentTimeStamp > duration){
             mainChangeTurn();
