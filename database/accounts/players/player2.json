@@ -1,58 +1,11 @@
 {
-  "money": 400.0,
+  "money": 123995.0,
   "score": 0,
   "loses": 0,
   "wins": 0,
   "draws": 0,
-  "gameLogSummaries": [
-    {
-      "frequency": 1,
-      "wins": 0,
-      "gameLogSummaryId": "7E49C367",
-      "score": 0,
-      "lastPlay": {
-        "date": {
-          "year": 2021,
-          "month": 1,
-          "day": 16
-        },
-        "time": {
-          "hour": 18,
-          "minute": 51,
-          "second": 58,
-          "nano": 190000000
-        }
-      },
-      "gameName": "Risk",
-      "gameLogs": [
-        {
-          "playerUsername": "player2",
-          "enemyUsernames": [
-            "john",
-            "player3"
-          ],
-          "gameName": "Risk",
-          "result": "LOST",
-          "timeFinished": {
-            "date": {
-              "year": 2021,
-              "month": 1,
-              "day": 16
-            },
-            "time": {
-              "hour": 18,
-              "minute": 51,
-              "second": 58,
-              "nano": 190000000
-            }
-          }
-        }
-      ]
-    }
-  ],
-  "friends": [
-    "player3"
-  ],
+  "gameLogSummaries": [],
+  "friends": [],
   "receivedFriendRequests": [],
   "sentFriendRequests": [],
   "messages": [],
@@ -61,17 +14,17 @@
   "alliance": [],
   "cards": [],
   "newSoldiers": 0,
-  "playerNumber": 2,
+  "playerNumber": 1,
   "draftSoldiers": 3,
   "requests": [],
   "gameFriends": [],
-  "firstName": "player2",
-  "lastName": "player2pass",
+  "firstName": "Amir",
+  "lastName": "msakg",
   "username": "player2",
-  "accountId": "6AA69E0F",
+  "accountId": "5A6CF227",
   "password": "player2pass",
-  "email": "ee@gmail.com",
-  "phoneNumber": "09105734731",
+  "email": "miasgm@hagko.com",
+  "phoneNumber": "09121234567",
   "registerDay": {
     "year": 2021,
     "month": 1,
