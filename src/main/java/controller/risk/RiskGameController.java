@@ -71,6 +71,7 @@ public class RiskGameController extends Controller {
 
     }
 
+
     public void shapeMap() {
         Integer mapNumber = (Integer) primitiveSettings.get("Map Number");
         String mapFileAddress = "src/main/resources/maps/map_" + String.valueOf(mapNumber) + ".txt";

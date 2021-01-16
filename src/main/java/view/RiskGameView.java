@@ -656,6 +656,11 @@ public class RiskGameView implements View, Initializable {
             int turnIndex = riskGameController.getCurrentPlayerIndex();
             playersCircles.get(turnIndex).getStyleClass().clear();
             playersCircles.get(turnIndex).getStyleClass().add("status_on");
+            for(Player player : riskGameController.getCurrentPlayer().getFriends()){
+                int playerNumber = player.getPlayerNumber();
+                playersCircles.get(playerNumber-1).getStyleClass().clear();
+                playersCircles.get(playerNumber-1).getStyleClass().add("friend");
+            }
         }
     }
 

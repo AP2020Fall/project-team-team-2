@@ -35,15 +35,15 @@ public class Main extends Application {
 //        players.add(newPlayer3);
 //        players.add(newPlayer4);
 
-//        HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
-//        primitiveSettings.put("Map Number", 1);
-//        primitiveSettings.put("Placement", false);
-//        primitiveSettings.put("Alliance", false);
-//        primitiveSettings.put("Blizzards", false);
-//        primitiveSettings.put("Fog of War", false);
-//        primitiveSettings.put("Duration", 60);
-//        primitiveSettings.put("PlayersNum", 2);
-//        primitiveSettings.put("Players", players);
+        HashMap<String, Object> primitiveSettings = new HashMap<String, Object>();
+        primitiveSettings.put("Map Number", 1);
+        primitiveSettings.put("Placement", false);
+        primitiveSettings.put("Alliance", false);
+        primitiveSettings.put("Blizzards", false);
+        primitiveSettings.put("Fog of War", false);
+        primitiveSettings.put("Duration", 60);
+        primitiveSettings.put("PlayersNum", 2);
+        primitiveSettings.put("Players", players);
         /* For Checking and Test game GUI */
 
 

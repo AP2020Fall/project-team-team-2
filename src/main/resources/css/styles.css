@@ -281,6 +281,9 @@
 #cardsMenuLabel:hover{
     -fx-text-fill: wheat;
 }
+.friend{
+    -fx-fill: #00ffeb;
+}
 .blizzard{
     -fx-fill: white;
 }
