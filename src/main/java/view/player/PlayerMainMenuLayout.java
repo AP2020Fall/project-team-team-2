@@ -37,7 +37,8 @@ public class PlayerMainMenuLayout implements View, Initializable {
     @FXML
     private ContextMenu searchContextMenu;
     PlayerMainMenuController controller;
-    private static AudioClip audioClip;
+    private static AudioClip audioClip = new AudioClip(PlayerMainMenuLayout.class.getResource("/sounds/playerSound.mp3").toString());
+
     public PlayerMainMenuLayout() {
         controller = new PlayerMainMenuController();
     }
@@ -47,7 +48,8 @@ public class PlayerMainMenuLayout implements View, Initializable {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/player/playerMainMenuLayout.fxml"));
         root.setController(this);
         window.setTitle("Plato");
-        playSoundtrack();
+        if (!audioClip.isPlaying())
+            playSoundtrack();
         Scene scene = new Scene(root.load());
         scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         window.setScene(scene);
@@ -59,7 +61,6 @@ public class PlayerMainMenuLayout implements View, Initializable {
     }
 
     private void playSoundtrack() {
-        audioClip = new AudioClip(getClass().getResource("/sounds/playerSound.mp3").toString());
         audioClip.setCycleCount(audioClip.INDEFINITE);
         audioClip.play();
     }
@@ -75,20 +76,21 @@ public class PlayerMainMenuLayout implements View, Initializable {
     @FXML
     private void search() {
         if (!controller.isUsernameExist(searchUsername.getText())) {
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
-                    "Invalid username","Username does not exist!");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid username", "Username does not exist!");
         } else {
             TabHandler.getTabHandler().push(
                     new PlayerProfileView(controller.searchPlayer(searchUsername.getText())));
         }
     }
+
     @FXML
     void updateContextMenu(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER) return;
+        if (event.getCode() == KeyCode.ENTER) return;
         String searchQuery = searchUsername.getText();
         searchContextMenu.getItems().clear();
         searchContextMenu.getItems().addAll(controller.getSearchQuery(searchQuery));
-        searchContextMenu.show(searchUsername, Side.BOTTOM,0,0);
+        searchContextMenu.show(searchUsername, Side.BOTTOM, 0, 0);
 
     }
 
@@ -109,26 +111,24 @@ public class PlayerMainMenuLayout implements View, Initializable {
 
     @FXML
     private void viewMainMenu() {
-        if(TabHandler.getTabHandler().current() instanceof PlayerMainMenu) {
+        if (TabHandler.getTabHandler().current() instanceof PlayerMainMenu) {
             TabHandler.getTabHandler().refresh();
-        }
-        else
-        TabHandler.getTabHandler().push(new PlayerMainMenu());
+        } else
+            TabHandler.getTabHandler().push(new PlayerMainMenu());
     }
 
     @FXML
     private void viewFriendsMenu() {
-        if(TabHandler.getTabHandler().current() instanceof PlayerFriendsMenu) {
+        if (TabHandler.getTabHandler().current() instanceof PlayerFriendsMenu) {
 
             TabHandler.getTabHandler().refresh();
-        }
-        else
+        } else
             TabHandler.getTabHandler().push(new PlayerFriendsMenu());
     }
 
     @FXML
     private void viewGamesMenu() {
-        if(TabHandler.getTabHandler().current() instanceof PlayerGamesMenu)
+        if (TabHandler.getTabHandler().current() instanceof PlayerGamesMenu)
             TabHandler.getTabHandler().refresh();
         else
             TabHandler.getTabHandler().push(new PlayerGamesMenu());
@@ -136,7 +136,7 @@ public class PlayerMainMenuLayout implements View, Initializable {
 
     @FXML
     private void viewAccountMenu() {
-        if(TabHandler.getTabHandler().current() instanceof PlayerAccountMenu)
+        if (TabHandler.getTabHandler().current() instanceof PlayerAccountMenu)
             TabHandler.getTabHandler().refresh();
         else
             TabHandler.getTabHandler().push(new PlayerAccountMenu());

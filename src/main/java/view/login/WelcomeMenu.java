@@ -15,7 +15,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class WelcomeMenu implements View {
-    private AudioClip audioClip;
+    private static AudioClip audioClip = new AudioClip(WelcomeMenu.class.getResource("/sounds/soundtrack.mp3").toString());
+    ;
 
     public WelcomeMenu() {
     }
@@ -25,22 +26,25 @@ public class WelcomeMenu implements View {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/login/welcomeMenu.fxml"));
         root.setController(this);
         window.setTitle("Plato");
-        audioClip = new AudioClip(getClass().getResource("/sounds/soundtrack.mp3").toString());
-        audioClip.play();
+        if (!audioClip.isPlaying())
+            audioClip.play();
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
     }
 
+    public static AudioClip getAudioClip() {
+        return audioClip;
+    }
 
     @FXML
     private void openLoginMenu() {
-        audioClip.stop();
+
         ViewHandler.getViewHandler().push(new LoginMenu());
     }
 
     @FXML
     private void openRegisterMenu() {
-        audioClip.stop();
+
         ViewHandler.getViewHandler().push(new RegisterMenu());
     }
 

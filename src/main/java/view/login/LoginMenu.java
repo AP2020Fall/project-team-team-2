@@ -64,6 +64,7 @@ public class LoginMenu implements View, Initializable {
                 AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                         , "Invalid Credentials", "Username and password are not match.");
             } else {
+                WelcomeMenu.getAudioClip().stop();
                 if (controller.login(username.getText())) {
                     ViewHandler.getViewHandler().push(new AdminMainMenuLayout());
                 } else {
