@@ -13,29 +13,30 @@
           "draws": 0,
           "gameLogSummaries": [
             {
-              "frequency": 2,
+              "frequency": 1,
               "wins": 0,
-              "gameLogSummaryId": "E10F6C15",
+              "gameLogSummaryId": "A5339600",
               "score": 0,
               "lastPlay": {
                 "date": {
                   "year": 2021,
                   "month": 1,
-                  "day": 15
+                  "day": 16
                 },
                 "time": {
-                  "hour": 19,
-                  "minute": 17,
+                  "hour": 18,
+                  "minute": 51,
                   "second": 58,
-                  "nano": 526000000
+                  "nano": 190000000
                 }
               },
               "gameName": "Risk",
               "gameLogs": [
                 {
-                  "playerUsername": "player1",
+                  "playerUsername": "john",
                   "enemyUsernames": [
-                    "player2"
+                    "player2",
+                    "player3"
                   ],
                   "gameName": "Risk",
                   "result": "LOST",
@@ -43,34 +44,13 @@
                     "date": {
                       "year": 2021,
                       "month": 1,
-                      "day": 15
+                      "day": 16
                     },
                     "time": {
-                      "hour": 19,
-                      "minute": 17,
-                      "second": 14,
-                      "nano": 541000000
-                    }
-                  }
-                },
-                {
-                  "playerUsername": "player1",
-                  "enemyUsernames": [
-                    "player2"
-                  ],
-                  "gameName": "Risk",
-                  "result": "LOST",
-                  "timeFinished": {
-                    "date": {
-                      "year": 2021,
-                      "month": 1,
-                      "day": 15
-                    },
-                    "time": {
-                      "hour": 19,
-                      "minute": 17,
+                      "hour": 18,
+                      "minute": 51,
                       "second": 58,
-                      "nano": 526000000
+                      "nano": 190000000
                     }
                   }
                 }
@@ -90,17 +70,17 @@
           "draftSoldiers": 3,
           "requests": [],
           "gameFriends": [],
-          "firstName": "player1",
-          "lastName": "player1",
-          "username": "player1",
-          "accountId": "D2A70327",
-          "password": "player1pass",
-          "email": "www@gmail.com",
+          "firstName": "john",
+          "lastName": "john",
+          "username": "john",
+          "accountId": "E2D49DD5",
+          "password": "johnpass",
+          "email": "ee@gmail.com",
           "phoneNumber": "09105734731",
           "registerDay": {
             "year": 2021,
             "month": 1,
-            "day": 15
+            "day": 16
           },
           "isRobot": false
         },
@@ -112,336 +92,21 @@
           "draws": 0,
           "gameLogSummaries": [
             {
-              "frequency": 2,
-              "wins": 2,
-              "gameLogSummaryId": "48D4FBF8",
-              "score": 6,
-              "lastPlay": {
-                "date": {
-                  "year": 2021,
-                  "month": 1,
-                  "day": 15
-                },
-                "time": {
-                  "hour": 19,
-                  "minute": 17,
-                  "second": 58,
-                  "nano": 526000000
-                }
-              },
-              "gameName": "Risk",
-              "gameLogs": [
-                {
-                  "playerUsername": "player2",
-                  "enemyUsernames": [
-                    "player1"
-                  ],
-                  "gameName": "Risk",
-                  "result": "WON",
-                  "timeFinished": {
-                    "date": {
-                      "year": 2021,
-                      "month": 1,
-                      "day": 15
-                    },
-                    "time": {
-                      "hour": 19,
-                      "minute": 17,
-                      "second": 14,
-                      "nano": 541000000
-                    }
-                  }
-                },
-                {
-                  "playerUsername": "player2",
-                  "enemyUsernames": [
-                    "player1"
-                  ],
-                  "gameName": "Risk",
-                  "result": "WON",
-                  "timeFinished": {
-                    "date": {
-                      "year": 2021,
-                      "month": 1,
-                      "day": 15
-                    },
-                    "time": {
-                      "hour": 19,
-                      "minute": 17,
-                      "second": 58,
-                      "nano": 526000000
-                    }
-                  }
-                }
-              ]
-            }
-          ],
-          "friends": [],
-          "receivedFriendRequests": [],
-          "sentFriendRequests": [],
-          "messages": [],
-          "favouriteGames": [],
-          "suggestions": [],
-          "alliance": [],
-          "cards": [],
-          "newSoldiers": 0,
-          "playerNumber": 2,
-          "draftSoldiers": 3,
-          "requests": [],
-          "gameFriends": [],
-          "firstName": "player2",
-          "lastName": "player2",
-          "username": "player2",
-          "accountId": "31DE9729",
-          "password": "player2pass",
-          "email": "eee@gmi.com",
-          "phoneNumber": "09105734731",
-          "registerDay": {
-            "year": 2021,
-            "month": 1,
-            "day": 15
-          },
-          "isRobot": false
-        }
-      ],
-      "winner": {
-        "money": 400.0,
-        "score": 0,
-        "loses": 0,
-        "wins": 0,
-        "draws": 0,
-        "gameLogSummaries": [
-          {
-            "frequency": 2,
-            "wins": 2,
-            "gameLogSummaryId": "48D4FBF8",
-            "score": 6,
-            "lastPlay": {
-              "date": {
-                "year": 2021,
-                "month": 1,
-                "day": 15
-              },
-              "time": {
-                "hour": 19,
-                "minute": 17,
-                "second": 58,
-                "nano": 526000000
-              }
-            },
-            "gameName": "Risk",
-            "gameLogs": [
-              {
-                "playerUsername": "player2",
-                "enemyUsernames": [
-                  "player1"
-                ],
-                "gameName": "Risk",
-                "result": "WON",
-                "timeFinished": {
-                  "date": {
-                    "year": 2021,
-                    "month": 1,
-                    "day": 15
-                  },
-                  "time": {
-                    "hour": 19,
-                    "minute": 17,
-                    "second": 14,
-                    "nano": 541000000
-                  }
-                }
-              },
-              {
-                "playerUsername": "player2",
-                "enemyUsernames": [
-                  "player1"
-                ],
-                "gameName": "Risk",
-                "result": "WON",
-                "timeFinished": {
-                  "date": {
-                    "year": 2021,
-                    "month": 1,
-                    "day": 15
-                  },
-                  "time": {
-                    "hour": 19,
-                    "minute": 17,
-                    "second": 58,
-                    "nano": 526000000
-                  }
-                }
-              }
-            ]
-          }
-        ],
-        "friends": [],
-        "receivedFriendRequests": [],
-        "sentFriendRequests": [],
-        "messages": [],
-        "favouriteGames": [],
-        "suggestions": [],
-        "alliance": [],
-        "cards": [],
-        "newSoldiers": 0,
-        "playerNumber": 2,
-        "draftSoldiers": 3,
-        "requests": [],
-        "gameFriends": [],
-        "firstName": "player2",
-        "lastName": "player2",
-        "username": "player2",
-        "accountId": "31DE9729",
-        "password": "player2pass",
-        "email": "eee@gmi.com",
-        "phoneNumber": "09105734731",
-        "registerDay": {
-          "year": 2021,
-          "month": 1,
-          "day": 15
-        },
-        "isRobot": false
-      },
-      "time": {
-        "date": {
-          "year": 2021,
-          "month": 1,
-          "day": 15
-        },
-        "time": {
-          "hour": 19,
-          "minute": 17,
-          "second": 14,
-          "nano": 541000000
-        }
-      }
-    },
-    {
-      "gameName": "Risk",
-      "players": [
-        {
-          "money": 400.0,
-          "score": 0,
-          "loses": 0,
-          "wins": 0,
-          "draws": 0,
-          "gameLogSummaries": [
-            {
-              "frequency": 2,
+              "frequency": 1,
               "wins": 0,
-              "gameLogSummaryId": "E10F6C15",
+              "gameLogSummaryId": "7E49C367",
               "score": 0,
               "lastPlay": {
                 "date": {
                   "year": 2021,
                   "month": 1,
-                  "day": 15
+                  "day": 16
                 },
                 "time": {
-                  "hour": 19,
-                  "minute": 17,
+                  "hour": 18,
+                  "minute": 51,
                   "second": 58,
-                  "nano": 526000000
-                }
-              },
-              "gameName": "Risk",
-              "gameLogs": [
-                {
-                  "playerUsername": "player1",
-                  "enemyUsernames": [
-                    "player2"
-                  ],
-                  "gameName": "Risk",
-                  "result": "LOST",
-                  "timeFinished": {
-                    "date": {
-                      "year": 2021,
-                      "month": 1,
-                      "day": 15
-                    },
-                    "time": {
-                      "hour": 19,
-                      "minute": 17,
-                      "second": 14,
-                      "nano": 541000000
-                    }
-                  }
-                },
-                {
-                  "playerUsername": "player1",
-                  "enemyUsernames": [
-                    "player2"
-                  ],
-                  "gameName": "Risk",
-                  "result": "LOST",
-                  "timeFinished": {
-                    "date": {
-                      "year": 2021,
-                      "month": 1,
-                      "day": 15
-                    },
-                    "time": {
-                      "hour": 19,
-                      "minute": 17,
-                      "second": 58,
-                      "nano": 526000000
-                    }
-                  }
-                }
-              ]
-            }
-          ],
-          "friends": [],
-          "receivedFriendRequests": [],
-          "sentFriendRequests": [],
-          "messages": [],
-          "favouriteGames": [],
-          "suggestions": [],
-          "alliance": [],
-          "cards": [],
-          "newSoldiers": 0,
-          "playerNumber": 1,
-          "draftSoldiers": 3,
-          "requests": [],
-          "gameFriends": [],
-          "firstName": "player1",
-          "lastName": "player1",
-          "username": "player1",
-          "accountId": "D2A70327",
-          "password": "player1pass",
-          "email": "www@gmail.com",
-          "phoneNumber": "09105734731",
-          "registerDay": {
-            "year": 2021,
-            "month": 1,
-            "day": 15
-          },
-          "isRobot": false
-        },
-        {
-          "money": 400.0,
-          "score": 0,
-          "loses": 0,
-          "wins": 0,
-          "draws": 0,
-          "gameLogSummaries": [
-            {
-              "frequency": 2,
-              "wins": 2,
-              "gameLogSummaryId": "48D4FBF8",
-              "score": 6,
-              "lastPlay": {
-                "date": {
-                  "year": 2021,
-                  "month": 1,
-                  "day": 15
-                },
-                "time": {
-                  "hour": 19,
-                  "minute": 17,
-                  "second": 58,
-                  "nano": 526000000
+                  "nano": 190000000
                 }
               },
               "gameName": "Risk",
@@ -449,49 +114,31 @@
                 {
                   "playerUsername": "player2",
                   "enemyUsernames": [
-                    "player1"
+                    "john",
+                    "player3"
                   ],
                   "gameName": "Risk",
-                  "result": "WON",
+                  "result": "LOST",
                   "timeFinished": {
                     "date": {
                       "year": 2021,
                       "month": 1,
-                      "day": 15
+                      "day": 16
                     },
                     "time": {
-                      "hour": 19,
-                      "minute": 17,
-                      "second": 14,
-                      "nano": 541000000
-                    }
-                  }
-                },
-                {
-                  "playerUsername": "player2",
-                  "enemyUsernames": [
-                    "player1"
-                  ],
-                  "gameName": "Risk",
-                  "result": "WON",
-                  "timeFinished": {
-                    "date": {
-                      "year": 2021,
-                      "month": 1,
-                      "day": 15
-                    },
-                    "time": {
-                      "hour": 19,
-                      "minute": 17,
+                      "hour": 18,
+                      "minute": 51,
                       "second": 58,
-                      "nano": 526000000
+                      "nano": 190000000
                     }
                   }
                 }
               ]
             }
           ],
-          "friends": [],
+          "friends": [
+            "player3"
+          ],
           "receivedFriendRequests": [],
           "sentFriendRequests": [],
           "messages": [],
@@ -505,16 +152,99 @@
           "requests": [],
           "gameFriends": [],
           "firstName": "player2",
-          "lastName": "player2",
+          "lastName": "player2pass",
           "username": "player2",
-          "accountId": "31DE9729",
+          "accountId": "6AA69E0F",
           "password": "player2pass",
-          "email": "eee@gmi.com",
+          "email": "ee@gmail.com",
           "phoneNumber": "09105734731",
           "registerDay": {
             "year": 2021,
             "month": 1,
-            "day": 15
+            "day": 16
+          },
+          "isRobot": false
+        },
+        {
+          "money": 400.0,
+          "score": 0,
+          "loses": 0,
+          "wins": 0,
+          "draws": 0,
+          "gameLogSummaries": [
+            {
+              "frequency": 1,
+              "wins": 1,
+              "gameLogSummaryId": "6455D1F0",
+              "score": 3,
+              "lastPlay": {
+                "date": {
+                  "year": 2021,
+                  "month": 1,
+                  "day": 16
+                },
+                "time": {
+                  "hour": 18,
+                  "minute": 51,
+                  "second": 58,
+                  "nano": 190000000
+                }
+              },
+              "gameName": "Risk",
+              "gameLogs": [
+                {
+                  "playerUsername": "player3",
+                  "enemyUsernames": [
+                    "john",
+                    "player2"
+                  ],
+                  "gameName": "Risk",
+                  "result": "WON",
+                  "timeFinished": {
+                    "date": {
+                      "year": 2021,
+                      "month": 1,
+                      "day": 16
+                    },
+                    "time": {
+                      "hour": 18,
+                      "minute": 51,
+                      "second": 58,
+                      "nano": 190000000
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "friends": [
+            "player2"
+          ],
+          "receivedFriendRequests": [],
+          "sentFriendRequests": [
+            "667557E0"
+          ],
+          "messages": [],
+          "favouriteGames": [],
+          "suggestions": [],
+          "alliance": [],
+          "cards": [],
+          "newSoldiers": 0,
+          "playerNumber": 3,
+          "draftSoldiers": 3,
+          "requests": [],
+          "gameFriends": [],
+          "firstName": "player3",
+          "lastName": "player3",
+          "username": "player3",
+          "accountId": "941405B2",
+          "password": "player3pass",
+          "email": "eee@gmail.com",
+          "phoneNumber": "09105734731",
+          "registerDay": {
+            "year": 2021,
+            "month": 1,
+            "day": 16
           },
           "isRobot": false
         }
@@ -527,29 +257,30 @@
         "draws": 0,
         "gameLogSummaries": [
           {
-            "frequency": 2,
-            "wins": 2,
-            "gameLogSummaryId": "48D4FBF8",
-            "score": 6,
+            "frequency": 1,
+            "wins": 1,
+            "gameLogSummaryId": "6455D1F0",
+            "score": 3,
             "lastPlay": {
               "date": {
                 "year": 2021,
                 "month": 1,
-                "day": 15
+                "day": 16
               },
               "time": {
-                "hour": 19,
-                "minute": 17,
+                "hour": 18,
+                "minute": 51,
                 "second": 58,
-                "nano": 526000000
+                "nano": 190000000
               }
             },
             "gameName": "Risk",
             "gameLogs": [
               {
-                "playerUsername": "player2",
+                "playerUsername": "player3",
                 "enemyUsernames": [
-                  "player1"
+                  "john",
+                  "player2"
                 ],
                 "gameName": "Risk",
                 "result": "WON",
@@ -557,64 +288,47 @@
                   "date": {
                     "year": 2021,
                     "month": 1,
-                    "day": 15
+                    "day": 16
                   },
                   "time": {
-                    "hour": 19,
-                    "minute": 17,
-                    "second": 14,
-                    "nano": 541000000
-                  }
-                }
-              },
-              {
-                "playerUsername": "player2",
-                "enemyUsernames": [
-                  "player1"
-                ],
-                "gameName": "Risk",
-                "result": "WON",
-                "timeFinished": {
-                  "date": {
-                    "year": 2021,
-                    "month": 1,
-                    "day": 15
-                  },
-                  "time": {
-                    "hour": 19,
-                    "minute": 17,
+                    "hour": 18,
+                    "minute": 51,
                     "second": 58,
-                    "nano": 526000000
+                    "nano": 190000000
                   }
                 }
               }
             ]
           }
         ],
-        "friends": [],
+        "friends": [
+          "player2"
+        ],
         "receivedFriendRequests": [],
-        "sentFriendRequests": [],
+        "sentFriendRequests": [
+          "667557E0"
+        ],
         "messages": [],
         "favouriteGames": [],
         "suggestions": [],
         "alliance": [],
         "cards": [],
         "newSoldiers": 0,
-        "playerNumber": 2,
+        "playerNumber": 3,
         "draftSoldiers": 3,
         "requests": [],
         "gameFriends": [],
-        "firstName": "player2",
-        "lastName": "player2",
-        "username": "player2",
-        "accountId": "31DE9729",
-        "password": "player2pass",
-        "email": "eee@gmi.com",
+        "firstName": "player3",
+        "lastName": "player3",
+        "username": "player3",
+        "accountId": "941405B2",
+        "password": "player3pass",
+        "email": "eee@gmail.com",
         "phoneNumber": "09105734731",
         "registerDay": {
           "year": 2021,
           "month": 1,
-          "day": 15
+          "day": 16
         },
         "isRobot": false
       },
@@ -622,13 +336,13 @@
         "date": {
           "year": 2021,
           "month": 1,
-          "day": 15
+          "day": 16
         },
         "time": {
-          "hour": 19,
-          "minute": 17,
+          "hour": 18,
+          "minute": 51,
           "second": 58,
-          "nano": 526000000
+          "nano": 190000000
         }
       }
     }
@@ -637,14 +351,19 @@
   "scoreboard": {
     "entries": [
       {
-        "playerName": "player2",
-        "wins": 2,
-        "numPlayed": 2
+        "playerName": "player3",
+        "wins": 1,
+        "numPlayed": 1
       },
       {
-        "playerName": "player1",
+        "playerName": "john",
         "wins": 0,
-        "numPlayed": 2
+        "numPlayed": 1
+      },
+      {
+        "playerName": "player2",
+        "wins": 0,
+        "numPlayed": 1
       }
     ]
   }

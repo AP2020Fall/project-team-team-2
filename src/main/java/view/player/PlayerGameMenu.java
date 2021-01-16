@@ -17,6 +17,7 @@ import javafx.scene.paint.Paint;
 import model.Entry.GameEntry;
 import model.Entry.GameLogEntry;
 import model.Entry.ScoreboardEntry;
+import model.Event;
 import model.Game;
 import model.GameLogStates;
 import model.Scoreboard;
@@ -25,6 +26,7 @@ import view.TabHandler;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -81,7 +83,9 @@ public class PlayerGameMenu implements Tab, Initializable {
 
     @FXML
     private void runGame() {
-        TabHandler.getTabHandler().push(new PlayerRunGameView(controller.getGame(),null));
+        TabHandler.getTabHandler().push(new PlayerRunGameView(controller.getGame(),new Event(
+                "Risk", LocalDate.now(),LocalDate.now(),0,"0","Casual",
+                controller.getGame().getImage())));
     }
 
 

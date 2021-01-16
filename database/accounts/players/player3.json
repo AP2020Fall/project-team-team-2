@@ -7,9 +7,9 @@
   "gameLogSummaries": [
     {
       "frequency": 1,
-      "wins": 0,
-      "gameLogSummaryId": "7E49C367",
-      "score": 0,
+      "wins": 1,
+      "gameLogSummaryId": "6455D1F0",
+      "score": 3,
       "lastPlay": {
         "date": {
           "year": 2021,
@@ -26,13 +26,13 @@
       "gameName": "Risk",
       "gameLogs": [
         {
-          "playerUsername": "player2",
+          "playerUsername": "player3",
           "enemyUsernames": [
             "john",
-            "player3"
+            "player2"
           ],
           "gameName": "Risk",
-          "result": "LOST",
+          "result": "WON",
           "timeFinished": {
             "date": {
               "year": 2021,
@@ -51,26 +51,28 @@
     }
   ],
   "friends": [
-    "player3"
+    "player2"
   ],
   "receivedFriendRequests": [],
-  "sentFriendRequests": [],
+  "sentFriendRequests": [
+    "667557E0"
+  ],
   "messages": [],
   "favouriteGames": [],
   "suggestions": [],
   "alliance": [],
   "cards": [],
   "newSoldiers": 0,
-  "playerNumber": 2,
+  "playerNumber": 3,
   "draftSoldiers": 3,
   "requests": [],
   "gameFriends": [],
-  "firstName": "player2",
-  "lastName": "player2pass",
-  "username": "player2",
-  "accountId": "6AA69E0F",
-  "password": "player2pass",
-  "email": "ee@gmail.com",
+  "firstName": "player3",
+  "lastName": "player3",
+  "username": "player3",
+  "accountId": "941405B2",
+  "password": "player3pass",
+  "email": "eee@gmail.com",
   "phoneNumber": "09105734731",
   "registerDay": {
     "year": 2021,
