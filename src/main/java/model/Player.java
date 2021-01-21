@@ -41,7 +41,7 @@ public class Player extends Account {
         friends = new ArrayList<>();
         receivedFriendRequests = new ArrayList<>();
         sentFriendRequests = new ArrayList<>();
-        cards = new ArrayList<>();
+        cards = new ArrayList<Card>();
         messages = new ArrayList<>();
         favouriteGames = new ArrayList<>();
         suggestions = new ArrayList<>();
@@ -463,6 +463,9 @@ public class Player extends Account {
     public void resetRequestAndFriends(){
         this.requests.clear();
         this.gameFriends.clear();
+    }
+    public void setCard(){
+        this.cards = new ArrayList<Card>();
     }
 
 }

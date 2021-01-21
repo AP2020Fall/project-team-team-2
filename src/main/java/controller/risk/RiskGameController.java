@@ -28,7 +28,7 @@ public class RiskGameController extends Controller {
     private Integer j;
     private int duration;
     private boolean fortifyDone;
-    private long currentTimeStamp = System.currentTimeMillis()/1000L;
+    private long currentTimeStamp = System.currentTimeMillis() / 1000L;
     private Country sourceCountryWinner;
     private boolean attackWon = false;
     private Country attackDestination;
@@ -53,15 +53,18 @@ public class RiskGameController extends Controller {
         return players;
     }
 
-    public RiskGameController(java.util.Map<String, Object> primitiveSettings, int soldiers , Event event) {
+    public RiskGameController(java.util.Map<String, Object> primitiveSettings, int soldiers, Event event) {
         this.primitiveSettings = primitiveSettings;
         this.event = event;
         this.players = (ArrayList<Player>) primitiveSettings.get("Players");
         originalPlayers = new ArrayList<>(this.players);
+        for (Player player: this.players){
+            player.setCard();
+        }
         this.fogIsSet = (boolean) primitiveSettings.get("Fog of War");
         this.startSoldiers = soldiers;
         this.duration = (int) primitiveSettings.get("Duration");
-        for(Player player:players){
+        for (Player player : players) {
             player.setRequestAndFriendsList();
         }
         setStartSoldiers();
@@ -290,10 +293,9 @@ public class RiskGameController extends Controller {
                 toPrint = "This Country is Alliance";
                 errorFound = true;
             }
-            if(errorFound){
+            if (errorFound) {
 
-            }
-            else if (attackNeighbourhoodCheck(source, destination)) {
+            } else if (attackNeighbourhoodCheck(source, destination)) {
                 boolean inWar = true;
                 do {
                     int randomNumberSource = (int) (Math.random() * (6 - 0 + 1)) + 0;
@@ -331,16 +333,16 @@ public class RiskGameController extends Controller {
                                 Player tempPlayer = destination.getOwner();
                                 destination.setOwner(currentPlayer);
                                 boolean playerDone = checkAdditionalPlayers(tempPlayer);
-                                if(playerDone){
-                                    addDestinationCardsToSource(source.getOwner() , tempPlayer);
+                                if (playerDone) {
+                                    addDestinationCardsToSource(source.getOwner(), tempPlayer);
                                 }
 
                             } else {
                                 Player tempPlayer = destination.getOwner();
                                 destination.setOwner(currentPlayer);
                                 boolean playerDone = checkAdditionalPlayers(tempPlayer);
-                                if(playerDone){
-                                    addDestinationCardsToSource(source.getOwner() , tempPlayer);
+                                if (playerDone) {
+                                    addDestinationCardsToSource(source.getOwner(), tempPlayer);
                                 }
                                 this.soldierPlacedAfterWin = false;
                                 this.attackWon = true;
@@ -365,11 +367,13 @@ public class RiskGameController extends Controller {
         }
         return toPrint;
     }
+
     public boolean getSoldierPlaced() {
         return soldierPlacedAfterWin;
     }
+
     private void addDestinationCardsToSource(Player sourcePlayer, Player destinationPlayer) {
-        for(Card card : destinationPlayer.getCards()){
+        for (Card card : destinationPlayer.getCards()) {
             sourcePlayer.addCard(card);
             System.out.println("Card of destination player added to current player. Card : " + card);
         }
@@ -415,7 +419,7 @@ public class RiskGameController extends Controller {
     public String next() {
         String toPrint = "";
         if (getPlacementFinished()) {
-            if(soldierPlacedAfterWin) {
+            if (soldierPlacedAfterWin) {
                 if (!draftDone) {
                     toPrint = "Next part, Start Attacking";
                     draftDone = true;
@@ -428,7 +432,7 @@ public class RiskGameController extends Controller {
                 } else {
                     toPrint = "Try `turn over`";
                 }
-            }else{
+            } else {
                 toPrint = "Please First try to draft in destination country";
             }
         } else {
@@ -451,7 +455,13 @@ public class RiskGameController extends Controller {
         if (!getPlacementFinished()) {
             checkPlacementFinished();
         }
-        RiskGameView.currentTimeStamp = System.currentTimeMillis()/1000L;
+        RiskGameView.currentTimeStamp = System.currentTimeMillis() / 1000L;
+        currentTimeStamp = System.currentTimeMillis() / 1000L;
+        setDraftDone(false);
+        setAttackDone(false);
+        setFortifyDone(false);
+        attackDestination = null;
+        attackWon = false;
         resetNotif();
         beginDraftDone = false;
     }
@@ -612,29 +622,32 @@ public class RiskGameController extends Controller {
         }
         return toPrint;
     }
-    public String leaveTheGame(){
+
+    public String leaveTheGame() {
         Player prevPlayer = currentPlayer;
         checkWinner();
-        if(gameIsPlaying) {
+        if (gameIsPlaying) {
             mainChangeTurn();
             players.remove(prevPlayer);
             makeCountryEmpty(prevPlayer);
-            return "Player "+ prevPlayer.getUsername() + " Exit The Game";
-        }else{
+            return "Player " + prevPlayer.getUsername() + " Exit The Game";
+        } else {
             return "Player " + prevPlayer.getUsername() + " Won";
         }
     }
-    public void makeCountryEmpty(Player player){
-        for(List<Country> countries : gameCountries){
-            for(Country country : countries){
-                if(country.getOwner() != null){
-                    if(country.getOwner().equals(player)){
+
+    public void makeCountryEmpty(Player player) {
+        for (List<Country> countries : gameCountries) {
+            for (Country country : countries) {
+                if (country.getOwner() != null) {
+                    if (country.getOwner().equals(player)) {
                         country.emptyCountry();
                     }
                 }
             }
         }
     }
+
     public boolean getDraftDone() {
         return draftDone;
     }
@@ -783,7 +796,7 @@ public class RiskGameController extends Controller {
         countryNumbers = setFogOfWarMap(currentPlayer);
     */
     public void setBlizzard() {
-        if((boolean) primitiveSettings.get("Blizzards")) {
+        if ((boolean) primitiveSettings.get("Blizzards")) {
             int rndRow = new Random().nextInt(gameCountries.size());
             int rndCol = new Random().nextInt(gameCountries.get(0).size());
             gameCountries.get(rndRow).get(rndCol).enableBlizzard();
@@ -942,8 +955,8 @@ public class RiskGameController extends Controller {
 
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                if(!gameCountries.get(i).get(j).getBlizzard()) {
-                    if(gameCountries.get(i).get(j).getOwner() != null) {
+                if (!gameCountries.get(i).get(j).getBlizzard()) {
+                    if (gameCountries.get(i).get(j).getOwner() != null) {
                         if (gameCountries.get(i).get(j).getName().equals(sourceCountry.getName())) {
                             countryNumbers[i][j] = 1;
                         } else if (gameCountries.get(i).get(j).getName().equals(destinationCountry.getName())) {
@@ -954,7 +967,7 @@ public class RiskGameController extends Controller {
                             countryNumbers[i][j] = 0;
                         }
                     }
-                }else{
+                } else {
                     countryNumbers[i][j] = 0;
                 }
             }
@@ -1010,7 +1023,7 @@ public class RiskGameController extends Controller {
     public boolean checkWinner() {
         boolean finished = true;
         boolean toCheck = false;
-        if(players.size() == 1){
+        if (players.size() == 1) {
             toCheck = true;
         }
         if (!getPlacementFinished() && !toCheck) {
@@ -1018,7 +1031,7 @@ public class RiskGameController extends Controller {
         }
         for (List<Country> countries : gameCountries) {
             for (Country country : countries) {
-                if(country.getOwner() != null) {
+                if (country.getOwner() != null) {
                     if (!country.getOwner().equals(currentPlayer) && !toCheck) {
                         finished = false;
                         break;
@@ -1029,13 +1042,13 @@ public class RiskGameController extends Controller {
         if (finished) {
             this.winner = currentPlayer;
             this.gameIsPlaying = false;
-            for(Player player:players){
+            for (Player player : players) {
                 player.resetRequestAndFriends();
             }
 
             Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, this.winner,
-                    3 + event.getScore(),1 + event.getScore()/2,0);
+                    3 + event.getScore(), 1 + event.getScore() / 2, 0);
             return true;
             /*GameLogSummary gameLog = currentPlayer.getGameHistory("Risk");
             if (gameLog == null) {
@@ -1075,13 +1088,13 @@ public class RiskGameController extends Controller {
             }
         }
         if (finished) {
-            for(Player player:players){
+            for (Player player : players) {
                 player.resetRequestAndFriends();
             }
             this.gameIsPlaying = false;
             Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,
-                    3 + event.getScore(),1 + event.getScore()/2,0);
+                    3 + event.getScore(), 1 + event.getScore() / 2, 0);
             /*Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist.");
             PlayLog playLog = new PlayLog("Risk", players, null, LocalDateTime.now());
@@ -1098,24 +1111,26 @@ public class RiskGameController extends Controller {
         ;
         return finished;
     }
-    public boolean checkAdditionalPlayers(Player player){
+
+    public boolean checkAdditionalPlayers(Player player) {
         boolean toCheck = true;
         outerLoop:
-        for(List<Country> countries : gameCountries){
-            for(Country country : countries){
-                if(country.getOwner() != null) {
-                    if (country.getOwner().equals(player)){
+        for (List<Country> countries : gameCountries) {
+            for (Country country : countries) {
+                if (country.getOwner() != null) {
+                    if (country.getOwner().equals(player)) {
                         toCheck = false;
                         break outerLoop;
                     }
                 }
             }
         }
-        if(toCheck){
+        if (toCheck) {
             players.remove(player);
         }
         return toCheck;
     }
+
     public boolean getAttackWon() {
         return this.attackWon;
     }
@@ -1212,62 +1227,71 @@ public class RiskGameController extends Controller {
     public boolean getCheckRequests() {
         return currentPlayer.checkPlayerHasRequest() && (!draftDone || !beginDraftDone);
     }
+
     public String addRequest(Player player) {
-        if(!player.getRequests().contains(currentPlayer)) {
+        if (!player.getRequests().contains(currentPlayer)) {
             player.addGameRequest(currentPlayer);
             return "Request sent successfully";
-        }else{
+        } else {
             return "You have been requested to this player";
         }
     }
-    public void addFriend(Player player){
+
+    public void addFriend(Player player) {
         player.addGameFriend(player);
     }
-    public void rejectRequest(Player player){
+
+    public void rejectRequest(Player player) {
         player.rejectRequest(player);
     }
 
-    public Player getPlayerByPlayerNumber(int number){
-        for(Player player: players){
-            if(player.getPlayerNumber() == number){
+    public Player getPlayerByPlayerNumber(int number) {
+        for (Player player : players) {
+            if (player.getPlayerNumber() == number) {
                 return player;
             }
         }
         return null;
     }
-    public void notifSent(){
+
+    public void notifSent() {
         notifSent = true;
     }
-    public void resetNotif(){
+
+    public void resetNotif() {
         notifSent = false;
     }
-    public boolean getNotifSent(){
+
+    public boolean getNotifSent() {
         return notifSent;
     }
-    public boolean checkCountryIsAlliance(Country destination){
-        if(destination.getOwner() != null) {
-            if (currentPlayer.getGameFriends().contains(destination.getOwner())){
+
+    public boolean checkCountryIsAlliance(Country destination) {
+        if (destination.getOwner() != null) {
+            if (currentPlayer.getGameFriends().contains(destination.getOwner())) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }
 
-    public boolean checkTime(){
-        if(System.currentTimeMillis()/1000L - currentTimeStamp > duration){
+    public boolean checkTime() {
+        if (System.currentTimeMillis() / 1000L - currentTimeStamp > duration) {
             mainChangeTurn();
-            currentTimeStamp = System.currentTimeMillis()/1000L;
+            currentTimeStamp = System.currentTimeMillis() / 1000L;
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-    public void updateCurrentTime(){
-        currentTimeStamp = System.currentTimeMillis()/1000L;
+
+    public void updateCurrentTime() {
+        currentTimeStamp = System.currentTimeMillis() / 1000L;
     }
+
     public void getProgressBar(ProgressBar progressBar) {
         this.progressBar = progressBar;
 //        timer = new AnimationTimer() {

@@ -606,6 +606,7 @@ public class RiskGameView implements View, Initializable {
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 Player owner = countries.get(i).get(j).getOwner();
+                allPaths[i][j].setMouseTransparent(false);
                 if (owner != null) {
                     if (fogStatus) {
                         int statusNumber = toShowFog[i][j];
@@ -617,6 +618,7 @@ public class RiskGameView implements View, Initializable {
                             String toClass = "country_fog";
                             allPaths[i][j].getStyleClass().clear();
                             allPaths[i][j].getStyleClass().add(toClass);
+                            allPaths[i][j].setMouseTransparent(true);
                         }
                     } else {
                         String toClass = "country_player_" + owner.getPlayerNumber();
@@ -630,6 +632,7 @@ public class RiskGameView implements View, Initializable {
                 if (countries.get(i).get(j).getBlizzard()) {
                     allPaths[i][j].getStyleClass().clear();
                     allPaths[i][j].getStyleClass().add("blizzard");
+                    allPaths[i][j].setMouseTransparent(true);
                 }
             }
         }
