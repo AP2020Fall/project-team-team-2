@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import model.*;
 import model.Entry.GameLogEntry;
 import model.Entry.ScoreboardEntry;
-import view.StartGameView;
 
 import java.util.ArrayList;
 import java.util.Objects;

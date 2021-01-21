@@ -2,17 +2,10 @@ package main;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import model.*;
-import view.RiskGameView;
-import view.StartGameView;
 import view.ViewHandler;
 import view.login.WelcomeMenu;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
 
 public class Main extends Application {
     public static Stage window;

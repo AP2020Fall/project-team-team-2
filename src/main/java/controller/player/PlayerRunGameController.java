@@ -9,14 +9,11 @@ import javafx.scene.image.Image;
 import model.Event;
 import model.Game;
 import model.Player;
-import view.StartGameView;
-import view.TabHandler;
+import view.risk.StartGameView;
 import view.ViewHandler;
-import view.player.PlayerProfileView;
 import view.player.PlayerRunGameView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 
 public class PlayerRunGameController extends PlayerMainMenuLayoutController{

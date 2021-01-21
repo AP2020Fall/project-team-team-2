@@ -3,6 +3,8 @@ package controller.risk;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import controller.Controller;
+import javafx.animation.AnimationTimer;
+import javafx.scene.control.ProgressBar;
 import model.*;
 
 
@@ -11,6 +13,7 @@ import java.io.FileReader;
 import java.util.*;
 
 import model.Card;
+import view.risk.RiskGameView;
 
 public class RiskGameController extends Controller {
     private static java.util.Map<String, Object> primitiveSettings;
@@ -42,8 +45,9 @@ public class RiskGameController extends Controller {
     private boolean soldierPlacedAfterWin = true;
     private Event event;
 
-    //todo delete
     private ArrayList<Player> originalPlayers;
+    private ProgressBar progressBar;
+    private AnimationTimer timer;
 
     public ArrayList<Player> getPlayers() {
         return players;
@@ -70,8 +74,6 @@ public class RiskGameController extends Controller {
         currentPlayer = players.get(0);
         /* Show Turn*/
         showTurn();
-
-
     }
 
 
@@ -449,6 +451,7 @@ public class RiskGameController extends Controller {
         if (!getPlacementFinished()) {
             checkPlacementFinished();
         }
+        RiskGameView.currentTimeStamp = System.currentTimeMillis()/1000L;
         resetNotif();
         beginDraftDone = false;
     }
@@ -1261,5 +1264,23 @@ public class RiskGameController extends Controller {
         }else{
             return true;
         }
+    }
+    public void updateCurrentTime(){
+        currentTimeStamp = System.currentTimeMillis()/1000L;
+    }
+    public void getProgressBar(ProgressBar progressBar) {
+        this.progressBar = progressBar;
+//        timer = new AnimationTimer() {
+//            @Override
+//            public void handle(long now) {
+//                double progressed = Double.valueOf(System.currentTimeMillis() / 1000L - currentTimeStamp) / Double.valueOf(duration);
+//                progressBar.setProgress(progressed);
+//                if (progressed >= 1) {
+//                    mainChangeTurn();
+//                    progressBar.setProgress(0);
+//                }
+//            }
+//        };
+//        timer.start();
     }
 }

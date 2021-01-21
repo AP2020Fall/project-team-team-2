@@ -35,6 +35,9 @@ public class Event {
         this.avatar = image;
         this.comment = comment;
     }
+    public Event(){
+
+    }
 
 
     private static Event openEvent(File file) throws FileNotFoundException {

@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -87,5 +88,6 @@
       <Circle fx:id="deselectIcon" fill="DODGERBLUE" layoutX="829.0" layoutY="60.0" onMouseClicked="#deselectHandler" radius="33.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Rectangle fx:id="loseManual" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="889.0" layoutY="24.0" onMouseClicked="#loseManually" stroke="#ffffff00" strokeType="INSIDE" width="90.0" />
       <JFXHamburger layoutX="1221.0" layoutY="40.0" onMouseClicked="#cardsMenuHandler" />
+      <ProgressBar fx:id="progressBar" layoutX="1.0" layoutY="4.0" prefHeight="18.0" prefWidth="1306.0" progress="0.0" />
    </children>
 </AnchorPane>

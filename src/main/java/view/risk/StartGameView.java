@@ -1,4 +1,4 @@
-package view;
+package view.risk;
 
 import controller.risk.StartGameController;
 import javafx.fxml.FXML;
@@ -11,6 +11,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import model.Event;
 import model.Player;
+import view.View;
+import view.ViewHandler;
 import view.login.LoginMenu;
 
 import java.io.IOException;
@@ -40,7 +42,6 @@ public class StartGameView implements View, Initializable {
 
     public StartGameView(ArrayList<Player> players , Event event) {
         this.startGameController = new StartGameController(players , event);
-
     }
 
     @FXML

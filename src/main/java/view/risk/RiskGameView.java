@@ -1,9 +1,12 @@
-package view;
+package view.risk;
 
+import com.google.gson.internal.LinkedHashTreeMap;
 import com.jfoenix.controls.JFXHamburger;
 import controller.risk.RiskGameController;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.scene.control.ProgressBar;
 import model.Event;
 import org.controlsfx.control.Notifications;
 import javafx.fxml.FXML;
@@ -29,7 +32,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Country;
 import model.Player;
+import view.View;
+import view.ViewHandler;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -37,13 +43,19 @@ import java.util.*;
 
 public class RiskGameView implements View, Initializable {
     private final RiskGameController riskGameController;
+    public static long currentTimeStamp = System.currentTimeMillis() / 1000L;
     private Stage gameWindow;
     private final String mapNum;
+    private int duration;
     private final SVGPath[][] allPaths = new SVGPath[5][5];
     private final Label[][] allLabels = new Label[5][5];
     private final Map<Integer, Circle> playersCircles = new HashMap<>();
     private final List<Label> playerLabels = new ArrayList<>();
     private Stage aboutStage;
+    private AnimationTimer timer;
+
+    @FXML
+    private ProgressBar progressBar;
     @FXML
     private HBox requestsHBox;
     @FXML
@@ -341,7 +353,7 @@ public class RiskGameView implements View, Initializable {
             } catch (NumberFormatException ex) {
                 changeNotifText("please insert a number");
             }
-        }else{
+        } else {
             changeNotifText("Your time has been finished");
             setColorTurn();
         }
@@ -393,9 +405,10 @@ public class RiskGameView implements View, Initializable {
         gameNotifs.setText(notifText);
     }
 
-    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers , Event event) {
-        this.riskGameController = new RiskGameController(primitiveSettings, soldiers , event);
+    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, Event event) {
+        this.riskGameController = new RiskGameController(primitiveSettings, soldiers, event);
         this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
+        this.duration = (int) primitiveSettings.get("Duration");
         if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
             autoPlace();
         }
@@ -548,6 +561,8 @@ public class RiskGameView implements View, Initializable {
         putCountryName();
         colorizeCountry();
         labelSetMouserTransparent();
+        sendProgressBar();
+        progress();
     }
 
     public void putCountryName() {
@@ -656,10 +671,10 @@ public class RiskGameView implements View, Initializable {
             int turnIndex = riskGameController.getCurrentPlayerIndex();
             playersCircles.get(turnIndex).getStyleClass().clear();
             playersCircles.get(turnIndex).getStyleClass().add("status_on");
-            for(Player player : riskGameController.getCurrentPlayer().getFriends()){
+            for (Player player : riskGameController.getCurrentPlayer().getFriends()) {
                 int playerNumber = player.getPlayerNumber();
-                playersCircles.get(playerNumber-1).getStyleClass().clear();
-                playersCircles.get(playerNumber-1).getStyleClass().add("friend");
+                playersCircles.get(playerNumber - 1).getStyleClass().clear();
+                playersCircles.get(playerNumber - 1).getStyleClass().add("friend");
             }
         }
     }
@@ -829,6 +844,10 @@ public class RiskGameView implements View, Initializable {
         setColorTurn();
     }
 
+    public void sendProgressBar() {
+        riskGameController.getProgressBar(progressBar);
+    }
+
     public void updatePlayerLabels() {
         int i = 0;
         for (Label label : playerLabels) {
@@ -849,9 +868,33 @@ public class RiskGameView implements View, Initializable {
         FXMLLoader root = new FXMLLoader(getClass().getResource(fileAddress));
         root.setController(this);
         gameWindow = window;
-        window.setTitle("Game Started");
+        window.setTitle("Risk Game");
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
+    }
+
+    public void progress() {
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                double progressed = Double.valueOf(System.currentTimeMillis() / 1000L - currentTimeStamp) / Double.valueOf(duration);
+                progressBar.setProgress(progressed);
+                if (progressed >= 1) {
+                    changeNotifText("Your time has been finished");
+                    currentTimeStamp = System.currentTimeMillis()/1000L;
+                    riskGameController.mainChangeTurn();
+                    progressBar.setProgress(0);
+                    riskGameController.updateCurrentTime();
+                    colorizeCountry();
+                    setColorTurn();
+                    setColorMode();
+                    updatePlayerLabels();
+                    putCountryName();
+                }
+            }
+
+        };
+        timer.start();
     }
 
     public void addColorToSelected() {

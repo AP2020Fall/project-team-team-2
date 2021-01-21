@@ -3,6 +3,8 @@ package view;
 import main.Main;
 import view.login.LoginMenu;
 import view.login.WelcomeMenu;
+import view.risk.RiskGameView;
+import view.risk.StartGameView;
 
 import java.io.IOException;
 import java.util.Stack;
@@ -75,7 +77,7 @@ public class ViewHandler {
     }
     public void exitGame()
     {
-        while((viewStack.peek() instanceof RiskGameView || viewStack.peek() instanceof  StartGameView))
+        while((viewStack.peek() instanceof RiskGameView || viewStack.peek() instanceof StartGameView))
         {
             viewStack.pop();
             if(viewStack.isEmpty()) break;

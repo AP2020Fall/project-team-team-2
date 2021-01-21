@@ -7,7 +7,7 @@ import model.Event;
 import model.Map;
 import model.Country;
 import model.Player;
-import view.RiskGameView;
+import view.risk.RiskGameView;
 
 import java.net.URL;
 import java.util.*;
