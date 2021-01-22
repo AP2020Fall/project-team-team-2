@@ -4,15 +4,22 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import controller.Controller;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import model.*;
 
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.net.URISyntaxException;
 import java.util.*;
 
 import model.Card;
+import org.controlsfx.control.Notifications;
 import view.risk.RiskGameView;
 
 public class RiskGameController extends Controller {
@@ -48,6 +55,7 @@ public class RiskGameController extends Controller {
     private ArrayList<Player> originalPlayers;
     private ProgressBar progressBar;
     private AnimationTimer timer;
+    private AudioClip audioClip;
 
     public ArrayList<Player> getPlayers() {
         return players;
@@ -57,8 +65,9 @@ public class RiskGameController extends Controller {
         this.primitiveSettings = primitiveSettings;
         this.event = event;
         this.players = (ArrayList<Player>) primitiveSettings.get("Players");
+        audioClip = new AudioClip(getClass().getResource("/sounds/attack.mp3").toString());
         originalPlayers = new ArrayList<>(this.players);
-        for (Player player: this.players){
+        for (Player player : this.players) {
             player.setCard();
         }
         this.fogIsSet = (boolean) primitiveSettings.get("Fog of War");
@@ -297,6 +306,8 @@ public class RiskGameController extends Controller {
 
             } else if (attackNeighbourhoodCheck(source, destination)) {
                 boolean inWar = true;
+                audioClip.play();
+                attackAnimation();
                 do {
                     int randomNumberSource = (int) (Math.random() * (6 - 0 + 1)) + 0;
                     int randomNumberDestination = (int) (Math.random() * (6 - 0 + 1)) + 0;
@@ -418,6 +429,7 @@ public class RiskGameController extends Controller {
     /* Draf-Attck-forfeit */
     public String next() {
         String toPrint = "";
+        audioClip.stop();
         if (getPlacementFinished()) {
             if (soldierPlacedAfterWin) {
                 if (!draftDone) {
@@ -1306,5 +1318,25 @@ public class RiskGameController extends Controller {
 //            }
 //        };
 //        timer.start();
+    }
+
+    public void attackAnimation() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Notifications notify = null;
+                try {
+                    notify = Notifications.create().title("Attack!")
+                            .graphic(new ImageView(new Image(String.valueOf(getClass().getResource("/images/attack_notif.png").toURI()))))
+                            .text("Attack")
+                            .hideAfter(javafx.util.Duration.seconds(2))
+                            .position(Pos.TOP_CENTER);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                notify.darkStyle();
+                notify.showInformation();
+            }
+        });
     }
 }
