@@ -307,7 +307,7 @@ public class RiskGameController extends Controller {
             } else if (attackNeighbourhoodCheck(source, destination)) {
                 boolean inWar = true;
                 audioClip.play();
-                attackAnimation();
+                String result = "";
                 do {
                     int randomNumberSource = (int) (Math.random() * (6 - 0 + 1)) + 0;
                     int randomNumberDestination = (int) (Math.random() * (6 - 0 + 1)) + 0;
@@ -327,15 +327,16 @@ public class RiskGameController extends Controller {
                         toPrint = toPrint + " Source Country Lost 1 soldier! , Destination Soldiers "
                                 + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
                     }
-                    System.out.println(toPrint);
                     if (soldiers == 0 || destination.getSoldiers() == 0 || source.getSoldiers() == 1) {
                         inWar = false;
                         if (source.getSoldiers() == 1 || soldiers == 0) {
                             toPrint = "attack failed";
+                            result = "Failed";
                         } else {
                             toPrint = "attack was successful";
+                            result = "Successful";
                             if (!gotCards) {
-                                toPrint += "\nYou Got new Card! : Card " + addCard() + " has been added to you";
+                                toPrint += "\nYou Got new Card!\n : Card " + addCard() + " \nhas been added to you";
                                 gotCards = true;
                             }
                             if (source.getSoldiers() == 2) {
@@ -358,13 +359,13 @@ public class RiskGameController extends Controller {
                                 this.soldierPlacedAfterWin = false;
                                 this.attackWon = true;
                                 this.attackDestination = destination;
-                                toPrint += "\nYou now should add one to " + (source.getSoldiers() - 1) + " soldiers to "
+                                toPrint += "\nYou now should add one to \n" + (source.getSoldiers() - 1) + " soldiers to \n"
                                         + destination.getName();
                                 sourceCountryWinner = source;
                                 draftDone = false;
                             }
-
                         }
+                        attackAnimation(result);
                         i = null;
                         j = null;
                         deselect();
@@ -1320,22 +1321,22 @@ public class RiskGameController extends Controller {
 //        timer.start();
     }
 
-    public void attackAnimation() {
+    public void attackAnimation(String result) {
         Platform.runLater(new Runnable() {
+
             @Override
             public void run() {
                 Notifications notify = null;
-                try {
-                    notify = Notifications.create().title("Attack!")
-                            .graphic(new ImageView(new Image(String.valueOf(getClass().getResource("/images/attack_notif.png").toURI()))))
-                            .text("Attack")
-                            .hideAfter(javafx.util.Duration.seconds(2))
-                            .position(Pos.TOP_CENTER);
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
+                Image img = new Image(String.valueOf(getClass().getResource("/images/attack.png")));
+                System.out.println(img);
+                notify = Notifications.create().title("Attack!")
+                        .graphic(new ImageView(img))
+                        .text(result)
+                        .hideAfter(javafx.util.Duration.seconds(2))
+                        .position(Pos.TOP_CENTER);
                 notify.darkStyle();
                 notify.showInformation();
+                notify.graphic(new ImageView(img));
             }
         });
     }

@@ -880,7 +880,7 @@ public class RiskGameView implements View, Initializable {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                double progressed = Double.valueOf(System.currentTimeMillis() / 1000L - currentTimeStamp) / Double.valueOf(duration);
+                double progressed = Double.valueOf((double)System.currentTimeMillis()/1000 - currentTimeStamp) / Double.valueOf(duration);
                 progressBar.setProgress(progressed);
                 if (progressed >= 1) {
                     changeNotifText("Your time has been finished");
