@@ -1,5 +1,6 @@
 package view.login;
 
+import client.ClientController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,15 +9,15 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import model.*;
+import sun.util.cldr.CLDRLocaleDataMetaInfo;
 import view.View;
 import view.ViewHandler;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.Socket;
 
-public class WelcomeMenu implements View {
+public class WelcomeMenu extends ClientController implements View {
     private static AudioClip audioClip = new AudioClip(WelcomeMenu.class.getResource("/sounds/soundtrack.mp3").toString());
-    ;
 
     public WelcomeMenu() {
     }

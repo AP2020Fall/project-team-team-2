@@ -1,5 +1,6 @@
 package view.login;
 
+import client.ClientController;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import controller.login.RegisterController;
@@ -20,10 +21,13 @@ import view.ViewHandler;
 import view.admin.AdminMainMenuLayout;
 import view.player.PlayerMainMenuLayout;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.Socket;
 import java.util.ArrayList;
 
-public class RegisterMenu  implements View {
+public class RegisterMenu extends ClientController implements View {
+    private final RegisterController controller;
+    private boolean isAdminExist;
     @FXML
     private StackPane stackRoot;
     @FXML
@@ -42,7 +46,6 @@ public class RegisterMenu  implements View {
     private JFXTextField money;
     @FXML
     private Pane animationPane;
-    private final RegisterController controller;
 
     public RegisterMenu() {
         controller = new RegisterController();
@@ -59,44 +62,41 @@ public class RegisterMenu  implements View {
 
     private ArrayList<String> getAdditionalInfo() {
         ArrayList<String> inputs = new ArrayList<>();
-        if(firstName.getText().isEmpty())
-        {
+        if (firstName.getText().isEmpty()) {
             setFirstNameColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                    "Okay","Invalid Information","Invalid first name.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Information", "Invalid first name.");
             return null;
         }
         inputs.add(firstName.getText());
-        if(lastName.getText().isEmpty())
-        {
+        if (lastName.getText().isEmpty()) {
             setLastNameColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                    "Okay","Invalid Information","Invalid last name.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Information", "Invalid last name.");
             return null;
         }
         inputs.add(lastName.getText());
         if (!controller.checkPhoneNumber(phoneNumber.getText())) {
             setPhoneNumberColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                    "Okay","Invalid Information","Invalid phone number.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Information", "Invalid phone number.");
             return null;
         }
         inputs.add(phoneNumber.getText());
 
         if (!controller.checkEmail(email.getText())) {
             setEmailColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                    "Okay","Invalid Information","Invalid email.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Information", "Invalid email.");
             return null;
         }
         inputs.add(email.getText());
 
-        if (Admin.isAdminExist()) {
-            if(!controller.checkMoney(money.getText()))
-            {
+        if (isAdminExist) {
+            if (!controller.checkMoney(money.getText())) {
                 setMoneyColourRed();
-                AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                        "Okay","Invalid Information","Invalid amount for money.");
+                AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                        "Okay", "Invalid Information", "Invalid amount for money.");
                 return null;
             }
             inputs.add(money.getText());
@@ -105,81 +105,114 @@ public class RegisterMenu  implements View {
     }
 
     @FXML
-    private void register() {
-        if (!controller.isUsernameExist(username.getText())) {
-            money.setVisible(Admin.isAdminExist());
+    private void register() throws IOException {
+        String input = "Register#" + username.getText() + "#" + password.getText();
+
+        String response = connectToServer(input);
+
+        System.out.println("res: " + response);
+        if (response.startsWith("Successful")) {
+            if (response.split("#")[1].matches("admin")) {
+                money.setVisible(false);
+                isAdminExist = false;
+            } else {
+                money.setVisible(true);
+                isAdminExist = true;
+            }
             animate(-1);
         } else {
             setCredentialsColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                    "Okay","Invalid Credentials","Username is already taken.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Credentials", "Username is already taken.");
         }
+//        if (!controller.isUsernameExist(username.getText())) {
+//            money.setVisible(Admin.isAdminExist());
+//            animate(-1);
+//        } else {
+//            setCredentialsColourRed();
+//            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+//                    "Okay", "Invalid Credentials", "Username is already taken.");
+//        }
     }
 
     public void submit(ActionEvent actionEvent) throws IOException {
         ArrayList<String> additionalInfo = getAdditionalInfo();
         if (additionalInfo != null) {
             WelcomeMenu.getAudioClip().stop();
-            if (controller.createAccount(username.getText(), password.getText(), additionalInfo)) {
+            StringBuilder input = new StringBuilder();
+            input = input.append("Submit#" + username.getText() + "#" + password.getText() + "#");
+            for (String s : getAdditionalInfo()) {
+                input.append(s + "#");
+            }
+            String response = connectToServer(input.toString());
+            if (response.startsWith("admin")) {
                 ViewHandler.getViewHandler().push(new AdminMainMenuLayout());
             } else {
                 ViewHandler.getViewHandler().push(new PlayerMainMenuLayout());
             }
+
+//            if (controller.createAccount(username.getText(), password.getText(), additionalInfo)) {
+//                ViewHandler.getViewHandler().push(new AdminMainMenuLayout());
+//            } else {
+//                ViewHandler.getViewHandler().push(new PlayerMainMenuLayout());
+//            }
         }
     }
 
-    @FXML private void back() {
+    @FXML
+    private void back() {
         ViewHandler.getViewHandler().pop();
     }
 
-    @FXML private void backSubmit() {
+    @FXML
+    private void backSubmit() {
         clear();
         animate(1);
     }
-    private void animate(int forward)
-    {
+
+    private void animate(int forward) {
         TranslateTransition tt = new TranslateTransition(Duration.millis(500), animationPane);
-        tt.setByX(forward*400f);
+        tt.setByX(forward * 400f);
         tt.play();
     }
-    private void clear()
-    {
+
+    private void clear() {
         firstName.clear();
         lastName.clear();
         phoneNumber.clear();
         email.clear();
         money.clear();
     }
-    private void setCredentialsColourRed()
-    {
+
+    private void setCredentialsColourRed() {
         username.setUnFocusColor(Paint.valueOf("ff0000"));
         username.setFocusColor(Paint.valueOf("ff0000"));
         password.setUnFocusColor(Paint.valueOf("ff0000"));
         password.setFocusColor(Paint.valueOf("ff0000"));
 
     }
-    private void setEmailColourRed()
-    {
+
+    private void setEmailColourRed() {
         email.setUnFocusColor(Paint.valueOf("ff0000"));
         email.setFocusColor(Paint.valueOf("ff0000"));
     }
-    private void setPhoneNumberColourRed()
-    {
+
+    private void setPhoneNumberColourRed() {
         phoneNumber.setUnFocusColor(Paint.valueOf("ff0000"));
         phoneNumber.setFocusColor(Paint.valueOf("ff0000"));
     }
-    private void setFirstNameColourRed()
-    {
+
+    private void setFirstNameColourRed() {
         firstName.setUnFocusColor(Paint.valueOf("ff0000"));
         firstName.setFocusColor(Paint.valueOf("ff0000"));
     }
-    private void setLastNameColourRed()
-    {
+
+    private void setLastNameColourRed() {
         lastName.setUnFocusColor(Paint.valueOf("ff0000"));
         lastName.setFocusColor(Paint.valueOf("ff0000"));
     }
-    private void setMoneyColourRed()
-    {
+
+    private void setMoneyColourRed() {
         money.setUnFocusColor(Paint.valueOf("ff0000"));
         money.setFocusColor(Paint.valueOf("ff0000"));
     }

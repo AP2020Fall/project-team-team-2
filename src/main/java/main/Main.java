@@ -1,11 +1,15 @@
 package main;
 
+import client.ClientController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.*;
 import view.ViewHandler;
 import view.login.WelcomeMenu;
+
+import java.io.IOException;
+import java.net.Socket;
 
 public class Main extends Application {
     public static Stage window;
@@ -14,8 +18,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         window.setOnCloseRequest(event -> Platform.exit());
-        openFiles();
-        Runtime.getRuntime().addShutdownHook(new Thread(Main::saveFiles));
+       // openFiles();
+       // Runtime.getRuntime().addShutdownHook(new Thread(Main::saveFiles));
         ViewHandler.getViewHandler().push(new WelcomeMenu());
         Main.window.show();
     }
@@ -24,30 +28,32 @@ public class Main extends Application {
         launch(args);
     }
 
-    private static void openFiles() {
-        try {
-            Account.open();
-            Event.open();
-            Suggestion.open();
-            Game.open();
-            FriendRequest.open();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
-    }
 
-    private static void saveFiles() {
-        try {
-            Account.save();
-            Event.save();
-            Suggestion.save();
-            Game.save();
-            FriendRequest.save();
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-    }
+//
+//    private static void openFiles() {
+//        try {
+//            Account.open();
+//            Event.open();
+//            Suggestion.open();
+//            Game.open();
+//            FriendRequest.open();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println(e.getMessage());
+//        }
+//    }
+
+//    private static void saveFiles() {
+//        try {
+//            Account.save();
+//            Event.save();
+//            Suggestion.save();
+//            Game.save();
+//            FriendRequest.save();
+//        } catch (Exception e) {
+//            e.getStackTrace();
+//        }
+//    }
 
 }
 
