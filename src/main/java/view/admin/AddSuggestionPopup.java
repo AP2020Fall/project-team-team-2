@@ -6,8 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
@@ -43,7 +41,7 @@ public class AddSuggestionPopup {
         popupWindow.showAndWait();
     }
     @FXML private void add() {
-        if (!controller.isUsernameExist(playerName.getText())) {
+        if (!controller.usernameExist(playerName.getText())) {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
                     "Invalid information","username does not exist.");

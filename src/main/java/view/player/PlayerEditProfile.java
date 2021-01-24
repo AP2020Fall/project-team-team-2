@@ -14,14 +14,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
-import javafx.stage.FileChooser;
-import main.Main;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
-import view.ViewHandler;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -142,7 +138,7 @@ public class PlayerEditProfile implements Tab, Initializable {
             return false;
         }
         if (!username.getText().equals(controller.getUsername()) &&
-                controller.isUsernameExist(username.getText()))  {
+                controller.usernameExist(username.getText()))  {
             setUsernameColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Username already taken.");

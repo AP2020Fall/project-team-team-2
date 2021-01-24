@@ -91,7 +91,7 @@ public class AddEventPopup implements Initializable {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Start date can not be after end.");
-        }else if (controller.isNumber(score.getText()) &&  Integer.parseInt(score.getText()) <= 0) {
+        }else if (controller.checkNumber(score.getText()) &&  Integer.parseInt(score.getText()) <= 0) {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Score should be positive number.");

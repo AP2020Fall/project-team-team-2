@@ -4,20 +4,20 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.*;
+import view.View;
 import view.ViewHandler;
 import view.login.WelcomeMenu;
 
 public class Main extends Application {
-    public static Stage window;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        window = primaryStage;
-        window.setOnCloseRequest(event -> Platform.exit());
+        primaryStage.setOnCloseRequest(event -> Platform.exit());
         openFiles();
         Runtime.getRuntime().addShutdownHook(new Thread(Main::saveFiles));
+        ViewHandler.getViewHandler().setWindow(primaryStage);
         ViewHandler.getViewHandler().push(new WelcomeMenu());
-        Main.window.show();
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

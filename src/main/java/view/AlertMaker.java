@@ -42,8 +42,8 @@ public class AlertMaker {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image files","*.png","*.jpeg","*.jpg"));
-
-        file = fileChooser.showOpenDialog(Main.window);
+        //todo maybe needs fixing
+        file = fileChooser.showOpenDialog(new Stage());
         if(file!=null)
         {
            return new Image(file.toURI().toString(),150,150,true,true);

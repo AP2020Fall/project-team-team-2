@@ -1,14 +1,43 @@
 package main;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import model.*;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server {
+public class Server extends Application {
     private static int PORT_NUMBER = 6660;
-
+//todo make it non javafx
     public static void main(String[] args) throws IOException {
-        (new Server()).run();
+        launch(args);
+
+    }
+    private static void openFiles() {
+        try {
+            Account.open();
+            Event.open();
+            Suggestion.open();
+            Game.open();
+            FriendRequest.open();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void saveFiles() {
+        try {
+            Account.save();
+            Event.save();
+            Suggestion.save();
+            Game.save();
+            FriendRequest.save();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
     }
 
     private void run() throws IOException {
@@ -28,6 +57,12 @@ public class Server {
                 break;
             }
         }
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        openFiles();
+        (new Server()).run();
     }
 
     static class ClientHandler extends Thread {

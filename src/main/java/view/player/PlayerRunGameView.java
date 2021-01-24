@@ -95,7 +95,7 @@ public class PlayerRunGameView implements Tab, Initializable {
     }
     public void update(JFXTextField textField)
     {
-        if (!controller.isUsernameExist(textField.getText())) {
+        if (!controller.usernameExist(textField.getText())) {
             AlertMaker.showMaterialDialog(TabHandler.getTabHandler().getStackRoot(),
                     TabHandler.getTabHandler().getStackRoot().getChildren().get(0), "Okay",
                     "Invalid username", "Username does not exist!");
