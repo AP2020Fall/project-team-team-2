@@ -13,6 +13,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import main.Client;
+import main.ClientMasterController;
 import model.Admin;
 import view.AlertMaker;
 import view.View;
@@ -42,10 +44,10 @@ public class RegisterMenu  implements View {
     private JFXTextField money;
     @FXML
     private Pane animationPane;
-    private final RegisterController controller;
+    private final ClientMasterController controller;
 
     public RegisterMenu() {
-        controller = new RegisterController();
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -59,44 +61,41 @@ public class RegisterMenu  implements View {
 
     private ArrayList<String> getAdditionalInfo() {
         ArrayList<String> inputs = new ArrayList<>();
-        if(firstName.getText().isEmpty())
-        {
+        if (firstName.getText().isEmpty()) {
             setFirstNameColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                    "Okay","Invalid Information","Invalid first name.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Information", "Invalid first name.");
             return null;
         }
         inputs.add(firstName.getText());
-        if(lastName.getText().isEmpty())
-        {
+        if (lastName.getText().isEmpty()) {
             setLastNameColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                    "Okay","Invalid Information","Invalid last name.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Information", "Invalid last name.");
             return null;
         }
         inputs.add(lastName.getText());
         if (!controller.checkPhoneNumber(phoneNumber.getText())) {
             setPhoneNumberColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                    "Okay","Invalid Information","Invalid phone number.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Information", "Invalid phone number.");
             return null;
         }
         inputs.add(phoneNumber.getText());
 
         if (!controller.checkEmail(email.getText())) {
             setEmailColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                    "Okay","Invalid Information","Invalid email.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Information", "Invalid email.");
             return null;
         }
         inputs.add(email.getText());
 
         if (Admin.isAdminExist()) {
-            if(!controller.checkMoney(money.getText()))
-            {
+            if (!controller.checkMoney(money.getText())) {
                 setMoneyColourRed();
-                AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                        "Okay","Invalid Information","Invalid amount for money.");
+                AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                        "Okay", "Invalid Information", "Invalid amount for money.");
                 return null;
             }
             inputs.add(money.getText());
@@ -111,8 +110,8 @@ public class RegisterMenu  implements View {
             animate(-1);
         } else {
             setCredentialsColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),
-                    "Okay","Invalid Credentials","Username is already taken.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Credentials", "Username is already taken.");
         }
     }
 
@@ -128,58 +127,60 @@ public class RegisterMenu  implements View {
         }
     }
 
-    @FXML private void back() {
+    @FXML
+    private void back() {
         ViewHandler.getViewHandler().pop();
     }
 
-    @FXML private void backSubmit() {
+    @FXML
+    private void backSubmit() {
         clear();
         animate(1);
     }
-    private void animate(int forward)
-    {
+
+    private void animate(int forward) {
         TranslateTransition tt = new TranslateTransition(Duration.millis(500), animationPane);
-        tt.setByX(forward*400f);
+        tt.setByX(forward * 400f);
         tt.play();
     }
-    private void clear()
-    {
+
+    private void clear() {
         firstName.clear();
         lastName.clear();
         phoneNumber.clear();
         email.clear();
         money.clear();
     }
-    private void setCredentialsColourRed()
-    {
+
+    private void setCredentialsColourRed() {
         username.setUnFocusColor(Paint.valueOf("ff0000"));
         username.setFocusColor(Paint.valueOf("ff0000"));
         password.setUnFocusColor(Paint.valueOf("ff0000"));
         password.setFocusColor(Paint.valueOf("ff0000"));
 
     }
-    private void setEmailColourRed()
-    {
+
+    private void setEmailColourRed() {
         email.setUnFocusColor(Paint.valueOf("ff0000"));
         email.setFocusColor(Paint.valueOf("ff0000"));
     }
-    private void setPhoneNumberColourRed()
-    {
+
+    private void setPhoneNumberColourRed() {
         phoneNumber.setUnFocusColor(Paint.valueOf("ff0000"));
         phoneNumber.setFocusColor(Paint.valueOf("ff0000"));
     }
-    private void setFirstNameColourRed()
-    {
+
+    private void setFirstNameColourRed() {
         firstName.setUnFocusColor(Paint.valueOf("ff0000"));
         firstName.setFocusColor(Paint.valueOf("ff0000"));
     }
-    private void setLastNameColourRed()
-    {
+
+    private void setLastNameColourRed() {
         lastName.setUnFocusColor(Paint.valueOf("ff0000"));
         lastName.setFocusColor(Paint.valueOf("ff0000"));
     }
-    private void setMoneyColourRed()
-    {
+
+    private void setMoneyColourRed() {
         money.setUnFocusColor(Paint.valueOf("ff0000"));
         money.setFocusColor(Paint.valueOf("ff0000"));
     }
