@@ -1,10 +1,8 @@
 package view.admin;
 
 import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import controller.admin.AdminMainMenuController;
-import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -134,7 +132,7 @@ public class AdminEditProfile implements Tab, Initializable {
             return false;
         }
         if (!username.getText().equals(controller.getUsername()) &&
-                controller.isUsernameExist(username.getText()))  {
+                controller.usernameExist(username.getText()))  {
             setUsernameColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Username already taken.");

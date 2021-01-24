@@ -23,6 +23,7 @@ public class RegisterController extends Controller {
             //ViewHandler.getViewHandler().push(new PlayerMainMenu());
             return false;
         }
+
     }
 
     private Player createPlayer(String username, String password, ArrayList<String> additionalInfo) {

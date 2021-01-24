@@ -1,11 +1,15 @@
 package main;
 
+import controller.Controller;
+import controller.login.LoginController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.*;
 import view.ViewHandler;
 import view.login.WelcomeMenu;
+
+import java.lang.reflect.Method;
 
 
 public class Client extends Application {
@@ -15,12 +19,12 @@ public class Client extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         initializeConnector();
-        Main.window = primaryStage;
-        Main.window.setOnCloseRequest(event -> Platform.exit());
+        primaryStage.setOnCloseRequest(event -> Platform.exit());
         openFiles();
         Runtime.getRuntime().addShutdownHook(new Thread(Client::saveFiles));
+        ViewHandler.getViewHandler().setWindow(primaryStage);
         ViewHandler.getViewHandler().push(new WelcomeMenu());
-        Main.window.show();
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

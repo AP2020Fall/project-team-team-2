@@ -53,13 +53,13 @@ public class LoginMenu implements View, Initializable {
     @FXML
     private void loginAccount() {
         playClickSound();
-        if (!controller.isUsernameExist(username.getText())) {
+        if (!controller.usernameExist(username.getText())) {
             setColourRed();
             AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                     , "Invalid Credentials", "Username does not exist.");
         } else {
 
-            if (!controller.isUsernameAndPasswordMatch(username.getText(), password.getText())) {
+            if (!controller.usernameAndPasswordMatch(username.getText(), password.getText())) {
                 setColourRed();
                 AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                         , "Invalid Credentials", "Username and password are not match.");
@@ -77,7 +77,7 @@ public class LoginMenu implements View, Initializable {
     @FXML
     private void deleteAccount() {
         playClickSound();
-        if (!controller.isUsernameExist(username.getText())) {
+        if (!controller.usernameExist(username.getText())) {
             setColourRed();
             AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                     , "Invalid Credentials", "Username does not exist.");
@@ -86,7 +86,7 @@ public class LoginMenu implements View, Initializable {
             AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                     , "Invalid Credentials", "Admin account can't be deleted.");
         } else {
-            if (!controller.isUsernameAndPasswordMatch(username.getText(), password.getText())) {
+            if (!controller.usernameAndPasswordMatch(username.getText(), password.getText())) {
                 setColourRed();
                 AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                         , "Invalid Credentials", "Username and password are not match.");
