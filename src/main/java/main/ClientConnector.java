@@ -35,7 +35,7 @@ public class ClientConnector {
             dataOutputStream.writeUTF(userInput);
             dataOutputStream.flush();
             String response = dataInputStream.readUTF();
-            System.out.println(response);
+            System.out.println("[CLIENT]: Server responded : "+ response);
             return response;
         }
         catch (IOException e) {

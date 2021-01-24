@@ -1,5 +1,6 @@
 package view;
 
+import javafx.stage.Stage;
 import main.Main;
 import view.login.LoginMenu;
 import view.login.WelcomeMenu;
@@ -13,7 +14,7 @@ import java.util.logging.Logger;
 public class ViewHandler {
     private static final Stack<View> viewStack = new Stack<>();
     private static ViewHandler viewHandler;
-
+    private Stage window;
     private ViewHandler() {
 
     }
@@ -28,10 +29,13 @@ public class ViewHandler {
     /*public boolean isEmpty() {
         return viewStack.isEmpty();
     }*/
-
+    public void setWindow(Stage window)
+    {
+        this.window = window;
+    }
     private void showView()  {
         try {
-            viewStack.peek().show(Main.window);
+            viewStack.peek().show(window);
         }catch (IOException exception)
         {
             Logger.getLogger("Show view error");//todo exit
@@ -53,7 +57,7 @@ public class ViewHandler {
     {
         while(!viewStack.isEmpty())
             viewStack.pop();
-        Main.window.close();
+        window.close();
     }
 
     public void remove() {

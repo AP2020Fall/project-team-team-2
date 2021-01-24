@@ -20,7 +20,6 @@ import view.View;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class PlayerMainMenuLayout implements View, Initializable {
     @FXML
@@ -75,7 +74,7 @@ public class PlayerMainMenuLayout implements View, Initializable {
 
     @FXML
     private void search() {
-        if (!controller.isUsernameExist(searchUsername.getText())) {
+        if (!controller.usernameExist(searchUsername.getText())) {
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid username", "Username does not exist!");
         } else {

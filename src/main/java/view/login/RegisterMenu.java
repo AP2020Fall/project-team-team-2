@@ -2,7 +2,6 @@ package view.login;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import controller.login.RegisterController;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -105,7 +104,7 @@ public class RegisterMenu  implements View {
 
     @FXML
     private void register() {
-        if (!controller.isUsernameExist(username.getText())) {
+        if (!controller.usernameExist(username.getText())) {
             money.setVisible(Admin.isAdminExist());
             animate(-1);
         } else {
