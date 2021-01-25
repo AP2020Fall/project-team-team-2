@@ -13,6 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
+import main.Client;
+import main.ClientMasterController;
 import view.AlertMaker;
 import view.TabHandler;
 import view.View;
@@ -35,11 +37,11 @@ public class PlayerMainMenuLayout implements View, Initializable {
     private Label scoreMenuBar = new Label();
     @FXML
     private ContextMenu searchContextMenu;
-    PlayerMainMenuController controller;
+    private final ClientMasterController controller;
     private static AudioClip audioClip = new AudioClip(PlayerMainMenuLayout.class.getResource("/sounds/playerSound.mp3").toString());
 
     public PlayerMainMenuLayout() {
-        controller = new PlayerMainMenuController();
+        controller = Client.getConnector().getController();
     }
 
     @Override

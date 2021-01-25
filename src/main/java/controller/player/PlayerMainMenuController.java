@@ -25,34 +25,40 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
 
 
 
-    public ArrayList<GameEntry> favoriteGames() {
+    public ArrayList<Game> favoriteGames() {
         //returns the names of player's favourite games.
-        ArrayList<GameEntry> result = new ArrayList<>();
+        /*ArrayList<GameEntry> result = new ArrayList<>();
         for (Game game : player.getFavouriteGames())
             result.add(new GameEntry(game));
-        return result;
-
+        return result;*/
+        return player.getFavouriteGames();
     }
 
-    public GameEntry lastGamePlayed() {
+    public Game lastGamePlayed() {
         //returns the last game played by player.
         //throws NullPointerException if gameLogs is empty.
         GameLogSummary gameLogSummary = player.getGameLogLastGamePlayed();
         if (gameLogSummary == null) {
-            return new GameEntry("No game has been played");
+            return null;
         }
-        else
+        /*else
         {
             return new GameEntry(Objects.requireNonNull(Game.getGameByGameName(gameLogSummary.getGameName()),
                     "Game doesn't exist"));
-        }
+        }*/
+        return Objects.requireNonNull(Game.getGameByGameName(gameLogSummary.getGameName()),
+                "Game doesn't exist");
     }
 
-    public ArrayList<GameEntry> adminsSuggestions() {
+    public ArrayList<Game> adminsSuggestions() {
         //returns the list of suggested games to player.
-        ArrayList<GameEntry> result = new ArrayList<>();
+        /*ArrayList<GameEntry> result = new ArrayList<>();
         for (Suggestion suggestion : player.getSuggestions())
             result.add(new GameEntry(suggestion.getGame()));
+        return result;*/
+        ArrayList<Game> result = new ArrayList<>();
+        for (Suggestion suggestion : player.getSuggestions())
+            result.add(suggestion.getGame());
         return result;
     }
 
@@ -151,23 +157,6 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
     }
     public Image getPlayerImage() {
         return player.getImage();
-    }
-
-    public ObservableList<MenuItem> getSearchQuery(String searchQuery) {
-        ObservableList<MenuItem> result = FXCollections.observableArrayList();
-        ArrayList<Player> top5Players = usernameFuzzySearchTop5(searchQuery);
-        for(Player player: top5Players)
-        {
-            MenuItem menuItem = new MenuItem();
-            menuItem.setOnAction(event -> TabHandler.getTabHandler().push(new PlayerProfileView(player)));
-            menuItem.setText(player.getUsername());
-            result.add(menuItem);
-        }
-        if(result.isEmpty())
-        {
-            result.add(new Menu("No similar user found."));
-        }
-        return result;
     }
 
     public Event getEvent(EventEntry eventEntry) {

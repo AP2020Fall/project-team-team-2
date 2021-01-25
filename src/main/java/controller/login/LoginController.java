@@ -28,7 +28,6 @@ public class LoginController extends Controller {
             return true;
         } else if (loggedIn instanceof Player) {
             new PlayerMainMenuLayoutController().login((Player) loggedIn);
-
             return false;
         }
         return false;

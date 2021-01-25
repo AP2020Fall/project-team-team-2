@@ -9,7 +9,7 @@ import view.player.PlayerGameMenu;
 public class GameEntry {
    private  String name;
    private  String detail;
-   private ImageView avatar;
+   private transient ImageView avatar;
     public GameEntry(Game game)
     {
         name= game.getName();

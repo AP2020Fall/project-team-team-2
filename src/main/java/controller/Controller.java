@@ -23,6 +23,7 @@ public class Controller {
             }
         }
     }
+
     public static String generateId(int different) {
         String id = "";
         while (true) {
@@ -42,6 +43,7 @@ public class Controller {
         }
         return false;
     }
+
     public Boolean checkEmail(String email) {
         return email.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$");
     }
@@ -53,7 +55,6 @@ public class Controller {
     public Boolean checkNumber(String number) {
         return number.matches("^\\d+");
     }
-
 
 
     public Boolean usernameAndPasswordMatch(String username, String password) {
@@ -94,17 +95,16 @@ public class Controller {
         return true;
     }
 
-    public Boolean checkRelativeDate(LocalDate start,LocalDate end)
-    {
+    public Boolean checkRelativeDate(LocalDate start, LocalDate end) {
         return start.compareTo(end) < 0;
     }
 
     public Boolean checkStartDate(LocalDate date) {
-            return LocalDate.now().compareTo(date) <= 0;
+        return LocalDate.now().compareTo(date) <= 0;
     }
 
     public Boolean checkEndDate(LocalDate date) {
-            return LocalDate.now().compareTo(date) < 0;
+        return LocalDate.now().compareTo(date) < 0;
     }
 
     public boolean isEventIdExists(String eventId) {
@@ -144,20 +144,17 @@ public class Controller {
         return pattern.matcher(input);
     }
 
-    public Player searchPlayer(String username)
-    {
+    public Player searchPlayer(String username) {
         return Player.getPlayerByUsername(username);
     }
 
 
-    public HashMap<Player,Integer> usernameFuzzySearch(String username)
-    {
-        List<Map.Entry<Player,Integer>> list = new LinkedList<>();
-        for (Player player: Account.getAllPlayers())
-        {
-            int fuzzyVal = FuzzySearch.ratio(username,player.getUsername());
-            if(fuzzyVal > 69)
-                list.add(new AbstractMap.SimpleEntry<Player,Integer>(player,fuzzyVal));
+    public HashMap<Player, Integer> usernameFuzzySearch(String username) {
+        List<Map.Entry<Player, Integer>> list = new LinkedList<>();
+        for (Player player : Account.getAllPlayers()) {
+            int fuzzyVal = FuzzySearch.ratio(username, player.getUsername());
+            if (fuzzyVal > 69)
+                list.add(new AbstractMap.SimpleEntry<Player, Integer>(player, fuzzyVal));
         }
         list.sort(new Comparator<Map.Entry<Player, Integer>>() {
             public int compare(Map.Entry<Player, Integer> o1,
@@ -172,6 +169,7 @@ public class Controller {
         return temp;
 
     }
+
     public ArrayList<Player> usernameFuzzySearchTop10(String username) {
         HashMap<Player, Integer> temp = usernameFuzzySearch(username);
         ArrayList<Player> result = new ArrayList<>();
@@ -183,6 +181,7 @@ public class Controller {
         }
         return result;
     }
+
     public ArrayList<Player> usernameFuzzySearchTop5(String username) {
         HashMap<Player, Integer> temp = usernameFuzzySearch(username);
         ArrayList<Player> result = new ArrayList<>();
@@ -194,6 +193,4 @@ public class Controller {
         }
         return result;
     }
-
-
 }

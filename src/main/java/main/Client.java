@@ -20,8 +20,8 @@ public class Client extends Application {
     public void start(Stage primaryStage) throws Exception {
         initializeConnector();
         primaryStage.setOnCloseRequest(event -> Platform.exit());
-        openFiles();
-        Runtime.getRuntime().addShutdownHook(new Thread(Client::saveFiles));
+        //openFiles();
+        //Runtime.getRuntime().addShutdownHook(new Thread(Client::saveFiles));
         ViewHandler.getViewHandler().setWindow(primaryStage);
         ViewHandler.getViewHandler().push(new WelcomeMenu());
         primaryStage.show();
