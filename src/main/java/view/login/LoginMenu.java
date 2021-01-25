@@ -11,6 +11,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import main.Client;
+import main.ClientMasterController;
 import model.Account;
 import view.AlertMaker;
 import view.View;
@@ -30,10 +32,10 @@ public class LoginMenu implements View, Initializable {
     @FXML
     private JFXPasswordField password;
 
-    LoginController controller;
+    private final ClientMasterController controller;
 
     public LoginMenu() {
-        controller = new LoginController();
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -93,7 +95,7 @@ public class LoginMenu implements View, Initializable {
             } else {
                 controller.delete(username.getText());
                 AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
-                        , "Invalid Credentials", username.getText() +
+                        , "Success", username.getText() +
                                 " deleted successfully!");
             }
         }

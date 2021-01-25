@@ -18,7 +18,7 @@ public class LoginController extends Controller {
         player.delete();
     }
 
-    public boolean login(String username) {
+    public Boolean login(String username) {
         //logins into account
         //throws NullPointerException if username doesn't exist
        Account loggedIn = Objects.requireNonNull(Account.getAccountByUsername(username),

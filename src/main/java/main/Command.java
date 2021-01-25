@@ -65,10 +65,10 @@ public class Command {
         try{
             Object object = getInstance();
             Method method = getMethod();
-            System.out.println(method.invoke(object,params.toArray()));
+            //System.out.println(method.invoke(object,params.toArray()));
            return method.invoke(object,params.toArray());
         } catch (IllegalAccessException | InvocationTargetException e) {
-            System.err.println("method" + command + "@" + declaringClass+ "couldn't be invoked.");
+            System.err.println("method " + command + "@" + declaringClass+ " couldn't be invoked.");
             System.err.println(e.getMessage());
             return null;
         }

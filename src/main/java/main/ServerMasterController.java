@@ -17,6 +17,7 @@ public class ServerMasterController {
            return "";
         return new Gson().toJson(command.invokeMethod());
     }
+
     public String test(String input)
     {
         if(input.equalsIgnoreCase("test"))
