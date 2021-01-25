@@ -163,11 +163,11 @@ public class ClientMasterController {
 
     public GameEntry lastGamePlayed() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("lastGamePlayed","controller.player.PlayerMainMenuController",params);
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        Game lastPlayed =  new Gson().fromJson(answer, new TypeToken<Game>() {}.getType());
-        if(lastPlayed == null)
-        return new GameEntry("No game has been played");
+        Command command = new Command("lastGamePlayed", "controller.player.PlayerMainMenuController", params);
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        Game lastPlayed = new Gson().fromJson(answer, Game.class);
+        if (lastPlayed == null)
+            return new GameEntry("No game has been played");
         else
             return new GameEntry(lastPlayed);
     }

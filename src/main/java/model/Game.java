@@ -1,6 +1,7 @@
 package model;
 
 import com.google.gson.GsonBuilder;
+import com.sun.org.apache.xpath.internal.objects.XString;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
@@ -20,14 +21,16 @@ public class Game {
     private final ArrayList<PlayLog> playLogs;
     private String details;
     private final Scoreboard scoreboard;
-    private transient Image avatar;
+    private String avatar;
 
     public Image getImage() {
-        return avatar;
+        File file = new File("database\\games\\images\\" + gameId + ".jpg");
+        return new Image(file.toURI().toString());
+        //return new Image(avatar);
     }
 
     public void setImage(Image image) {
-        this.avatar = image;
+        this.avatar = saveImageToFile(image,gameId);
     }
 
     public Game(String name, String gameId, String details, Image gameImage) {
@@ -35,7 +38,7 @@ public class Game {
         this.gameId = gameId;
         this.details = details;
         this.playLogs = new ArrayList<>();
-        avatar = gameImage;
+        avatar = saveImageToFile(gameImage,gameId);
         scoreboard = new Scoreboard();
     }
 
@@ -180,7 +183,7 @@ public class Game {
         System.out.println("saving image ended " + game.getGameId());
     }
 
-    public static void saveImageToFile(Image image, String gameId) {
+    public static String saveImageToFile(Image image, String gameId) {
 
         File folder = new File("database\\games\\images");
         if (!folder.exists()) {
@@ -194,6 +197,7 @@ public class Game {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return "database\\games\\images\\" + gameId + ".jpg";
     }
 
     public static void openFileToImage(Game game) {

@@ -7,6 +7,7 @@ import model.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server extends Application {
     private static int PORT_NUMBER = 6660;
@@ -62,6 +63,7 @@ public class Server extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         openFiles();
+        Runtime.getRuntime().addShutdownHook(new Thread(Server::saveFiles));
         (new Server()).run();
     }
 
