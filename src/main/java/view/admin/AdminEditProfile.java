@@ -76,11 +76,11 @@ public class AdminEditProfile implements Tab, Initializable {
     }
     @FXML
     private void addAvatar(MouseEvent event) {
-        Image givenImage = AlertMaker.getImageFromUser();
+        String givenImage =AlertMaker.getImageFromUser();
         if(givenImage != null)
         {
-            playerImage.setImage(givenImage);
             controller.setImage(givenImage);
+            playerImage.setImage(controller.getImage());
         }
     }
 

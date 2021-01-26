@@ -31,10 +31,6 @@ public class PlayerEventMenuController extends PlayerMainMenuLayoutController {
         return String.valueOf( event.getScore());
     }
 
-    public Image getEventImage() {
-        return event.getImage();
-    }
-
     public String getComment() {
         return event.getComment();
     }

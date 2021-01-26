@@ -141,6 +141,10 @@ public class Controller {
         return false;
     }
 
+    public Admin getAdmin()
+    {
+        return Account.getAdmin();
+    }
     public Boolean doesGameExist(String gameName) {
         return Game.getGameByGameName(gameName) != null;
     }

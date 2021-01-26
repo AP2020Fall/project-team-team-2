@@ -36,7 +36,7 @@ import javax.imageio.ImageIO;
 public class AlertMaker {
 
 
-    public static Image getImageFromUser()
+    public static String getImageFromUser()
     {
         File file;
         FileChooser fileChooser = new FileChooser();
@@ -46,7 +46,8 @@ public class AlertMaker {
         file = fileChooser.showOpenDialog(new Stage());
         if(file!=null)
         {
-           return new Image(file.toURI().toString(),150,150,true,true);
+           //return new Image(file.toURI().toString(),150,150,true,true);
+            return file.toURI().toString();
         }
         return  null;
     }

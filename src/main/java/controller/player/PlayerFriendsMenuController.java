@@ -1,13 +1,6 @@
 package controller.player;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TreeItem;
 import main.ClientInfo;
-import model.Entry.FriendEntry;
-import model.Entry.FriendRequestEntry;
-import model.Entry.PlatoMessageEntry;
-import model.Event;
 import model.FriendRequest;
 import model.Player;
 
@@ -23,36 +16,12 @@ public class PlayerFriendsMenuController extends PlayerMainMenuLayoutController 
                 "Player object passed to FriendsMenuController is null.");
     }
 
-    public ArrayList<String> showFriends() {
-        //returns the list of player's friends' usernames.
-        ArrayList<String> result = new ArrayList<>();
-        for (Player friend : player.getFriends()) {
-            result.add(friend.getUsername());
-        }
-        return result;
+    public ArrayList<Player> getFriends() {
+        return player.getFriends();
+
     }
 
-    public ObservableList<TreeItem<FriendEntry>> getFriends() {
-        ObservableList<TreeItem<FriendEntry>> result = FXCollections.observableArrayList();
-        for (Player friend : player.getFriends()) {
-            result.add(new TreeItem<>(new FriendEntry(friend,player)));
-        }
-        return result;
-    }
-
-    public ObservableList<FriendRequestEntry> getFriendRequests() {
-        ObservableList<FriendRequestEntry> result = FXCollections.observableArrayList();
-        for (FriendRequest friendRequest : player.getReceivedFriendRequests()){
-            result.add(new FriendRequestEntry(friendRequest));
-        }
-        return result;
-    }
-
-    public Player getFriend(FriendEntry friendEntry) {
-        return Player.getPlayerByUsername(friendEntry.getName());
-    }
-    public Player getFriend(FriendRequestEntry friendRequestEntry)
-    {
-        return Player.getPlayerByUsername(friendRequestEntry.getName());
+    public ArrayList<FriendRequest> getFriendRequests() {
+       return player.getReceivedFriendRequests();
     }
 }

@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import main.Client;
+import main.ClientMasterController;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
@@ -42,10 +43,10 @@ public class PlayerEditProfile implements Tab, Initializable {
     private JFXTextField email;
     @FXML
     private JFXTextField phoneNumber;
-    private final PlayerMainMenuController controller;
+    private final ClientMasterController controller;
 
     public PlayerEditProfile() {
-        controller = new PlayerMainMenuController(Client.getClientInfo());
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -80,102 +81,99 @@ public class PlayerEditProfile implements Tab, Initializable {
         }
     }
     @FXML
-    private void addAvatar(MouseEvent event) {
-        Image givenImage = AlertMaker.getImageFromUser();
+    private void addAvatar() {
+        String givenImage = AlertMaker.getImageFromUser();
         if(givenImage != null)
         {
-            playerImage.setImage(givenImage);
             controller.setPlayerImage(givenImage);
+            playerImage.setImage(controller.getPlayerImage());
         }
     }
 
     private void initializedPlayerInfo() {
-        username.setText(controller.getUsername());
-        password.setText(controller.getPassword());
-        firstName.setText(controller.getFirstName());
-        lastName.setText(controller.getLastName());
-        bio.setText(controller.getBio());
-        email.setText(controller.getEmail());
-        phoneNumber.setText(controller.getPhoneNumber());
+        username.setText(Client.getClientInfo().getLoggedIn().getUsername());
+        password.setText(Client.getClientInfo().getLoggedIn().getPassword());
+        firstName.setText(Client.getClientInfo().getLoggedIn().getFirstName());
+        lastName.setText(Client.getClientInfo().getLoggedIn().getLastName());
+        bio.setText(Client.getClientInfo().getLoggedIn().getBio());
+        email.setText(Client.getClientInfo().getLoggedIn().getEmail());
+        phoneNumber.setText(Client.getClientInfo().getLoggedIn().getPhoneNumber());
         playerImage.setImage(controller.getPlayerImage());
     }
 
-    private void setUsernameColourRed() {
-        username.setFocusColor(Paint.valueOf("#ff0000"));
-        username.setUnFocusColor(Paint.valueOf("#ff0000"));
+    private void setColourRed(JFXTextField textField)
+    {
+        textField.setFocusColor(Paint.valueOf("#ff0000"));
+        textField.setUnFocusColor(Paint.valueOf("#ff0000"));
     }
 
-    private void setPasswordColourRed() {
-        password.setFocusColor(Paint.valueOf("#ff0000"));
-        password.setUnFocusColor(Paint.valueOf("#ff0000"));
+   private void unsetColour(JFXTextField textField)
+   {
+       textField.setUnFocusColor(Paint.valueOf("#4d4d4d"));
+       textField.setFocusColor(Paint.valueOf("#4059a9"));
+   }
+    private void setColourRed(JFXPasswordField passwordField)
+    {
+        passwordField.setFocusColor(Paint.valueOf("#ff0000"));
+        passwordField.setUnFocusColor(Paint.valueOf("#ff0000"));
     }
 
-    private void setFirstNameColourRed() {
-        firstName.setFocusColor(Paint.valueOf("#ff0000"));
-        firstName.setUnFocusColor(Paint.valueOf("#ff0000"));
+    private void unsetColour(JFXPasswordField passwordField)
+    {
+        passwordField.setUnFocusColor(Paint.valueOf("#4d4d4d"));
+        passwordField.setFocusColor(Paint.valueOf("#4059a9"));
     }
-
-    private void setLastNameColourRed() {
-        lastName.setFocusColor(Paint.valueOf("#ff0000"));
-        lastName.setUnFocusColor(Paint.valueOf("#ff0000"));
-    }
-
-    private void setEmailColourRed() {
-        email.setFocusColor(Paint.valueOf("#ff0000"));
-        email.setUnFocusColor(Paint.valueOf("#ff0000"));
-    }
-
-    private void setPhoneNumberColourRed() {
-        phoneNumber.setFocusColor(Paint.valueOf("#ff0000"));
-        phoneNumber.setUnFocusColor(Paint.valueOf("#ff0000"));
-    }
-
     private boolean validateInput() {
         if(username.getText().isEmpty())
         {
-            setPasswordColourRed();
+            setColourRed(username);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "No username is given.");
             return false;
         }
-        if (!username.getText().equals(controller.getUsername()) &&
+        if (!username.getText().equals(Client.getClientInfo().getLoggedIn().getUsername()) &&
                 controller.usernameExist(username.getText()))  {
-            setUsernameColourRed();
+            setColourRed(username);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Username already taken.");
             return false;
         }
+        unsetColour(username);
         if (password.getText().isEmpty()) {
-            setPasswordColourRed();
+            setColourRed(password);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "No password is given.");
             return false;
         }
+        unsetColour(password);
         if (firstName.getText().isEmpty()) {
-            setFirstNameColourRed();
+            setColourRed(firstName);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "No first name is given.");
             return false;
         }
+        unsetColour(firstName);
         if (lastName.getText().isEmpty()) {
-            setLastNameColourRed();
+            setColourRed(lastName);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "No last name is given.");
             return false;
         }
+        unsetColour(lastName);
         if (!controller.checkEmail(email.getText())) {
-            setEmailColourRed();
+            setColourRed(email);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Invalid email is given.");
             return false;
         }
+        unsetColour(email);
         if (!controller.checkPhoneNumber(phoneNumber.getText())) {
-            setPhoneNumberColourRed();
+            setColourRed(phoneNumber);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Invalid phone number is given.");
             return false;
         }
+        unsetColour(phoneNumber);
         return true;
     }
-
 }

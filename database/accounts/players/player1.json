@@ -11,6 +11,7 @@
   "messages": [],
   "favouriteGames": [],
   "suggestions": [],
+  "bio": "No bio is given.",
   "firstName": "player1",
   "lastName": "player1",
   "username": "player1",
@@ -25,5 +26,4 @@
   },
   "isRobot": false,
   "avatar": "database\\accounts\\images\\A9694569.jpg"
-
 }

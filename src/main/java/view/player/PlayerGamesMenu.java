@@ -95,7 +95,7 @@ public class PlayerGamesMenu implements Tab, Initializable {
                 if(gamesListGamesMenu.getSelectionModel().getSelectedItems().size() != 0)
                 {
                     GameEntry gameEntry = gamesListGamesMenu.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame( gameEntry)));
+                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame( gameEntry.getName())));
                 }
             }
 

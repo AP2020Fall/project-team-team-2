@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import main.Client;
+import main.ClientMasterController;
 import model.Event;
 import view.Tab;
 import view.TabHandler;
@@ -26,10 +27,11 @@ public class PlayerEventMenu implements Tab, Initializable {
     private Label comment;
     @FXML
     private ImageView eventImage;
-    PlayerEventMenuController controller;
+    private final ClientMasterController controller;
 
     public PlayerEventMenu(Event event) {
-        controller = new PlayerEventMenuController(Client.getClientInfo());
+        Client.getClientInfo().setEvent(event);
+        controller = Client.getConnector().getController();
     }
     @Override
     public Parent show() throws IOException {
@@ -45,7 +47,8 @@ public class PlayerEventMenu implements Tab, Initializable {
     }
 
     public void join() {
-        TabHandler.getTabHandler().push(new PlayerRunGameView(controller.getGame(),controller.getEvent()));
+        TabHandler.getTabHandler().push(new PlayerRunGameView(Client.getClientInfo().getGame(),
+                Client.getClientInfo().getEvent()));
     }
     private void initializeInfo()
     {
