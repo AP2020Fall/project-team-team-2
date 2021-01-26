@@ -64,8 +64,9 @@ public abstract class Account {
         return new Image(file.toURI().toString());
     }
 
-    public void setImage(Image image) {
-        this.avatar = saveImageToFile(image,this.accountId);
+    public void setImage(String url) {
+
+        this.avatar = saveImageToFile(new Image(url),this.accountId);
     }
 
     public Account(String botName, String username) {
@@ -93,8 +94,9 @@ public abstract class Account {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        setImage(new Image("/images/blankProfile.jpg"));
+        setImage("/images/blankProfile.jpg");
         registerDay = LocalDate.now();
+        bio = "No bio is given.";
     }
 
     public String getFirstName() {
@@ -288,7 +290,7 @@ public abstract class Account {
 
     public static void openFileToImage(Account account) {
         File file = new File("database\\accounts\\images\\"+account.getAccountId()+".jpg");
-        account.setImage(new Image(file.toURI().toString()));
+        account.setImage(file.toURI().toString());
     }
 
     @Override

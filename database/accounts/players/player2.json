@@ -6,11 +6,14 @@
   "draws": 0,
   "gameLogSummaries": [],
   "friends": [],
-  "receivedFriendRequests": [],
+  "receivedFriendRequests": [
+    "43B9CAF5"
+  ],
   "sentFriendRequests": [],
   "messages": [],
   "favouriteGames": [],
   "suggestions": [],
+  "bio": "No bio is given.",
   "firstName": "player2",
   "lastName": "player2`",
   "username": "player2",

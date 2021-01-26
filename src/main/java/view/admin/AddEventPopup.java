@@ -130,7 +130,7 @@ public class AddEventPopup implements Initializable {
 
     @FXML
     void addAvatar() {
-        Image givenImage = AlertMaker.getImageFromUser();
+        Image givenImage = new Image(AlertMaker.getImageFromUser());
         if (givenImage != null) {
             avatar.setImage(givenImage);
         }

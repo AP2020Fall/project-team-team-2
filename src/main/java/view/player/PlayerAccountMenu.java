@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import main.Client;
+import main.ClientMasterController;
 import model.Entry.GameLogSummaryEntry;
 import view.Tab;
 import view.TabHandler;
@@ -52,10 +53,10 @@ public class PlayerAccountMenu implements Tab, Initializable {
     private Label phoneNumber = new Label();
     @FXML
     private ImageView avatar;
-    private PlayerMainMenuController controller;
+    private final ClientMasterController controller;
 
     public PlayerAccountMenu() {
-        controller = new PlayerMainMenuController(Client.getClientInfo());
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -85,13 +86,13 @@ public class PlayerAccountMenu implements Tab, Initializable {
     }
 
     private void initializedInfo() {
-        username.setText(controller.getUsername());
-        firstName.setText(controller.getFirstName());
-        lastName.setText(controller.getLastName());
-        email.setText(controller.getEmail());
-        phoneNumber.setText(controller.getPhoneNumber());
+        username.setText(Client.getClientInfo().getLoggedIn().getUsername());
+        firstName.setText(Client.getClientInfo().getLoggedIn().getFirstName());
+        lastName.setText(Client.getClientInfo().getLoggedIn().getLastName());
+        email.setText(Client.getClientInfo().getLoggedIn().getEmail());
+        phoneNumber.setText(Client.getClientInfo().getLoggedIn().getPhoneNumber());
         score.setText(controller.showPoints());
-        bio.setText(controller.getBio());
+        bio.setText(Client.getClientInfo().getLoggedIn().getBio());
         money.setText(controller.getMoney());
         date.setText(controller.getDate());
         wins.setText(controller.getWins() + " Wins");
@@ -124,7 +125,7 @@ public class PlayerAccountMenu implements Tab, Initializable {
                 if(gameHistoryList.getSelectionModel().getSelectedItems().size() != 0)
                 {
                     GameLogSummaryEntry gameEntry = gameHistoryList.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame(gameEntry)));
+                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame(gameEntry.getGameName())));
                 }
             }
 

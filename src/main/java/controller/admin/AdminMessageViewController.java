@@ -44,7 +44,7 @@ public class AdminMessageViewController extends AdminMainMenuLayoutController {
     }
     public PlatoMessageEntry getMessageRoot()
     {
-        return new PlatoMessageEntry();
+        return new PlatoMessageEntry(getAdmin().getImage());
     }
     public boolean hasMessage() {
         return !admin.getSentMessages().isEmpty();

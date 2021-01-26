@@ -78,12 +78,6 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
         return Game.getGameByGameName(gameName);
     }
 
-    public String getBio() {
-        return player.getBio();
-    }
-    public String getMoney() {
-        return String.valueOf(player.getMoney());
-    }
     public String getDate() {
         return String.valueOf(player.getDayOfRegister());
     }
@@ -92,6 +86,13 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
     }
     public String getFriendCount() {
         return String.valueOf(player.getFriends().size());
+    }
+
+    public String getBio() {
+        return player.getBio();
+    }
+    public String getMoney() {
+        return String.valueOf(player.getMoney());
     }
     public String getUsername(){
         return player.getUsername();
@@ -115,11 +116,8 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
         return player.getLastName();
     }
 
-    public ObservableList<GameLogSummaryEntry> getGameHistory() {
-        ObservableList<GameLogSummaryEntry> result = FXCollections.observableArrayList();
-        for (GameLogSummary gameLog : player.getGameLogSummaries())
-            result.add(new GameLogSummaryEntry(gameLog));
-        return result;
+    public ArrayList<GameLogSummary> getGameHistory() {
+        return player.getGameLogSummaries();
     }
 
     public String showPoints() {
@@ -149,12 +147,12 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
         player.setBio(bio);
     }
 
-    public void setPlayerImage(Image givenImage) {
-        player.setImage(givenImage);
+    public void setPlayerImage(String url) {
+        player.setImage(url);
 
     }
-    public Image getPlayerImage() {
-        return player.getImage();
+    public Player getPlayer() {
+        return player;
     }
 
 

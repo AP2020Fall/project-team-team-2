@@ -28,7 +28,7 @@ public class PlayerRunGameController extends PlayerMainMenuLayoutController{
         this.event = Objects.requireNonNull(clientInfo.getEvent(), "Event passed to PlayerRunGameController is null.");
     }
 
-    public ObservableList<MenuItem> getSearchQuery(JFXTextField textField, String searchQuery,
+    /*public ObservableList<MenuItem> getSearchQuery(JFXTextField textField, String searchQuery,
                                                    PlayerRunGameView controller) {
         ObservableList<MenuItem> result = FXCollections.observableArrayList();
         ArrayList<Player> top5Players = usernameFuzzySearchTop5(searchQuery);
@@ -47,7 +47,7 @@ public class PlayerRunGameController extends PlayerMainMenuLayoutController{
             result.add(new Menu("No similar user found."));
         }
         return result;
-    }
+    }*/
 
     public Image getGameImage() {
         return game.getImage();
@@ -68,11 +68,14 @@ public class PlayerRunGameController extends PlayerMainMenuLayoutController{
     }
     public void runGame(ArrayList<String> usernames) {
         ArrayList<Player> players = new ArrayList<>();
+        System.out.println("Players ready to play are:");
         for(String username: usernames)
         {
+            System.out.println(username);
             players.add(Objects.requireNonNull(Player.getPlayerByUsername(username),
                     "Username passed to runGame doesn't exist."));
         }
-        ViewHandler.getViewHandler().push(new StartGameView(players,event));
+        System.out.println("lets go play");
+       // ViewHandler.getViewHandler().push(new StartGameView(players,event));
     }
 }

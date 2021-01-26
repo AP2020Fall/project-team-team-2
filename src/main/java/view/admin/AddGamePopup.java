@@ -108,7 +108,7 @@ public class AddGamePopup implements Initializable {
 
     @FXML
     void addAvatar(MouseEvent event) {
-        Image givenImage = AlertMaker.getImageFromUser();
+        Image givenImage =new Image( AlertMaker.getImageFromUser());
         if (givenImage != null) {
             avatar.setImage(givenImage);
         }
