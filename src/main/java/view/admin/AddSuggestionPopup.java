@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.Client;
 import view.AlertMaker;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class AddSuggestionPopup {
 
     public AddSuggestionPopup()
     {
-        controller = new AdminMainMenuController();
+        controller = new AdminMainMenuController(Client.getClientInfo());
     }
 
     public void openWindow() throws IOException {

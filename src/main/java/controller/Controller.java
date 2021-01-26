@@ -1,5 +1,6 @@
 package controller;
 
+import main.ClientInfo;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import model.*;
 
@@ -12,6 +13,12 @@ import java.util.regex.Pattern;
 public class Controller {
     private static ArrayList<String> ids = new ArrayList<>();
     //protected static Account loggedIn;
+    protected ClientInfo clientInfo;
+    public Controller(ClientInfo clientInfo)
+    {
+        if(clientInfo == null) System.out.println("this is fucking null bitch");
+        this.clientInfo = clientInfo;
+    }
 
     protected static String generateId() {
         String id = "";

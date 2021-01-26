@@ -10,6 +10,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import main.Client;
 import model.Entry.SuggestionEntry;
 import view.Tab;
 import view.TabHandler;
@@ -24,7 +25,7 @@ public class AdminMainMenu implements Tab, Initializable {
     private final AdminMainMenuController controller;
     public AdminMainMenu()
     {
-        controller = new AdminMainMenuController();
+        controller = new AdminMainMenuController(Client.getClientInfo());
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

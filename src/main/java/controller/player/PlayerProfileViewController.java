@@ -3,6 +3,8 @@ package controller.player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import main.Client;
+import main.ClientInfo;
 import model.Entry.GameLogSummaryEntry;
 import model.FriendRequest;
 import model.Game;
@@ -15,8 +17,9 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
     private final Player player;
     private final Player logged;
 
-    public PlayerProfileViewController(Player player) {
-        this.player = Objects.requireNonNull(player,
+    public PlayerProfileViewController(ClientInfo clientInfo) {
+        super(clientInfo);
+        this.player = Objects.requireNonNull(clientInfo.getPlayer(),
                 "Players passed to PlayerProfileViewController is null");
         this.logged = Objects.requireNonNull(loggedIn,
                 "Logged passed to PlayerProfileViewController is null");

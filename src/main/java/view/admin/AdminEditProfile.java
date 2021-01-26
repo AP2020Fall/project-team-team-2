@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
+import main.Client;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
@@ -40,7 +41,7 @@ public class AdminEditProfile implements Tab, Initializable {
     private final AdminMainMenuController controller;
 
     public AdminEditProfile() {
-        controller = new AdminMainMenuController();
+        controller = new AdminMainMenuController(Client.getClientInfo());
     }
 
     @Override

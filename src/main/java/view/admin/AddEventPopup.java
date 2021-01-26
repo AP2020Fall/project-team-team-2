@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.Client;
 import model.Event;
 import view.AlertMaker;
 
@@ -54,7 +55,7 @@ public class AddEventPopup implements Initializable {
 
     public AddEventPopup(boolean edit, Event event) {
         this.edit = edit;
-        controller = new AdminEventMenuController(event);
+        controller = new AdminEventMenuController(Client.getClientInfo());
     }
 
     public void openWindow() throws IOException {

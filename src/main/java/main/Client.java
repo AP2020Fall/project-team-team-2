@@ -15,9 +15,15 @@ import java.lang.reflect.Method;
 public class Client extends Application {
     private static int PORT_NUMBER = 6660;
     private static ClientConnector connector;
+    private static ClientInfo clientInfo;
+
+    public static void updateClientInfo(ClientInfo NewClientInfo) {
+        clientInfo = NewClientInfo;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        clientInfo = new ClientInfo();
         initializeConnector();
         primaryStage.setOnCloseRequest(event -> Platform.exit());
         //openFiles();
@@ -65,5 +71,9 @@ public class Client extends Application {
     public static ClientConnector getConnector()
     {
         return connector;
+    }
+
+    public static ClientInfo getClientInfo() {
+        return clientInfo;
     }
 }

@@ -1,7 +1,11 @@
 package main;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import model.Account;
+import model.AccountGSON;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -10,20 +14,27 @@ public class Command {
     private final String command;
     private final String declaringClass;
     private final ArrayList<Object> params;
+    private ClientInfo clientInfo;
 
-    public Command(String command,String declaringClass, ArrayList<Object> params) {
+    public Command(String command,String declaringClass, ArrayList<Object> params,ClientInfo clientInfo) {
         this.command = command;
         this.declaringClass = declaringClass;
         this.params = (ArrayList<Object>) params.clone();
+        this.clientInfo = clientInfo;
 
     }
+
+    public ClientInfo getClientInfo() {
+        return clientInfo;
+    }
+
     public String toJson()
     {
-        return new Gson().toJson(this);
+        return new GsonBuilder().registerTypeAdapter(Account.class,new AccountGSON()).create().toJson(this);
     }
     public static Command fromJson(String json)
     {
-        return new Gson().fromJson(json, Command.class);
+        return new GsonBuilder().registerTypeAdapter(Account.class,new AccountGSON()).create().fromJson(json, Command.class);
     }
 
     public String getCommand() {
@@ -65,7 +76,6 @@ public class Command {
         try{
             Object object = getInstance();
             Method method = getMethod();
-            //System.out.println(method.invoke(object,params.toArray()));
            return method.invoke(object,params.toArray());
         } catch (IllegalAccessException | InvocationTargetException e) {
             System.err.println("method " + command + "@" + declaringClass+ " couldn't be invoked.");
@@ -76,8 +86,8 @@ public class Command {
     private Object getInstance()
     {
         try{
-          return getDeclaringClass().newInstance();
-        } catch (IllegalAccessException | InstantiationException e) {
+          return getDeclaringClass().getConstructor(ClientInfo.class).newInstance(clientInfo);
+        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             System.err.println("couldn't make a new instance" + "@" + declaringClass);
             System.err.println(e.getMessage());
             return null;

@@ -11,6 +11,7 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import main.Client;
 import model.Entry.EventEntry;
 import model.Entry.FriendEntry;
 import model.Entry.FriendRequestEntry;
@@ -30,7 +31,7 @@ public class PlayerFriendsMenu implements Tab, Initializable {
 
 
     public PlayerFriendsMenu() {
-        controller = new PlayerFriendsMenuController();
+        controller = new PlayerFriendsMenuController(Client.getClientInfo());
     }
 
     @Override
