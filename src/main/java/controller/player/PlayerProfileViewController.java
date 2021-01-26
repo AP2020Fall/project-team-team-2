@@ -45,7 +45,7 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
         return player.getPhoneNumber();
     }
 
-    public String getDaysPassed() {
+    public String getViewPlayerDaysPassed() {
         return String.valueOf(player.getDayOfRegister());
     }
 
@@ -89,15 +89,15 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
             result.add(new GameLogSummaryEntry(gameLog));
         return result;
     }
-    public String getWins() {
+    public String getViewPlayerWins() {
         return String.valueOf(player.getNumberOfWins());
     }
-    public String getFriendCount() {
+    public String getViewPlayerFriendCount() {
         return String.valueOf(player.getFriends().size());
     }
 
-    public Image getPlayerImage() {
-        return player.getImage();
+    public Player getPlayer() {
+        return player;
     }
     public Game getGame(GameLogSummaryEntry gameEntry) {
         return Game.getGameByGameName(gameEntry.getGameName());

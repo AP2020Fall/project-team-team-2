@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import main.Client;
+import main.ClientMasterController;
 import model.Event;
 import model.Game;
 import view.AlertMaker;
@@ -47,13 +48,15 @@ public class PlayerRunGameView implements Tab, Initializable {
     @FXML
     private Label eventMode;
     private final ContextMenu searchContextMenu;
-    private final PlayerRunGameController controller;
     private final ArrayList<String> usernames;
+    private final ClientMasterController controller;
     public PlayerRunGameView(Game game, Event event)
     {
-        controller = new PlayerRunGameController(Client.getClientInfo());
+        Client.getClientInfo().setGame(game);
+        Client.getClientInfo().setEvent(event);
+        controller = Client.getConnector().getController();
         usernames = new ArrayList<>();
-        usernames.add(controller.getUsername());
+        usernames.add(Client.getClientInfo().getLoggedIn().getUsername());
         searchContextMenu = new ContextMenu();
     }
     @Override

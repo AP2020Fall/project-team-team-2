@@ -7,7 +7,9 @@
   "gameLogSummaries": [],
   "friends": [],
   "receivedFriendRequests": [],
-  "sentFriendRequests": [],
+  "sentFriendRequests": [
+    "43B9CAF5"
+  ],
   "messages": [],
   "favouriteGames": [],
   "suggestions": [],

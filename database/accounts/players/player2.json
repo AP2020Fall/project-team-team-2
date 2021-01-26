@@ -6,7 +6,9 @@
   "draws": 0,
   "gameLogSummaries": [],
   "friends": [],
-  "receivedFriendRequests": [],
+  "receivedFriendRequests": [
+    "43B9CAF5"
+  ],
   "sentFriendRequests": [],
   "messages": [],
   "favouriteGames": [],

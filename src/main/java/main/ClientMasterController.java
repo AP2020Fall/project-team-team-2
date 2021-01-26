@@ -2,6 +2,7 @@ package main;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Menu;
@@ -12,6 +13,7 @@ import model.*;
 import model.Entry.*;
 import view.TabHandler;
 import view.player.PlayerProfileView;
+import view.player.PlayerRunGameView;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
@@ -345,9 +347,34 @@ public class ClientMasterController {
         ArrayList<FriendRequest> friendRequests = new Gson().fromJson(answer,new TypeToken<ArrayList<FriendRequest>>() {}.getType());
         ObservableList<FriendRequestEntry> result = FXCollections.observableArrayList();
         for (FriendRequest friendRequest : friendRequests){
+
             result.add(new FriendRequestEntry(friendRequest));
         }
         return result;
+    }
+    public void acceptRequest(String friendRequestId) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(friendRequestId);
+        Command command = new Command("acceptRequest","controller.player.PlayerFriendsMenuController"
+                , params,Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public String getFriendRequestPlayerName(String friendRequestId) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(friendRequestId);
+        Command command = new Command("getFriendRequestPlayerName","controller.player.PlayerFriendsMenuController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,String.class);
+    }
+
+    public void declineRequest(String friendRequestId) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(friendRequestId);
+        Command command = new Command("declineRequest","controller.player.PlayerFriendsMenuController"
+                , params,Client.getClientInfo());
+          Client.getConnector().serverQuery(command.toJson());
     }
 
     public Player getFriend(String name) {
@@ -556,4 +583,121 @@ public class ClientMasterController {
 
         return result;
     }
+
+    public void addFriend() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("addFriend","controller.player.PlayerProfileViewController"
+                , params,Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void removeFriend() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("removeFriend","controller.player.PlayerProfileViewController"
+                , params,Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public Image getViewPlayerImage() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getPlayer","controller.player.PlayerProfileViewController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,Player.class).getImage();
+    }
+
+    public String getViewPlayerFriendCount() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewPlayerFriendCount","controller.player.PlayerProfileViewController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,String.class);
+    }
+
+    public String getViewPlayerDaysPassed() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewPlayerDaysPassed","controller.player.PlayerProfileViewController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,String.class);
+    }
+
+    public String getViewPlayerWins() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewPlayerWins","controller.player.PlayerProfileViewController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,String.class);
+    }
+
+    public boolean areFriends() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("areFriends","controller.player.PlayerProfileViewController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,Boolean.class);
+    }
+
+    public boolean HasFriendRequestBeenSent() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("HasFriendRequestBeenSent","controller.player.PlayerProfileViewController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,Boolean.class);
+    }
+
+    public boolean areTheSame() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("areTheSame","controller.player.PlayerProfileViewController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,Boolean.class);
+    }
+
+    public ObservableList<MenuItem> getSearchQuery(JFXTextField textField, String searchQuery,
+                                                   PlayerRunGameView controller) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(searchQuery);
+        Command command = new Command("usernameFuzzySearchTop5","controller.Controller",params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        ArrayList<Player> top5Players = new Gson().fromJson(answer,  new TypeToken<ArrayList<Player>>() {}.getType());
+        ObservableList<MenuItem> result = FXCollections.observableArrayList();
+        for(Player player: top5Players)
+        {
+            MenuItem menuItem = new MenuItem();
+            menuItem.setOnAction(event -> {
+                textField.setText(player.getUsername());
+                controller.update(textField);
+            });
+            menuItem.setText(player.getUsername());
+            result.add(menuItem);
+        }
+        if(result.isEmpty())
+        {
+            result.add(new MenuItem("No similar user found."));
+        }
+        return result;
+    }
+
+    public void runGame(ArrayList<String> usernames) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(usernames);
+        Command command = new Command("getEventMode","controller.player.PlayerRunGameController"
+                , params,Client.getClientInfo());
+         Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public String getEventMode() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getEventMode","controller.player.PlayerRunGameController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,String.class);
+    }
+
+    public Image getUsernameImage(String username) {
+        return searchPlayer(username).getImage();
+    }
+
+
 }
