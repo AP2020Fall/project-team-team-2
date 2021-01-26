@@ -9,6 +9,7 @@ public class AdminMainMenuLayoutController extends Controller {
 
     public AdminMainMenuLayoutController(ClientInfo clientInfo) {
         super(clientInfo);
+        //super(clientInfo);
     }
 
     public void login(Admin admin)

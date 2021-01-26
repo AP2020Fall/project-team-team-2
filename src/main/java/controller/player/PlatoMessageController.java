@@ -2,6 +2,7 @@ package controller.player;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.Client;
 import main.ClientInfo;
 import model.Account;
 import model.Entry.PlatoMessageEntry;
@@ -11,13 +12,13 @@ import model.Player;
 import java.time.LocalDate;
 import java.util.*;
 
-public class PlatoMessageController extends PlayerMainMenuLayoutController {
+public class PlatoMessageController {
     private final Player player;
 
     public PlatoMessageController(ClientInfo clientInfo) {
-        super(clientInfo);
-        this.player = Objects.requireNonNull( loggedIn,
-                "Player passed to PlatoMessageController is null.");
+        this.player = Player.getPlayerByUsername(clientInfo.getPlayerUsername());
+        if(player == null)
+            System.err.println("Player passed to PlatoMessageController is null.");
     }
     public ArrayList<Message> platoBotsMessages() {
         //returns the list of messages send to player.

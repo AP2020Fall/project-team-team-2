@@ -1,6 +1,5 @@
 package view.player;
 
-import controller.player.PlayerMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +22,6 @@ import view.ViewHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class PlayerAccountMenu implements Tab, Initializable {
@@ -85,18 +83,31 @@ public class PlayerAccountMenu implements Tab, Initializable {
         TabHandler.getTabHandler().push(new PlayerEditProfile());
     }
 
+    @FXML
+    void gameLogSummaryTableSelected(MouseEvent event) {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                if (gameHistoryList.getSelectionModel().getSelectedItems().size() != 0) {
+                    GameLogSummaryEntry gameEntry = gameHistoryList.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new PlayerGameMenu(gameEntry.getGameName()));
+                }
+            }
+
+        }
+    }
+
     private void initializedInfo() {
-        username.setText(Client.getClientInfo().getLoggedIn().getUsername());
-        firstName.setText(Client.getClientInfo().getLoggedIn().getFirstName());
-        lastName.setText(Client.getClientInfo().getLoggedIn().getLastName());
-        email.setText(Client.getClientInfo().getLoggedIn().getEmail());
-        phoneNumber.setText(Client.getClientInfo().getLoggedIn().getPhoneNumber());
-        score.setText(controller.showPoints());
-        bio.setText(Client.getClientInfo().getLoggedIn().getBio());
-        money.setText(controller.getMoney());
-        date.setText(controller.getDate());
-        wins.setText(controller.getWins() + " Wins");
-        friends.setText(controller.getFriendCount());
+        username.setText(controller.getPlayerUsername());
+        firstName.setText(controller.getPlayerFirstName());
+        lastName.setText(controller.getPlayerLastName());
+        email.setText(controller.getPlayerEmail());
+        phoneNumber.setText(controller.getPlayerPhoneNumber());
+        score.setText(controller.getPlayerPoints());
+        bio.setText(controller.getPlayerBio());
+        money.setText(controller.getPlayerMoney());
+        date.setText(controller.getPlayerDate());
+        wins.setText(controller.getPlayerWins() + " Wins");
+        friends.setText(controller.getPlayerFriendCount());
         avatar.setImage(controller.getPlayerImage());
     }
 
@@ -115,22 +126,7 @@ public class PlayerAccountMenu implements Tab, Initializable {
         lastPlayColumn.setCellValueFactory(new PropertyValueFactory<>("lastPlay"));
         gameHistoryList.setPlaceholder(new Label("You have not played a game."));
 
-        gameHistoryList.getColumns().addAll(gameImageColumn,gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
+        gameHistoryList.getColumns().addAll(gameImageColumn, gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
         gameHistoryList.getItems().addAll(controller.getGameHistory());
     }
-    @FXML
-    void gameLogSummaryTableSelected(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(gameHistoryList.getSelectionModel().getSelectedItems().size() != 0)
-                {
-                    GameLogSummaryEntry gameEntry = gameHistoryList.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame(gameEntry.getGameName())));
-                }
-            }
-
-        }
-    }
-
-
 }

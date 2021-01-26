@@ -1,5 +1,6 @@
 package controller;
 
+import main.Client;
 import main.ClientInfo;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import model.*;
@@ -13,13 +14,11 @@ import java.util.regex.Pattern;
 public class Controller {
     private static ArrayList<String> ids = new ArrayList<>();
     //protected static Account loggedIn;
-    protected ClientInfo clientInfo;
+
     public Controller(ClientInfo clientInfo)
     {
-        if(clientInfo == null) System.out.println("this is fucking null bitch");
-        this.clientInfo = clientInfo;
-    }
 
+    }
     protected static String generateId() {
         String id = "";
         while (true) {
@@ -144,6 +143,11 @@ public class Controller {
     public Admin getAdmin()
     {
         return Account.getAdmin();
+    }
+
+    public Boolean adminExists()
+    {
+        return Admin.isAdminExist();
     }
     public Boolean doesGameExist(String gameName) {
         return Game.getGameByGameName(gameName) != null;

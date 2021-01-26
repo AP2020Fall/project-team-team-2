@@ -1,11 +1,7 @@
 package main;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import model.Account;
-import model.AccountGSON;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -30,11 +26,11 @@ public class Command {
 
     public String toJson()
     {
-        return new GsonBuilder().registerTypeAdapter(Account.class,new AccountGSON()).create().toJson(this);
+        return new Gson().toJson(this);
     }
     public static Command fromJson(String json)
     {
-        return new GsonBuilder().registerTypeAdapter(Account.class,new AccountGSON()).create().fromJson(json, Command.class);
+        return new Gson().fromJson(json, Command.class);
     }
 
     public String getCommand() {
@@ -88,7 +84,7 @@ public class Command {
         try{
           return getDeclaringClass().getConstructor(ClientInfo.class).newInstance(clientInfo);
         } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-            System.err.println("couldn't make a new instance" + "@" + declaringClass);
+            System.err.println("couldn't make a new instance " + "@" + declaringClass);
             System.err.println(e.getMessage());
             return null;
         }

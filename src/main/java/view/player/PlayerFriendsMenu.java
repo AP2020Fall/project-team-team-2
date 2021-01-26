@@ -48,6 +48,34 @@ public class PlayerFriendsMenu implements Tab, Initializable {
         initializeTableFriendRequestList();
     }
 
+    @FXML
+    void friendRequestTableSelected(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(friendRequestList.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    FriendRequestEntry friendEntry = friendRequestList.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new PlayerProfileView(friendEntry.getName()));
+                }
+            }
+
+        }
+    }
+
+    @FXML
+    void friendTableSelected(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(friendsList.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    FriendEntry friendEntry = friendsList.getSelectionModel().getSelectedItems().get(0).getValue();
+                    TabHandler.getTabHandler().push(new PlayerProfileView(friendEntry.getName()));
+                }
+            }
+
+        }
+    }
+
     private void initializeTreeFriendsList() {
         TreeTableColumn<FriendEntry, ImageView>  friendAvatarColumn = new TreeTableColumn<>("Avatar");
         friendAvatarColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("avatar"));
@@ -77,35 +105,4 @@ public class PlayerFriendsMenu implements Tab, Initializable {
         friendRequestList.getColumns().addAll(friendRequestNames, friendRequestAccept, friendRequestDecline);
         friendRequestList.getItems().addAll(controller.getFriendRequests());
     }
-    @FXML
-    void friendRequestTableSelected(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(friendRequestList.getSelectionModel().getSelectedItems().size() != 0)
-                {
-                    FriendRequestEntry friendEntry = friendRequestList.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new PlayerProfileView(controller.getFriend(friendEntry.getName())));
-                }
-            }
-
-        }
-    }
-
-    @FXML
-    void friendTableSelected(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(friendsList.getSelectionModel().getSelectedItems().size() != 0)
-                {
-                    FriendEntry friendEntry = friendsList.getSelectionModel().getSelectedItems().get(0).getValue();
-                    TabHandler.getTabHandler().push(new PlayerProfileView(controller.getFriend(friendEntry.getName())));
-                }
-            }
-
-        }
-    }
-
-
-
-
 }

@@ -1,48 +1,47 @@
 package main;
 
-import model.Account;
-import model.Event;
-import model.Game;
-import model.Player;
-
 public class ClientInfo {
-    private Account loggedIn;
-    private Game game;
-    private Event event;
-    private Player player;
+    private String loggedInUsername;
+    private String gameName;
+    private String eventId;
+    private String playerUsername;
 
     public ClientInfo() {
+        loggedInUsername = "";
+        gameName = "";
+        eventId = "";
+        playerUsername = "";
     }
 
-    public Account getLoggedIn() {
-        return loggedIn;
+    public String getLoggedInUsername() {
+        return loggedInUsername;
     }
 
-    public void setLoggedIn(Account loggedIn) {
-        this.loggedIn = loggedIn;
+    public void setLoggedInUsername(String loggedInUsername) {
+        this.loggedInUsername = loggedInUsername;
     }
 
-    public Game getGame() {
-        return game;
+    public String getGameName() {
+        return gameName;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
-    public Event getEvent() {
-        return event;
+    public String getEventId() {
+        return eventId;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getPlayerUsername() {
+        return playerUsername;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayerUsername(String playerUsername) {
+        this.playerUsername = playerUsername;
     }
 }

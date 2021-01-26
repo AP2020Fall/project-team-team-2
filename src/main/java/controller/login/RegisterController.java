@@ -2,8 +2,6 @@ package controller.login;
 
 
 import controller.Controller;
-import controller.admin.AdminMainMenuLayoutController;
-import controller.player.PlayerMainMenuLayoutController;
 import main.ClientInfo;
 import model.Account;
 import model.Admin;
@@ -13,18 +11,19 @@ import java.util.ArrayList;
 
 public class RegisterController extends Controller {
 
-
+    private final ClientInfo clientInfo;
     public RegisterController(ClientInfo clientInfo) {
         super(clientInfo);
+        this.clientInfo = clientInfo;
     }
 
     public boolean createAccount(String username, String password, ArrayList<String> additionalInfo) {
         //creates an account and loads either AdminMainMenu or PlayerMainMenu
         if (!Admin.isAdminExist()) {
-            clientInfo.setLoggedIn(createAdmin(username, password, additionalInfo));
+            clientInfo.setLoggedInUsername(createAdmin(username, password, additionalInfo).getUsername());
             return true;
         } else {
-            clientInfo.setLoggedIn(createPlayer(username, password, additionalInfo));
+            clientInfo.setLoggedInUsername(createPlayer(username, password, additionalInfo).getUsername());
             //ViewHandler.getViewHandler().push(new PlayerMainMenu());
             return false;
         }

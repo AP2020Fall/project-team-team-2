@@ -50,13 +50,13 @@ public class PlayerRunGameView implements Tab, Initializable {
     private final ContextMenu searchContextMenu;
     private final ArrayList<String> usernames;
     private final ClientMasterController controller;
-    public PlayerRunGameView(Game game, Event event)
+    public PlayerRunGameView(String gameName, String eventId)
     {
-        Client.getClientInfo().setGame(game);
-        Client.getClientInfo().setEvent(event);
+        Client.getClientInfo().setGameName(gameName);
+        Client.getClientInfo().setEventId(eventId);
         controller = Client.getConnector().getController();
         usernames = new ArrayList<>();
-        usernames.add(Client.getClientInfo().getLoggedIn().getUsername());
+        //usernames.add(Client.getClientInfo().getLoggedIn().getUsername());
         searchContextMenu = new ContextMenu();
     }
     @Override

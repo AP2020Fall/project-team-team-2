@@ -4,14 +4,11 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 //import com.sun.xml.internal.ws.api.model.SEIModel;
-import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import main.Client;
@@ -68,71 +65,67 @@ public class PlayerEditProfile implements Tab, Initializable {
 
     @FXML
     private void save() {
-        if(validateInput())
-        {
-            controller.setUsername(username.getText());
-            controller.setPassword(password.getText());
-            controller.setBio(bio.getText());
-            controller.setFirstName(firstName.getText());
-            controller.setLastName(lastName.getText());
-            controller.setPhoneNumber(phoneNumber.getText());
-            controller.setEmail(email.getText());
+        if (validateInput()) {
+            controller.setPlayerUsername(username.getText());
+            controller.setPlayerPassword(password.getText());
+            controller.setPlayerBio(bio.getText());
+            controller.setPlayerFirstName(firstName.getText());
+            controller.setPlayerLastName(lastName.getText());
+            controller.setPlayerPhoneNumber(phoneNumber.getText());
+            controller.setPlayerEmail(email.getText());
             TabHandler.getTabHandler().back();
         }
     }
+
     @FXML
     private void addAvatar() {
         String givenImage = AlertMaker.getImageFromUser();
-        if(givenImage != null)
-        {
+        if (givenImage != null) {
             controller.setPlayerImage(givenImage);
             playerImage.setImage(controller.getPlayerImage());
         }
     }
 
     private void initializedPlayerInfo() {
-        username.setText(Client.getClientInfo().getLoggedIn().getUsername());
-        password.setText(Client.getClientInfo().getLoggedIn().getPassword());
-        firstName.setText(Client.getClientInfo().getLoggedIn().getFirstName());
-        lastName.setText(Client.getClientInfo().getLoggedIn().getLastName());
-        bio.setText(Client.getClientInfo().getLoggedIn().getBio());
-        email.setText(Client.getClientInfo().getLoggedIn().getEmail());
-        phoneNumber.setText(Client.getClientInfo().getLoggedIn().getPhoneNumber());
+        username.setText(controller.getPlayerUsername());
+        password.setText(controller.getPlayerPassword());
+        firstName.setText(controller.getPlayerFirstName());
+        lastName.setText(controller.getPlayerLastName());
+        bio.setText(controller.getPlayerBio());
+        email.setText(controller.getPlayerEmail());
+        phoneNumber.setText(controller.getPlayerPhoneNumber());
         playerImage.setImage(controller.getPlayerImage());
     }
 
-    private void setColourRed(JFXTextField textField)
-    {
+    private void setColourRed(JFXTextField textField) {
         textField.setFocusColor(Paint.valueOf("#ff0000"));
         textField.setUnFocusColor(Paint.valueOf("#ff0000"));
     }
 
-   private void unsetColour(JFXTextField textField)
-   {
-       textField.setUnFocusColor(Paint.valueOf("#4d4d4d"));
-       textField.setFocusColor(Paint.valueOf("#4059a9"));
-   }
-    private void setColourRed(JFXPasswordField passwordField)
-    {
+    private void unsetColour(JFXTextField textField) {
+        textField.setUnFocusColor(Paint.valueOf("#4d4d4d"));
+        textField.setFocusColor(Paint.valueOf("#4059a9"));
+    }
+
+    private void setColourRed(JFXPasswordField passwordField) {
         passwordField.setFocusColor(Paint.valueOf("#ff0000"));
         passwordField.setUnFocusColor(Paint.valueOf("#ff0000"));
     }
 
-    private void unsetColour(JFXPasswordField passwordField)
-    {
+    private void unsetColour(JFXPasswordField passwordField) {
         passwordField.setUnFocusColor(Paint.valueOf("#4d4d4d"));
         passwordField.setFocusColor(Paint.valueOf("#4059a9"));
     }
+
     private boolean validateInput() {
-        if(username.getText().isEmpty())
-        {
+        if (username.getText().isEmpty()) {
             setColourRed(username);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "No username is given.");
             return false;
         }
-        if (!username.getText().equals(Client.getClientInfo().getLoggedIn().getUsername()) &&
-                controller.usernameExist(username.getText()))  {
+        if (!username.getText().equals(Client.getClientInfo().getLoggedInUsername()) &&
+                controller.usernameExist(username.getText())) {
             setColourRed(username);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Username already taken.");

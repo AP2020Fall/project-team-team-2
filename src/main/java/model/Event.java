@@ -35,9 +35,7 @@ public class Event {
         setImage(image);
         this.comment = comment;
     }
-    public Event(){
 
-    }
 
     private static Event openEvent(File file) throws FileNotFoundException {
         StringBuilder json = fileToString(file);
@@ -78,6 +76,9 @@ public class Event {
     public Image getImage() {
         File file = new File("database\\events\\images\\" + eventId + ".jpg");
         return new Image(file.toURI().toString());
+    }
+    public String getImageURL() {
+        return avatar;
     }
 
     public void setImage(Image avatar) {
@@ -179,7 +180,7 @@ public class Event {
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
             ImageIO.write(bImage, "jpg", outputFile);
-            return "database\\events\\images\\" + eventId + ".jpg";
+            return outputFile.toURI().toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -200,5 +201,6 @@ public class Event {
                 ", eventId='" + eventId + '\'' +
                 '}';
     }
+
 
 }

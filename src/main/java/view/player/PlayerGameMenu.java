@@ -1,8 +1,5 @@
 package view.player;
 
-
-import com.sun.deploy.util.SessionState;
-import controller.player.PlayerGameMenuController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,22 +14,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import main.Client;
 import main.ClientMasterController;
-import model.Entry.GameEntry;
 import model.Entry.GameLogEntry;
 import model.Entry.ScoreboardEntry;
-import model.Event;
-import model.Game;
 import model.GameLogStates;
-import model.Scoreboard;
 import view.Tab;
 import view.TabHandler;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
-
 
 public class PlayerGameMenu implements Tab, Initializable {
     @FXML
@@ -50,8 +41,8 @@ public class PlayerGameMenu implements Tab, Initializable {
     public TreeTableView<GameLogEntry> gameLog;
     private final ClientMasterController controller;
 
-    public PlayerGameMenu(Game game) {
-        Client.getClientInfo().setGame(game);
+    public PlayerGameMenu(String gameName) {
+        Client.getClientInfo().setGameName(gameName);
         controller = Client.getConnector().getController();
     }
 
@@ -87,14 +78,25 @@ public class PlayerGameMenu implements Tab, Initializable {
 
     @FXML
     private void runGame() {
-        TabHandler.getTabHandler().push(new PlayerRunGameView(Client.getClientInfo().getGame(),new Event(
-                "Risk", LocalDate.now(),LocalDate.now(),0,"0","Casual",
-                Client.getClientInfo().getGame().getImage())));
+        TabHandler.getTabHandler().push(new PlayerRunGameView(Client.getClientInfo().getGameName(),
+                controller.getCasualEvent()));
     }
 
+    @FXML
+    void scoreboardSelected(MouseEvent event) {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                if (scoreboard.getSelectionModel().getSelectedItems().size() != 0) {
+                    ScoreboardEntry scoreboardEntry = scoreboard.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new PlayerProfileView(scoreboardEntry.getPlayerName()));
+                }
+            }
+
+        }
+    }
 
     private void initializeInfo() {
-        detail.setText(controller.getDetails());
+        detail.setText(controller.getGameDetails());
         frequency.setText(controller.getPlayedFrequency());
         win.setText(controller.getWinsCount());
         gameImage.setImage(controller.getGameImage());
@@ -126,7 +128,7 @@ public class PlayerGameMenu implements Tab, Initializable {
     }
 
     private void fillYellow() {
-     favorite.setFill(Paint.valueOf("#ffc000ff"));
+        favorite.setFill(Paint.valueOf("#ffc000ff"));
     }
 
     private void unFill() {
@@ -142,20 +144,7 @@ public class PlayerGameMenu implements Tab, Initializable {
         scoreboardFrequencyColumn.setCellValueFactory(new PropertyValueFactory<>("numPlayed"));
 
         scoreboard.setPlaceholder(new Label("No one has played the game."));
-        scoreboard.getColumns().addAll(scoreboardNameColumn,scoreboardFrequencyColumn,scoreboardWinsColumn);
+        scoreboard.getColumns().addAll(scoreboardNameColumn, scoreboardFrequencyColumn, scoreboardWinsColumn);
         scoreboard.getItems().addAll(controller.getScoreboard());
-    }
-    @FXML
-    void scoreboardSelected(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(scoreboard.getSelectionModel().getSelectedItems().size() != 0)
-                {
-                    ScoreboardEntry scoreboardEntry = scoreboard.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new PlayerProfileView(controller.getPlayer(scoreboardEntry)));
-                }
-            }
-
-        }
     }
 }
