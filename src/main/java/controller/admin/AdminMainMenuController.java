@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
+import main.ClientInfo;
 import model.*;
 import model.Entry.PlayerEntry;
 import model.Entry.SuggestionEntry;
@@ -19,7 +20,9 @@ import java.util.Objects;
 public class AdminMainMenuController extends AdminMainMenuLayoutController {
     private final Admin admin;
 
-    public AdminMainMenuController() {
+    public AdminMainMenuController(ClientInfo clientInfo)
+    {
+        super(clientInfo);
         this.admin = Objects.requireNonNull(loggedIn,
                 "Admin passed to AdminMainMenuController is null.");
     }
@@ -80,8 +83,8 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         admin.setPhoneNumber(phoneNumber);
     }
 
-    public void setImage(Image image) {
-        admin.setImage(image);
+    public void setImage(String url) {
+        admin.setImage(url);
     }
 
 
@@ -132,7 +135,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public ObservableList<MenuItem> getSearchQuery(String searchQuery) {
         ObservableList<MenuItem> result = FXCollections.observableArrayList();
-        ArrayList<Player> top5Players = usernameFuzzySearchTop5(searchQuery);
+        ArrayList<Player> top5Players = new ArrayList<>();//usernameFuzzySearchTop5(searchQuery);
         for(Player player: top5Players)
         {
             MenuItem menuItem = new MenuItem();

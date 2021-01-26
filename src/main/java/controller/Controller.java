@@ -1,5 +1,6 @@
 package controller;
 
+import main.ClientInfo;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import model.*;
 
@@ -12,29 +13,36 @@ import java.util.regex.Pattern;
 public class Controller {
     private static ArrayList<String> ids = new ArrayList<>();
     //protected static Account loggedIn;
+    protected ClientInfo clientInfo;
+    public Controller(ClientInfo clientInfo)
+    {
+        if(clientInfo == null) System.out.println("this is fucking null bitch");
+        this.clientInfo = clientInfo;
+    }
 
     protected static String generateId() {
         String id = "";
         while (true) {
             id = UUID.randomUUID().toString().toUpperCase().substring(0, 8);
-            if (!doesIdExist(id)) {
-                ids.add(id);
-                return id;
-            }
-        }
-    }
-    public static String generateId(int different) {
-        String id = "";
-        while (true) {
-            id = UUID.randomUUID().toString().toUpperCase().substring(0, 8);
-            if (!doesIdExist(id)) {
+            if (!idExists(id)) {
                 ids.add(id);
                 return id;
             }
         }
     }
 
-    public boolean isUsernameExist(String username) {
+    public static String generateId(int different) {
+        String id = "";
+        while (true) {
+            id = UUID.randomUUID().toString().toUpperCase().substring(0, 8);
+            if (!idExists(id)) {
+                ids.add(id);
+                return id;
+            }
+        }
+    }
+
+    public Boolean usernameExist(String username) {
         for (Account account : Account.getAllAccounts()) {
             if (account.getUsername().equals(username)) {
                 return true;
@@ -43,7 +51,20 @@ public class Controller {
         return false;
     }
 
-    public boolean isUsernameAndPasswordMatch(String username, String password) {
+    public Boolean checkEmail(String email) {
+        return email.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$");
+    }
+
+    public Boolean checkPhoneNumber(String phoneNumber) {
+        return phoneNumber.matches("09\\d{9}");
+    }
+
+    public Boolean checkNumber(String number) {
+        return number.matches("^\\d+");
+    }
+
+
+    public Boolean usernameAndPasswordMatch(String username, String password) {
         for (Account account : Account.getAllAccounts()) {
             if (account.getUsername().equals(username)) {
                 return account.getPassword().equals(password);
@@ -52,7 +73,7 @@ public class Controller {
         return false;
     }
 
-    private static boolean doesIdExist(String id) {
+    private static Boolean idExists(String id) {
         for (String existId : ids) {
             if (existId.equals(id)) {
                 return true;
@@ -70,7 +91,7 @@ public class Controller {
         return localDate;
     }
 
-    public boolean isValidDate(String date) {
+    public Boolean isValidDate(String date) {
         String[] splitDate = date.split("\\/");
         int year = Integer.parseInt(splitDate[0]);
         int month = Integer.parseInt(splitDate[1]);
@@ -81,17 +102,16 @@ public class Controller {
         return true;
     }
 
-    public boolean checkRelativeDate(LocalDate start,LocalDate end)
-    {
+    public Boolean checkRelativeDate(LocalDate start, LocalDate end) {
         return start.compareTo(end) < 0;
     }
 
-    public boolean checkStartDate(LocalDate date) {
-            return LocalDate.now().compareTo(date) <= 0;
+    public Boolean checkStartDate(LocalDate date) {
+        return LocalDate.now().compareTo(date) <= 0;
     }
 
-    public boolean checkEndDate(LocalDate date) {
-            return LocalDate.now().compareTo(date) < 0;
+    public Boolean checkEndDate(LocalDate date) {
+        return LocalDate.now().compareTo(date) < 0;
     }
 
     public boolean isEventIdExists(String eventId) {
@@ -103,7 +123,7 @@ public class Controller {
         return false;
     }
 
-    public boolean isSuggestionIdExists(String suggestionId) {
+    public Boolean isSuggestionIdExists(String suggestionId) {
         for (Suggestion suggestion : Suggestion.getSuggestions()) {
             if (suggestion.getSuggestionId().equals(suggestionId)) {
                 return true;
@@ -112,7 +132,7 @@ public class Controller {
         return false;
     }
 
-    public boolean isUsernamePlayer(String username) {
+    public Boolean isUsernamePlayer(String username) {
         for (Account account : Account.getAllAccounts()) {
             if (account.getUsername().equals(username) && account instanceof Player) {
                 return true;
@@ -121,42 +141,31 @@ public class Controller {
         return false;
     }
 
-    public boolean doesGameExist(String gameName) {
+    public Admin getAdmin()
+    {
+        return Account.getAdmin();
+    }
+    public Boolean doesGameExist(String gameName) {
         return Game.getGameByGameName(gameName) != null;
     }
 
-    public boolean checkEmail(String email) {
-        return email.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$");
-    }
-
-    public boolean checkPhoneNumber(String phoneNumber) {
-        return phoneNumber.matches("09\\d{9}");
-    }
 
     public Matcher getMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }
 
-    public Player searchPlayer(String username)
-    {
+    public Player searchPlayer(String username) {
         return Player.getPlayerByUsername(username);
     }
 
 
-    public boolean checkMoney(String money) {
-        return money.matches("^\\d+");
-    }
-
-
-    public HashMap<Player,Integer> usernameFuzzySearch(String username)
-    {
-        List<Map.Entry<Player,Integer>> list = new LinkedList<>();
-        for (Player player: Account.getAllPlayers())
-        {
-            int fuzzyVal = FuzzySearch.ratio(username,player.getUsername());
-            if(fuzzyVal > 69)
-                list.add(new AbstractMap.SimpleEntry<Player,Integer>(player,fuzzyVal));
+    public HashMap<Player, Integer> usernameFuzzySearch(String username) {
+        List<Map.Entry<Player, Integer>> list = new LinkedList<>();
+        for (Player player : Account.getAllPlayers()) {
+            int fuzzyVal = FuzzySearch.ratio(username, player.getUsername());
+            if (fuzzyVal > 69)
+                list.add(new AbstractMap.SimpleEntry<Player, Integer>(player, fuzzyVal));
         }
         list.sort(new Comparator<Map.Entry<Player, Integer>>() {
             public int compare(Map.Entry<Player, Integer> o1,
@@ -171,6 +180,7 @@ public class Controller {
         return temp;
 
     }
+
     public ArrayList<Player> usernameFuzzySearchTop10(String username) {
         HashMap<Player, Integer> temp = usernameFuzzySearch(username);
         ArrayList<Player> result = new ArrayList<>();
@@ -182,6 +192,7 @@ public class Controller {
         }
         return result;
     }
+
     public ArrayList<Player> usernameFuzzySearchTop5(String username) {
         HashMap<Player, Integer> temp = usernameFuzzySearch(username);
         ArrayList<Player> result = new ArrayList<>();
@@ -192,10 +203,5 @@ public class Controller {
             if (counter == 0) break;
         }
         return result;
-    }
-
-
-    public boolean isNumber(String text) {
-        return text.matches("^\\d+");
     }
 }

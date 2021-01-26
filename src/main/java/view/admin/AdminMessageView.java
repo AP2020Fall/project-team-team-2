@@ -19,6 +19,7 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import main.Client;
 import model.Entry.PlatoMessageEntry;
 import view.View;
 
@@ -38,7 +39,7 @@ public class AdminMessageView implements View, Initializable {
     private final AdminMessageViewController controller;
 
     public AdminMessageView() {
-        controller = new AdminMessageViewController();
+        controller = new AdminMessageViewController(Client.getClientInfo());
     }
 
     @Override

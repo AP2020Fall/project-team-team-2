@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import main.Client;
 import model.Entry.FriendRequestEntry;
 import model.Entry.GameEntry;
 import model.Entry.PlayerEntry;
@@ -28,7 +29,7 @@ public class AdminPlayerListMenu implements Tab, Initializable {
     private AdminMainMenuController controller;
     public AdminPlayerListMenu()
     {
-        controller = new AdminMainMenuController();
+        controller = new AdminMainMenuController(Client.getClientInfo());
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

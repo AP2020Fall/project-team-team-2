@@ -3,6 +3,7 @@ package controller.admin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import main.ClientInfo;
 import model.Entry.GameLogSummaryEntry;
 import model.FriendRequest;
 import model.GameLogSummary;
@@ -13,8 +14,10 @@ import java.util.Objects;
 public class AdminProfileViewController extends AdminMainMenuLayoutController{
     private final Player player;
 
-    public AdminProfileViewController(Player player) {
-        this.player = Objects.requireNonNull(player,
+    public AdminProfileViewController(ClientInfo clientInfo)
+    {
+        super(clientInfo);
+        this.player = Objects.requireNonNull(clientInfo.getPlayer(),
                 "Players passed to AdminProfileViewController is null");
     }
 

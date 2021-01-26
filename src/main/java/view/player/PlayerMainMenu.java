@@ -10,6 +10,8 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import main.Client;
+import main.ClientMasterController;
 import model.Entry.GameEntry;
 import view.Tab;
 
@@ -21,10 +23,10 @@ import java.util.ResourceBundle;
 public class PlayerMainMenu implements Tab, Initializable {
     @FXML
     private TreeTableView<GameEntry> gamesList;
-    PlayerMainMenuController controller;
+    private final ClientMasterController controller;
 
     public PlayerMainMenu() {
-        controller = new PlayerMainMenuController();
+        controller = Client.getConnector().getController();
     }
 
     @Override

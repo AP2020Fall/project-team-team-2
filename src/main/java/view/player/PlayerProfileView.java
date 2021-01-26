@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import main.Client;
+import main.ClientMasterController;
 import model.Entry.GameEntry;
 import model.Entry.GameLogEntry;
 import model.Entry.GameLogSummaryEntry;
@@ -27,7 +29,6 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class PlayerProfileView implements Tab, Initializable {
-    private final PlayerProfileViewController controller;
     @FXML
     private Label friendRequestPending= new Label();
     @FXML
@@ -40,8 +41,6 @@ public class PlayerProfileView implements Tab, Initializable {
     private Label email= new Label();
     @FXML
     private Label phoneNumber= new Label();
-    @FXML
-    private Label daysPassed= new Label();
     @FXML
     private Label bio= new Label();
     @FXML
@@ -58,9 +57,12 @@ public class PlayerProfileView implements Tab, Initializable {
     private JFXButton addButton;
     @FXML
     private JFXButton removeButton;
+    private final ClientMasterController controller;
 
-    public PlayerProfileView(Player player) {
-        controller = new PlayerProfileViewController(player);
+    public PlayerProfileView(Player player)
+    {
+        Client.getClientInfo().setPlayer(player);
+        controller =Client.getConnector().getController();
     }
 
     @Override
@@ -94,17 +96,16 @@ public class PlayerProfileView implements Tab, Initializable {
     }
     private void initializedPlayerInfo()
     {
-        username.setText(controller.getUsername());
-        firstName.setText(controller.getFirstName());
-        lastName.setText(controller.getLastName());
-        email.setText(controller.getEmail());
-        phoneNumber.setText(controller.getPhoneNumber());
-        daysPassed.setText(controller.getDaysPassed());
-        wins.setText(controller.getWins() + " Wins");
-        date.setText(controller.getDaysPassed());
-        friends.setText(controller.getFriendCount());
-        bio.setText(controller.getBio());
-        avatar.setImage(controller.getPlayerImage());
+        username.setText(Client.getClientInfo().getPlayer().getUsername());
+        firstName.setText(Client.getClientInfo().getPlayer().getFirstName());
+        lastName.setText(Client.getClientInfo().getPlayer().getLastName());
+        email.setText(Client.getClientInfo().getPlayer().getEmail());
+        phoneNumber.setText(Client.getClientInfo().getPlayer().getPhoneNumber());
+        wins.setText(controller.getViewPlayerWins() + " Wins");
+        date.setText(controller.getViewPlayerDaysPassed());
+        friends.setText(controller.getViewPlayerFriendCount());
+        bio.setText(Client.getClientInfo().getPlayer().getBio());
+        avatar.setImage(controller.getViewPlayerImage());
     }
     private void initializedFriendButtons()
     {
@@ -145,7 +146,7 @@ public class PlayerProfileView implements Tab, Initializable {
                 if(gameHistoryList.getSelectionModel().getSelectedItems().size() != 0)
                 {
                     GameLogSummaryEntry gameEntry = gameHistoryList.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame(gameEntry)));
+                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame(gameEntry.getGameName())));
                 }
             }
 

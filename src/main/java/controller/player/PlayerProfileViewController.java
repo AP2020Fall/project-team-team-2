@@ -3,6 +3,8 @@ package controller.player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import main.Client;
+import main.ClientInfo;
 import model.Entry.GameLogSummaryEntry;
 import model.FriendRequest;
 import model.Game;
@@ -15,8 +17,9 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
     private final Player player;
     private final Player logged;
 
-    public PlayerProfileViewController(Player player) {
-        this.player = Objects.requireNonNull(player,
+    public PlayerProfileViewController(ClientInfo clientInfo) {
+        super(clientInfo);
+        this.player = Objects.requireNonNull(clientInfo.getPlayer(),
                 "Players passed to PlayerProfileViewController is null");
         this.logged = Objects.requireNonNull(loggedIn,
                 "Logged passed to PlayerProfileViewController is null");
@@ -42,7 +45,7 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
         return player.getPhoneNumber();
     }
 
-    public String getDaysPassed() {
+    public String getViewPlayerDaysPassed() {
         return String.valueOf(player.getDayOfRegister());
     }
 
@@ -86,15 +89,15 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
             result.add(new GameLogSummaryEntry(gameLog));
         return result;
     }
-    public String getWins() {
+    public String getViewPlayerWins() {
         return String.valueOf(player.getNumberOfWins());
     }
-    public String getFriendCount() {
+    public String getViewPlayerFriendCount() {
         return String.valueOf(player.getFriends().size());
     }
 
-    public Image getPlayerImage() {
-        return player.getImage();
+    public Player getPlayer() {
+        return player;
     }
     public Game getGame(GameLogSummaryEntry gameEntry) {
         return Game.getGameByGameName(gameEntry.getGameName());

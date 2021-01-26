@@ -11,6 +11,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import main.Client;
 import model.Entry.EventEntry;
 import model.Entry.GameEntry;
 import model.Event;
@@ -32,7 +33,7 @@ public class AdminGamesMenu implements Tab, Initializable {
 
 
     public AdminGamesMenu() {
-        controller = new AdminGamesMenuController();
+        controller = new AdminGamesMenuController(Client.getClientInfo());
     }
 
     @Override

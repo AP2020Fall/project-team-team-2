@@ -2,7 +2,6 @@ package view.login;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import controller.login.RegisterController;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,42 +61,47 @@ public class RegisterMenu  implements View {
     private ArrayList<String> getAdditionalInfo() {
         ArrayList<String> inputs = new ArrayList<>();
         if (firstName.getText().isEmpty()) {
-            setFirstNameColourRed();
+            setColourRed(firstName);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
                     "Okay", "Invalid Information", "Invalid first name.");
             return null;
         }
+        unsetColour(firstName);
         inputs.add(firstName.getText());
         if (lastName.getText().isEmpty()) {
-            setLastNameColourRed();
+            setColourRed(lastName);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
                     "Okay", "Invalid Information", "Invalid last name.");
             return null;
         }
+        unsetColour(lastName);
         inputs.add(lastName.getText());
         if (!controller.checkPhoneNumber(phoneNumber.getText())) {
-            setPhoneNumberColourRed();
+            setColourRed(phoneNumber);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
                     "Okay", "Invalid Information", "Invalid phone number.");
             return null;
         }
+        unsetColour(phoneNumber);
         inputs.add(phoneNumber.getText());
 
         if (!controller.checkEmail(email.getText())) {
-            setEmailColourRed();
+            setColourRed(email);
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
                     "Okay", "Invalid Information", "Invalid email.");
             return null;
         }
+        unsetColour(email);
         inputs.add(email.getText());
 
         if (Admin.isAdminExist()) {
             if (!controller.checkMoney(money.getText())) {
-                setMoneyColourRed();
+                setColourRed(money);
                 AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
                         "Okay", "Invalid Information", "Invalid amount for money.");
                 return null;
             }
+            unsetColour(money);
             inputs.add(money.getText());
         }
         return inputs;
@@ -105,7 +109,7 @@ public class RegisterMenu  implements View {
 
     @FXML
     private void register() {
-        if (!controller.isUsernameExist(username.getText())) {
+        if (!controller.usernameExist(username.getText())) {
             money.setVisible(Admin.isAdminExist());
             animate(-1);
         } else {
@@ -153,35 +157,18 @@ public class RegisterMenu  implements View {
     }
 
     private void setCredentialsColourRed() {
-        username.setUnFocusColor(Paint.valueOf("ff0000"));
-        username.setFocusColor(Paint.valueOf("ff0000"));
+        setColourRed(username);
         password.setUnFocusColor(Paint.valueOf("ff0000"));
         password.setFocusColor(Paint.valueOf("ff0000"));
-
     }
 
-    private void setEmailColourRed() {
-        email.setUnFocusColor(Paint.valueOf("ff0000"));
-        email.setFocusColor(Paint.valueOf("ff0000"));
+    private void setColourRed(JFXTextField textField) {
+        textField.setUnFocusColor(Paint.valueOf("ff0000"));
+        textField.setFocusColor(Paint.valueOf("ff0000"));
     }
-
-    private void setPhoneNumberColourRed() {
-        phoneNumber.setUnFocusColor(Paint.valueOf("ff0000"));
-        phoneNumber.setFocusColor(Paint.valueOf("ff0000"));
-    }
-
-    private void setFirstNameColourRed() {
-        firstName.setUnFocusColor(Paint.valueOf("ff0000"));
-        firstName.setFocusColor(Paint.valueOf("ff0000"));
-    }
-
-    private void setLastNameColourRed() {
-        lastName.setUnFocusColor(Paint.valueOf("ff0000"));
-        lastName.setFocusColor(Paint.valueOf("ff0000"));
-    }
-
-    private void setMoneyColourRed() {
-        money.setUnFocusColor(Paint.valueOf("ff0000"));
-        money.setFocusColor(Paint.valueOf("ff0000"));
+    private void unsetColour(JFXTextField textField)
+    {
+        textField.setUnFocusColor(Paint.valueOf("#4d4d4d"));
+        textField.setFocusColor(Paint.valueOf("#4059a9"));
     }
 }

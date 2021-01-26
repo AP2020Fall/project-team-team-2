@@ -24,9 +24,9 @@ public class PlatoMessageEntry {
     {
         this.day = time;
     }
-    public PlatoMessageEntry()
+    public PlatoMessageEntry(Image adminAvatar)
     {
-       this.avatar = new ImageView(Account.getAdmin().getImage());
+       this.avatar = new ImageView(adminAvatar);
         avatar.setFitHeight(48);
         avatar.setFitWidth(48);
     }

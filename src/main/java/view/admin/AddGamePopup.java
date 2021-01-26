@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.Client;
 import model.Game;
 import view.AlertMaker;
 
@@ -47,7 +48,7 @@ public class AddGamePopup implements Initializable {
 
     public AddGamePopup(boolean edit, Game game) {
         this.edit = edit;
-        controller = new AdminGameMenuController(game);
+        controller = new AdminGameMenuController(Client.getClientInfo());
     }
 
 
@@ -107,7 +108,7 @@ public class AddGamePopup implements Initializable {
 
     @FXML
     void addAvatar(MouseEvent event) {
-        Image givenImage = AlertMaker.getImageFromUser();
+        Image givenImage =new Image( AlertMaker.getImageFromUser());
         if (givenImage != null) {
             avatar.setImage(givenImage);
         }

@@ -6,12 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.Client;
 import view.AlertMaker;
 
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class AddSuggestionPopup {
 
     public AddSuggestionPopup()
     {
-        controller = new AdminMainMenuController();
+        controller = new AdminMainMenuController(Client.getClientInfo());
     }
 
     public void openWindow() throws IOException {
@@ -43,7 +42,7 @@ public class AddSuggestionPopup {
         popupWindow.showAndWait();
     }
     @FXML private void add() {
-        if (!controller.isUsernameExist(playerName.getText())) {
+        if (!controller.usernameExist(playerName.getText())) {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
                     "Invalid information","username does not exist.");

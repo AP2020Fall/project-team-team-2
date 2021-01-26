@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import main.Client;
 import view.Tab;
 import view.TabHandler;
 import view.ViewHandler;
@@ -37,7 +38,7 @@ public class AdminAccountMenu implements Tab, Initializable {
 
 
     public AdminAccountMenu() {
-        controller = new AdminMainMenuController();
+        controller = new AdminMainMenuController(Client.getClientInfo());
     }
 
     @Override

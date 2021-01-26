@@ -1,5 +1,7 @@
 package main;
 
+import controller.Controller;
+import controller.login.LoginController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -7,20 +9,28 @@ import model.*;
 import view.ViewHandler;
 import view.login.WelcomeMenu;
 
+import java.lang.reflect.Method;
+
 
 public class Client extends Application {
     private static int PORT_NUMBER = 6660;
     private static ClientConnector connector;
+    private static ClientInfo clientInfo;
+
+    public static void updateClientInfo(ClientInfo NewClientInfo) {
+        clientInfo = NewClientInfo;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        clientInfo = new ClientInfo();
         initializeConnector();
-        Main.window = primaryStage;
-        Main.window.setOnCloseRequest(event -> Platform.exit());
-        openFiles();
-        Runtime.getRuntime().addShutdownHook(new Thread(Client::saveFiles));
+        primaryStage.setOnCloseRequest(event -> Platform.exit());
+        //openFiles();
+        //Runtime.getRuntime().addShutdownHook(new Thread(Client::saveFiles));
+        ViewHandler.getViewHandler().setWindow(primaryStage);
         ViewHandler.getViewHandler().push(new WelcomeMenu());
-        Main.window.show();
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
@@ -61,5 +71,9 @@ public class Client extends Application {
     public static ClientConnector getConnector()
     {
         return connector;
+    }
+
+    public static ClientInfo getClientInfo() {
+        return clientInfo;
     }
 }

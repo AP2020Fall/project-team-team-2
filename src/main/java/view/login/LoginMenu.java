@@ -11,6 +11,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import main.Client;
+import main.ClientMasterController;
 import model.Account;
 import view.AlertMaker;
 import view.View;
@@ -30,10 +32,10 @@ public class LoginMenu implements View, Initializable {
     @FXML
     private JFXPasswordField password;
 
-    LoginController controller;
+    private final ClientMasterController controller;
 
     public LoginMenu() {
-        controller = new LoginController();
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -53,13 +55,13 @@ public class LoginMenu implements View, Initializable {
     @FXML
     private void loginAccount() {
         playClickSound();
-        if (!controller.isUsernameExist(username.getText())) {
+        if (!controller.usernameExist(username.getText())) {
             setColourRed();
             AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                     , "Invalid Credentials", "Username does not exist.");
         } else {
 
-            if (!controller.isUsernameAndPasswordMatch(username.getText(), password.getText())) {
+            if (!controller.usernameAndPasswordMatch(username.getText(), password.getText())) {
                 setColourRed();
                 AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                         , "Invalid Credentials", "Username and password are not match.");
@@ -77,7 +79,7 @@ public class LoginMenu implements View, Initializable {
     @FXML
     private void deleteAccount() {
         playClickSound();
-        if (!controller.isUsernameExist(username.getText())) {
+        if (!controller.usernameExist(username.getText())) {
             setColourRed();
             AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                     , "Invalid Credentials", "Username does not exist.");
@@ -86,14 +88,14 @@ public class LoginMenu implements View, Initializable {
             AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                     , "Invalid Credentials", "Admin account can't be deleted.");
         } else {
-            if (!controller.isUsernameAndPasswordMatch(username.getText(), password.getText())) {
+            if (!controller.usernameAndPasswordMatch(username.getText(), password.getText())) {
                 setColourRed();
                 AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
                         , "Invalid Credentials", "Username and password are not match.");
             } else {
                 controller.delete(username.getText());
                 AlertMaker.showMaterialDialog(root, root.getChildren().get(0), "Okay"
-                        , "Invalid Credentials", username.getText() +
+                        , "Success", username.getText() +
                                 " deleted successfully!");
             }
         }

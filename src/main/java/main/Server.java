@@ -1,14 +1,46 @@
 package main;
 
+import com.google.gson.Gson;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import model.*;
+import org.javatuples.Pair;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
-public class Server {
+public class Server extends Application {
     private static int PORT_NUMBER = 6660;
-
+//todo make it non javafx
     public static void main(String[] args) throws IOException {
-        (new Server()).run();
+        launch(args);
+
+    }
+    private static void openFiles() {
+        try {
+            Account.open();
+            Event.open();
+            Suggestion.open();
+            Game.open();
+            FriendRequest.open();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void saveFiles() {
+        try {
+            Account.save();
+            Event.save();
+            Suggestion.save();
+            Game.save();
+            FriendRequest.save();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
     }
 
     private void run() throws IOException {
@@ -28,6 +60,14 @@ public class Server {
                 break;
             }
         }
+    }
+
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        openFiles();
+        Runtime.getRuntime().addShutdownHook(new Thread(Server::saveFiles));
+        (new Server()).run();
     }
 
     static class ClientHandler extends Thread {
@@ -52,8 +92,8 @@ public class Server {
                 while (true) {
                     input = dataInputStream.readUTF();
                     System.out.println("[SERVER]: Command " + input + " was sent.");
-                    String answer = controller.takeAction(input);
-                    dataOutputStream.writeUTF(answer);
+                    Pair<String,String> answer = controller.takeAction(input);
+                    dataOutputStream.writeUTF(new Gson().toJson(answer));
                     dataOutputStream.flush();
                     System.out.println("[SERVER]: " + answer);
                     if (answer.equals("Connection is terminated.")) {

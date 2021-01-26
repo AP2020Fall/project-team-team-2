@@ -3,6 +3,7 @@ package controller.admin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import main.ClientInfo;
 import model.Entry.EventEntry;
 import model.Entry.GameEntry;
 import model.Event;
@@ -15,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class AdminGamesMenuController extends AdminMainMenuLayoutController{
+
+    public AdminGamesMenuController(ClientInfo clientInfo) {
+        super(clientInfo);
+    }
 
     public ObservableList<GameEntry> getGames() {
        ObservableList<GameEntry> result = FXCollections.observableArrayList();

@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import main.Client;
 import model.Entry.GameLogSummaryEntry;
 import model.Player;
 import view.Tab;
@@ -52,7 +53,7 @@ public class AdminProfileView implements Tab, Initializable {
     private final AdminProfileViewController controller;
 
     public AdminProfileView(Player player) {
-        controller = new AdminProfileViewController(player);
+        controller = new AdminProfileViewController(Client.getClientInfo());
     }
 
     @Override

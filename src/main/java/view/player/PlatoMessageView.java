@@ -11,6 +11,8 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import main.Client;
+import main.ClientMasterController;
 import model.Entry.GameLogEntry;
 import model.Entry.PlatoMessageEntry;
 import view.View;
@@ -24,11 +26,12 @@ import java.util.ResourceBundle;
 
 public class PlatoMessageView implements View, Initializable {
     private static Stage popupWindow;
-    private final PlatoMessageController controller;
     @FXML
     private TreeTableView<PlatoMessageEntry> messageTable;
+    private final ClientMasterController controller;
+
     public PlatoMessageView() {
-        controller = new PlatoMessageController();
+        controller = Client.getConnector().getController();
     }
 
     @Override

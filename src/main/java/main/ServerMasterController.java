@@ -1,16 +1,28 @@
 package main;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import model.Account;
+import model.AccountGSON;
+import org.javatuples.Pair;
+
+import java.lang.reflect.Method;
+
 public class ServerMasterController {
-    public String takeAction(String input) {
+    public Pair<String,String> takeAction(String input) {
        Command command = Command.fromJson(input);
        if(command.getCommand().equals("endConnection"))
         {
-            return "Connection is terminated.";
+            return new Pair<>("Connection is terminated.", new Gson().toJson(command.getClientInfo()));
         }
-       String result = "Actions must be implemented";
-       //todo do action
-        return result;
+       if(command.getDeclaringClass() == null)
+           return new Pair<>("", new Gson().toJson(command.getClientInfo()));
+       if(command.getMethod() == null)
+           return new Pair<>("", new Gson().toJson(command.getClientInfo()));
+        return new Pair<>(new Gson().toJson(command.invokeMethod()),
+                new GsonBuilder().registerTypeAdapter(Account.class,new AccountGSON()).create().toJson(command.getClientInfo()));
     }
+
     public String test(String input)
     {
         if(input.equalsIgnoreCase("test"))
@@ -20,5 +32,6 @@ public class ServerMasterController {
         else
             return "Test was unsuccessful.";
     }
+
 
 }

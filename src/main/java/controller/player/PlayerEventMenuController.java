@@ -1,6 +1,7 @@
 package controller.player;
 
 import javafx.scene.image.Image;
+import main.ClientInfo;
 import model.Event;
 import model.Game;
 
@@ -8,9 +9,10 @@ import java.util.Objects;
 
 public class PlayerEventMenuController extends PlayerMainMenuLayoutController {
     private final Event event;
-    public PlayerEventMenuController(Event event)
+    public PlayerEventMenuController(ClientInfo clientInfo)
     {
-        this.event = Objects.requireNonNull(event,"Event passed to PlayerEventMenu is null");
+        super(clientInfo);
+        this.event = Objects.requireNonNull(clientInfo.getEvent(),"Event passed to PlayerEventMenu is null");
     }
 
     public String getGameName() {
@@ -27,10 +29,6 @@ public class PlayerEventMenuController extends PlayerMainMenuLayoutController {
 
     public String getScore() {
         return String.valueOf( event.getScore());
-    }
-
-    public Image getEventImage() {
-        return event.getImage();
     }
 
     public String getComment() {

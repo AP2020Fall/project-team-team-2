@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.Client;
 import model.Event;
 import view.AlertMaker;
 
@@ -54,7 +55,7 @@ public class AddEventPopup implements Initializable {
 
     public AddEventPopup(boolean edit, Event event) {
         this.edit = edit;
-        controller = new AdminEventMenuController(event);
+        controller = new AdminEventMenuController(Client.getClientInfo());
     }
 
     public void openWindow() throws IOException {
@@ -91,7 +92,7 @@ public class AddEventPopup implements Initializable {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Start date can not be after end.");
-        }else if (controller.isNumber(score.getText()) &&  Integer.parseInt(score.getText()) <= 0) {
+        }else if (controller.checkNumber(score.getText()) &&  Integer.parseInt(score.getText()) <= 0) {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Score should be positive number.");
@@ -129,7 +130,7 @@ public class AddEventPopup implements Initializable {
 
     @FXML
     void addAvatar() {
-        Image givenImage = AlertMaker.getImageFromUser();
+        Image givenImage = new Image(AlertMaker.getImageFromUser());
         if (givenImage != null) {
             avatar.setImage(givenImage);
         }

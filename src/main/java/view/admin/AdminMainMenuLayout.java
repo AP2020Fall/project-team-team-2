@@ -2,7 +2,6 @@ package view.admin;
 
 import com.jfoenix.controls.JFXTextField;
 import controller.admin.AdminMainMenuController;
-import controller.player.PlayerMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,25 +9,19 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
-import main.Main;
-import model.Player;
+import main.Client;
 import view.AlertMaker;
 import view.TabHandler;
 import view.View;
-import view.player.PlatoMessageView;
-import view.player.PlayerProfileView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AdminMainMenuLayout implements View, Initializable {
@@ -43,7 +36,7 @@ public class AdminMainMenuLayout implements View, Initializable {
     private static AudioClip audioClip;
 
     public AdminMainMenuLayout() {
-        controller = new AdminMainMenuController();
+        controller = new AdminMainMenuController(Client.getClientInfo());
     }
 
     @Override
@@ -75,7 +68,7 @@ public class AdminMainMenuLayout implements View, Initializable {
         viewMainMenu();
     }
     @FXML private  void search(ActionEvent actionEvent) {
-        if (!controller.isUsernameExist(searchUsername.getText())) {
+        if (!controller.usernameExist(searchUsername.getText())) {
             AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
                     "Invalid username","Username does not exist!");
         } else {

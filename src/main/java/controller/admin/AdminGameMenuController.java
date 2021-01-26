@@ -1,13 +1,14 @@
 package controller.admin;
 
 import javafx.scene.image.Image;
+import main.ClientInfo;
 import model.Game;
 
 public class AdminGameMenuController extends AdminGamesMenuController {
     private final Game game ;
-    public AdminGameMenuController (Game game)
-    {
-        this.game = game;
+    public AdminGameMenuController(ClientInfo clientInfo) {
+        super(clientInfo);
+        this.game = clientInfo.getGame();
     }
 
     public Image getImage() {

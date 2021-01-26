@@ -1,10 +1,8 @@
 package view.admin;
 
 import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import controller.admin.AdminMainMenuController;
-import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
+import main.Client;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
@@ -42,7 +41,7 @@ public class AdminEditProfile implements Tab, Initializable {
     private final AdminMainMenuController controller;
 
     public AdminEditProfile() {
-        controller = new AdminMainMenuController();
+        controller = new AdminMainMenuController(Client.getClientInfo());
     }
 
     @Override
@@ -77,11 +76,11 @@ public class AdminEditProfile implements Tab, Initializable {
     }
     @FXML
     private void addAvatar(MouseEvent event) {
-        Image givenImage = AlertMaker.getImageFromUser();
+        String givenImage =AlertMaker.getImageFromUser();
         if(givenImage != null)
         {
-            playerImage.setImage(givenImage);
             controller.setImage(givenImage);
+            playerImage.setImage(controller.getImage());
         }
     }
 
@@ -134,7 +133,7 @@ public class AdminEditProfile implements Tab, Initializable {
             return false;
         }
         if (!username.getText().equals(controller.getUsername()) &&
-                controller.isUsernameExist(username.getText()))  {
+                controller.usernameExist(username.getText()))  {
             setUsernameColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Username already taken.");

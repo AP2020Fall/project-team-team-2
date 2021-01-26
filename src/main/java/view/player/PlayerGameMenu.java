@@ -1,6 +1,7 @@
 package view.player;
 
 
+import com.sun.deploy.util.SessionState;
 import controller.player.PlayerGameMenuController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
@@ -14,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
+import main.Client;
+import main.ClientMasterController;
 import model.Entry.GameEntry;
 import model.Entry.GameLogEntry;
 import model.Entry.ScoreboardEntry;
@@ -45,10 +48,11 @@ public class PlayerGameMenu implements Tab, Initializable {
     @FXML
     private FontAwesomeIconView favorite = new FontAwesomeIconView();
     public TreeTableView<GameLogEntry> gameLog;
-    PlayerGameMenuController controller;
+    private final ClientMasterController controller;
 
     public PlayerGameMenu(Game game) {
-        controller = new PlayerGameMenuController(game);
+        Client.getClientInfo().setGame(game);
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -83,9 +87,9 @@ public class PlayerGameMenu implements Tab, Initializable {
 
     @FXML
     private void runGame() {
-        TabHandler.getTabHandler().push(new PlayerRunGameView(controller.getGame(),new Event(
+        TabHandler.getTabHandler().push(new PlayerRunGameView(Client.getClientInfo().getGame(),new Event(
                 "Risk", LocalDate.now(),LocalDate.now(),0,"0","Casual",
-                controller.getGame().getImage())));
+                Client.getClientInfo().getGame().getImage())));
     }
 
 

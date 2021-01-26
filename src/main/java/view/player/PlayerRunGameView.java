@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import main.Client;
+import main.ClientMasterController;
 import model.Event;
 import model.Game;
 import view.AlertMaker;
@@ -46,13 +48,15 @@ public class PlayerRunGameView implements Tab, Initializable {
     @FXML
     private Label eventMode;
     private final ContextMenu searchContextMenu;
-    private final PlayerRunGameController controller;
     private final ArrayList<String> usernames;
+    private final ClientMasterController controller;
     public PlayerRunGameView(Game game, Event event)
     {
-        controller = new PlayerRunGameController(game,event);
+        Client.getClientInfo().setGame(game);
+        Client.getClientInfo().setEvent(event);
+        controller = Client.getConnector().getController();
         usernames = new ArrayList<>();
-        usernames.add(controller.getUsername());
+        usernames.add(Client.getClientInfo().getLoggedIn().getUsername());
         searchContextMenu = new ContextMenu();
     }
     @Override
@@ -95,7 +99,7 @@ public class PlayerRunGameView implements Tab, Initializable {
     }
     public void update(JFXTextField textField)
     {
-        if (!controller.isUsernameExist(textField.getText())) {
+        if (!controller.usernameExist(textField.getText())) {
             AlertMaker.showMaterialDialog(TabHandler.getTabHandler().getStackRoot(),
                     TabHandler.getTabHandler().getStackRoot().getChildren().get(0), "Okay",
                     "Invalid username", "Username does not exist!");

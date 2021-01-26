@@ -1,15 +1,18 @@
 package controller.admin;
 
 import javafx.scene.image.Image;
+import main.Client;
+import main.ClientInfo;
 import model.Event;
 
 import java.time.LocalDate;
 
 public class AdminEventMenuController extends AdminGamesMenuController{
     private final Event event;
-    public AdminEventMenuController(Event event)
+    public AdminEventMenuController(ClientInfo clientInfo)
     {
-        this.event = event;
+        super(clientInfo);
+        this.event = clientInfo.getEvent();
     }
 
     public String getScore() {

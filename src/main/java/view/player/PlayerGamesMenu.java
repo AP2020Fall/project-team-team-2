@@ -1,6 +1,5 @@
 package view.player;
 
-import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,9 +10,10 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import main.Client;
+import main.ClientMasterController;
 import model.Entry.EventEntry;
 import model.Entry.GameEntry;
-import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
 
@@ -27,10 +27,10 @@ public class PlayerGamesMenu implements Tab, Initializable {
     private TableView<GameEntry> gamesListGamesMenu;
     @FXML
     private TreeTableView<EventEntry> eventList;
-    private PlayerMainMenuController controller;
+    private final ClientMasterController controller;
 
     public PlayerGamesMenu() {
-        controller = new PlayerMainMenuController();
+        controller = Client.getConnector().getController();
     }
     @Override
     public Parent show() throws IOException {
@@ -95,7 +95,7 @@ public class PlayerGamesMenu implements Tab, Initializable {
                 if(gamesListGamesMenu.getSelectionModel().getSelectedItems().size() != 0)
                 {
                     GameEntry gameEntry = gamesListGamesMenu.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame( gameEntry)));
+                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame( gameEntry.getName())));
                 }
             }
 

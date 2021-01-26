@@ -11,6 +11,8 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import main.Client;
+import main.ClientMasterController;
 import model.Entry.EventEntry;
 import model.Entry.FriendEntry;
 import model.Entry.FriendRequestEntry;
@@ -26,11 +28,11 @@ public class PlayerFriendsMenu implements Tab, Initializable {
     private TreeTableView<FriendEntry> friendsList;
     @FXML
     private TableView<FriendRequestEntry> friendRequestList;
-    private final PlayerFriendsMenuController controller;
+    private final ClientMasterController controller;
 
 
     public PlayerFriendsMenu() {
-        controller = new PlayerFriendsMenuController();
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -82,7 +84,7 @@ public class PlayerFriendsMenu implements Tab, Initializable {
                 if(friendRequestList.getSelectionModel().getSelectedItems().size() != 0)
                 {
                     FriendRequestEntry friendEntry = friendRequestList.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new PlayerProfileView(controller.getFriend(friendEntry)));
+                    TabHandler.getTabHandler().push(new PlayerProfileView(controller.getFriend(friendEntry.getName())));
                 }
             }
 
@@ -96,7 +98,7 @@ public class PlayerFriendsMenu implements Tab, Initializable {
                 if(friendsList.getSelectionModel().getSelectedItems().size() != 0)
                 {
                     FriendEntry friendEntry = friendsList.getSelectionModel().getSelectedItems().get(0).getValue();
-                    TabHandler.getTabHandler().push(new PlayerProfileView(controller.getFriend(friendEntry)));
+                    TabHandler.getTabHandler().push(new PlayerProfileView(controller.getFriend(friendEntry.getName())));
                 }
             }
 

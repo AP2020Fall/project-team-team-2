@@ -13,6 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
+import main.Client;
+import main.ClientMasterController;
 import view.AlertMaker;
 import view.TabHandler;
 import view.View;
@@ -20,7 +22,6 @@ import view.View;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class PlayerMainMenuLayout implements View, Initializable {
     @FXML
@@ -36,11 +37,11 @@ public class PlayerMainMenuLayout implements View, Initializable {
     private Label scoreMenuBar = new Label();
     @FXML
     private ContextMenu searchContextMenu;
-    PlayerMainMenuController controller;
+    private final ClientMasterController controller;
     private static AudioClip audioClip = new AudioClip(PlayerMainMenuLayout.class.getResource("/sounds/playerSound.mp3").toString());
 
     public PlayerMainMenuLayout() {
-        controller = new PlayerMainMenuController();
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -75,7 +76,7 @@ public class PlayerMainMenuLayout implements View, Initializable {
 
     @FXML
     private void search() {
-        if (!controller.isUsernameExist(searchUsername.getText())) {
+        if (!controller.usernameExist(searchUsername.getText())) {
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid username", "Username does not exist!");
         } else {

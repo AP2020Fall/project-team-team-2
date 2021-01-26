@@ -36,17 +36,18 @@ import javax.imageio.ImageIO;
 public class AlertMaker {
 
 
-    public static Image getImageFromUser()
+    public static String getImageFromUser()
     {
         File file;
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image files","*.png","*.jpeg","*.jpg"));
-
-        file = fileChooser.showOpenDialog(Main.window);
+        //todo maybe needs fixing
+        file = fileChooser.showOpenDialog(new Stage());
         if(file!=null)
         {
-           return new Image(file.toURI().toString(),150,150,true,true);
+           //return new Image(file.toURI().toString(),150,150,true,true);
+            return file.toURI().toString();
         }
         return  null;
     }
