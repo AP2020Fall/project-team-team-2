@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import main.Client;
 import model.Event;
 import model.Game;
 import view.AlertMaker;
@@ -50,7 +51,7 @@ public class PlayerRunGameView implements Tab, Initializable {
     private final ArrayList<String> usernames;
     public PlayerRunGameView(Game game, Event event)
     {
-        controller = new PlayerRunGameController(game,event);
+        controller = new PlayerRunGameController(Client.getClientInfo());
         usernames = new ArrayList<>();
         usernames.add(controller.getUsername());
         searchContextMenu = new ContextMenu();

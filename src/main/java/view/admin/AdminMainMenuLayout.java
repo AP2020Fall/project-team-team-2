@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
+import main.Client;
 import view.AlertMaker;
 import view.TabHandler;
 import view.View;
@@ -35,7 +36,7 @@ public class AdminMainMenuLayout implements View, Initializable {
     private static AudioClip audioClip;
 
     public AdminMainMenuLayout() {
-        controller = new AdminMainMenuController();
+        controller = new AdminMainMenuController(Client.getClientInfo());
     }
 
     @Override

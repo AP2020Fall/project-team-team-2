@@ -33,7 +33,7 @@ public abstract class Account {
     private String phoneNumber;
     private LocalDate registerDay;
     private boolean isRobot = false;
-    private transient Image avatar;
+    private String avatar;
 
     public static Admin getAdmin() {
         for(Account account: allAccounts)
@@ -60,11 +60,12 @@ public abstract class Account {
     }
 
     public Image getImage() {
-        return avatar;
+        File file = new File("database\\accounts\\images\\" + accountId + ".jpg");
+        return new Image(file.toURI().toString());
     }
 
     public void setImage(Image image) {
-        this.avatar = image;
+        this.avatar = saveImageToFile(image,this.accountId);
     }
 
     public Account(String botName, String username) {
@@ -92,7 +93,7 @@ public abstract class Account {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.avatar = new Image("/images/blankProfile.jpg");
+        setImage(new Image("/images/blankProfile.jpg"));
         registerDay = LocalDate.now();
     }
 
@@ -268,7 +269,7 @@ public abstract class Account {
         return json;
     }
 
-    public static void saveImageToFile(Image image, String accountId) {
+    public static String saveImageToFile(Image image, String accountId) {
 
         File folder = new File("database\\accounts\\images");
         if (!folder.exists()) {
@@ -279,6 +280,7 @@ public abstract class Account {
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
             ImageIO.write(bImage, "jpg", outputFile);
+            return "database\\accounts\\images\\" + accountId + ".jpg";
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

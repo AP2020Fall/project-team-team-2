@@ -3,6 +3,7 @@ package controller.player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
+import main.ClientInfo;
 import model.Entry.FriendEntry;
 import model.Entry.FriendRequestEntry;
 import model.Entry.PlatoMessageEntry;
@@ -16,7 +17,8 @@ import java.util.Objects;
 public class PlayerFriendsMenuController extends PlayerMainMenuLayoutController {
     private final Player player;
 
-    public PlayerFriendsMenuController() {
+    public PlayerFriendsMenuController(ClientInfo clientInfo) {
+        super(clientInfo);
         this.player = Objects.requireNonNull(loggedIn,
                 "Player object passed to FriendsMenuController is null.");
     }

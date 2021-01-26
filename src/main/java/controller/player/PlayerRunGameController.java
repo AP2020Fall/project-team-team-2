@@ -6,6 +6,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
+import main.Client;
+import main.ClientInfo;
 import model.Event;
 import model.Game;
 import model.Player;
@@ -20,9 +22,10 @@ public class PlayerRunGameController extends PlayerMainMenuLayoutController{
     private Game game;
     private Event event;
 
-    public PlayerRunGameController(Game game, Event event) {
-        this.game = game;
-        this.event = event;
+    public PlayerRunGameController(ClientInfo clientInfo) {
+        super(clientInfo);
+        this.game = Objects.requireNonNull(clientInfo.getGame(), "Game passed to PlayerRunGameController is null.");
+        this.event = Objects.requireNonNull(clientInfo.getEvent(), "Event passed to PlayerRunGameController is null.");
     }
 
     public ObservableList<MenuItem> getSearchQuery(JFXTextField textField, String searchQuery,

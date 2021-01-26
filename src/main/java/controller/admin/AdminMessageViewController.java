@@ -1,5 +1,6 @@
 package controller.admin;
 
+import main.ClientInfo;
 import model.Admin;
 import model.Entry.PlatoMessageEntry;
 import model.Message;
@@ -10,7 +11,9 @@ import java.util.*;
 
 public class AdminMessageViewController extends AdminMainMenuLayoutController {
     private Admin admin;
-    public AdminMessageViewController() {
+    public AdminMessageViewController(ClientInfo clientInfo)
+    {
+        super(clientInfo);
         this.admin = Objects.requireNonNull( loggedIn,
                 "Admin passed to AdminMessageViewController is null.");
     }

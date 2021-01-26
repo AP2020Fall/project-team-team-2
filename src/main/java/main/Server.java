@@ -1,8 +1,10 @@
 package main;
 
+import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.*;
+import org.javatuples.Pair;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -60,6 +62,7 @@ public class Server extends Application {
         }
     }
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         openFiles();
@@ -89,8 +92,8 @@ public class Server extends Application {
                 while (true) {
                     input = dataInputStream.readUTF();
                     System.out.println("[SERVER]: Command " + input + " was sent.");
-                    String answer = controller.takeAction(input);
-                    dataOutputStream.writeUTF(answer);
+                    Pair<String,String> answer = controller.takeAction(input);
+                    dataOutputStream.writeUTF(new Gson().toJson(answer));
                     dataOutputStream.flush();
                     System.out.println("[SERVER]: " + answer);
                     if (answer.equals("Connection is terminated.")) {

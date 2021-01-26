@@ -98,5 +98,6 @@
     "month": 1,
     "day": 13
   },
-  "isRobot": false
+  "isRobot": false,
+  "avatar": "database\\accounts\\images\\63FB6D26.jpg"
 }

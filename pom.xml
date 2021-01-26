@@ -104,6 +104,12 @@
             <version>9.1.2</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.javatuples/javatuples -->
+        <dependency>
+            <groupId>org.javatuples</groupId>
+            <artifactId>javatuples</artifactId>
+            <version>1.2</version>
+        </dependency>
 
     </dependencies>
 

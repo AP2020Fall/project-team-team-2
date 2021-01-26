@@ -15,7 +15,6 @@ public class GameEntry {
         name= game.getName();
         detail = game.getDetails();
         avatar = new ImageView(game.getImage());
-        System.out.println("not her");
         avatar.setFitHeight(48);
         avatar.setFitWidth(48);
     }

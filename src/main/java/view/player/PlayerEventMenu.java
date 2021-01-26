@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import main.Client;
 import model.Event;
 import view.Tab;
 import view.TabHandler;
@@ -28,7 +29,7 @@ public class PlayerEventMenu implements Tab, Initializable {
     PlayerEventMenuController controller;
 
     public PlayerEventMenu(Event event) {
-        controller = new PlayerEventMenuController(event);
+        controller = new PlayerEventMenuController(Client.getClientInfo());
     }
     @Override
     public Parent show() throws IOException {

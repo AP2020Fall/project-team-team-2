@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
+import main.Client;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
@@ -44,7 +45,7 @@ public class PlayerEditProfile implements Tab, Initializable {
     private final PlayerMainMenuController controller;
 
     public PlayerEditProfile() {
-        controller = new PlayerMainMenuController();
+        controller = new PlayerMainMenuController(Client.getClientInfo());
     }
 
     @Override

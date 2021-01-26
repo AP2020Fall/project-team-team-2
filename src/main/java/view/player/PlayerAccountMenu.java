@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import main.Client;
 import model.Entry.GameLogSummaryEntry;
 import view.Tab;
 import view.TabHandler;
@@ -54,7 +55,7 @@ public class PlayerAccountMenu implements Tab, Initializable {
     private PlayerMainMenuController controller;
 
     public PlayerAccountMenu() {
-        controller = new PlayerMainMenuController();
+        controller = new PlayerMainMenuController(Client.getClientInfo());
     }
 
     @Override
@@ -73,7 +74,7 @@ public class PlayerAccountMenu implements Tab, Initializable {
     @FXML
     private void logout() throws IOException {
         PlayerMainMenuLayout.getAudioClip().stop();
-        controller.logout();
+        //controller.logout();
         TabHandler.getTabHandler().logout();
         ViewHandler.getViewHandler().logout();
     }

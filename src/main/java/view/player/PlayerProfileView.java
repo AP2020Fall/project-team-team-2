@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import main.Client;
 import model.Entry.GameEntry;
 import model.Entry.GameLogEntry;
 import model.Entry.GameLogSummaryEntry;
@@ -27,7 +28,6 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class PlayerProfileView implements Tab, Initializable {
-    private final PlayerProfileViewController controller;
     @FXML
     private Label friendRequestPending= new Label();
     @FXML
@@ -58,9 +58,10 @@ public class PlayerProfileView implements Tab, Initializable {
     private JFXButton addButton;
     @FXML
     private JFXButton removeButton;
+    private final PlayerProfileViewController controller;
 
     public PlayerProfileView(Player player) {
-        controller = new PlayerProfileViewController(player);
+        controller = new PlayerProfileViewController(Client.getClientInfo());
     }
 
     @Override

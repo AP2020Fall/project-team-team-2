@@ -24,7 +24,7 @@ public class Event {
     private int score;
     private String eventId;
     private String comment;
-    private transient Image avatar;
+    private String avatar;
 
     public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId, String comment, Image image) {
         this.gameName = gameName;
@@ -32,13 +32,12 @@ public class Event {
         this.end = end;
         this.score = score;
         this.eventId = eventId;
-        this.avatar = image;
+        setImage(image);
         this.comment = comment;
     }
     public Event(){
 
     }
-
 
     private static Event openEvent(File file) throws FileNotFoundException {
         StringBuilder json = fileToString(file);
@@ -77,11 +76,12 @@ public class Event {
     }
 
     public Image getImage() {
-        return avatar;
+        File file = new File("database\\events\\images\\" + eventId + ".jpg");
+        return new Image(file.toURI().toString());
     }
 
     public void setImage(Image avatar) {
-        this.avatar = avatar;
+        this.avatar = saveImageToFile(avatar,eventId);
     }
 
     public String getComment() {
@@ -168,7 +168,7 @@ public class Event {
         }
     }
 
-    public static void saveImageToFile(Image image, String eventId) {
+    public static String saveImageToFile(Image image, String eventId) {
 
         File folder = new File("database\\events\\images");
         if (!folder.exists()) {
@@ -179,6 +179,7 @@ public class Event {
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
             ImageIO.write(bImage, "jpg", outputFile);
+            return "database\\events\\images\\" + eventId + ".jpg";
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

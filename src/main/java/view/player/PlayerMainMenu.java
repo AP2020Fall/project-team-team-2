@@ -44,16 +44,13 @@ public class PlayerMainMenu implements Tab, Initializable {
     private void initializeTreeGamesList() {
         TreeItem<GameEntry> favourite = new TreeItem<>(new GameEntry("Favourite Games"));
         favourite.setExpanded(true);
-        System.out.println("*1");
         for (GameEntry gameEntry : controller.favoriteGames()) {
 
             favourite.getChildren().add(new TreeItem<>(gameEntry));
         }
-        System.out.println("*2");
         TreeItem<GameEntry> recently = new TreeItem<>(new GameEntry("Recently Played"));
         recently.setExpanded(true);
         recently.getChildren().add(new TreeItem<>(controller.lastGamePlayed()));
-        System.out.println("*3");
         TreeItem<GameEntry> suggested = new TreeItem<>(new GameEntry("Suggested"));
         suggested.setExpanded(true);
         for (GameEntry gameEntry : controller.adminsSuggestions()) {

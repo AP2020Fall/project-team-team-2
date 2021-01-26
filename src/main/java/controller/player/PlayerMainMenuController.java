@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
+import main.ClientInfo;
 import model.*;
 import model.Entry.*;
 import view.TabHandler;
@@ -18,11 +19,11 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
 
     private final Player player;
 
-    public PlayerMainMenuController() {
+    public PlayerMainMenuController(ClientInfo clientInfo) {
+        super(clientInfo);
         this.player = Objects.requireNonNull(loggedIn,
                 "Player passed to PlayerMainMenuController is null.");
     }
-
 
 
     public ArrayList<Game> favoriteGames() {
@@ -62,13 +63,21 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
         return result;
     }
 
-    public ArrayList<EventEntry> getEvents()
-    {
-        ArrayList<EventEntry> result = new ArrayList<>();
-        for(Event event: Event.getEvents())
-            result.add(new EventEntry(event));
-        return result;
+    public ArrayList<Game> getGames() {
+        return Game.getGames();
     }
+
+    public ArrayList<Event> getEvents()
+    {
+        return Event.getEvents();
+    }
+    public Event getEvent(String eventId) {
+        return Event.getEventById(eventId);
+    }
+    public Game getGame(String gameName) {
+        return Game.getGameByGameName(gameName);
+    }
+
     public String getBio() {
         return player.getBio();
     }
@@ -106,21 +115,10 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
         return player.getLastName();
     }
 
-
-
-
     public ObservableList<GameLogSummaryEntry> getGameHistory() {
         ObservableList<GameLogSummaryEntry> result = FXCollections.observableArrayList();
         for (GameLogSummary gameLog : player.getGameLogSummaries())
             result.add(new GameLogSummaryEntry(gameLog));
-        return result;
-    }
-
-
-    public ObservableList<GameEntry> getGames() {
-        ObservableList<GameEntry> result = FXCollections.observableArrayList();
-        for(Game game: Game.getGames())
-            result.add(new GameEntry(game));
         return result;
     }
 
@@ -159,12 +157,7 @@ public class PlayerMainMenuController extends PlayerMainMenuLayoutController {
         return player.getImage();
     }
 
-    public Event getEvent(EventEntry eventEntry) {
-        return Event.getEventById(eventEntry.getEventId());
-    }
-    public Game getGame(GameEntry gameEntry) {
-        return Game.getGameByGameName(gameEntry.getName());
-    }
+
     public Game getGame(GameLogSummaryEntry gameEntry) {
         return Game.getGameByGameName(gameEntry.getGameName());
     }
