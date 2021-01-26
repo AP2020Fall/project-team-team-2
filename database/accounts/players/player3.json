@@ -1,0 +1,29 @@
+{
+  "money": 400.0,
+  "score": 0,
+  "loses": 0,
+  "wins": 0,
+  "draws": 0,
+  "gameLogSummaries": [],
+  "friends": [],
+  "receivedFriendRequests": [],
+  "sentFriendRequests": [],
+  "messages": [],
+  "favouriteGames": [],
+  "suggestions": [],
+  "bio": "No bio is given.",
+  "firstName": "player3",
+  "lastName": "player3",
+  "username": "player3",
+  "accountId": "2BC913A2",
+  "password": "player3",
+  "email": "emad.zin@gmail.com",
+  "phoneNumber": "09105734731",
+  "registerDay": {
+    "year": 2021,
+    "month": 1,
+    "day": 27
+  },
+  "isRobot": false,
+  "avatar": "file:/C:/Users/emadz/Desktop/Codes/IntelliJ/AP/Project/project-team-team-2/database/accounts/images/2BC913A2.jpg"
+}

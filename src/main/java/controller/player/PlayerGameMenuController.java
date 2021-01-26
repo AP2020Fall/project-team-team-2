@@ -1,19 +1,24 @@
 package controller.player;
 
+import controller.Controller;
 import main.ClientInfo;
 import model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
+public class PlayerGameMenuController extends Controller {
     private final Game game;
     private final Player player;
 
     public PlayerGameMenuController(ClientInfo clientInfo) {
         super(clientInfo);
-        this.game = Objects.requireNonNull(clientInfo.getGame(), "Game passed to GameMenuController is null.");
-        this.player = Objects.requireNonNull(loggedIn,"Player passed to GameMenuController is null.");
+        this.game = Game.getGameByGameName(clientInfo.getGameName());
+        if(game == null)
+            System.err.println("Game passed to GameMenuController is null.");
+        this.player = Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
+        if(player == null)
+            System.err.println("Player passed to GameMenuController is null.");
     }
 
     public Boolean isFavorite() {
@@ -53,8 +58,8 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
             return String.valueOf(gameLogSummary.getWins());
     }
 
-    public Game getGame() {
-        return game;
+    public String getImage() {
+        return game.getImageURL();
     }
 
     public Boolean hasPlayedGame()
@@ -69,5 +74,12 @@ public class PlayerGameMenuController extends PlayerMainMenuLayoutController {
     public ArrayList<Scoreboard.Entry> getScoreboard() {
         return game.getScoreboard().getScoreboard();
 
+    }
+
+    public String getCasualEvent() {
+        Event casual = new Event(game.getName(), LocalDate.now(),LocalDate.now(),0,generateId(),
+                "Casual",game.getImage());
+        Event.addEvent(casual);
+        return casual.getEventId();
     }
 }

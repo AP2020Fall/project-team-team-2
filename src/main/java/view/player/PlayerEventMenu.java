@@ -18,21 +18,25 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayerEventMenu implements Tab, Initializable {
-
-    @FXML private Label gameName;
-    @FXML private Label startDate;
-    @FXML private Label endDate;
-    @FXML private Label score;
+    @FXML
+    private Label gameName;
+    @FXML
+    private Label startDate;
+    @FXML
+    private Label endDate;
+    @FXML
+    private Label score;
     @FXML
     private Label comment;
     @FXML
     private ImageView eventImage;
     private final ClientMasterController controller;
 
-    public PlayerEventMenu(Event event) {
-        Client.getClientInfo().setEvent(event);
+    public PlayerEventMenu(String eventId) {
+        Client.getClientInfo().setEventId(eventId);
         controller = Client.getConnector().getController();
     }
+
     @Override
     public Parent show() throws IOException {
 
@@ -46,17 +50,18 @@ public class PlayerEventMenu implements Tab, Initializable {
         initializeInfo();
     }
 
-    public void join() {
-        TabHandler.getTabHandler().push(new PlayerRunGameView(Client.getClientInfo().getGame(),
-                Client.getClientInfo().getEvent()));
+    @FXML
+    private void join() {
+        TabHandler.getTabHandler().push(new PlayerRunGameView(controller.getEventGameName(),
+                Client.getClientInfo().getEventId()));
     }
-    private void initializeInfo()
-    {
-        gameName.setText(controller.getGameName());
-        startDate.setText(controller.getStartDate());
-        endDate.setText(controller.getEndDate());
-        score.setText(controller.getScore());
-        comment.setText(controller.getComment());
+
+    private void initializeInfo() {
+        gameName.setText(controller.getEventGameName());
+        startDate.setText(controller.getEventStartDate());
+        endDate.setText(controller.getEventEndDate());
+        score.setText(controller.getEventScore());
+        comment.setText(controller.getEventComment());
         eventImage.setImage(controller.getEventImage());
     }
 }

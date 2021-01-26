@@ -12,9 +12,20 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Server extends Application {
-    private static int PORT_NUMBER = 6660;
+    private static final int PORT_NUMBER = 6660;
+    private static Server server;
+
+    public Server()
+    {}
+    public static Server getInstance()
+    {
+        if(server == null)
+            return server = new Server();
+        return server;
+    }
 //todo make it non javafx
     public static void main(String[] args) throws IOException {
+        getInstance();
         launch(args);
 
     }
@@ -87,24 +98,28 @@ public class Server extends Application {
 
         @Override
         public void run() {
-            try {
-                String input;
-                while (true) {
-                    input = dataInputStream.readUTF();
-                    System.out.println("[SERVER]: Command " + input + " was sent.");
-                    Pair<String,String> answer = controller.takeAction(input);
-                    dataOutputStream.writeUTF(new Gson().toJson(answer));
-                    dataOutputStream.flush();
-                    System.out.println("[SERVER]: " + answer);
-                    if (answer.equals("Connection is terminated.")) {
-                        System.out.println("[SERVER]: Connection closed!");
-                        break;
+            String input;
+            while (!Thread.interrupted()) {
+                synchronized (Server.getInstance()) {
+                    try {
+                        input = dataInputStream.readUTF();
+                        Pair<String, String> answer = controller.takeAction(input);
+                        dataOutputStream.writeUTF(new Gson().toJson(answer));
+                        dataOutputStream.flush();
+                        System.out.println("[SERVER]: Command: " + input + " was sent.");
+                        System.out.println("[SERVER]: result: " + answer + " is sent.");
+                        if (answer.equals("Connection is terminated.")) {
+                            System.out.println("[SERVER]: Connection closed!");
+                            Thread.currentThread().interrupt();
+                            break;
+                        }
+                    } catch (Exception e) {
+                        System.out.println("[SERVER]: Connection to the client is lost!");
+                        Thread.currentThread().interrupt();
                     }
                 }
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
 
+            }
         }
 
     }

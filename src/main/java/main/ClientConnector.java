@@ -4,13 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import model.Account;
-import model.AccountGSON;
-import model.Game;
 import org.javatuples.Pair;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ClientConnector {
     private Socket socket;
@@ -44,10 +41,9 @@ public class ClientConnector {
             dataOutputStream.writeUTF(userInput);
             dataOutputStream.flush();
             String response = dataInputStream.readUTF();
-            System.out.println("[CLIENT]: Server responded : "+ response + " to: " + userInput);
             Pair<String,String> query = new Gson().fromJson(response,  new TypeToken<Pair<String,String>>() {}.getType());
-            Client.updateClientInfo(new GsonBuilder().registerTypeAdapter(Account.class, new AccountGSON()).create().
-                    fromJson(query.getValue1(),ClientInfo.class));
+            System.out.println("[CLIENT]: Server responded : "+ query.getValue1() + "\n to: " + userInput);
+            Client.updateClientInfo(new Gson().fromJson(query.getValue1(),ClientInfo.class));
             return query.getValue0();
         }
         catch (IOException e) {

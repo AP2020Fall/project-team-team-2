@@ -33,6 +33,9 @@ public class Game {
         this.avatar = saveImageToFile(image,gameId);
     }
 
+    public String getImageURL() {
+        return avatar;
+    }
     public Game(String name, String gameId, String details, Image gameImage) {
         this.name = name;
         this.gameId = gameId;
@@ -194,10 +197,11 @@ public class Game {
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
             ImageIO.write(bImage, "jpg", outputFile);
+            return outputFile.toURI().toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return "database\\games\\images\\" + gameId + ".jpg";
+
     }
 
     public static void openFileToImage(Game game) {
@@ -210,4 +214,6 @@ public class Game {
         return "Game: " + name + '\n'
                 + details;
     }
+
+
 }

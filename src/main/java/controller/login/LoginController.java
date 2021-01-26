@@ -1,8 +1,6 @@
 package controller.login;
 
 import controller.Controller;
-import controller.admin.AdminMainMenuLayoutController;
-import controller.player.PlayerMainMenuLayoutController;
 import main.ClientInfo;
 import model.Account;
 import model.Admin;
@@ -11,8 +9,10 @@ import model.Player;
 import java.util.Objects;
 
 public class LoginController extends Controller {
+    private ClientInfo clientInfo;
     public LoginController(ClientInfo clientInfo) {
         super(clientInfo);
+        this.clientInfo = clientInfo;
     }
 
     public void delete(String username) {
@@ -29,7 +29,7 @@ public class LoginController extends Controller {
        Account loggedIn = Objects.requireNonNull(Account.getAccountByUsername(username),
                 "Username passed to LoginController.login doesn't exist.");
         if(clientInfo != null) {
-            clientInfo.setLoggedIn(loggedIn);
+            clientInfo.setLoggedInUsername(loggedIn.getUsername());
         }
         if (loggedIn instanceof Admin) {
             //new AdminMainMenuLayoutController().login((Admin) loggedIn);

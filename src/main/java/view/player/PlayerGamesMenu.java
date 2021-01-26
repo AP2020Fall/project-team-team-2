@@ -32,6 +32,7 @@ public class PlayerGamesMenu implements Tab, Initializable {
     public PlayerGamesMenu() {
         controller = Client.getConnector().getController();
     }
+
     @Override
     public Parent show() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerGamesMenu.fxml"));
@@ -43,6 +44,35 @@ public class PlayerGamesMenu implements Tab, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initializeTableGamesList();
         initializeTreeEventList();
+    }
+
+    @FXML
+    void eventTableSelect(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(eventList.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    EventEntry eventEntry = eventList.getSelectionModel().getSelectedItems().get(0).getValue();
+                    TabHandler.getTabHandler().push(new PlayerEventMenu(eventEntry.getEventId()));
+                }
+            }
+
+        }
+
+    }
+
+    @FXML
+    void gameTableSelect(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(gamesListGamesMenu.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    GameEntry gameEntry = gamesListGamesMenu.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new PlayerGameMenu(gameEntry.getName()));
+                }
+            }
+
+        }
     }
 
     private void initializeTableGamesList() {
@@ -72,34 +102,6 @@ public class PlayerGamesMenu implements Tab, Initializable {
         eventList.setShowRoot(false);
         eventList.setPlaceholder(new Label("No event has been created."));
         eventList.getColumns().addAll(eventImage, eventName,eventStart,eventEnd);
-    }
-    @FXML
-    void eventTableSelect(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(eventList.getSelectionModel().getSelectedItems().size() != 0)
-                {
-                    EventEntry eventEntry = eventList.getSelectionModel().getSelectedItems().get(0).getValue();
-                    TabHandler.getTabHandler().push(new PlayerEventMenu(controller.getEvent(eventEntry)));
-                }
-            }
-
-        }
-
-    }
-
-    @FXML
-    void gameTableSelect(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(gamesListGamesMenu.getSelectionModel().getSelectedItems().size() != 0)
-                {
-                    GameEntry gameEntry = gamesListGamesMenu.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame( gameEntry.getName())));
-                }
-            }
-
-        }
     }
 
 }

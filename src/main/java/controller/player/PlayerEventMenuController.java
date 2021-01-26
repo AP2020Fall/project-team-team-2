@@ -7,12 +7,14 @@ import model.Game;
 
 import java.util.Objects;
 
-public class PlayerEventMenuController extends PlayerMainMenuLayoutController {
+public class PlayerEventMenuController {
     private final Event event;
-    public PlayerEventMenuController(ClientInfo clientInfo)
-    {
-        super(clientInfo);
-        this.event = Objects.requireNonNull(clientInfo.getEvent(),"Event passed to PlayerEventMenu is null");
+
+    public PlayerEventMenuController(ClientInfo clientInfo) {
+        this.event = Event.getEventById(clientInfo.getEventId());
+        if (event == null)
+            System.err.println("Event passed to PlayerEventMenuController is null");
+
     }
 
     public String getGameName() {
@@ -20,7 +22,7 @@ public class PlayerEventMenuController extends PlayerMainMenuLayoutController {
     }
 
     public String getStartDate() {
-        return  event.getStart().toString();
+        return event.getStart().toString();
     }
 
     public String getEndDate() {
@@ -28,18 +30,22 @@ public class PlayerEventMenuController extends PlayerMainMenuLayoutController {
     }
 
     public String getScore() {
-        return String.valueOf( event.getScore());
+        return String.valueOf(event.getScore());
     }
 
     public String getComment() {
         return event.getComment();
     }
 
+    public String getImage() {
+        return event.getImageURL();
+    }
+
     public Game getGame() {
         return Game.getGameByGameName(event.getGameName());
     }
-    public Event getEvent()
-    {
+
+    public Event getEvent() {
         return event;
     }
 }
