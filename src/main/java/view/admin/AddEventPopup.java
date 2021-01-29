@@ -5,18 +5,12 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import controller.admin.AdminEventMenuController;
-import controller.admin.AdminGamesMenuController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
@@ -146,14 +140,14 @@ public class AddEventPopup implements Initializable {
     }
 
     private void initializeEventInfo() {
-        score.setText(controller.getScore());
-        startDate.setValue(controller.getStartDate());
-        endDate.setValue(controller.getEndDate());
+        score.setText(controller.getAdminEventScore());
+        startDate.setValue(controller.getAdminEventStartDate());
+        endDate.setValue(controller.getAdminEventEndDate());
         startDate.setDisable(true);
         endDate.setDisable(true);
-        gameName.setText(controller.getGameName());
-        avatar.setImage(controller.getImage());
-        detail.setText(controller.getComment());
+        gameName.setText(controller.getAdminEventGameName());
+        avatar.setImage(controller.getAdminEventImage());
+        detail.setText(controller.getAdminEventComment());
     }
 
 }

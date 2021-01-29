@@ -78,8 +78,8 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         admin.setPhoneNumber(phoneNumber);
     }//done
 
-    public Image getImage() {
-        return admin.getImage();
+    public String getImage() {
+        return admin.getImageURL();
     }//done
 
     public void setImage(String url) {

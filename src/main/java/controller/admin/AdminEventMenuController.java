@@ -19,27 +19,27 @@ public class AdminEventMenuController extends AdminGamesMenuController{
 
     public String getScore() {
         return String.valueOf(event.getScore());
-    }
+    }//done
 
-    public LocalDate getStartDate() {
-        return event.getStart();
-    }
-    public LocalDate getEndDate()
+    public String getStartDate() {
+        return event.getStart().toString();
+    }//done
+    public String getEndDate()
     {
-        return event.getEnd();
-    }
+        return event.getEnd().toString();
+    }//done
     public String getGameName()
     {
         return event.getGameName();
-    }
+    }//done
 
-    public Image getImage() {
-        return event.getImage();
-    }
+    public String getImage() {
+        return event.getImageURL();
+    }//done
     public String getComment()
     {
         return event.getComment();
-    }
+    }//done
     public void edit(String gameName, int score, Image image,String comment) {
         event.setGameName(gameName);
         event.setScore(score);

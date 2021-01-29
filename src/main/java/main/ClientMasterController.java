@@ -959,5 +959,60 @@ public class ClientMasterController {
         return result;
     }
 
+    //######################## AdminEventMenu Commands ########################\\
+
+    public String getAdminEventGameName() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getGameName", "controller.admin.AdminEventMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getAdminEventStartDate() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getStartDate", "controller.admin.AdminEventMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+
+    public String getAdminEventEndDate() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getEndDate", "controller.admin.AdminEventMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getAdminEventScore() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getScore", "controller.admin.AdminEventMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public Image getAdminEventImage() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getImage", "controller.admin.AdminEventMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        String url = new Gson().fromJson(answer, String.class);
+        return new Image(url);
+    }
+
+    public String getAdminEventComment() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getComment", "controller.admin.AdminEventMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+
+
+
 
 }
