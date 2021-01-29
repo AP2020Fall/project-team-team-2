@@ -2,6 +2,7 @@ package view.login;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import controller.ClientMasterController.ClientMasterController;
 import controller.login.LoginController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import main.Client;
-import main.ClientMasterController;
 import model.Account;
 import view.AlertMaker;
 import view.View;

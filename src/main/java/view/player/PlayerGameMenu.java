@@ -1,5 +1,6 @@
 package view.player;
 
+import controller.ClientMasterController.ClientMasterController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import main.Client;
-import main.ClientMasterController;
 import model.Entry.GameLogEntry;
 import model.Entry.ScoreboardEntry;
 import model.GameLogStates;

@@ -1,5 +1,6 @@
 package view.player;
 
+import controller.ClientMasterController.ClientMasterController;
 import controller.player.PlayerFriendsMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import main.Client;
-import main.ClientMasterController;
 import model.Entry.EventEntry;
 import model.Entry.FriendEntry;
 import model.Entry.FriendRequestEntry;

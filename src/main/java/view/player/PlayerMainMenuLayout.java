@@ -1,5 +1,6 @@
 package view.player;
 
+import controller.ClientMasterController.ClientMasterController;
 import controller.player.PlayerMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +15,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import main.Client;
-import main.ClientMasterController;
 import view.AlertMaker;
 import view.TabHandler;
 import view.View;

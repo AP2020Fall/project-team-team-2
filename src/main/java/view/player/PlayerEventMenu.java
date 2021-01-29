@@ -1,5 +1,6 @@
 package view.player;
 
+import controller.ClientMasterController.ClientMasterController;
 import controller.player.PlayerEventMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import main.Client;
-import main.ClientMasterController;
 import model.Event;
 import view.Tab;
 import view.TabHandler;
