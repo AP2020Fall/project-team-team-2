@@ -86,10 +86,10 @@ public class AdminEditProfile implements Tab, Initializable {
     private void initializedPlayerInfo() {
         username.setText(controller.getAdminUsername());
         password.setText(controller.getAdminPassword());
-        firstName.setText(controller.getFirstName());
-        lastName.setText(controller.getLastName());
+        firstName.setText(controller.getAdminFirstName());
+        lastName.setText(controller.getAdminLastName());
         email.setText(controller.getEmail());
-        phoneNumber.setText(controller.getPhoneNumber());
+        phoneNumber.setText(controller.getAdminPhoneNumber());
         playerImage.setImage(controller.getImage());
     }
 

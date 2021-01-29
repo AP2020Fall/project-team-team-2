@@ -67,10 +67,10 @@ public class AdminAccountMenu implements Tab, Initializable {
 
     private void initializedInfo() {
         username.setText(controller.getAdminUsername());
-        firstName.setText(controller.getFirstName());
-        lastName.setText(controller.getLastName());
+        firstName.setText(controller.getAdminFirstName());
+        lastName.setText(controller.getAdminLastName());
         email.setText(controller.getEmail());
-        phoneNumber.setText(controller.getPhoneNumber());
+        phoneNumber.setText(controller.getAdminPhoneNumber());
         date.setText(controller.getDate());
         avatar.setImage(controller.getImage());
     }

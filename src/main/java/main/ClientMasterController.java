@@ -843,6 +843,33 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public String getAdminFirstName() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getFirstName", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getAdminLastName() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getLastName", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getAdminPhoneNumber() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getPhoneNumber", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+
+
+
 
 
 

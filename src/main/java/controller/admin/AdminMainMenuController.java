@@ -28,11 +28,11 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public String getUsername() {
         return admin.getUsername();
-    }
+    }//done
 
     public String getPassword() {
         return admin.getPassword();
-    }
+    }//done
 
     public void setPassword(String password) {
         admin.setPassword(password);
@@ -44,7 +44,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public String getFirstName() {
         return admin.getFirstName();
-    }
+    }//done
 
     public void setFirstName(String firstName) {
         admin.setFirstName(firstName);
@@ -52,7 +52,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public String getLastName() {
         return admin.getLastName();
-    }
+    }//done
 
     public void setLastName(String lastName) {
         admin.setLastName(lastName);
@@ -68,7 +68,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public String getPhoneNumber() {
         return admin.getPhoneNumber();
-    }
+    }//done
 
     public void setPhoneNumber(String phoneNumber) {
         admin.setPhoneNumber(phoneNumber);
