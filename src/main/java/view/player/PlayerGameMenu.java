@@ -26,6 +26,8 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class PlayerGameMenu implements Tab, Initializable {
+    private final ClientMasterController controller;
+    public TreeTableView<GameLogEntry> gameLog;
     @FXML
     private Label detail = new Label();
     @FXML
@@ -38,8 +40,6 @@ public class PlayerGameMenu implements Tab, Initializable {
     private TableView<ScoreboardEntry> scoreboard;
     @FXML
     private FontAwesomeIconView favorite = new FontAwesomeIconView();
-    public TreeTableView<GameLogEntry> gameLog;
-    private final ClientMasterController controller;
 
     public PlayerGameMenu(String gameName) {
         Client.getClientInfo().setGameName(gameName);

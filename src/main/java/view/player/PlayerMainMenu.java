@@ -20,9 +20,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayerMainMenu implements Tab, Initializable {
+    private final ClientMasterController controller;
     @FXML
     private TreeTableView<GameEntry> gamesList;
-    private final ClientMasterController controller;
 
     public PlayerMainMenu() {
         controller = Client.getConnector().getController();
@@ -65,7 +65,7 @@ public class PlayerMainMenu implements Tab, Initializable {
         gameRoot.getChildren().addAll(favourite, recently, suggested);
         gamesList.setRoot(gameRoot);
         gamesList.setShowRoot(false);
-        gamesList.getColumns().addAll(gameAvatar,gameName, gameOpen);
+        gamesList.getColumns().addAll(gameAvatar, gameName, gameOpen);
     }
 }
 

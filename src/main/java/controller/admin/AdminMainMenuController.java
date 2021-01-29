@@ -20,8 +20,7 @@ import java.util.Objects;
 public class AdminMainMenuController extends AdminMainMenuLayoutController {
     private final Admin admin;
 
-    public AdminMainMenuController(ClientInfo clientInfo)
-    {
+    public AdminMainMenuController(ClientInfo clientInfo) {
         super(clientInfo);
         this.admin = Objects.requireNonNull(loggedIn,
                 "Admin passed to AdminMainMenuController is null.");
@@ -29,72 +28,67 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public String getUsername() {
         return admin.getUsername();
-    }
-
-    public String getPassword() {
-        return admin.getPassword();
-    }
-
-    public String getDate() {
-        return String.valueOf(admin.getDayOfRegister());
-    }
-
-    public String getFirstName() {
-        return admin.getFirstName();
-    }
-
-    public String getLastName() {
-        return admin.getLastName();
-    }
-
-    public String getEmail() {
-        return admin.getEmail();
-    }
-
-    public String getPhoneNumber() {
-        return admin.getPhoneNumber();
-    }
-
-    public Image getImage() {
-        return admin.getImage();
-    }
+    }//done
 
     public void setUsername(String username) {
         admin.setUsername(username);
-    }
+    }//done
+
+    public String getPassword() {
+        return admin.getPassword();
+    }//done
 
     public void setPassword(String password) {
         admin.setPassword(password);
-    }
+    }//done
+
+    public String getDate() {
+        return String.valueOf(admin.getDayOfRegister());
+    }//done
+
+    public String getFirstName() {
+        return admin.getFirstName();
+    }//done
 
     public void setFirstName(String firstName) {
         admin.setFirstName(firstName);
-    }
+    }//done
+
+    public String getLastName() {
+        return admin.getLastName();
+    }//done
 
     public void setLastName(String lastName) {
         admin.setLastName(lastName);
-    }
+    }//done
+
+    public String getEmail() {
+        return admin.getEmail();
+    }//done
 
     public void setEmail(String email) {
         admin.setEmail(email);
-    }
+    }//done
+
+    public String getPhoneNumber() {
+        return admin.getPhoneNumber();
+    }//done
 
     public void setPhoneNumber(String phoneNumber) {
         admin.setPhoneNumber(phoneNumber);
-    }
+    }//done
+
+    public Image getImage() {
+        return admin.getImage();
+    }//done
 
     public void setImage(String url) {
         admin.setImage(url);
-    }
+    }//done
 
-
-    public ObservableList<SuggestionEntry> getSuggestions() {
-        ObservableList<SuggestionEntry> result = FXCollections.observableArrayList();
-        for (Suggestion suggestion : Suggestion.getSuggestions()) {
-            result.add(new SuggestionEntry(suggestion));
-        }
-        return result;
-    }
+    public ArrayList<Suggestion> getSuggestions() {
+        return Suggestion.getSuggestions();
+    }//done
 
     public void deleteSuggestion(SuggestionEntry suggestionEntry) {
         //removes a suggestion for the player's suggestions
@@ -136,15 +130,13 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
     public ObservableList<MenuItem> getSearchQuery(String searchQuery) {
         ObservableList<MenuItem> result = FXCollections.observableArrayList();
         ArrayList<Player> top5Players = new ArrayList<>();//usernameFuzzySearchTop5(searchQuery);
-        for(Player player: top5Players)
-        {
+        for (Player player : top5Players) {
             MenuItem menuItem = new MenuItem();
             menuItem.setOnAction(event -> TabHandler.getTabHandler().push(new AdminProfileView(player)));
             menuItem.setText(player.getUsername());
             result.add(menuItem);
         }
-        if(result.isEmpty())
-        {
+        if (result.isEmpty()) {
             result.add(new Menu("No similar user found."));
         }
         return result;

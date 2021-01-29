@@ -30,28 +30,56 @@ public class PlayerMainMenuController {
         return player.getUsername();
     }
 
+    public void setUsername(String username) {
+        player.setUsername(username);
+    }
+
     public String getPassword() {
         return player.getPassword();
+    }
+
+    public void setPassword(String password) {
+        player.setPassword(password);
     }
 
     public String getFirstName() {
         return player.getFirstName();
     }
 
+    public void setFirstName(String firstName) {
+        player.setFirstName(firstName);
+    }
+
     public String getLastName() {
         return player.getLastName();
+    }
+
+    public void setLastName(String lastName) {
+        player.setLastName(lastName);
     }
 
     public String getBio() {
         return player.getBio();
     }
 
+    public void setBio(String bio) {
+        player.setBio(bio);
+    }
+
     public String getPhoneNumber() {
         return player.getPhoneNumber();
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        player.setPhoneNumber(phoneNumber);
+    }
+
     public String getEmail() {
         return player.getEmail();
+    }
+
+    public void setEmail(String email) {
+        player.setEmail(email);
     }
 
     public String getDate() {
@@ -78,35 +106,9 @@ public class PlayerMainMenuController {
         return player.getImageURL();
     }
 
-    public void setUsername(String username) {
-        player.setUsername(username);
+    public void setImage(String url) {
+        player.setImage(url);
     }
-
-    public void setPassword(String password) {
-        player.setPassword(password);
-    }
-
-    public void setFirstName(String firstName) {
-        player.setFirstName(firstName);
-    }
-
-    public void setLastName(String lastName) {
-        player.setLastName(lastName);
-    }
-
-    public void setBio(String bio) {
-        player.setBio(bio);
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        player.setPhoneNumber(phoneNumber);
-    }
-
-    public void setEmail(String email) {
-        player.setEmail(email);
-    }
-
-    public void setImage(String url) { player.setImage(url); }
 
     public ArrayList<Game> favoriteGames() {
         //returns the names of player's favourite games.
@@ -124,7 +126,7 @@ public class PlayerMainMenuController {
             return null;
         }
         Game result = Game.getGameByGameName(gameLogSummary.getGameName());
-        if(result == null)
+        if (result == null)
             System.err.println("Game @lastGamePlayed doesn't exist anymore.");
         return result;
     }
