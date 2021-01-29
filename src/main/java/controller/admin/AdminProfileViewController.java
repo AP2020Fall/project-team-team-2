@@ -23,33 +23,33 @@ public class AdminProfileViewController extends AdminMainMenuLayoutController{
             System.err.println("Player passed to AdminProfileViewController is null");
     }
 
-    public String getUsername() {
+    public String getViewAdminUsername() {
         return player.getUsername();
-    }
+    }//done
 
-    public String getFirstName() {
+    public String getViewAdminFirstName() {
         return player.getFirstName();
-    }
+    }//done
 
-    public String getLastName() {
+    public String getViewAdminLastName() {
         return player.getLastName();
-    }
+    }//done
 
-    public String getEmail() {
+    public String getViewAdminEmail() {
         return player.getEmail();
-    }
+    }//done
 
-    public String getPhoneNumber() {
+    public String getViewAdminPhoneNumber() {
         return player.getPhoneNumber();
-    }
+    }//done
 
-    public String getDaysPassed() {
+    public String getViewAdminDaysPassed() {
         return String.valueOf(player.getDayOfRegister());
-    }
+    }//done
 
-    public String getBio(){
+    public String getViewAdminBio(){
         return player.getBio();
-    }
+    }//done
 
 
     public ObservableList<GameLogSummaryEntry> getGameHistory() {
@@ -58,14 +58,14 @@ public class AdminProfileViewController extends AdminMainMenuLayoutController{
             result.add(new GameLogSummaryEntry(gameLog));
         return result;
     }
-    public String getWins() {
+    public String getViewAdminWins() {
         return String.valueOf(player.getNumberOfWins());
-    }
-    public String getFriendCount() {
+    }//done
+    public String getViewAdminFriendCount() {
         return String.valueOf(player.getFriends().size());
-    }
+    }//done
 
-    public Image getPlayerImage() {
-        return player.getImage();
-    }
+    public String getViewAdminPlayerImage() {
+        return player.getImageURL();
+    }//done
 }

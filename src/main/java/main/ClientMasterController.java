@@ -1021,7 +1021,7 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, Game.class).getImage();
     }
 
-    public String getGameName(){
+    public String getGameName() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getGameName", "controller.admin.AdminGameMenuController"
                 , params, Client.getClientInfo());
@@ -1031,15 +1031,95 @@ public class ClientMasterController {
 
     public String getAdminGameDetails() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getDetails", "controller.player.PlayerGameMenuController"
+        Command command = new Command("getDetails", "controller.admin.AdminGameMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    //######################## PlayerProfileView Commands ########################\\
+
+    public String getViewAdminUsername() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminUsername", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getViewAdminFirstName() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminFirstName", "controller.admin.AdminProfileViewController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
     }
 
 
+    public String getViewAdminLastName() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminLastName", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getViewAdminEmail() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminEmail", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getViewadminPhoneNumber() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminPhoneNumber", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getViewAdminDaysPassed() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminDaysPassed", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getViewAdminBio() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminBio", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
 
 
+    public String getViewAdminWins() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminWins", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
 
+    public String getViewAdminFriendCount() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminFriendCount", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public Image getViewAdminPlayerImage() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminPlayerImage", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        String url = new Gson().fromJson(answer, String.class);
+        return new Image(url);
+    }
 
 }

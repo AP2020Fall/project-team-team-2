@@ -1,8 +1,6 @@
 package view.admin;
 
-import com.jfoenix.controls.JFXButton;
 import controller.admin.AdminProfileViewController;
-import controller.player.PlayerProfileViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,7 +18,6 @@ import view.Tab;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AdminProfileView implements Tab, Initializable {
@@ -71,17 +68,17 @@ public class AdminProfileView implements Tab, Initializable {
 
     private void initializedPlayerInfo()
     {
-        username.setText(controller.getUsername());
-        firstName.setText(controller.getFirstName());
-        lastName.setText(controller.getLastName());
-        email.setText(controller.getEmail());
-        phoneNumber.setText(controller.getPhoneNumber());
-        daysPassed.setText(controller.getDaysPassed());
-        wins.setText(controller.getWins() + " Wins");
-        date.setText(controller.getDaysPassed());
-        friends.setText(controller.getFriendCount());
-        bio.setText(controller.getBio());
-        avatar.setImage(controller.getPlayerImage());
+        username.setText(controller.getViewAdminUsername());
+        firstName.setText(controller.getViewAdminFirstName());
+        lastName.setText(controller.getViewAdminLastName());
+        email.setText(controller.getViewAdminEmail());
+        phoneNumber.setText(controller.getViewAdminPhoneNumber());
+        daysPassed.setText(controller.getViewAdminDaysPassed());
+        wins.setText(controller.getViewAdminWins() + " Wins");
+        date.setText(controller.getViewAdminDaysPassed());
+        friends.setText(controller.getViewAdminFriendCount());
+        bio.setText(controller.getViewAdminBio());
+        avatar.setImage(controller.getViewAdminPlayerImage());
     }
 
     private void initializedTableGameLog()
