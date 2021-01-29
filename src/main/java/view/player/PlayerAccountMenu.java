@@ -1,5 +1,6 @@
 package view.player;
 
+import controller.ClientMasterController.ClientMasterController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import main.Client;
-import main.ClientMasterController;
 import model.Entry.GameLogSummaryEntry;
 import view.Tab;
 import view.TabHandler;

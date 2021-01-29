@@ -1,6 +1,7 @@
 package view.player;
 
 import com.jfoenix.controls.JFXButton;
+import controller.ClientMasterController.ClientMasterController;
 import controller.player.PlayerProfileViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import main.Client;
-import main.ClientMasterController;
 import model.Entry.GameEntry;
 import model.Entry.GameLogEntry;
 import model.Entry.GameLogSummaryEntry;

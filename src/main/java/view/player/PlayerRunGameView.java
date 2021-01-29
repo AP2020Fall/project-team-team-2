@@ -1,7 +1,7 @@
 package view.player;
 
 import com.jfoenix.controls.JFXTextField;
-import controller.player.PlayerRunGameController;
+import controller.ClientMasterController.ClientMasterController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import main.Client;
-import main.ClientMasterController;
-import model.Event;
-import model.Game;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;

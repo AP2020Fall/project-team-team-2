@@ -1,6 +1,7 @@
 package main;
 
 import com.google.gson.Gson;
+import controller.ServerMasterController.ServerMasterController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.*;

@@ -1,5 +1,6 @@
 package view.player;
 
+import controller.ClientMasterController.ClientMasterController;
 import controller.player.PlatoMessageController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.Client;
-import main.ClientMasterController;
 import model.Entry.GameLogEntry;
 import model.Entry.PlatoMessageEntry;
 import view.View;
