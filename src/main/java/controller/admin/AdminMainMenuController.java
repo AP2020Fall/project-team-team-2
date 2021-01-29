@@ -20,8 +20,7 @@ import java.util.Objects;
 public class AdminMainMenuController extends AdminMainMenuLayoutController {
     private final Admin admin;
 
-    public AdminMainMenuController(ClientInfo clientInfo)
-    {
+    public AdminMainMenuController(ClientInfo clientInfo) {
         super(clientInfo);
         this.admin = Objects.requireNonNull(loggedIn,
                 "Admin passed to AdminMainMenuController is null.");
@@ -35,6 +34,10 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         return admin.getPassword();
     }
 
+    public void setPassword(String password) {
+        admin.setPassword(password);
+    }
+
     public String getDate() {
         return String.valueOf(admin.getDayOfRegister());
     }
@@ -43,50 +46,45 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         return admin.getFirstName();
     }
 
-    public String getLastName() {
-        return admin.getLastName();
-    }
-
-    public String getEmail() {
-        return admin.getEmail();
-    }
-
-    public String getPhoneNumber() {
-        return admin.getPhoneNumber();
-    }
-
-    public Image getImage() {
-        return admin.getImage();
-    }
-
-    public void setUsername(String username) {
-        admin.setUsername(username);
-    }
-
-    public void setPassword(String password) {
-        admin.setPassword(password);
-    }
-
     public void setFirstName(String firstName) {
         admin.setFirstName(firstName);
+    }
+
+    public String getLastName() {
+        return admin.getLastName();
     }
 
     public void setLastName(String lastName) {
         admin.setLastName(lastName);
     }
 
+    public String getEmail() {
+        return admin.getEmail();
+    }
+
     public void setEmail(String email) {
         admin.setEmail(email);
+    }
+
+    public String getPhoneNumber() {
+        return admin.getPhoneNumber();
     }
 
     public void setPhoneNumber(String phoneNumber) {
         admin.setPhoneNumber(phoneNumber);
     }
 
+    public Image getImage() {
+        return admin.getImage();
+    }
+
     public void setImage(String url) {
         admin.setImage(url);
     }
 
+    public void setUsername(String username) {
+        admin.setUsername(username);
+    }
 
     public ObservableList<SuggestionEntry> getSuggestions() {
         ObservableList<SuggestionEntry> result = FXCollections.observableArrayList();
@@ -136,15 +134,13 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
     public ObservableList<MenuItem> getSearchQuery(String searchQuery) {
         ObservableList<MenuItem> result = FXCollections.observableArrayList();
         ArrayList<Player> top5Players = new ArrayList<>();//usernameFuzzySearchTop5(searchQuery);
-        for(Player player: top5Players)
-        {
+        for (Player player : top5Players) {
             MenuItem menuItem = new MenuItem();
             menuItem.setOnAction(event -> TabHandler.getTabHandler().push(new AdminProfileView(player)));
             menuItem.setText(player.getUsername());
             result.add(menuItem);
         }
-        if(result.isEmpty())
-        {
+        if (result.isEmpty()) {
             result.add(new Menu("No similar user found."));
         }
         return result;

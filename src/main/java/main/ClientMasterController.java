@@ -825,6 +825,17 @@ public class ClientMasterController {
         return searchPlayer(username).getImage();
     }
 
+    //######################## AdminMainMenu Commands ########################\\
+
+    public String getAdminUsername() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getUsername","controller.admin.AdminMainMenuController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,String.class);
+    }
+
+
 
 
 }

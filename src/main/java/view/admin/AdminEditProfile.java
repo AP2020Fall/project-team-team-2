@@ -7,12 +7,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import main.Client;
+import main.ClientMasterController;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminEditProfile implements Tab, Initializable {
+    private final ClientMasterController controller;
     @FXML
     private StackPane stackRoot;
     @FXML
@@ -38,10 +39,9 @@ public class AdminEditProfile implements Tab, Initializable {
     private JFXTextField email;
     @FXML
     private JFXTextField phoneNumber;
-    private final AdminMainMenuController controller;
 
     public AdminEditProfile() {
-        controller = new AdminMainMenuController(Client.getClientInfo());
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -63,8 +63,7 @@ public class AdminEditProfile implements Tab, Initializable {
 
     @FXML
     private void save() {
-        if(validateInput())
-        {
+        if (validateInput()) {
             controller.setUsername(username.getText());
             controller.setPassword(password.getText());
             controller.setFirstName(firstName.getText());
@@ -74,18 +73,18 @@ public class AdminEditProfile implements Tab, Initializable {
             TabHandler.getTabHandler().back();
         }
     }
+
     @FXML
     private void addAvatar(MouseEvent event) {
-        String givenImage =AlertMaker.getImageFromUser();
-        if(givenImage != null)
-        {
+        String givenImage = AlertMaker.getImageFromUser();
+        if (givenImage != null) {
             controller.setImage(givenImage);
             playerImage.setImage(controller.getImage());
         }
     }
 
     private void initializedPlayerInfo() {
-        username.setText(controller.getUsername());
+        username.setText(controller.getAdminUsername());
         password.setText(controller.getPassword());
         firstName.setText(controller.getFirstName());
         lastName.setText(controller.getLastName());
@@ -125,15 +124,14 @@ public class AdminEditProfile implements Tab, Initializable {
     }
 
     private boolean validateInput() {
-        if(username.getText().isEmpty())
-        {
+        if (username.getText().isEmpty()) {
             setPasswordColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "No username is given.");
             return false;
         }
-        if (!username.getText().equals(controller.getUsername()) &&
-                controller.usernameExist(username.getText()))  {
+        if (!username.getText().equals(controller.getAdminUsername()) &&
+                controller.usernameExist(username.getText())) {
             setUsernameColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Username already taken.");

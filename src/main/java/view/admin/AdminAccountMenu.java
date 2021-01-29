@@ -9,16 +9,17 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import main.Client;
+import main.ClientMasterController;
 import view.Tab;
 import view.TabHandler;
 import view.ViewHandler;
-import view.player.PlayerEditProfile;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminAccountMenu implements Tab, Initializable {
+    private final ClientMasterController controller;
     @FXML
     private Label date = new Label();
     @FXML
@@ -26,7 +27,7 @@ public class AdminAccountMenu implements Tab, Initializable {
     @FXML
     private Label firstName = new Label();
     @FXML
-    private Label lastName= new Label();
+    private Label lastName = new Label();
     @FXML
     private ImageView avatar;
     @FXML
@@ -34,11 +35,9 @@ public class AdminAccountMenu implements Tab, Initializable {
     @FXML
     private Label phoneNumber = new Label();
 
-    private AdminMainMenuController controller;
-
 
     public AdminAccountMenu() {
-        controller = new AdminMainMenuController(Client.getClientInfo());
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -67,7 +66,7 @@ public class AdminAccountMenu implements Tab, Initializable {
     }
 
     private void initializedInfo() {
-        username.setText(controller.getUsername());
+        username.setText(controller.getAdminUsername());
         firstName.setText(controller.getFirstName());
         lastName.setText(controller.getLastName());
         email.setText(controller.getEmail());
