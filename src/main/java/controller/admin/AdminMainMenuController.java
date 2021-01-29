@@ -36,7 +36,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public void setPassword(String password) {
         admin.setPassword(password);
-    }
+    }//done
 
     public String getDate() {
         return String.valueOf(admin.getDayOfRegister());
@@ -48,7 +48,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public void setFirstName(String firstName) {
         admin.setFirstName(firstName);
-    }
+    }//done
 
     public String getLastName() {
         return admin.getLastName();
@@ -56,7 +56,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public void setLastName(String lastName) {
         admin.setLastName(lastName);
-    }
+    }//done
 
     public String getEmail() {
         return admin.getEmail();
@@ -64,7 +64,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public void setEmail(String email) {
         admin.setEmail(email);
-    }
+    }//done
 
     public String getPhoneNumber() {
         return admin.getPhoneNumber();
@@ -72,7 +72,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public void setPhoneNumber(String phoneNumber) {
         admin.setPhoneNumber(phoneNumber);
-    }
+    }//done
 
     public Image getImage() {
         return admin.getImage();
@@ -80,11 +80,11 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public void setImage(String url) {
         admin.setImage(url);
-    }
+    }//done
 
     public void setUsername(String username) {
         admin.setUsername(username);
-    }
+    }//done
 
     public ObservableList<SuggestionEntry> getSuggestions() {
         ObservableList<SuggestionEntry> result = FXCollections.observableArrayList();

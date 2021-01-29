@@ -891,6 +891,68 @@ public class ClientMasterController {
         return new Image(url);
     }
 
+    public void setAdminUsername(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setUsername","controller.admin.AdminMainMenuController"
+                , params,Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+
+    public void setAdminPassword(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setPassword","controller.admin.AdminMainMenuController"
+                , params,Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void setAdminFirstName(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setFirstName","controller.admin.AdminMainMenuController"
+                , params,Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void setAdminLastName(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setLastName","controller.admin.AdminMainMenuController"
+                , params,Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+
+    public void setAdminPhoneNumber(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setPhoneNumber","controller.admin.AdminMainMenuController"
+                , params,Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+
+    public void setAdminEmail(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setEmail","controller.admin.AdminMainMenuController"
+                , params,Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+
+    public void setAdminImage(String givenImage) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(givenImage);
+        Command command = new Command("setImage","controller.admin.AdminMainMenuController"
+                , params,Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+
+
 
 
 

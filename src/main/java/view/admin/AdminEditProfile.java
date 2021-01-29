@@ -64,12 +64,12 @@ public class AdminEditProfile implements Tab, Initializable {
     private void save() {
         if(validateInput())
         {
-            controller.setUsername(username.getText());
-            controller.setPassword(password.getText());
-            controller.setFirstName(firstName.getText());
-            controller.setLastName(lastName.getText());
-            controller.setPhoneNumber(phoneNumber.getText());
-            controller.setEmail(email.getText());
+            controller.setAdminUsername(username.getText());
+            controller.setAdminPassword(password.getText());
+            controller.setAdminFirstName(firstName.getText());
+            controller.setAdminLastName(lastName.getText());
+            controller.setAdminPhoneNumber(phoneNumber.getText());
+            controller.setAdminEmail(email.getText());
             TabHandler.getTabHandler().back();
         }
     }
@@ -78,7 +78,7 @@ public class AdminEditProfile implements Tab, Initializable {
         String givenImage =AlertMaker.getImageFromUser();
         if(givenImage != null)
         {
-            controller.setImage(givenImage);
+            controller.setAdminImage(givenImage);
             playerImage.setImage(controller.getAdminImage());
         }
     }
