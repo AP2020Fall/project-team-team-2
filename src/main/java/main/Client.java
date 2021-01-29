@@ -15,6 +15,24 @@ public class Client extends Application {
         clientInfo = NewClientInfo;
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    private static void initializeConnector() {
+        connector = new ClientConnector();
+        int PORT_NUMBER = 6660;
+        connector.connect("localhost", PORT_NUMBER);
+    }
+
+    public static ClientConnector getConnector() {
+        return connector;
+    }
+
+    public static ClientInfo getClientInfo() {
+        return clientInfo;
+    }
+
     @Override
     public void start(Stage primaryStage) {
         clientInfo = new ClientInfo();
@@ -26,25 +44,5 @@ public class Client extends Application {
         ViewHandler.getViewHandler().setWindow(primaryStage);
         ViewHandler.getViewHandler().push(new WelcomeMenu());
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-
-    private static void initializeConnector()
-    {
-        connector = new ClientConnector();
-        int PORT_NUMBER = 6660;
-        connector.connect("localhost", PORT_NUMBER);
-    }
-    public static ClientConnector getConnector()
-    {
-        return connector;
-    }
-
-    public static ClientInfo getClientInfo() {
-        return clientInfo;
     }
 }

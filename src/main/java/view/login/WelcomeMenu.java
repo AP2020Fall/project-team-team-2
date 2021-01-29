@@ -21,6 +21,10 @@ public class WelcomeMenu implements View {
     public WelcomeMenu() {
     }
 
+    public static AudioClip getAudioClip() {
+        return audioClip;
+    }
+
     @Override
     public void show(Stage window) throws IOException {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/login/welcomeMenu.fxml"));
@@ -30,10 +34,6 @@ public class WelcomeMenu implements View {
             audioClip.play();
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
-    }
-
-    public static AudioClip getAudioClip() {
-        return audioClip;
     }
 
     @FXML

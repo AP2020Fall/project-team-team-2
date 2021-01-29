@@ -24,11 +24,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayerMainMenuLayout implements View, Initializable {
+    private static AudioClip audioClip = new AudioClip(PlayerMainMenuLayout.class.getResource("/sounds/playerSound.mp3").toString());
+    private final ClientMasterController controller;
     @FXML
     private BorderPane borderPane;
     @FXML
     private StackPane stackRoot;
-
     @FXML
     private TextField searchUsername;
     @FXML
@@ -37,11 +38,13 @@ public class PlayerMainMenuLayout implements View, Initializable {
     private Label scoreMenuBar = new Label();
     @FXML
     private ContextMenu searchContextMenu;
-    private final ClientMasterController controller;
-    private static AudioClip audioClip = new AudioClip(PlayerMainMenuLayout.class.getResource("/sounds/playerSound.mp3").toString());
 
     public PlayerMainMenuLayout() {
         controller = Client.getConnector().getController();
+    }
+
+    public static AudioClip getAudioClip() {
+        return audioClip;
     }
 
     @Override
@@ -55,10 +58,6 @@ public class PlayerMainMenuLayout implements View, Initializable {
         scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         window.setScene(scene);
         window.setResizable(false);
-    }
-
-    public static AudioClip getAudioClip() {
-        return audioClip;
     }
 
     private void playSoundtrack() {

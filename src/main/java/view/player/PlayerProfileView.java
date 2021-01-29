@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class PlayerProfileView implements Tab, Initializable {
+    private final ClientMasterController controller;
     @FXML
     private Label friendRequestPending = new Label();
     @FXML
@@ -57,7 +58,6 @@ public class PlayerProfileView implements Tab, Initializable {
     private JFXButton addButton;
     @FXML
     private JFXButton removeButton;
-    private final ClientMasterController controller;
 
     public PlayerProfileView(String playerUsername) {
         Client.getClientInfo().setPlayerUsername(playerUsername);
@@ -96,10 +96,9 @@ public class PlayerProfileView implements Tab, Initializable {
 
     @FXML
     void gameLogSummaryTableSelected(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(gameHistoryList.getSelectionModel().getSelectedItems().size() != 0)
-                {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                if (gameHistoryList.getSelectionModel().getSelectedItems().size() != 0) {
                     GameLogSummaryEntry gameEntry = gameHistoryList.getSelectionModel().getSelectedItems().get(0);
                     TabHandler.getTabHandler().push(new PlayerGameMenu(gameEntry.getGameName()));
                 }

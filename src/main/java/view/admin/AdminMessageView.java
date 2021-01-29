@@ -31,12 +31,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AdminMessageView implements View, Initializable {
+    private static Stage popupWindow;
+    private final AdminMessageViewController controller;
     @FXML
     private TreeTableView<PlatoMessageEntry> messageTable;
     @FXML
     private JFXTextArea message;
-    private static Stage popupWindow;
-    private final AdminMessageViewController controller;
 
     public AdminMessageView() {
         controller = new AdminMessageViewController(Client.getClientInfo());
@@ -99,7 +99,7 @@ public class AdminMessageView implements View, Initializable {
                 for (PlatoMessageEntry messageEntry : messageEntries)
                     dayRoot.getChildren().add(new TreeItem<>(messageEntry));
                 dayRoot.setExpanded(true);
-               messages.addAll(dayRoot);
+                messages.addAll(dayRoot);
             }
             messageRoot.getChildren().addAll(messages);
             messageRoot.setExpanded(true);
@@ -109,6 +109,6 @@ public class AdminMessageView implements View, Initializable {
         } else {
             messageTable.setPlaceholder(new Label("No messages."));
         }
-        messageTable.getColumns().addAll(avatarColumn,dayColumn, messageColumn, timeColumn);
+        messageTable.getColumns().addAll(avatarColumn, dayColumn, messageColumn, timeColumn);
     }
 }

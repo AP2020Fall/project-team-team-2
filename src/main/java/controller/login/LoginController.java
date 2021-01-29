@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class LoginController extends Controller {
     private ClientInfo clientInfo;
+
     public LoginController(ClientInfo clientInfo) {
         super(clientInfo);
         this.clientInfo = clientInfo;
@@ -18,7 +19,7 @@ public class LoginController extends Controller {
     public void delete(String username) {
         //removes the username from the list and it is a player
         //throws NullPointerException if username is not a player
-        Player player =Objects.requireNonNull( Player.getPlayerByUsername(username),
+        Player player = Objects.requireNonNull(Player.getPlayerByUsername(username),
                 "Username passed to LoginController.delete isn't a player or doesn't exist.");
         player.delete();
     }
@@ -26,9 +27,9 @@ public class LoginController extends Controller {
     public Boolean login(String username) {
         //logins into account
         //throws NullPointerException if username doesn't exist
-       Account loggedIn = Objects.requireNonNull(Account.getAccountByUsername(username),
+        Account loggedIn = Objects.requireNonNull(Account.getAccountByUsername(username),
                 "Username passed to LoginController.login doesn't exist.");
-        if(clientInfo != null) {
+        if (clientInfo != null) {
             clientInfo.setLoggedInUsername(loggedIn.getUsername());
         }
         if (loggedIn instanceof Admin) {

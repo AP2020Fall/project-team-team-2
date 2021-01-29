@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.events.JFXDialogEvent;
+
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
@@ -13,6 +14,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
+
 import javafx.scene.Node;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
@@ -36,20 +38,18 @@ import javax.imageio.ImageIO;
 public class AlertMaker {
 
 
-    public static String getImageFromUser()
-    {
+    public static String getImageFromUser() {
         File file;
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image files","*.png","*.jpeg","*.jpg"));
+                new FileChooser.ExtensionFilter("Image files", "*.png", "*.jpeg", "*.jpg"));
         //todo maybe needs fixing
         file = fileChooser.showOpenDialog(new Stage());
-        if(file!=null)
-        {
-           //return new Image(file.toURI().toString(),150,150,true,true);
+        if (file != null) {
+            //return new Image(file.toURI().toString(),150,150,true,true);
             return file.toURI().toString();
         }
-        return  null;
+        return null;
     }
 
     public static void showSimpleAlert(String title, String content) {
@@ -57,7 +57,7 @@ public class AlertMaker {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
-       // styleAlert(alert);
+        // styleAlert(alert);
         alert.showAndWait();
     }
 
@@ -66,7 +66,7 @@ public class AlertMaker {
         alert.setTitle("Error");
         alert.setHeaderText(title);
         alert.setContentText(content);
-       // styleAlert(alert);
+        // styleAlert(alert);
         alert.showAndWait();
     }
 
@@ -157,12 +157,13 @@ public class AlertMaker {
         });
         nodeToBeBlurred.setEffect(blur);
     }
-    public static void showMaterialDialog(StackPane root, Node nodeToBeBlurred,String button, String header, String body) {
+
+    public static void showMaterialDialog(StackPane root, Node nodeToBeBlurred, String button, String header, String body) {
         BoxBlur blur = new BoxBlur(3, 3, 3);
         JFXButton okay = new JFXButton(button);
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
         JFXDialog dialog = new JFXDialog(root, dialogLayout, JFXDialog.DialogTransition.TOP);
-        okay.setStyle("-fx-background-color: #00bbff;\n-fx-text-fill: white;\n-fx-border-radius: 1px;\n"+
+        okay.setStyle("-fx-background-color: #00bbff;\n-fx-text-fill: white;\n-fx-border-radius: 1px;\n" +
                 "-fx-background-radius: 3px;");
         okay.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
             dialog.close();

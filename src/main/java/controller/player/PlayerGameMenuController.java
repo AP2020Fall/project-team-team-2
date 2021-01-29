@@ -14,10 +14,10 @@ public class PlayerGameMenuController extends Controller {
     public PlayerGameMenuController(ClientInfo clientInfo) {
         super(clientInfo);
         this.game = Game.getGameByGameName(clientInfo.getGameName());
-        if(game == null)
+        if (game == null)
             System.err.println("Game passed to GameMenuController is null.");
         this.player = Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
-        if(player == null)
+        if (player == null)
             System.err.println("Player passed to GameMenuController is null.");
     }
 
@@ -41,8 +41,8 @@ public class PlayerGameMenuController extends Controller {
     public String getPlayedFrequency() {
         //returns the number of times player played the game.
         //throws NullPointerException if the player hasn't played the game.
-        GameLogSummary gameLogSummary= player.getGameHistory(game.getName());
-        if(gameLogSummary == null)
+        GameLogSummary gameLogSummary = player.getGameHistory(game.getName());
+        if (gameLogSummary == null)
             return "hasn't been played";
         else
             return String.valueOf(gameLogSummary.getFrequency());
@@ -51,8 +51,8 @@ public class PlayerGameMenuController extends Controller {
     public String getWinsCount() {
         //returns the number of times player won the game.
         //throws NullPointerException if the player hasn't played the game.
-        GameLogSummary gameLogSummary= player.getGameHistory(game.getName());
-        if(gameLogSummary == null)
+        GameLogSummary gameLogSummary = player.getGameHistory(game.getName());
+        if (gameLogSummary == null)
             return "hasn't been played";
         else
             return String.valueOf(gameLogSummary.getWins());
@@ -62,8 +62,7 @@ public class PlayerGameMenuController extends Controller {
         return game.getImageURL();
     }
 
-    public Boolean hasPlayedGame()
-    {
+    public Boolean hasPlayedGame() {
         return player.getGameHistory(game.getName()) != null;
     }
 
@@ -77,8 +76,8 @@ public class PlayerGameMenuController extends Controller {
     }
 
     public String getCasualEvent() {
-        Event casual = new Event(game.getName(), LocalDate.now(),LocalDate.now(),0,generateId(),
-                "Casual",game.getImage());
+        Event casual = new Event(game.getName(), LocalDate.now(), LocalDate.now(), 0, generateId(),
+                "Casual", game.getImage());
         Event.addEvent(casual);
         return casual.getEventId();
     }

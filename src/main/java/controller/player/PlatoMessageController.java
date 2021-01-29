@@ -17,13 +17,15 @@ public class PlatoMessageController {
 
     public PlatoMessageController(ClientInfo clientInfo) {
         this.player = Player.getPlayerByUsername(clientInfo.getPlayerUsername());
-        if(player == null)
+        if (player == null)
             System.err.println("Player passed to PlatoMessageController is null.");
     }
+
     public ArrayList<Message> platoBotsMessages() {
         //returns the list of messages send to player.
         return player.getMessages();
     }
+
     public Boolean hasMessage() {
         return !player.getMessages().isEmpty();
     }

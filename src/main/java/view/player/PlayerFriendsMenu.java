@@ -24,11 +24,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayerFriendsMenu implements Tab, Initializable {
+    private final ClientMasterController controller;
     @FXML
     private TreeTableView<FriendEntry> friendsList;
     @FXML
     private TableView<FriendRequestEntry> friendRequestList;
-    private final ClientMasterController controller;
 
 
     public PlayerFriendsMenu() {
@@ -50,10 +50,9 @@ public class PlayerFriendsMenu implements Tab, Initializable {
 
     @FXML
     void friendRequestTableSelected(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(friendRequestList.getSelectionModel().getSelectedItems().size() != 0)
-                {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                if (friendRequestList.getSelectionModel().getSelectedItems().size() != 0) {
                     FriendRequestEntry friendEntry = friendRequestList.getSelectionModel().getSelectedItems().get(0);
                     TabHandler.getTabHandler().push(new PlayerProfileView(friendEntry.getName()));
                 }
@@ -64,10 +63,9 @@ public class PlayerFriendsMenu implements Tab, Initializable {
 
     @FXML
     void friendTableSelected(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(friendsList.getSelectionModel().getSelectedItems().size() != 0)
-                {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                if (friendsList.getSelectionModel().getSelectedItems().size() != 0) {
                     FriendEntry friendEntry = friendsList.getSelectionModel().getSelectedItems().get(0).getValue();
                     TabHandler.getTabHandler().push(new PlayerProfileView(friendEntry.getName()));
                 }
@@ -77,7 +75,7 @@ public class PlayerFriendsMenu implements Tab, Initializable {
     }
 
     private void initializeTreeFriendsList() {
-        TreeTableColumn<FriendEntry, ImageView>  friendAvatarColumn = new TreeTableColumn<>("Avatar");
+        TreeTableColumn<FriendEntry, ImageView> friendAvatarColumn = new TreeTableColumn<>("Avatar");
         friendAvatarColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("avatar"));
         TreeTableColumn<FriendEntry, String> friendNames = new TreeTableColumn<>("Name");
         friendNames.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
@@ -89,7 +87,7 @@ public class PlayerFriendsMenu implements Tab, Initializable {
         friendsList.setRoot(friendRoot);
         friendsList.setShowRoot(false);
         friendsList.setPlaceholder(new Label("No friends."));
-        friendsList.getColumns().addAll(friendAvatarColumn,friendNames, friendRemove);
+        friendsList.getColumns().addAll(friendAvatarColumn, friendNames, friendRemove);
     }
 
     private void initializeTableFriendRequestList() {

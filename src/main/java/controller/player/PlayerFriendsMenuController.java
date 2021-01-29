@@ -11,7 +11,7 @@ public class PlayerFriendsMenuController {
 
     public PlayerFriendsMenuController(ClientInfo clientInfo) {
         this.player = Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
-        if(player == null)
+        if (player == null)
             System.err.println("Player passed to FriendsMenuController is null.");
     }
 
@@ -21,25 +21,25 @@ public class PlayerFriendsMenuController {
     }
 
     public ArrayList<FriendRequest> getFriendRequests() {
-       return player.getReceivedFriendRequests();
+        return player.getReceivedFriendRequests();
     }
 
     public void acceptRequest(String friendRequestId) {
-        for(FriendRequest friendRequest : player.getReceivedFriendRequests())
-            if(friendRequest.getFriendRequestId().equals(friendRequestId))
+        for (FriendRequest friendRequest : player.getReceivedFriendRequests())
+            if (friendRequest.getFriendRequestId().equals(friendRequestId))
                 friendRequest.acceptRequest();
     }
 
     public String getFriendRequestPlayerName(String friendRequestId) {
-        for(FriendRequest friendRequest : player.getReceivedFriendRequests())
-            if(friendRequest.getFriendRequestId().equals(friendRequestId))
+        for (FriendRequest friendRequest : player.getReceivedFriendRequests())
+            if (friendRequest.getFriendRequestId().equals(friendRequestId))
                 return friendRequest.getPlayer().getUsername();
-            return "";
+        return "";
     }
 
     public void declineRequest(String friendRequestId) {
-        for(FriendRequest friendRequest : player.getReceivedFriendRequests())
-            if(friendRequest.getFriendRequestId().equals(friendRequestId))
+        for (FriendRequest friendRequest : player.getReceivedFriendRequests())
+            if (friendRequest.getFriendRequestId().equals(friendRequestId))
                 friendRequest.declineRequest();
     }
 }

@@ -1037,7 +1037,7 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
-    //######################## PlayerProfileView Commands ########################\\
+    //######################## AdminProfileView Commands ########################\\
 
     public String getViewAdminUsername() {
         ArrayList<Object> params = new ArrayList<>();
@@ -1072,7 +1072,7 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
-    public String getViewadminPhoneNumber() {
+    public String getViewAdminPhoneNumber() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getViewAdminPhoneNumber", "controller.admin.AdminProfileViewController"
                 , params, Client.getClientInfo());

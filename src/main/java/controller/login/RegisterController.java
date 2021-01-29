@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class RegisterController extends Controller {
 
     private final ClientInfo clientInfo;
+
     public RegisterController(ClientInfo clientInfo) {
         super(clientInfo);
         this.clientInfo = clientInfo;
@@ -33,7 +34,7 @@ public class RegisterController extends Controller {
     private Player createPlayer(String username, String password, ArrayList<String> additionalInfo) {
         //creates a player object and returns it
         Player player = new Player(additionalInfo.get(0), additionalInfo.get(1), username, generateId(),
-                password,additionalInfo.get(3), additionalInfo.get(2),
+                password, additionalInfo.get(3), additionalInfo.get(2),
                 Double.parseDouble(additionalInfo.get(4)));
         Account.getAllAccounts().add(player);
         return player;
@@ -42,7 +43,7 @@ public class RegisterController extends Controller {
     private Admin createAdmin(String username, String password, ArrayList<String> additionalInfo) {
         //creates an admin object and returns it
         Admin admin = new Admin(additionalInfo.get(0), additionalInfo.get(1), username,
-                generateId(), password,  additionalInfo.get(3),additionalInfo.get(2));
+                generateId(), password, additionalInfo.get(3), additionalInfo.get(2));
         Account.getAllAccounts().add(admin);
         return admin;
     }

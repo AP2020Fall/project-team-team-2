@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddGamePopup implements Initializable {
+    private final boolean edit;
     @FXML
     private JFXTextArea gameDetail;
     @FXML
@@ -37,7 +38,6 @@ public class AddGamePopup implements Initializable {
     private JFXButton addButton;
     @FXML
     private JFXButton editButton;
-    private final boolean edit;
     private AdminGameMenuController controller;
 
     public AddGamePopup(boolean edit, Game game) {
@@ -102,7 +102,7 @@ public class AddGamePopup implements Initializable {
 
     @FXML
     void addAvatar(MouseEvent event) {
-        Image givenImage =new Image( AlertMaker.getImageFromUser());
+        Image givenImage = new Image(AlertMaker.getImageFromUser());
         if (givenImage != null) {
             avatar.setImage(givenImage);
         }

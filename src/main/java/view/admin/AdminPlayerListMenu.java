@@ -27,10 +27,11 @@ public class AdminPlayerListMenu implements Tab, Initializable {
     @FXML
     private TableView<PlayerEntry> playerList;
     private AdminMainMenuController controller;
-    public AdminPlayerListMenu()
-    {
+
+    public AdminPlayerListMenu() {
         controller = new AdminMainMenuController(Client.getClientInfo());
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeTableAccountList();
@@ -42,6 +43,7 @@ public class AdminPlayerListMenu implements Tab, Initializable {
         loader.setController(this);
         return loader.load();
     }
+
     private void initializeTableAccountList() {
         TableColumn<PlayerEntry, ImageView> playerAvatar = new TableColumn<>("Avatar");
         playerAvatar.setCellValueFactory(new PropertyValueFactory<>("avatar"));
@@ -50,15 +52,15 @@ public class AdminPlayerListMenu implements Tab, Initializable {
 
         playerList.setPlaceholder(new Label("No player has registered."));
         playerList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        playerList.getColumns().addAll(playerAvatar,playerName);
+        playerList.getColumns().addAll(playerAvatar, playerName);
         playerList.getItems().addAll(controller.getPlayers());
     }
+
     @FXML
     void playerTableSelected(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(playerList.getSelectionModel().getSelectedItems().size() != 0)
-                {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                if (playerList.getSelectionModel().getSelectedItems().size() != 0) {
                     PlayerEntry playerEntry = playerList.getSelectionModel().getSelectedItems().get(0);
                     TabHandler.getTabHandler().push(new AdminProfileView(controller.getPlayer(playerEntry)));
                 }

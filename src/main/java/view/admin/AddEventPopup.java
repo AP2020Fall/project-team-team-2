@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 
 public class AddEventPopup implements Initializable {
 
+    private final boolean edit;
     @FXML
     private StackPane stackRoot;
     @FXML
@@ -44,7 +45,6 @@ public class AddEventPopup implements Initializable {
     @FXML
     private JFXButton editButton;
     private Stage popupWindow;
-    private final boolean edit;
     private AdminEventMenuController controller;
 
     public AddEventPopup(boolean edit, Event event) {
@@ -81,12 +81,11 @@ public class AddEventPopup implements Initializable {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Invalid dates.");
-         } else if (!controller.checkRelativeDate(startDate.getValue(),endDate.getValue()))
-        {
+        } else if (!controller.checkRelativeDate(startDate.getValue(), endDate.getValue())) {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Start date can not be after end.");
-        }else if (controller.checkNumber(score.getText()) &&  Integer.parseInt(score.getText()) <= 0) {
+        } else if (controller.checkNumber(score.getText()) && Integer.parseInt(score.getText()) <= 0) {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Score should be positive number.");
@@ -96,7 +95,7 @@ public class AddEventPopup implements Initializable {
                     "Invalid Information", "Game does not exist.");
         } else {
             controller.addEvent(gameName.getText(), startDate.getValue(), endDate.getValue(),
-                    Integer.parseInt(score.getText()),detail.getText(), avatar.getImage());
+                    Integer.parseInt(score.getText()), detail.getText(), avatar.getImage());
             popupWindow.close();
         }
     }
@@ -112,7 +111,7 @@ public class AddEventPopup implements Initializable {
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Game does not exist.");
         } else {
-            controller.edit(gameName.getText(), Integer.parseInt(score.getText()), avatar.getImage(),detail.getText());
+            controller.edit(gameName.getText(), Integer.parseInt(score.getText()), avatar.getImage(), detail.getText());
             popupWindow.close();
         }
     }

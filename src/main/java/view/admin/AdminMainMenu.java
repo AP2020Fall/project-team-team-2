@@ -20,13 +20,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminMainMenu implements Tab, Initializable {
+    private final AdminMainMenuController controller;
     @FXML
     private TableView<SuggestionEntry> suggestionList;
-    private final AdminMainMenuController controller;
-    public AdminMainMenu()
-    {
+
+    public AdminMainMenu() {
         controller = new AdminMainMenuController(Client.getClientInfo());
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializedTableSuggestionList();
@@ -45,15 +46,13 @@ public class AdminMainMenu implements Tab, Initializable {
     }
 
     public void delete() {
-        for (SuggestionEntry suggestionEntry: suggestionList.getSelectionModel().getSelectedItems())
-        {
+        for (SuggestionEntry suggestionEntry : suggestionList.getSelectionModel().getSelectedItems()) {
             controller.deleteSuggestion(suggestionEntry);
         }
         TabHandler.getTabHandler().refresh();
     }
 
-    private void initializedTableSuggestionList()
-    {
+    private void initializedTableSuggestionList() {
         TableColumn<SuggestionEntry, String> suggestionIdColumn = new TableColumn<>("ID");
         suggestionIdColumn.setCellValueFactory(new PropertyValueFactory<>("suggestionId"));
         TableColumn<SuggestionEntry, String> suggestionGameNameColumn = new TableColumn<>("Game");
@@ -63,7 +62,7 @@ public class AdminMainMenu implements Tab, Initializable {
 
         suggestionList.setPlaceholder(new Label("No suggestion has been made."));
         suggestionList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        suggestionList.getColumns().addAll(suggestionIdColumn, suggestionGameNameColumn,suggestionPlayerNameColumn);
+        suggestionList.getColumns().addAll(suggestionIdColumn, suggestionGameNameColumn, suggestionPlayerNameColumn);
         suggestionList.getItems().addAll(controller.getSuggestions());
     }
 }

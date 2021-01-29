@@ -10,16 +10,16 @@ import java.util.logging.Logger;
 public class TabHandler {
     private static final ArrayList<Tab> viewArrayList = new ArrayList<>();
     private static TabHandler TabHandler;
-    private BorderPane borderPane;
     private static int index;
+    private BorderPane borderPane;
     private StackPane stackRoot;
 
     private TabHandler() {
         index = -1;
     }
-    public static TabHandler getTabHandler()
-    {
-        if(TabHandler == null)
+
+    public static TabHandler getTabHandler() {
+        if (TabHandler == null)
             return TabHandler = new TabHandler();
         else
             return TabHandler;
@@ -29,51 +29,48 @@ public class TabHandler {
         this.borderPane = borderPane;
     }
 
-    private void display()
-    {
+    private void display() {
         try {
-            borderPane.setCenter( viewArrayList.get(index).show());
-        }catch (IOException ignored)
-        {
+            borderPane.setCenter(viewArrayList.get(index).show());
+        } catch (IOException ignored) {
             Logger.getLogger("Show view error");//todo exit
         }
     }
 
-    public void push(Tab tab)
-    {
+    public void push(Tab tab) {
 
-        viewArrayList.subList(index + 1,viewArrayList.size()).clear();
+        viewArrayList.subList(index + 1, viewArrayList.size()).clear();
         viewArrayList.add(tab);
         index++;
         display();
     }
-    public void back()
-    {
-        if(index > 0) index--;
-         display();
+
+    public void back() {
+        if (index > 0) index--;
+        display();
     }
-    public void ahead()
-    {
-        if(index < viewArrayList.size() - 1) index++;
-         display();
+
+    public void ahead() {
+        if (index < viewArrayList.size() - 1) index++;
+        display();
     }
 
     public void refresh() {
         display();
     }
-    public Tab current()
-    {
-        if(index < viewArrayList.size() && index >= 0) {
+
+    public Tab current() {
+        if (index < viewArrayList.size() && index >= 0) {
             return viewArrayList.get(index);
         }
-            return null;
+        return null;
     }
-    public void logout()
-    {
+
+    public void logout() {
         viewArrayList.clear();
-        index= -1;
+        index = -1;
         borderPane = null;
-        stackRoot=null;
+        stackRoot = null;
     }
 
     public void setStackPane(StackPane stackRoot) {

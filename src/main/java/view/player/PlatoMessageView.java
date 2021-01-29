@@ -26,9 +26,9 @@ import java.util.ResourceBundle;
 
 public class PlatoMessageView implements View, Initializable {
     private static Stage popupWindow;
+    private final ClientMasterController controller;
     @FXML
     private TreeTableView<PlatoMessageEntry> messageTable;
-    private final ClientMasterController controller;
 
     public PlatoMessageView() {
         controller = Client.getConnector().getController();
@@ -54,7 +54,7 @@ public class PlatoMessageView implements View, Initializable {
         if (controller.hasMessage()) {
             for (ArrayList<PlatoMessageEntry> messageEntries : controller.platoBotsMessages()) {
                 TreeItem<PlatoMessageEntry> dayRoot = new TreeItem<>();
-                for(PlatoMessageEntry messageEntry: messageEntries)
+                for (PlatoMessageEntry messageEntry : messageEntries)
                     dayRoot.getChildren().add(new TreeItem<>(messageEntry));
                 dayRoot.setExpanded(true);
                 messageRoot.getChildren().add(dayRoot);
@@ -66,7 +66,7 @@ public class PlatoMessageView implements View, Initializable {
         } else {
             messageTable.setPlaceholder(new Label("No messages."));
         }
-        messageTable.getColumns().addAll(avatarColumn,dayColumn, messageColumn, timeColumn);
+        messageTable.getColumns().addAll(avatarColumn, dayColumn, messageColumn, timeColumn);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class PlatoMessageView implements View, Initializable {
     public void openWindow() throws IOException {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/plato/player/platoMessageView.fxml"));
         root.setController(this);
-        if (popupWindow == null )
+        if (popupWindow == null)
             popupWindow = new Stage(StageStyle.DECORATED);
         popupWindow.setTitle("PlatoBot Message");
         popupWindow.setScene(new Scene(root.load()));

@@ -16,10 +16,10 @@ public class PlayerProfileViewController extends Controller {
     public PlayerProfileViewController(ClientInfo clientInfo) {
         super(clientInfo);
         this.player = Player.getPlayerByUsername(clientInfo.getPlayerUsername());
-        if(player == null)
+        if (player == null)
             System.err.println("Player passed to PlayerProfileViewController is null");
-        this.logged =  Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
-        if(player == null)
+        this.logged = Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
+        if (player == null)
             System.err.println("Player passed to PlayerProfileViewController is null");
     }
 
@@ -35,7 +35,7 @@ public class PlayerProfileViewController extends Controller {
         return player.getLastName();
     }
 
-    public String getViewPlayerBio(){
+    public String getViewPlayerBio() {
         return player.getBio();
     }
 

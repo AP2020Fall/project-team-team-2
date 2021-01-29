@@ -22,32 +22,31 @@ import java.util.ResourceBundle;
 
 public class AdminProfileView implements Tab, Initializable {
 
+    private final AdminProfileViewController controller;
     @FXML
     private Label username = new Label();
     @FXML
-    private Label firstName= new Label();
+    private Label firstName = new Label();
     @FXML
-    private Label lastName= new Label();
+    private Label lastName = new Label();
     @FXML
-    private Label email= new Label();
+    private Label email = new Label();
     @FXML
-    private Label phoneNumber= new Label();
+    private Label phoneNumber = new Label();
     @FXML
-    private Label daysPassed= new Label();
+    private Label daysPassed = new Label();
     @FXML
-    private Label bio= new Label();
+    private Label bio = new Label();
     @FXML
-    private Label date= new Label();
+    private Label date = new Label();
     @FXML
-    private Label wins= new Label();
+    private Label wins = new Label();
     @FXML
-    private Label friends= new Label();
+    private Label friends = new Label();
     @FXML
     private ImageView avatar;
     @FXML
     private TableView<GameLogSummaryEntry> gameHistoryList;
-
-    private final AdminProfileViewController controller;
 
     public AdminProfileView(Player player) {
         controller = new AdminProfileViewController(Client.getClientInfo());
@@ -66,8 +65,7 @@ public class AdminProfileView implements Tab, Initializable {
         return loader.load();
     }
 
-    private void initializedPlayerInfo()
-    {
+    private void initializedPlayerInfo() {
         username.setText(controller.getViewAdminUsername());
         firstName.setText(controller.getViewAdminFirstName());
         lastName.setText(controller.getViewAdminLastName());
@@ -81,8 +79,7 @@ public class AdminProfileView implements Tab, Initializable {
         avatar.setImage(controller.getViewAdminPlayerImage());
     }
 
-    private void initializedTableGameLog()
-    {
+    private void initializedTableGameLog() {
         TableColumn<GameLogSummaryEntry, ImageView> gameImageColumn = new TableColumn<>("Avatar");
         gameImageColumn.setCellValueFactory(new PropertyValueFactory<>("avatar"));
         TableColumn<GameLogSummaryEntry, String> gameNameColumn = new TableColumn<>("Game");
@@ -96,7 +93,7 @@ public class AdminProfileView implements Tab, Initializable {
         TableColumn<GameLogSummaryEntry, LocalDate> lastPlayColumn = new TableColumn<>("Last Play");
         lastPlayColumn.setCellValueFactory(new PropertyValueFactory<>("lastPlay"));
         gameHistoryList.setPlaceholder(new Label("Player has not played a game."));
-        gameHistoryList.getColumns().addAll(gameImageColumn,gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
+        gameHistoryList.getColumns().addAll(gameImageColumn, gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
         gameHistoryList.getItems().addAll(controller.getGameHistory());
     }
 

@@ -25,14 +25,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginMenu implements View, Initializable {
+    private final ClientMasterController controller;
     @FXML
     private StackPane root;
     @FXML
     private JFXTextField username;
     @FXML
     private JFXPasswordField password;
-
-    private final ClientMasterController controller;
 
     public LoginMenu() {
         controller = Client.getConnector().getController();

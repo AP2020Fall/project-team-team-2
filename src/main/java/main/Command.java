@@ -12,7 +12,7 @@ public class Command {
     private final ArrayList<Object> params;
     private ClientInfo clientInfo;
 
-    public Command(String command,String declaringClass, ArrayList<Object> params,ClientInfo clientInfo) {
+    public Command(String command, String declaringClass, ArrayList<Object> params, ClientInfo clientInfo) {
         this.command = command;
         this.declaringClass = declaringClass;
         this.params = (ArrayList<Object>) params.clone();
@@ -20,17 +20,16 @@ public class Command {
 
     }
 
+    public static Command fromJson(String json) {
+        return new Gson().fromJson(json, Command.class);
+    }
+
     public ClientInfo getClientInfo() {
         return clientInfo;
     }
 
-    public String toJson()
-    {
+    public String toJson() {
         return new Gson().toJson(this);
-    }
-    public static Command fromJson(String json)
-    {
-        return new Gson().fromJson(json, Command.class);
     }
 
     public String getCommand() {
@@ -48,41 +47,41 @@ public class Command {
         try {
             return Class.forName(declaringClass);
         } catch (ClassNotFoundException e) {
-            System.err.println("class " + declaringClass+ " was not found.");
+            System.err.println("class " + declaringClass + " was not found.");
             System.err.println(e.getMessage());
-            return  null;
+            return null;
         }
     }
-    public Method getMethod()  {
+
+    public Method getMethod() {
         try {
             Class<?> c = getDeclaringClass();
             Class<?>[] paramsType = new Class[params.size()];
-            for(int i = 0 ; i < params.size(); i++)
+            for (int i = 0; i < params.size(); i++)
                 paramsType[i] = params.get(i).getClass();
             return c.getDeclaredMethod(command, paramsType);
-        }catch (NoSuchMethodException e)
-        {
-            System.err.println("method " + command + "@" + declaringClass+ " was not found.");
+        } catch (NoSuchMethodException e) {
+            System.err.println("method " + command + "@" + declaringClass + " was not found.");
             System.err.println(e.getMessage());
             return null;
         }
     }
-    public Object invokeMethod()
-    {
-        try{
+
+    public Object invokeMethod() {
+        try {
             Object object = getInstance();
             Method method = getMethod();
-           return method.invoke(object,params.toArray());
+            return method.invoke(object, params.toArray());
         } catch (IllegalAccessException | InvocationTargetException e) {
-            System.err.println("method " + command + "@" + declaringClass+ " couldn't be invoked.");
+            System.err.println("method " + command + "@" + declaringClass + " couldn't be invoked.");
             System.err.println(e.getMessage());
             return null;
         }
     }
-    private Object getInstance()
-    {
-        try{
-          return getDeclaringClass().getConstructor(ClientInfo.class).newInstance(clientInfo);
+
+    private Object getInstance() {
+        try {
+            return getDeclaringClass().getConstructor(ClientInfo.class).newInstance(clientInfo);
         } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             System.err.println("couldn't make a new instance " + "@" + declaringClass);
             System.err.println(e.getMessage());

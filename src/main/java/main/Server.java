@@ -15,20 +15,22 @@ public class Server extends Application {
     private static final int PORT_NUMBER = 6660;
     private static Server server;
 
-    public Server()
-    {}
-    public static Server getInstance()
-    {
-        if(server == null)
+    public Server() {
+    }
+
+    public static Server getInstance() {
+        if (server == null)
             return server = new Server();
         return server;
     }
-//todo make it non javafx
+
+    //todo make it non javafx
     public static void main(String[] args) throws IOException {
         getInstance();
         launch(args);
 
     }
+
     private static void openFiles() {
         try {
             Account.open();

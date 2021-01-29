@@ -6,7 +6,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.SVGPath;
 
 
-
 public class RiskGameEventHandler {
 
 }

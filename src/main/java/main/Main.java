@@ -10,16 +10,6 @@ import view.login.WelcomeMenu;
 
 public class Main extends Application {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setOnCloseRequest(event -> Platform.exit());
-        openFiles();
-        Runtime.getRuntime().addShutdownHook(new Thread(Main::saveFiles));
-        ViewHandler.getViewHandler().setWindow(primaryStage);
-        ViewHandler.getViewHandler().push(new WelcomeMenu());
-        primaryStage.show();
-    }
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -47,6 +37,16 @@ public class Main extends Application {
         } catch (Exception e) {
             e.getStackTrace();
         }
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setOnCloseRequest(event -> Platform.exit());
+        openFiles();
+        Runtime.getRuntime().addShutdownHook(new Thread(Main::saveFiles));
+        ViewHandler.getViewHandler().setWindow(primaryStage);
+        ViewHandler.getViewHandler().push(new WelcomeMenu());
+        primaryStage.show();
     }
 
 }

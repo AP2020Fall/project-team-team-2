@@ -23,11 +23,11 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class PlayerGamesMenu implements Tab, Initializable {
+    private final ClientMasterController controller;
     @FXML
     private TableView<GameEntry> gamesListGamesMenu;
     @FXML
     private TreeTableView<EventEntry> eventList;
-    private final ClientMasterController controller;
 
     public PlayerGamesMenu() {
         controller = Client.getConnector().getController();
@@ -48,10 +48,9 @@ public class PlayerGamesMenu implements Tab, Initializable {
 
     @FXML
     void eventTableSelect(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(eventList.getSelectionModel().getSelectedItems().size() != 0)
-                {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                if (eventList.getSelectionModel().getSelectedItems().size() != 0) {
                     EventEntry eventEntry = eventList.getSelectionModel().getSelectedItems().get(0).getValue();
                     TabHandler.getTabHandler().push(new PlayerEventMenu(eventEntry.getEventId()));
                 }
@@ -63,10 +62,9 @@ public class PlayerGamesMenu implements Tab, Initializable {
 
     @FXML
     void gameTableSelect(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(gamesListGamesMenu.getSelectionModel().getSelectedItems().size() != 0)
-                {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                if (gamesListGamesMenu.getSelectionModel().getSelectedItems().size() != 0) {
                     GameEntry gameEntry = gamesListGamesMenu.getSelectionModel().getSelectedItems().get(0);
                     TabHandler.getTabHandler().push(new PlayerGameMenu(gameEntry.getName()));
                 }
@@ -82,7 +80,7 @@ public class PlayerGamesMenu implements Tab, Initializable {
         gameNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         gamesListGamesMenu.setPlaceholder(new Label("No game has been added."));
-        gamesListGamesMenu.getColumns().addAll(gameAvatarColumn,gameNameColumn);
+        gamesListGamesMenu.getColumns().addAll(gameAvatarColumn, gameNameColumn);
         gamesListGamesMenu.getItems().addAll(controller.getGames());
     }
 
@@ -101,7 +99,7 @@ public class PlayerGamesMenu implements Tab, Initializable {
         eventList.setRoot(eventRoot);
         eventList.setShowRoot(false);
         eventList.setPlaceholder(new Label("No event has been created."));
-        eventList.getColumns().addAll(eventImage, eventName,eventStart,eventEnd);
+        eventList.getColumns().addAll(eventImage, eventName, eventStart, eventEnd);
     }
 
 }

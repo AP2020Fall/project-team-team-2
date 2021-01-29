@@ -15,12 +15,13 @@ public class ViewHandler {
     private static final Stack<View> viewStack = new Stack<>();
     private static ViewHandler viewHandler;
     private Stage window;
+
     private ViewHandler() {
 
     }
-    public static ViewHandler getViewHandler()
-    {
-        if(viewHandler == null)
+
+    public static ViewHandler getViewHandler() {
+        if (viewHandler == null)
             return viewHandler = new ViewHandler();
         else
             return viewHandler;
@@ -29,15 +30,14 @@ public class ViewHandler {
     /*public boolean isEmpty() {
         return viewStack.isEmpty();
     }*/
-    public void setWindow(Stage window)
-    {
+    public void setWindow(Stage window) {
         this.window = window;
     }
-    private void showView()  {
+
+    private void showView() {
         try {
             viewStack.peek().show(window);
-        }catch (IOException exception)
-        {
+        } catch (IOException exception) {
             Logger.getLogger("Show view error");//todo exit
         }
     }
@@ -53,9 +53,8 @@ public class ViewHandler {
         showView();
     }
 
-    public void exit()
-    {
-        while(!viewStack.isEmpty())
+    public void exit() {
+        while (!viewStack.isEmpty())
             viewStack.pop();
         window.close();
     }
@@ -67,24 +66,25 @@ public class ViewHandler {
     public void mainMenuBack() {
         View view = viewStack.peek();
         viewStack.pop();
-        if(viewStack.peek() instanceof LoginMenu)
+        if (viewStack.peek() instanceof LoginMenu)
             viewStack.push(view);
         showView();
     }
+
     public void refresh() {
         showView();
     }
+
     public void logout() {
-        while(!(viewStack.peek() instanceof WelcomeMenu))
+        while (!(viewStack.peek() instanceof WelcomeMenu))
             viewStack.pop();
         showView();
     }
-    public void exitGame()
-    {
-        while((viewStack.peek() instanceof RiskGameView || viewStack.peek() instanceof StartGameView))
-        {
+
+    public void exitGame() {
+        while ((viewStack.peek() instanceof RiskGameView || viewStack.peek() instanceof StartGameView)) {
             viewStack.pop();
-            if(viewStack.isEmpty()) break;
+            if (viewStack.isEmpty()) break;
         }
         showView();
     }

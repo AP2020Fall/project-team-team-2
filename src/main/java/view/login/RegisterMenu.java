@@ -24,7 +24,8 @@ import view.player.PlayerMainMenuLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class RegisterMenu  implements View {
+public class RegisterMenu implements View {
+    private final ClientMasterController controller;
     @FXML
     private StackPane stackRoot;
     @FXML
@@ -43,7 +44,6 @@ public class RegisterMenu  implements View {
     private JFXTextField money;
     @FXML
     private Pane animationPane;
-    private final ClientMasterController controller;
 
     public RegisterMenu() {
         controller = Client.getConnector().getController();
@@ -142,9 +142,6 @@ public class RegisterMenu  implements View {
         }
         return inputs;
     }
-
-
-
 
 
     private void animate(int forward) {

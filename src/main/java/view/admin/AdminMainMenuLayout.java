@@ -25,7 +25,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminMainMenuLayout implements View, Initializable {
-    @FXML private BorderPane borderPane;
+    private static AudioClip audioClip;
+    @FXML
+    private BorderPane borderPane;
     @FXML
     private JFXTextField searchUsername;
     @FXML
@@ -33,10 +35,13 @@ public class AdminMainMenuLayout implements View, Initializable {
     private AdminMainMenuController controller;
     @FXML
     private StackPane stackRoot;
-    private static AudioClip audioClip;
 
     public AdminMainMenuLayout() {
         controller = new AdminMainMenuController(Client.getClientInfo());
+    }
+
+    public static AudioClip getAudioClip() {
+        return audioClip;
     }
 
     @Override
@@ -57,35 +62,36 @@ public class AdminMainMenuLayout implements View, Initializable {
         audioClip.play();
     }
 
-    public static AudioClip getAudioClip() {
-        return audioClip;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         TabHandler.getTabHandler().setBorderPane(borderPane);
         TabHandler.getTabHandler().setStackPane(stackRoot);
         viewMainMenu();
     }
-    @FXML private  void search(ActionEvent actionEvent) {
+
+    @FXML
+    private void search(ActionEvent actionEvent) {
         if (!controller.usernameExist(searchUsername.getText())) {
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
-                    "Invalid username","Username does not exist!");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid username", "Username does not exist!");
         } else {
             TabHandler.getTabHandler().push(
                     new AdminProfileView(controller.searchPlayer(searchUsername.getText())));
         }
     }
+
     @FXML
     void updateContextMenu(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER) return;
+        if (event.getCode() == KeyCode.ENTER) return;
         String searchQuery = searchUsername.getText();
         searchContextMenu.getItems().clear();
         searchContextMenu.getItems().addAll(controller.getSearchQuery(searchQuery));
-        searchContextMenu.show(searchUsername, Side.BOTTOM,0,0);
+        searchContextMenu.show(searchUsername, Side.BOTTOM, 0, 0);
 
     }
-    @FXML private  void platoMessage() throws IOException {
+
+    @FXML
+    private void platoMessage() throws IOException {
         new AdminMessageView().openWindow();
     }
 
@@ -99,32 +105,36 @@ public class AdminMainMenuLayout implements View, Initializable {
         TabHandler.getTabHandler().ahead();
     }
 
-    @FXML private  void viewAccountMenu() {
-        if(TabHandler.getTabHandler().current() instanceof AdminAccountMenu)
+    @FXML
+    private void viewAccountMenu() {
+        if (TabHandler.getTabHandler().current() instanceof AdminAccountMenu)
             TabHandler.getTabHandler().refresh();
         else {
             TabHandler.getTabHandler().push(new AdminAccountMenu());
         }
     }
 
-    @FXML private  void viewGamesAndEventMenu() {
-        if(TabHandler.getTabHandler().current() instanceof AdminGamesMenu)
+    @FXML
+    private void viewGamesAndEventMenu() {
+        if (TabHandler.getTabHandler().current() instanceof AdminGamesMenu)
             TabHandler.getTabHandler().refresh();
         else {
             TabHandler.getTabHandler().push(new AdminGamesMenu());
         }
     }
 
-    @FXML private  void viewPlayerList() {
-        if(TabHandler.getTabHandler().current() instanceof AdminPlayerListMenu)
+    @FXML
+    private void viewPlayerList() {
+        if (TabHandler.getTabHandler().current() instanceof AdminPlayerListMenu)
             TabHandler.getTabHandler().refresh();
         else {
             TabHandler.getTabHandler().push(new AdminPlayerListMenu());
         }
     }
 
-    @FXML private  void viewMainMenu() {
-        if(TabHandler.getTabHandler().current() instanceof AdminMainMenu)
+    @FXML
+    private void viewMainMenu() {
+        if (TabHandler.getTabHandler().current() instanceof AdminMainMenu)
             TabHandler.getTabHandler().refresh();
         else {
             TabHandler.getTabHandler().push(new AdminMainMenu());

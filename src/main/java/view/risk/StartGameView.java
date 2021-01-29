@@ -40,8 +40,16 @@ public class StartGameView implements View, Initializable {
     private Button startButton;
 
 
-    public StartGameView(ArrayList<Player> players , Event event) {
-        this.startGameController = new StartGameController(players , event);
+    public StartGameView(ArrayList<Player> players, Event event) {
+        this.startGameController = new StartGameController(players, event);
+    }
+
+    public static boolean checkToggle(boolean inputBoolean) {
+        if (inputBoolean) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @FXML
@@ -69,10 +77,6 @@ public class StartGameView implements View, Initializable {
         String playersNum = playerNum.getText();
         changePlayersNumber(playersNum);
     }
-
-
-
-
 
     @FXML
     public void startButtonClick() {
@@ -136,14 +140,6 @@ public class StartGameView implements View, Initializable {
         window.setScene(new Scene(root.load()));
         window.setResizable(false);
         //window.show();
-    }
-
-    public static boolean checkToggle(boolean inputBoolean) {
-        if (inputBoolean) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
     @Override

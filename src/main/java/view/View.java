@@ -4,6 +4,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public interface  View {
+public interface View {
     void show(Stage stage) throws IOException;
 }

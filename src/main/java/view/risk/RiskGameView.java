@@ -42,15 +42,15 @@ import java.net.URL;
 import java.util.*;
 
 public class RiskGameView implements View, Initializable {
-    private final RiskGameController riskGameController;
     public static long currentTimeStamp = System.currentTimeMillis() / 1000L;
-    private Stage gameWindow;
+    private final RiskGameController riskGameController;
     private final String mapNum;
-    private int duration;
     private final SVGPath[][] allPaths = new SVGPath[5][5];
     private final Label[][] allLabels = new Label[5][5];
     private final Map<Integer, Circle> playersCircles = new HashMap<>();
     private final List<Label> playerLabels = new ArrayList<>();
+    private Stage gameWindow;
+    private int duration;
     private Stage aboutStage;
     private AnimationTimer timer;
 
@@ -208,6 +208,15 @@ public class RiskGameView implements View, Initializable {
     private Label label_5_4;
     @FXML
     private Label label_5_5;
+
+    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, Event event) {
+        this.riskGameController = new RiskGameController(primitiveSettings, soldiers, event);
+        this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
+        this.duration = (int) primitiveSettings.get("Duration");
+        if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
+            autoPlace();
+        }
+    }
 
     @FXML
     private void loseManually(MouseEvent e) throws URISyntaxException {
@@ -403,15 +412,6 @@ public class RiskGameView implements View, Initializable {
 
     public void changeNotifText(String notifText) {
         gameNotifs.setText(notifText);
-    }
-
-    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, Event event) {
-        this.riskGameController = new RiskGameController(primitiveSettings, soldiers, event);
-        this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
-        this.duration = (int) primitiveSettings.get("Duration");
-        if (!(boolean) riskGameController.getPrimitiveSettings().get("Placement")) {
-            autoPlace();
-        }
     }
 
     public void toggleColor(SVGPath path) {
@@ -880,11 +880,11 @@ public class RiskGameView implements View, Initializable {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                double progressed = Double.valueOf((double)System.currentTimeMillis()/1000 - currentTimeStamp) / Double.valueOf(duration);
+                double progressed = Double.valueOf((double) System.currentTimeMillis() / 1000 - currentTimeStamp) / Double.valueOf(duration);
                 progressBar.setProgress(progressed);
                 if (progressed >= 1) {
                     changeNotifText("Your time has been finished");
-                    currentTimeStamp = System.currentTimeMillis()/1000L;
+                    currentTimeStamp = System.currentTimeMillis() / 1000L;
                     riskGameController.mainChangeTurn();
                     progressBar.setProgress(0);
                     riskGameController.updateCurrentTime();

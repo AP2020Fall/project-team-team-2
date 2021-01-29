@@ -17,7 +17,7 @@ public class ClientConnector {
 
     public void connect(String proxy, int port) {
         try {
-            socket = new Socket(proxy,port);
+            socket = new Socket(proxy, port);
             System.out.println("[Client]: Successfully connected to server.");
             initialize();
             System.out.println("[Client]: Setup successfully finished.");
@@ -35,24 +35,24 @@ public class ClientConnector {
             System.err.println(e.getMessage());
         }
     }
-    public String serverQuery(String userInput)
-    {
+
+    public String serverQuery(String userInput) {
         try {
             dataOutputStream.writeUTF(userInput);
             dataOutputStream.flush();
             String response = dataInputStream.readUTF();
-            Pair<String,String> query = new Gson().fromJson(response,  new TypeToken<Pair<String,String>>() {}.getType());
-            System.out.println("[CLIENT]: Server responded : "+ query.getValue1() + "\n to: " + userInput);
-            Client.updateClientInfo(new Gson().fromJson(query.getValue1(),ClientInfo.class));
+            Pair<String, String> query = new Gson().fromJson(response, new TypeToken<Pair<String, String>>() {
+            }.getType());
+            System.out.println("[CLIENT]: Server responded : " + query.getValue1() + "\n to: " + userInput);
+            Client.updateClientInfo(new Gson().fromJson(query.getValue1(), ClientInfo.class));
             return query.getValue0();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
             return "";
         }
     }
-    public ClientMasterController getController()
-    {
+
+    public ClientMasterController getController() {
         return controller;
     }
 }

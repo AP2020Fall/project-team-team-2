@@ -27,10 +27,10 @@ public class PlayerRunGameController extends Controller {
     public PlayerRunGameController(ClientInfo clientInfo) {
         super(clientInfo);
         this.game = Game.getGameByGameName(clientInfo.getGameName());
-        if(game == null)
+        if (game == null)
             System.err.println("Game passed to PlayerRunGameController is null.");
         this.event = Event.getEventById(clientInfo.getEventId());
-        if(event == null)
+        if (event == null)
             System.err.println("Player passed to PlayerRunGameController is null.");
     }
 
@@ -61,7 +61,7 @@ public class PlayerRunGameController extends Controller {
     }
 
     public String getEventMode() {
-        if(event != null)
+        if (event != null)
             return event.getComment();
         return "Casual";
     }
@@ -73,13 +73,12 @@ public class PlayerRunGameController extends Controller {
     public void runGame(ArrayList<String> usernames) {
         ArrayList<Player> players = new ArrayList<>();
         System.out.println("Players ready to play are:");
-        for(String username: usernames)
-        {
+        for (String username : usernames) {
             System.out.println(username);
             players.add(Objects.requireNonNull(Player.getPlayerByUsername(username),
                     "Username passed to runGame doesn't exist."));
         }
         System.out.println("lets go play");
-       // ViewHandler.getViewHandler().push(new StartGameView(players,event));
+        // ViewHandler.getViewHandler().push(new StartGameView(players,event));
     }
 }

@@ -16,18 +16,16 @@ import view.AlertMaker;
 import java.io.IOException;
 
 public class AddSuggestionPopup {
+    private final AdminMainMenuController controller;
     @FXML
     private JFXTextField playerName;
     @FXML
     private JFXTextField gameName;
     @FXML
     private StackPane stackRoot;
-
     private Stage popupWindow;
-    private final AdminMainMenuController controller;
 
-    public AddSuggestionPopup()
-    {
+    public AddSuggestionPopup() {
         controller = new AdminMainMenuController(Client.getClientInfo());
     }
 
@@ -41,19 +39,21 @@ public class AddSuggestionPopup {
         popupWindow.setResizable(false);
         popupWindow.showAndWait();
     }
-    @FXML private void add() {
+
+    @FXML
+    private void add() {
         if (!controller.usernameExist(playerName.getText())) {
             setInfoColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
-                    "Invalid information","username does not exist.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid information", "username does not exist.");
         } else if (!controller.doesGameExist(gameName.getText())) {
             setInfoColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
-                    "Invalid information","game does not exist.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid information", "game does not exist.");
         } else if (controller.playerBeenSuggested(playerName.getText(), gameName.getText())) {
             setInfoColourRed();
-            AlertMaker.showMaterialDialog(stackRoot,stackRoot.getChildren().get(0),"Okay",
-                    "Invalid information","game has already been suggested.");
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
+                    "Invalid information", "game has already been suggested.");
         } else {
             controller.addSuggestion(playerName.getText(), gameName.getText());
             popupWindow.close();
@@ -64,8 +64,8 @@ public class AddSuggestionPopup {
     void cancel(ActionEvent event) {
         popupWindow.close();
     }
-    private void setInfoColourRed()
-    {
+
+    private void setInfoColourRed() {
         playerName.setFocusColor(Paint.valueOf("#ff0000"));
         playerName.setUnFocusColor(Paint.valueOf("#ff0000"));
         gameName.setFocusColor(Paint.valueOf("#ff0000"));

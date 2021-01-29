@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PlayerRunGameView implements Tab, Initializable {
+    private final ContextMenu searchContextMenu;
+    private final ArrayList<String> usernames;
+    private final ClientMasterController controller;
     @FXML
     private JFXTextField player2Name;
     @FXML
@@ -47,11 +50,8 @@ public class PlayerRunGameView implements Tab, Initializable {
     private ImageView player5Avatar;
     @FXML
     private Label eventMode;
-    private final ContextMenu searchContextMenu;
-    private final ArrayList<String> usernames;
-    private final ClientMasterController controller;
-    public PlayerRunGameView(String gameName, String eventId)
-    {
+
+    public PlayerRunGameView(String gameName, String eventId) {
         Client.getClientInfo().setGameName(gameName);
         Client.getClientInfo().setEventId(eventId);
         controller = Client.getConnector().getController();
@@ -59,46 +59,51 @@ public class PlayerRunGameView implements Tab, Initializable {
         //usernames.add(Client.getClientInfo().getLoggedIn().getUsername());
         searchContextMenu = new ContextMenu();
     }
+
     @Override
     public Parent show() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerRunGameView.fxml"));
         loader.setController(this);
         return loader.load();
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-            initializeInfo();
+        initializeInfo();
     }
+
     @FXML
     void playerSearch(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER) return;
+        if (event.getCode() == KeyCode.ENTER) return;
         JFXTextField textField = (JFXTextField) event.getSource();
         String searchQuery = textField.getText();
         searchContextMenu.getItems().clear();
-        searchContextMenu.getItems().addAll(controller.getSearchQuery(textField, searchQuery,this));
-        searchContextMenu.show(textField, Side.RIGHT,0,0);
+        searchContextMenu.getItems().addAll(controller.getSearchQuery(textField, searchQuery, this));
+        searchContextMenu.show(textField, Side.RIGHT, 0, 0);
     }
 
     @FXML
     void start() {
         controller.runGame(usernames);
     }
+
     @FXML
     void cancel() {
-            TabHandler.getTabHandler().back();
+        TabHandler.getTabHandler().back();
     }
 
     private void initializeInfo() {
         gameAvatar.setImage(controller.getGameImage());
         eventMode.setText(controller.getEventMode());
     }
+
     @FXML
     void update(ActionEvent event) {
         JFXTextField textField = (JFXTextField) event.getSource();
         update(textField);
     }
-    public void update(JFXTextField textField)
-    {
+
+    public void update(JFXTextField textField) {
         if (!controller.usernameExist(textField.getText())) {
             AlertMaker.showMaterialDialog(TabHandler.getTabHandler().getStackRoot(),
                     TabHandler.getTabHandler().getStackRoot().getChildren().get(0), "Okay",
@@ -112,8 +117,8 @@ public class PlayerRunGameView implements Tab, Initializable {
             textField.setDisable(true);
         }
     }
-    private void updateImage(ImageView imageView,String username)
-    {
+
+    private void updateImage(ImageView imageView, String username) {
         imageView.setImage(controller.getUsernameImage(username));
         usernames.add(username);
     }
