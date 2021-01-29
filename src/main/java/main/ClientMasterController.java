@@ -1011,6 +1011,33 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    //######################## AdminGameMenuController Commands ########################\\
+
+    public Image getAdminGameImage() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getGame", "controller.admin.AdminGameMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Game.class).getImage();
+    }
+
+    public String getGameName(){
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getGameName", "controller.admin.AdminGameMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getAdminGameDetails() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getDetails", "controller.player.PlayerGameMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+
 
 
 

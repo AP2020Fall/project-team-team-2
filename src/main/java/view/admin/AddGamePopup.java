@@ -4,16 +4,10 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import controller.admin.AdminGameMenuController;
-import controller.admin.AdminGamesMenuController;
-import controller.admin.AdminMainMenuController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -77,8 +71,8 @@ public class AddGamePopup implements Initializable {
 
     private void initializeGameInfo() {
         gameName.setText(controller.getGameName());
-        gameDetail.setText(controller.getGameDetail());
-        avatar.setImage(controller.getImage());
+        gameDetail.setText(controller.getAdminGameDetail());
+        avatar.setImage(controller.getAdminGameImage());
     }
 
 
