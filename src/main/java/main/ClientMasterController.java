@@ -835,6 +835,14 @@ public class ClientMasterController {
         return new Gson().fromJson(answer,String.class);
     }
 
+    public String getAdminPassword() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getPassword", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
 
 
 
