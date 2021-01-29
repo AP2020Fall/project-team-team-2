@@ -1,4 +1,4 @@
-package main;
+package ClientMasterController;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -9,6 +9,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
+import main.Client;
+import main.Command;
 import model.*;
 import model.Entry.*;
 import view.TabHandler;
