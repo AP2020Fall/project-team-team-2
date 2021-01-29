@@ -1,4 +1,4 @@
-package ClientMasterController;
+package controller.ClientMasterController;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
