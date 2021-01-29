@@ -79,7 +79,7 @@ public class AdminEditProfile implements Tab, Initializable {
         if(givenImage != null)
         {
             controller.setImage(givenImage);
-            playerImage.setImage(controller.getImage());
+            playerImage.setImage(controller.getAdminImage());
         }
     }
 
@@ -88,9 +88,9 @@ public class AdminEditProfile implements Tab, Initializable {
         password.setText(controller.getAdminPassword());
         firstName.setText(controller.getAdminFirstName());
         lastName.setText(controller.getAdminLastName());
-        email.setText(controller.getEmail());
+        email.setText(controller.getAdminEmail());
         phoneNumber.setText(controller.getAdminPhoneNumber());
-        playerImage.setImage(controller.getImage());
+        playerImage.setImage(controller.getAdminImage());
     }
 
     private void setUsernameColourRed() {

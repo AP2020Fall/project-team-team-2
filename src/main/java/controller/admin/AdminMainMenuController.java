@@ -40,7 +40,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public String getDate() {
         return String.valueOf(admin.getDayOfRegister());
-    }
+    }//done
 
     public String getFirstName() {
         return admin.getFirstName();
@@ -60,7 +60,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public String getEmail() {
         return admin.getEmail();
-    }
+    }//done
 
     public void setEmail(String email) {
         admin.setEmail(email);
@@ -76,7 +76,7 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
 
     public Image getImage() {
         return admin.getImage();
-    }
+    }//done
 
     public void setImage(String url) {
         admin.setImage(url);

@@ -867,6 +867,32 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public String getAdminEmail() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getEmail", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String getAdminDate() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getDate","controller.admin.AdminMainMenuController"
+                , params,Client.getClientInfo());
+        String answer =  Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,String.class);
+    }
+
+    public Image getAdminImage() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getImage", "controller.admin.AdminMainMenuController", params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        String url = new Gson().fromJson(answer, String.class);
+        return new Image(url);
+    }
+
+
+
 
 
 
