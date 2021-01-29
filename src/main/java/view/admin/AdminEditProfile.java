@@ -2,6 +2,7 @@ package view.admin;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import controller.ClientMasterController.ClientMasterController;
 import controller.admin.AdminMainMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import main.Client;
-import main.ClientMasterController;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;

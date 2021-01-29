@@ -1,5 +1,6 @@
 package view.admin;
 
+import controller.ClientMasterController.ClientMasterController;
 import controller.admin.AdminMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import main.Client;
-import main.ClientMasterController;
 import view.Tab;
 import view.TabHandler;
 import view.ViewHandler;
