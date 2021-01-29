@@ -1,7 +1,8 @@
-package main;
+package ServerMasterController;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import main.Command;
 import model.Account;
 import org.javatuples.Pair;
 
