@@ -30,6 +30,10 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         return admin.getUsername();
     }//done
 
+    public void setUsername(String username) {
+        admin.setUsername(username);
+    }//done
+
     public String getPassword() {
         return admin.getPassword();
     }//done
@@ -82,17 +86,9 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         admin.setImage(url);
     }//done
 
-    public void setUsername(String username) {
-        admin.setUsername(username);
+    public ArrayList<Suggestion> getSuggestions() {
+        return Suggestion.getSuggestions();
     }//done
-
-    public ObservableList<SuggestionEntry> getSuggestions() {
-        ObservableList<SuggestionEntry> result = FXCollections.observableArrayList();
-        for (Suggestion suggestion : Suggestion.getSuggestions()) {
-            result.add(new SuggestionEntry(suggestion));
-        }
-        return result;
-    }
 
     public void deleteSuggestion(SuggestionEntry suggestionEntry) {
         //removes a suggestion for the player's suggestions

@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class PlayerAccountMenu implements Tab, Initializable {
+    private final ClientMasterController controller;
     @FXML
     private TableView<GameLogSummaryEntry> gameHistoryList;
     @FXML
@@ -51,7 +52,6 @@ public class PlayerAccountMenu implements Tab, Initializable {
     private Label phoneNumber = new Label();
     @FXML
     private ImageView avatar;
-    private final ClientMasterController controller;
 
     public PlayerAccountMenu() {
         controller = Client.getConnector().getController();

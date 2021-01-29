@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayerEditProfile implements Tab, Initializable {
+    private final ClientMasterController controller;
     @FXML
     private StackPane stackRoot;
     @FXML
@@ -40,7 +41,6 @@ public class PlayerEditProfile implements Tab, Initializable {
     private JFXTextField email;
     @FXML
     private JFXTextField phoneNumber;
-    private final ClientMasterController controller;
 
     public PlayerEditProfile() {
         controller = Client.getConnector().getController();

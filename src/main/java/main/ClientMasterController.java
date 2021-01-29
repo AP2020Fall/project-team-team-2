@@ -17,10 +17,7 @@ import view.player.PlayerRunGameView;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
 
 public class ClientMasterController {
@@ -113,7 +110,8 @@ public class ClientMasterController {
         params.add(searchQuery);
         Command command = new Command("usernameFuzzySearchTop5", "controller.Controller", params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        ArrayList<Player> top5Players = new Gson().fromJson(answer, new TypeToken<ArrayList<Player>>() {}.getType());
+        ArrayList<Player> top5Players = new Gson().fromJson(answer, new TypeToken<ArrayList<Player>>() {
+        }.getType());
         ObservableList<MenuItem> result = FXCollections.observableArrayList();
         for (Player player : top5Players) {
             MenuItem menuItem = new MenuItem();
@@ -130,12 +128,12 @@ public class ClientMasterController {
     public ObservableList<MenuItem> getSearchQuery(JFXTextField textField, String searchQuery, PlayerRunGameView controller) {
         ArrayList<Object> params = new ArrayList<>();
         params.add(searchQuery);
-        Command command = new Command("usernameFuzzySearchTop5","controller.Controller",params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        ArrayList<Player> top5Players = new Gson().fromJson(answer,  new TypeToken<ArrayList<Player>>() {}.getType());
+        Command command = new Command("usernameFuzzySearchTop5", "controller.Controller", params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        ArrayList<Player> top5Players = new Gson().fromJson(answer, new TypeToken<ArrayList<Player>>() {
+        }.getType());
         ObservableList<MenuItem> result = FXCollections.observableArrayList();
-        for(Player player: top5Players)
-        {
+        for (Player player : top5Players) {
             MenuItem menuItem = new MenuItem();
             menuItem.setOnAction(event -> {
                 textField.setText(player.getUsername());
@@ -144,8 +142,7 @@ public class ClientMasterController {
             menuItem.setText(player.getUsername());
             result.add(menuItem);
         }
-        if(result.isEmpty())
-        {
+        if (result.isEmpty()) {
             result.add(new MenuItem("No similar user found."));
         }
         return result;
@@ -281,10 +278,10 @@ public class ClientMasterController {
 
     public String getCasualEvent() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getCasualEvent","controller.player.PlayerGameMenuController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getCasualEvent", "controller.player.PlayerGameMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     //######################## PlayerFriendsMenu Commands ########################\\
@@ -398,10 +395,18 @@ public class ClientMasterController {
 
     public String getPlayerUsername() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getUsername","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getUsername", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void setPlayerUsername(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setUsername", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
 
     public String getPlayerPassword() {
@@ -412,12 +417,28 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public void setPlayerPassword(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setPassword", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
     public String getPlayerFirstName() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getFirstName", "controller.player.PlayerMainMenuController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
+    }
+
+    public void setPlayerFirstName(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setFirstName", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
 
     public String getPlayerLastName() {
@@ -428,12 +449,28 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public void setPlayerLastName(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setLastName", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
     public String getPlayerBio() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getBio", "controller.player.PlayerMainMenuController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
+    }
+
+    public void setPlayerBio(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setBio", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
 
     public String getPlayerPhoneNumber() {
@@ -444,6 +481,14 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public void setPlayerPhoneNumber(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setPhoneNumber", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
     public String getPlayerEmail() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getEmail", "controller.player.PlayerMainMenuController"
@@ -452,20 +497,28 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public void setPlayerEmail(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setEmail", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
     public String getPlayerDate() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getDate","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getDate", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getPlayerWins() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getWins","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getWins", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getPlayerMoney() {
@@ -477,10 +530,10 @@ public class ClientMasterController {
 
     public String getPlayerFriendCount() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getFriendCount","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getFriendCount", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getPlayerPoints() {
@@ -498,67 +551,11 @@ public class ClientMasterController {
         return new Image(url);
     }
 
-    public void setPlayerUsername(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setUsername","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-    public void setPlayerPassword(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setPassword","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-    public void setPlayerBio(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setBio","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-    public void setPlayerFirstName(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setFirstName","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-    public void setPlayerLastName(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setLastName","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-    public void setPlayerPhoneNumber(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setPhoneNumber","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-    public void setPlayerEmail(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setEmail","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
     public void setPlayerImage(String givenImage) {
         ArrayList<Object> params = new ArrayList<>();
         params.add(givenImage);
-        Command command = new Command("setImage","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
+        Command command = new Command("setImage", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
 
@@ -599,10 +596,11 @@ public class ClientMasterController {
 
     public ObservableList<GameLogSummaryEntry> getGameHistory() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getGameHistory","controller.player.PlayerMainMenuController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        ArrayList<GameLogSummary> gameLogSummaries = new Gson().fromJson(answer,new TypeToken<ArrayList<GameLogSummary>>() {}.getType());
+        Command command = new Command("getGameHistory", "controller.player.PlayerMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        ArrayList<GameLogSummary> gameLogSummaries = new Gson().fromJson(answer, new TypeToken<ArrayList<GameLogSummary>>() {
+        }.getType());
         ObservableList<GameLogSummaryEntry> result = FXCollections.observableArrayList();
         for (GameLogSummary gameLog : gameLogSummaries)
             result.add(new GameLogSummaryEntry(gameLog));
@@ -639,27 +637,28 @@ public class ClientMasterController {
 
     public PlatoMessageEntry getMessageRoot() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getAdmin","controller.Controller"
-                , params,Client.getClientInfo());
+        Command command = new Command("getAdmin", "controller.Controller"
+                , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        return new PlatoMessageEntry( new Gson().fromJson(answer,Admin.class).getImage());
+        return new PlatoMessageEntry(new Gson().fromJson(answer, Admin.class).getImage());
     }
 
     public boolean hasMessage() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("hasMessage","controller.player.PlatoMessageController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,Boolean.class);
+        Command command = new Command("hasMessage", "controller.player.PlatoMessageController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
     }
 
     public ArrayList<ArrayList<PlatoMessageEntry>> platoBotsMessages() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("platoBotsMessages","controller.player.PlatoMessageController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        ArrayList<Message> messages = new Gson().fromJson(answer,new TypeToken<ArrayList<Message>>() {}.getType());
-        ArrayList<ArrayList<PlatoMessageEntry>> result = new   ArrayList<>();
+        Command command = new Command("platoBotsMessages", "controller.player.PlatoMessageController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        ArrayList<Message> messages = new Gson().fromJson(answer, new TypeToken<ArrayList<Message>>() {
+        }.getType());
+        ArrayList<ArrayList<PlatoMessageEntry>> result = new ArrayList<>();
         java.util.Map<LocalDate, List<Message>> map = new HashMap<LocalDate, List<Message>>();
         for (Message item : messages) {
             List<Message> list = map.get(item.getTime().toLocalDate());
@@ -669,12 +668,11 @@ public class ClientMasterController {
             }
             list.add(item);
         }
-        for(Map.Entry<LocalDate,List<Message>> mapEntry: map.entrySet())
-        {
+        for (Map.Entry<LocalDate, List<Message>> mapEntry : map.entrySet()) {
 
             ArrayList<PlatoMessageEntry> platoMessageEntries = new ArrayList<>();
             platoMessageEntries.add(new PlatoMessageEntry(mapEntry.getKey()));
-            for(Message message: mapEntry.getValue())
+            for (Message message : mapEntry.getValue())
                 platoMessageEntries.add(new PlatoMessageEntry(message));
             result.add(platoMessageEntries);
         }
@@ -686,121 +684,121 @@ public class ClientMasterController {
 
     public String getViewPlayerUsername() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getViewPlayerUsername","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getViewPlayerUsername", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getViewPlayerFirstName() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getViewPlayerFirstName","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getViewPlayerFirstName", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getViewPlayerLastName() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getViewPlayerLastName","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getViewPlayerLastName", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getViewPlayerBio() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getViewPlayerBio","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getViewPlayerBio", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getViewPlayerPhoneNumber() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getViewPlayerPhoneNumber","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getViewPlayerPhoneNumber", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getViewPlayerEmail() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getViewPlayerEmail","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getViewPlayerEmail", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getViewPlayerDaysPassed() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getViewPlayerDaysPassed","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getViewPlayerDaysPassed", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getViewPlayerWins() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getViewPlayerWins","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getViewPlayerWins", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public String getViewPlayerFriendCount() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getViewPlayerFriendCount","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getViewPlayerFriendCount", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public Image getViewPlayerImage() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getViewPlayerImage","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        String url = new Gson().fromJson(answer,String.class);
+        Command command = new Command("getViewPlayerImage", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        String url = new Gson().fromJson(answer, String.class);
         return new Image(url);
     }
 
     public boolean areFriends() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("areFriends","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,Boolean.class);
+        Command command = new Command("areFriends", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
     }
 
     public void addFriend() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("addFriend","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
+        Command command = new Command("addFriend", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
 
     public void removeFriend() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("removeFriend","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
+        Command command = new Command("removeFriend", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
 
     public boolean HasFriendRequestBeenSent() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("HasFriendRequestBeenSent","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,Boolean.class);
+        Command command = new Command("HasFriendRequestBeenSent", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
     }
 
     public boolean areTheSame() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("areTheSame","controller.player.PlayerProfileViewController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,Boolean.class);
+        Command command = new Command("areTheSame", "controller.player.PlayerProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
     }
 
     //######################## PlayerRunGameController Commands ########################\\
@@ -808,17 +806,17 @@ public class ClientMasterController {
     public void runGame(ArrayList<String> usernames) {
         ArrayList<Object> params = new ArrayList<>();
         params.add(usernames);
-        Command command = new Command("getEventMode","controller.player.PlayerRunGameController"
-                , params,Client.getClientInfo());
-         Client.getConnector().serverQuery(command.toJson());
+        Command command = new Command("getEventMode", "controller.player.PlayerRunGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
 
     public String getEventMode() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getEventMode","controller.player.PlayerRunGameController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getEventMode", "controller.player.PlayerRunGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public Image getUsernameImage(String username) {
@@ -829,10 +827,18 @@ public class ClientMasterController {
 
     public String getAdminUsername() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getUsername","controller.admin.AdminMainMenuController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getUsername", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void setAdminUsername(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setUsername", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
 
     public String getAdminPassword() {
@@ -843,12 +849,28 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public void setAdminPassword(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setPassword", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
     public String getAdminFirstName() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getFirstName", "controller.admin.AdminMainMenuController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
+    }
+
+    public void setAdminFirstName(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setFirstName", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
 
     public String getAdminLastName() {
@@ -859,12 +881,28 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public void setAdminLastName(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setLastName", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
     public String getAdminPhoneNumber() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getPhoneNumber", "controller.admin.AdminMainMenuController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
+    }
+
+    public void setAdminPhoneNumber(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setPhoneNumber", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
 
     public String getAdminEmail() {
@@ -875,12 +913,20 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public void setAdminEmail(String text) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        Command command = new Command("setEmail", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
     public String getAdminDate() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getDate","controller.admin.AdminMainMenuController"
-                , params,Client.getClientInfo());
-        String answer =  Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer,String.class);
+        Command command = new Command("getDate", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public Image getAdminImage() {
@@ -891,74 +937,27 @@ public class ClientMasterController {
         return new Image(url);
     }
 
-    public void setAdminUsername(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setUsername","controller.admin.AdminMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-
-    public void setAdminPassword(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setPassword","controller.admin.AdminMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-    public void setAdminFirstName(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setFirstName","controller.admin.AdminMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-    public void setAdminLastName(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setLastName","controller.admin.AdminMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-
-    public void setAdminPhoneNumber(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setPhoneNumber","controller.admin.AdminMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-
-    public void setAdminEmail(String text) {
-        ArrayList<Object> params = new ArrayList<>();
-        params.add(text);
-        Command command = new Command("setEmail","controller.admin.AdminMainMenuController"
-                , params,Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
-
-
     public void setAdminImage(String givenImage) {
         ArrayList<Object> params = new ArrayList<>();
         params.add(givenImage);
-        Command command = new Command("setImage","controller.admin.AdminMainMenuController"
-                , params,Client.getClientInfo());
+        Command command = new Command("setImage", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
 
 
-
-
-
-
-
-
-
+    public ObservableList<SuggestionEntry> getSuggestions() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getSuggestions", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        ArrayList<Suggestion> suggestions = new Gson().fromJson(answer, new TypeToken<ArrayList<Suggestion>>() {
+        }.getType());
+        ObservableList<SuggestionEntry> result = FXCollections.observableArrayList();
+        for (Suggestion suggestion : suggestions)
+            result.add(new SuggestionEntry(suggestion));
+        return result;
+    }
 
 
 }
