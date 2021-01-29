@@ -3,10 +3,7 @@ package main;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.Account;
-import model.AccountGSON;
 import org.javatuples.Pair;
-
-import java.lang.reflect.Method;
 
 public class ServerMasterController {
     public Pair<String,String> takeAction(String input) {
@@ -20,7 +17,7 @@ public class ServerMasterController {
        if(command.getMethod() == null)
            return new Pair<>("", new Gson().toJson(command.getClientInfo()));
         return new Pair<>(new Gson().toJson(command.invokeMethod()),
-                new GsonBuilder().registerTypeAdapter(Account.class,new AccountGSON()).create().toJson(command.getClientInfo()));
+               new Gson().toJson(command.getClientInfo()));
     }
 
     public String test(String input)

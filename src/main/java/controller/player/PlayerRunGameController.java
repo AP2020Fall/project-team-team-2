@@ -1,6 +1,7 @@
 package controller.player;
 
 import com.jfoenix.controls.JFXTextField;
+import controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Menu;
@@ -15,17 +16,22 @@ import view.risk.StartGameView;
 import view.ViewHandler;
 import view.player.PlayerRunGameView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class PlayerRunGameController extends PlayerMainMenuLayoutController{
-    private Game game;
-    private Event event;
+public class PlayerRunGameController extends Controller {
+    private final Game game;
+    private final Event event;
 
     public PlayerRunGameController(ClientInfo clientInfo) {
         super(clientInfo);
-        this.game = Objects.requireNonNull(clientInfo.getGame(), "Game passed to PlayerRunGameController is null.");
-        this.event = Objects.requireNonNull(clientInfo.getEvent(), "Event passed to PlayerRunGameController is null.");
+        this.game = Game.getGameByGameName(clientInfo.getGameName());
+        if(game == null)
+            System.err.println("Game passed to PlayerRunGameController is null.");
+        this.event = Event.getEventById(clientInfo.getEventId());
+        if(event == null)
+            System.err.println("Player passed to PlayerRunGameController is null.");
     }
 
     /*public ObservableList<MenuItem> getSearchQuery(JFXTextField textField, String searchQuery,
@@ -36,10 +42,10 @@ public class PlayerRunGameController extends PlayerMainMenuLayoutController{
         {
             MenuItem menuItem = new MenuItem();
             menuItem.setOnAction(event -> {
-                textField.setText(player.getUsername());
+                textField.setText(player.getPlayerUsername());
                 controller.update(textField);
             });
-            menuItem.setText(player.getUsername());
+            menuItem.setText(player.getPlayerUsername());
             result.add(menuItem);
         }
         if(result.isEmpty())
@@ -48,6 +54,7 @@ public class PlayerRunGameController extends PlayerMainMenuLayoutController{
         }
         return result;
     }*/
+
 
     public Image getGameImage() {
         return game.getImage();
@@ -63,9 +70,6 @@ public class PlayerRunGameController extends PlayerMainMenuLayoutController{
         return Player.getPlayerByUsername(username).getImage();
     }
 
-    public String getUsername() {
-        return loggedIn.getUsername();
-    }
     public void runGame(ArrayList<String> usernames) {
         ArrayList<Player> players = new ArrayList<>();
         System.out.println("Players ready to play are:");

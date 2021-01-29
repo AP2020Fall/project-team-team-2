@@ -1,56 +1,66 @@
 package controller.player;
 
+import controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
-import main.Client;
 import main.ClientInfo;
 import model.Entry.GameLogSummaryEntry;
 import model.FriendRequest;
-import model.Game;
 import model.GameLogSummary;
 import model.Player;
 
-import java.util.Objects;
-
-public class PlayerProfileViewController extends PlayerMainMenuLayoutController {
+public class PlayerProfileViewController extends Controller {
     private final Player player;
     private final Player logged;
 
     public PlayerProfileViewController(ClientInfo clientInfo) {
         super(clientInfo);
-        this.player = Objects.requireNonNull(clientInfo.getPlayer(),
-                "Players passed to PlayerProfileViewController is null");
-        this.logged = Objects.requireNonNull(loggedIn,
-                "Logged passed to PlayerProfileViewController is null");
+        this.player = Player.getPlayerByUsername(clientInfo.getPlayerUsername());
+        if(player == null)
+            System.err.println("Player passed to PlayerProfileViewController is null");
+        this.logged =  Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
+        if(player == null)
+            System.err.println("Player passed to PlayerProfileViewController is null");
     }
 
-    public String getUsername() {
+    public String getViewPlayerUsername() {
         return player.getUsername();
     }
 
-    public String getFirstName() {
+    public String getViewPlayerFirstName() {
         return player.getFirstName();
     }
 
-    public String getLastName() {
+    public String getViewPlayerLastName() {
         return player.getLastName();
     }
 
-    public String getEmail() {
-        return player.getEmail();
+    public String getViewPlayerBio(){
+        return player.getBio();
     }
 
-    public String getPhoneNumber() {
+    public String getViewPlayerPhoneNumber() {
         return player.getPhoneNumber();
+    }
+
+    public String getViewPlayerEmail() {
+        return player.getEmail();
     }
 
     public String getViewPlayerDaysPassed() {
         return String.valueOf(player.getDayOfRegister());
     }
 
-    public String getBio(){
-        return player.getBio();
+    public String getViewPlayerWins() {
+        return String.valueOf(player.getNumberOfWins());
+    }
+
+    public String getViewPlayerFriendCount() {
+        return String.valueOf(player.getFriends().size());
+    }
+
+    public String getViewPlayerImage() {
+        return player.getImageURL();
     }
 
     public boolean areFriends() {
@@ -63,7 +73,6 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
         FriendRequest friendRequest = new FriendRequest(player, logged, generateId());
         friendRequest.sendRequest();
     }
-
 
     public void removeFriend() {
         //removes logged from friends of player and removes the player from the friends of logged.
@@ -83,23 +92,11 @@ public class PlayerProfileViewController extends PlayerMainMenuLayoutController 
         return logged.getUsername().equals(player.getUsername());
     }
 
-    public ObservableList<GameLogSummaryEntry> getGameHistory() {
+    public ObservableList<GameLogSummaryEntry> getViewPlayerGameHistory() {
         ObservableList<GameLogSummaryEntry> result = FXCollections.observableArrayList();
         for (GameLogSummary gameLog : player.getGameLogSummaries())
             result.add(new GameLogSummaryEntry(gameLog));
         return result;
     }
-    public String getViewPlayerWins() {
-        return String.valueOf(player.getNumberOfWins());
-    }
-    public String getViewPlayerFriendCount() {
-        return String.valueOf(player.getFriends().size());
-    }
 
-    public Player getPlayer() {
-        return player;
-    }
-    public Game getGame(GameLogSummaryEntry gameEntry) {
-        return Game.getGameByGameName(gameEntry.getGameName());
-    }
 }

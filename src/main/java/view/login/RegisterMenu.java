@@ -58,6 +58,42 @@ public class RegisterMenu  implements View {
         window.setResizable(false);
     }
 
+    @FXML
+    private void register() {
+        if (!controller.usernameExist(username.getText())) {
+            money.setVisible(controller.adminExists());
+            animate(-1);
+        } else {
+            setCredentialsColourRed();
+            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
+                    "Okay", "Invalid Credentials", "Username is already taken.");
+        }
+    }
+
+    @FXML
+    private void back() {
+        ViewHandler.getViewHandler().pop();
+    }
+
+    @FXML
+    private void backSubmit() {
+        clear();
+        animate(1);
+    }
+
+    @FXML
+    private void submit() throws IOException {
+        ArrayList<String> additionalInfo = getAdditionalInfo();
+        if (additionalInfo != null) {
+            WelcomeMenu.getAudioClip().stop();
+            if (controller.createAccount(username.getText(), password.getText(), additionalInfo)) {
+                ViewHandler.getViewHandler().push(new AdminMainMenuLayout());
+            } else {
+                ViewHandler.getViewHandler().push(new PlayerMainMenuLayout());
+            }
+        }
+    }
+
     private ArrayList<String> getAdditionalInfo() {
         ArrayList<String> inputs = new ArrayList<>();
         if (firstName.getText().isEmpty()) {
@@ -94,7 +130,7 @@ public class RegisterMenu  implements View {
         unsetColour(email);
         inputs.add(email.getText());
 
-        if (Admin.isAdminExist()) {
+        if (controller.adminExists()) {
             if (!controller.checkMoney(money.getText())) {
                 setColourRed(money);
                 AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
@@ -107,40 +143,9 @@ public class RegisterMenu  implements View {
         return inputs;
     }
 
-    @FXML
-    private void register() {
-        if (!controller.usernameExist(username.getText())) {
-            money.setVisible(Admin.isAdminExist());
-            animate(-1);
-        } else {
-            setCredentialsColourRed();
-            AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0),
-                    "Okay", "Invalid Credentials", "Username is already taken.");
-        }
-    }
 
-    public void submit(ActionEvent actionEvent) throws IOException {
-        ArrayList<String> additionalInfo = getAdditionalInfo();
-        if (additionalInfo != null) {
-            WelcomeMenu.getAudioClip().stop();
-            if (controller.createAccount(username.getText(), password.getText(), additionalInfo)) {
-                ViewHandler.getViewHandler().push(new AdminMainMenuLayout());
-            } else {
-                ViewHandler.getViewHandler().push(new PlayerMainMenuLayout());
-            }
-        }
-    }
 
-    @FXML
-    private void back() {
-        ViewHandler.getViewHandler().pop();
-    }
 
-    @FXML
-    private void backSubmit() {
-        clear();
-        animate(1);
-    }
 
     private void animate(int forward) {
         TranslateTransition tt = new TranslateTransition(Duration.millis(500), animationPane);
@@ -166,8 +171,8 @@ public class RegisterMenu  implements View {
         textField.setUnFocusColor(Paint.valueOf("ff0000"));
         textField.setFocusColor(Paint.valueOf("ff0000"));
     }
-    private void unsetColour(JFXTextField textField)
-    {
+
+    private void unsetColour(JFXTextField textField) {
         textField.setUnFocusColor(Paint.valueOf("#4d4d4d"));
         textField.setFocusColor(Paint.valueOf("#4059a9"));
     }

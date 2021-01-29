@@ -81,7 +81,7 @@ public class PlayerMainMenuLayout implements View, Initializable {
                     "Invalid username", "Username does not exist!");
         } else {
             TabHandler.getTabHandler().push(
-                    new PlayerProfileView(controller.searchPlayer(searchUsername.getText())));
+                    new PlayerProfileView(searchUsername.getText()));
         }
     }
 
@@ -144,7 +144,7 @@ public class PlayerMainMenuLayout implements View, Initializable {
     }
 
     public void initializeMenuBar() {
-        scoreMenuBar.setText(controller.showPoints());
-        moneyMenuBar.setText(controller.getMoney());
+        scoreMenuBar.setText(controller.getPlayerPoints());
+        moneyMenuBar.setText(controller.getPlayerMoney());
     }
 }

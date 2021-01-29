@@ -5,15 +5,14 @@ import model.FriendRequest;
 import model.Player;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class PlayerFriendsMenuController extends PlayerMainMenuLayoutController {
+public class PlayerFriendsMenuController {
     private final Player player;
 
     public PlayerFriendsMenuController(ClientInfo clientInfo) {
-        super(clientInfo);
-        this.player = Objects.requireNonNull(loggedIn,
-                "Player object passed to FriendsMenuController is null.");
+        this.player = Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
+        if(player == null)
+            System.err.println("Player passed to FriendsMenuController is null.");
     }
 
     public ArrayList<Player> getFriends() {

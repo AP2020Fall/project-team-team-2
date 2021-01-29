@@ -30,25 +30,25 @@ import java.util.ResourceBundle;
 
 public class PlayerProfileView implements Tab, Initializable {
     @FXML
-    private Label friendRequestPending= new Label();
+    private Label friendRequestPending = new Label();
     @FXML
     private Label username = new Label();
     @FXML
-    private Label firstName= new Label();
+    private Label firstName = new Label();
     @FXML
-    private Label lastName= new Label();
+    private Label lastName = new Label();
     @FXML
-    private Label email= new Label();
+    private Label email = new Label();
     @FXML
-    private Label phoneNumber= new Label();
+    private Label phoneNumber = new Label();
     @FXML
-    private Label bio= new Label();
+    private Label bio = new Label();
     @FXML
-    private Label date= new Label();
+    private Label date = new Label();
     @FXML
-    private Label wins= new Label();
+    private Label wins = new Label();
     @FXML
-    private Label friends= new Label();
+    private Label friends = new Label();
     @FXML
     private ImageView avatar;
     @FXML
@@ -59,10 +59,9 @@ public class PlayerProfileView implements Tab, Initializable {
     private JFXButton removeButton;
     private final ClientMasterController controller;
 
-    public PlayerProfileView(Player player)
-    {
-        Client.getClientInfo().setPlayer(player);
-        controller =Client.getConnector().getController();
+    public PlayerProfileView(String playerUsername) {
+        Client.getClientInfo().setPlayerUsername(playerUsername);
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -94,21 +93,35 @@ public class PlayerProfileView implements Tab, Initializable {
         removeButton.setVisible(false);
         friendRequestPending.setVisible(false);
     }
-    private void initializedPlayerInfo()
-    {
-        username.setText(Client.getClientInfo().getPlayer().getUsername());
-        firstName.setText(Client.getClientInfo().getPlayer().getFirstName());
-        lastName.setText(Client.getClientInfo().getPlayer().getLastName());
-        email.setText(Client.getClientInfo().getPlayer().getEmail());
-        phoneNumber.setText(Client.getClientInfo().getPlayer().getPhoneNumber());
+
+    @FXML
+    void gameLogSummaryTableSelected(MouseEvent event) {
+        if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2){
+                if(gameHistoryList.getSelectionModel().getSelectedItems().size() != 0)
+                {
+                    GameLogSummaryEntry gameEntry = gameHistoryList.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new PlayerGameMenu(gameEntry.getGameName()));
+                }
+            }
+
+        }
+    }
+
+    private void initializedPlayerInfo() {
+        username.setText(controller.getViewPlayerUsername());
+        firstName.setText(controller.getViewPlayerFirstName());
+        lastName.setText(controller.getViewPlayerLastName());
+        email.setText(controller.getViewPlayerEmail());
+        phoneNumber.setText(controller.getViewPlayerPhoneNumber());
         wins.setText(controller.getViewPlayerWins() + " Wins");
         date.setText(controller.getViewPlayerDaysPassed());
         friends.setText(controller.getViewPlayerFriendCount());
-        bio.setText(Client.getClientInfo().getPlayer().getBio());
+        bio.setText(controller.getViewPlayerBio());
         avatar.setImage(controller.getViewPlayerImage());
     }
-    private void initializedFriendButtons()
-    {
+
+    private void initializedFriendButtons() {
         friendRequestPending.setVisible(false);
         addButton.setVisible(!controller.areFriends());
         removeButton.setVisible(controller.areFriends());
@@ -123,8 +136,8 @@ public class PlayerProfileView implements Tab, Initializable {
             friendRequestPending.setVisible(false);
         }
     }
-    private void initializedTableGameLog()
-    {
+
+    private void initializedTableGameLog() {
         TableColumn<GameLogSummaryEntry, String> gameNameColumn = new TableColumn<>("Game");
         gameNameColumn.setCellValueFactory(new PropertyValueFactory<>("gameName"));
         TableColumn<GameLogSummaryEntry, Integer> frequencyColumn = new TableColumn<>("Frequency");
@@ -138,18 +151,5 @@ public class PlayerProfileView implements Tab, Initializable {
         gameHistoryList.setPlaceholder(new Label("Player has not played a game."));
         gameHistoryList.getColumns().addAll(gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
         gameHistoryList.getItems().addAll(controller.getGameHistory());
-    }
-    @FXML
-    void gameLogSummaryTableSelected(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            if(event.getClickCount() == 2){
-                if(gameHistoryList.getSelectionModel().getSelectedItems().size() != 0)
-                {
-                    GameLogSummaryEntry gameEntry = gameHistoryList.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new PlayerGameMenu(controller.getGame(gameEntry.getGameName())));
-                }
-            }
-
-        }
     }
 }

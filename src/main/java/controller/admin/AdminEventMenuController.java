@@ -12,7 +12,9 @@ public class AdminEventMenuController extends AdminGamesMenuController{
     public AdminEventMenuController(ClientInfo clientInfo)
     {
         super(clientInfo);
-        this.event = clientInfo.getEvent();
+        this.event = Event.getEventById(clientInfo.getEventId());
+        if(event == null)
+            System.err.println("Event passed to AdminEventMenuController is null");
     }
 
     public String getScore() {

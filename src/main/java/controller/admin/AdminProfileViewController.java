@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import main.ClientInfo;
 import model.Entry.GameLogSummaryEntry;
+import model.Event;
 import model.FriendRequest;
 import model.GameLogSummary;
 import model.Player;
@@ -17,8 +18,9 @@ public class AdminProfileViewController extends AdminMainMenuLayoutController{
     public AdminProfileViewController(ClientInfo clientInfo)
     {
         super(clientInfo);
-        this.player = Objects.requireNonNull(clientInfo.getPlayer(),
-                "Players passed to AdminProfileViewController is null");
+        this.player = Player.getPlayerByUsername(clientInfo.getPlayerUsername());
+        if(player == null)
+            System.err.println("Player passed to AdminProfileViewController is null");
     }
 
     public String getUsername() {

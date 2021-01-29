@@ -63,6 +63,11 @@ public abstract class Account {
         File file = new File("database\\accounts\\images\\" + accountId + ".jpg");
         return new Image(file.toURI().toString());
     }
+    public  String getImageURL()
+    {
+        return avatar;
+    }
+
 
     public void setImage(String url) {
 
@@ -282,7 +287,7 @@ public abstract class Account {
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
         try {
             ImageIO.write(bImage, "jpg", outputFile);
-            return "database\\accounts\\images\\" + accountId + ".jpg";
+            return outputFile.toURI().toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -303,4 +308,5 @@ public abstract class Account {
                         "\nphoneNumber: " + phoneNumber + "\n"
                 ;
     }
+
 }
