@@ -103,25 +103,22 @@ public class Server extends Application {
         public void run() {
             String input;
             while (!Thread.interrupted()) {
-                synchronized (Server.getInstance()) {
-                    try {
-                        input = dataInputStream.readUTF();
-                        Pair<String, String> answer = controller.takeAction(input);
-                        dataOutputStream.writeUTF(new Gson().toJson(answer));
-                        dataOutputStream.flush();
-                        System.out.println("[SERVER]: Command: " + input + " was sent.");
-                        System.out.println("[SERVER]: result: " + answer + " is sent.");
-                        if (answer.equals("Connection is terminated.")) {
-                            System.out.println("[SERVER]: Connection closed!");
-                            Thread.currentThread().interrupt();
-                            break;
-                        }
-                    } catch (Exception e) {
-                        System.out.println("[SERVER]: Connection to the client is lost!");
+                try {
+                    input = dataInputStream.readUTF();
+                    Pair<String, String> answer = controller.takeAction(input);
+                    dataOutputStream.writeUTF(new Gson().toJson(answer));
+                    dataOutputStream.flush();
+                    System.out.println("[SERVER]: Command: " + input + " was sent.");
+                    System.out.println("[SERVER]: result: " + answer + " is sent.");
+                    if (answer.equals("Connection is terminated.")) {
+                        System.out.println("[SERVER]: Connection closed!");
                         Thread.currentThread().interrupt();
+                        break;
                     }
+                } catch (Exception e) {
+                    System.out.println("[SERVER]: Connection to the client is lost!");
+                    Thread.currentThread().interrupt();
                 }
-
             }
         }
 
