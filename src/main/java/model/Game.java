@@ -26,22 +26,24 @@ public class Game {
     public Image getImage() {
         File file = new File("database\\games\\images\\" + gameId + ".jpg");
         return new Image(file.toURI().toString());
-        //return new Image(avatar);
     }
-
-    public void setImage(Image image) {
-        this.avatar = saveImageToFile(image,gameId);
-    }
-
-    public String getImageURL() {
+    public  String getImageURL()
+    {
         return avatar;
     }
-    public Game(String name, String gameId, String details, Image gameImage) {
+
+
+    public void setImage(String url) {
+
+        this.avatar = saveImageToFile(new Image(url),this.gameId);
+    }
+
+    public Game(String name, String gameId, String details, String gameImage) {
         this.name = name;
         this.gameId = gameId;
         this.details = details;
         this.playLogs = new ArrayList<>();
-        avatar = saveImageToFile(gameImage,gameId);
+        setImage(gameImage);
         scoreboard = new Scoreboard();
     }
 
@@ -206,7 +208,7 @@ public class Game {
 
     public static void openFileToImage(Game game) {
         File file = new File("database\\games\\images\\" + game.getGameId() + ".jpg");
-        game.setImage(new Image(file.toURI().toString()));
+        game.setImage(file.toURI().toString());
     }
 
     @Override

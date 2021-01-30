@@ -1,5 +1,6 @@
 package view.admin;
 
+import controller.ClientMasterController.ClientMasterController;
 import controller.admin.AdminProfileViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,6 @@ import java.util.ResourceBundle;
 
 public class AdminProfileView implements Tab, Initializable {
 
-    private final AdminProfileViewController controller;
     @FXML
     private Label username = new Label();
     @FXML
@@ -47,9 +47,11 @@ public class AdminProfileView implements Tab, Initializable {
     private ImageView avatar;
     @FXML
     private TableView<GameLogSummaryEntry> gameHistoryList;
+    private final ClientMasterController controller;
 
-    public AdminProfileView(Player player) {
-        controller = new AdminProfileViewController(Client.getClientInfo());
+    public AdminProfileView(String playerUsername) {
+        Client.getClientInfo().setPlayerUsername(playerUsername);
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -94,7 +96,7 @@ public class AdminProfileView implements Tab, Initializable {
         lastPlayColumn.setCellValueFactory(new PropertyValueFactory<>("lastPlay"));
         gameHistoryList.setPlaceholder(new Label("Player has not played a game."));
         gameHistoryList.getColumns().addAll(gameImageColumn, gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
-        gameHistoryList.getItems().addAll(controller.getGameHistory());
+        gameHistoryList.getItems().addAll(controller.getAdminGameHistory());
     }
 
 }

@@ -3,6 +3,7 @@ package view.admin;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import controller.ClientMasterController.ClientMasterController;
 import controller.admin.AdminGameMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,11 +39,12 @@ public class AddGamePopup implements Initializable {
     private JFXButton addButton;
     @FXML
     private JFXButton editButton;
-    private AdminGameMenuController controller;
-
-    public AddGamePopup(boolean edit, Game game) {
+    private ClientMasterController controller;
+    private String givenImage;
+    public AddGamePopup(boolean edit,String gameName) {
         this.edit = edit;
-        controller = new AdminGameMenuController(Client.getClientInfo());
+        Client.getClientInfo().setGameName(gameName);
+        controller = Client.getConnector().getController();
     }
 
 
@@ -70,8 +72,8 @@ public class AddGamePopup implements Initializable {
     }
 
     private void initializeGameInfo() {
-        gameName.setText(controller.getGameName());
-        gameDetail.setText(controller.getAdminGameDetail());
+        gameName.setText(controller.getAdminGameName());
+        gameDetail.setText(controller.getAdminGameDetails());
         avatar.setImage(controller.getAdminGameImage());
     }
 
@@ -83,28 +85,28 @@ public class AddGamePopup implements Initializable {
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid information", "The game already exists.");
         } else {
-            controller.addGame(gameName.getText(), gameDetail.getText(), avatar.getImage());
+            controller.addGame(gameName.getText(), gameDetail.getText(), givenImage);
             popupWindow.close();
         }
     }
 
     @FXML
     void edit() {
-        if (controller.doesGameExist(gameName.getText()) && !controller.getGameName().equals(gameName.getText())) {
+        if (controller.doesGameExist(gameName.getText()) && !controller.getAdminGameName().equals(gameName.getText())) {
             setInfoColourRed();
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid information", "The game already exists.");
         } else {
-            controller.edit(gameName.getText(), gameDetail.getText(), avatar.getImage());
+            controller.editGame(gameName.getText(), gameDetail.getText(), givenImage);
             popupWindow.close();
         }
     }
 
     @FXML
     void addAvatar(MouseEvent event) {
-        Image givenImage = new Image(AlertMaker.getImageFromUser());
+        givenImage = AlertMaker.getImageFromUser();
         if (givenImage != null) {
-            avatar.setImage(givenImage);
+            avatar.setImage(new Image(givenImage));
         }
     }
 

@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import controller.ClientMasterController.ClientMasterController;
 import controller.admin.AdminEventMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,11 +46,12 @@ public class AddEventPopup implements Initializable {
     @FXML
     private JFXButton editButton;
     private Stage popupWindow;
-    private AdminEventMenuController controller;
+    private final ClientMasterController controller;
 
-    public AddEventPopup(boolean edit, Event event) {
+    public AddEventPopup(boolean edit, String event) {
         this.edit = edit;
-        controller = new AdminEventMenuController(Client.getClientInfo());
+        Client.getClientInfo().setEventId(event);
+        controller = Client.getConnector().getController();
     }
 
     public void openWindow() throws IOException {
@@ -111,7 +113,7 @@ public class AddEventPopup implements Initializable {
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Game does not exist.");
         } else {
-            controller.edit(gameName.getText(), Integer.parseInt(score.getText()), avatar.getImage(), detail.getText());
+            controller.editEvent(gameName.getText(), Integer.parseInt(score.getText()), avatar.getImage(), detail.getText());
             popupWindow.close();
         }
     }

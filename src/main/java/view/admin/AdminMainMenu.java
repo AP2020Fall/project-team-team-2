@@ -1,6 +1,6 @@
 package view.admin;
 
-import controller.admin.AdminMainMenuController;
+import controller.ClientMasterController.ClientMasterController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,12 +20,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminMainMenu implements Tab, Initializable {
-    private final AdminMainMenuController controller;
+    private final ClientMasterController controller;
     @FXML
     private TableView<SuggestionEntry> suggestionList;
 
     public AdminMainMenu() {
-        controller = new AdminMainMenuController(Client.getClientInfo());
+        controller = Client.getConnector().getController();
     }
 
     @Override

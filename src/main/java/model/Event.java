@@ -26,7 +26,7 @@ public class Event {
     private String comment;
     private String avatar;
 
-    public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId, String comment, Image image) {
+    public Event(String gameName, LocalDate start, LocalDate end, int score, String eventId, String comment, String image) {
         this.gameName = gameName;
         this.start = start;
         this.end = end;
@@ -81,8 +81,9 @@ public class Event {
         return avatar;
     }
 
-    public void setImage(Image avatar) {
-        this.avatar = saveImageToFile(avatar,eventId);
+    public void setImage(String url) {
+
+        this.avatar = saveImageToFile(new Image(url),this.eventId);
     }
 
     public String getComment() {
@@ -188,7 +189,7 @@ public class Event {
 
     public static void openFileToImage(Event event) {
         File file = new File("database\\events\\images\\" + event.getEventId() + ".jpg");
-        event.setImage(new Image(file.toURI().toString()));
+        event.setImage(file.toURI().toString());
     }
 
     @Override

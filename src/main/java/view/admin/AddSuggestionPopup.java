@@ -1,6 +1,7 @@
 package view.admin;
 
 import com.jfoenix.controls.JFXTextField;
+import controller.ClientMasterController.ClientMasterController;
 import controller.admin.AdminMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +17,7 @@ import view.AlertMaker;
 import java.io.IOException;
 
 public class AddSuggestionPopup {
-    private final AdminMainMenuController controller;
+    private final ClientMasterController controller;
     @FXML
     private JFXTextField playerName;
     @FXML
@@ -26,7 +27,7 @@ public class AddSuggestionPopup {
     private Stage popupWindow;
 
     public AddSuggestionPopup() {
-        controller = new AdminMainMenuController(Client.getClientInfo());
+        controller =Client.getConnector().getController();
     }
 
     public void openWindow() throws IOException {

@@ -1,6 +1,7 @@
 package controller.admin;
 
 
+import controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Menu;
@@ -17,12 +18,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
-public class AdminMainMenuController extends AdminMainMenuLayoutController {
+public class AdminMainMenuController extends Controller {
     private final Admin admin;
 
     public AdminMainMenuController(ClientInfo clientInfo) {
         super(clientInfo);
-        this.admin = Objects.requireNonNull(loggedIn,
+        this.admin = Objects.requireNonNull((Admin)Account.getAccountByUsername(clientInfo.getLoggedInUsername()),
                 "Admin passed to AdminMainMenuController is null.");
     }
 
@@ -90,10 +91,10 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         return Suggestion.getSuggestions();
     }//done
 
-    public void deleteSuggestion(SuggestionEntry suggestionEntry) {
+    public void deleteSuggestion(String suggestionEntryId) {
         //removes a suggestion for the player's suggestions
         //throws NullPointerException if suggestionId doesn't exist.
-        Objects.requireNonNull(Suggestion.getSuggestionById(suggestionEntry.getSuggestionId()),
+        Objects.requireNonNull(Suggestion.getSuggestionById(suggestionEntryId),
                 "SuggestionId passed to AdminMainMenuController.removeSuggestion doesn't exist.").delete();
     }
 
@@ -119,30 +120,8 @@ public class AdminMainMenuController extends AdminMainMenuLayoutController {
         return player.suggestionExists(gameName);
     }
 
-    public ObservableList<PlayerEntry> getPlayers() {
-        ObservableList<PlayerEntry> result = FXCollections.observableArrayList();
-        for (Player player : Account.getAllPlayers()) {
-            result.add(new PlayerEntry(player));
-        }
-        return result;
+    public ArrayList<Player> getAllPlayers() {
+        return Account.getAllPlayers();
     }
 
-    public ObservableList<MenuItem> getSearchQuery(String searchQuery) {
-        ObservableList<MenuItem> result = FXCollections.observableArrayList();
-        ArrayList<Player> top5Players = new ArrayList<>();//usernameFuzzySearchTop5(searchQuery);
-        for (Player player : top5Players) {
-            MenuItem menuItem = new MenuItem();
-            menuItem.setOnAction(event -> TabHandler.getTabHandler().push(new AdminProfileView(player)));
-            menuItem.setText(player.getUsername());
-            result.add(menuItem);
-        }
-        if (result.isEmpty()) {
-            result.add(new Menu("No similar user found."));
-        }
-        return result;
-    }
-
-    public Player getPlayer(PlayerEntry playerEntry) {
-        return Player.getPlayerByUsername(playerEntry.getName());
-    }
 }
