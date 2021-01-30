@@ -1,5 +1,6 @@
 package view.admin;
 
+import controller.ClientMasterController.ClientMasterController;
 import controller.admin.AdminProfileViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,6 @@ import java.util.ResourceBundle;
 
 public class AdminProfileView implements Tab, Initializable {
 
-    private final AdminProfileViewController controller;
     @FXML
     private Label username = new Label();
     @FXML
@@ -47,9 +47,11 @@ public class AdminProfileView implements Tab, Initializable {
     private ImageView avatar;
     @FXML
     private TableView<GameLogSummaryEntry> gameHistoryList;
+    private final ClientMasterController controller;
 
-    public AdminProfileView(Player player) {
-        controller = new AdminProfileViewController(Client.getClientInfo());
+    public AdminProfileView(String playerUsername) {
+        Client.getClientInfo().setPlayerUsername(playerUsername);
+        controller = Client.getConnector().getController();
     }
 
     @Override

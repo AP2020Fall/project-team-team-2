@@ -1,5 +1,6 @@
 package view.admin;
 
+import controller.ClientMasterController.ClientMasterController;
 import controller.admin.AdminGamesMenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,11 +30,11 @@ public class AdminGamesMenu implements Tab, Initializable {
     private TableView<GameEntry> gameList;
     @FXML
     private TreeTableView<EventEntry> eventList;
-    private AdminGamesMenuController controller;
+    private ClientMasterController controller;
 
 
     public AdminGamesMenu() {
-        controller = new AdminGamesMenuController(Client.getClientInfo());
+        controller = Client.getConnector().getController();
     }
 
     @Override
@@ -59,7 +60,7 @@ public class AdminGamesMenu implements Tab, Initializable {
     private void editGame() throws IOException {
         if (gameList.getSelectionModel().getSelectedItems().size() == 1) {
             GameEntry gameEntry = gameList.getSelectionModel().getSelectedItems().get(0);
-            new AddGamePopup(true, controller.getGame(gameEntry)).openWindow();
+            new AddGamePopup(true, gameEntry.getName()).openWindow();
             TabHandler.getTabHandler().refresh();
         } else {
             System.out.println("it is working");
@@ -72,7 +73,7 @@ public class AdminGamesMenu implements Tab, Initializable {
     @FXML
     private void deleteGame() {
         for (GameEntry gameEntry : gameList.getSelectionModel().getSelectedItems()) {
-            controller.deleteGame(gameEntry);
+            controller.deleteAdminGame(gameEntry);
         }
         TabHandler.getTabHandler().refresh();
 
@@ -88,7 +89,7 @@ public class AdminGamesMenu implements Tab, Initializable {
     private void editEvent() throws IOException {
         if (eventList.getSelectionModel().getSelectedItems().size() == 1) {
             EventEntry eventEntry = eventList.getSelectionModel().getSelectedItems().get(0).getValue();
-            new AddEventPopup(true, controller.getEvent(eventEntry)).openWindow();
+            new AddEventPopup(true,eventEntry.getEventId()).openWindow();
             TabHandler.getTabHandler().refresh();
         } else {
             AlertMaker.showMaterialDialog(TabHandler.getTabHandler().getStackRoot(),
@@ -101,7 +102,7 @@ public class AdminGamesMenu implements Tab, Initializable {
     private void deleteEvent() {
         for (TreeItem<EventEntry> eventEntry : eventList.getSelectionModel().getSelectedItems()) {
             if (!eventEntry.getParent().equals(eventList.getRoot()))
-                controller.deleteEvent(eventEntry.getValue());
+                controller.deleteAdminEvent(eventEntry.getValue());
         }
         TabHandler.getTabHandler().refresh();
     }
@@ -126,7 +127,7 @@ public class AdminGamesMenu implements Tab, Initializable {
         // gameList.setEditable(true);
         gameList.setPlaceholder(new Label("No game has been added."));
         gameList.getColumns().addAll(gameAvatarColumn, gameNameColumn, gameDetailColumn);
-        gameList.getItems().addAll(controller.getGames());
+        gameList.getItems().addAll(controller.getAdminGames());
     }
 
     private void initializedTreeEventList() {

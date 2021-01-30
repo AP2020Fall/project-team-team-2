@@ -1,20 +1,9 @@
 package controller.player;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
-import main.Client;
 import main.ClientInfo;
 import model.*;
-import model.Entry.*;
-import view.TabHandler;
-import view.admin.AdminProfileView;
-import view.player.PlayerProfileView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class PlayerMainMenuController {
 

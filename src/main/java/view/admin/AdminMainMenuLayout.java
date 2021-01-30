@@ -1,6 +1,7 @@
 package view.admin;
 
 import com.jfoenix.controls.JFXTextField;
+import controller.ClientMasterController.ClientMasterController;
 import controller.admin.AdminMainMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,12 +33,12 @@ public class AdminMainMenuLayout implements View, Initializable {
     private JFXTextField searchUsername;
     @FXML
     private ContextMenu searchContextMenu;
-    private AdminMainMenuController controller;
+    private ClientMasterController controller;
     @FXML
     private StackPane stackRoot;
 
     public AdminMainMenuLayout() {
-        controller = new AdminMainMenuController(Client.getClientInfo());
+        controller = Client.getConnector().getController();
     }
 
     public static AudioClip getAudioClip() {
@@ -76,7 +77,7 @@ public class AdminMainMenuLayout implements View, Initializable {
                     "Invalid username", "Username does not exist!");
         } else {
             TabHandler.getTabHandler().push(
-                    new AdminProfileView(controller.searchPlayer(searchUsername.getText())));
+                    new AdminProfileView(searchUsername.getText()));
         }
     }
 
@@ -85,7 +86,7 @@ public class AdminMainMenuLayout implements View, Initializable {
         if (event.getCode() == KeyCode.ENTER) return;
         String searchQuery = searchUsername.getText();
         searchContextMenu.getItems().clear();
-        searchContextMenu.getItems().addAll(controller.getSearchQuery(searchQuery));
+        searchContextMenu.getItems().addAll(controller.getAdminSearchQuery(searchQuery));
         searchContextMenu.show(searchUsername, Side.BOTTOM, 0, 0);
 
     }

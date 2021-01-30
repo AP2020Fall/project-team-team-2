@@ -1,6 +1,7 @@
 package view.admin;
 
 import com.jfoenix.controls.JFXTextArea;
+import controller.ClientMasterController.ClientMasterController;
 import controller.Controller;
 import controller.admin.AdminMessageViewController;
 import controller.player.PlatoMessageController;
@@ -32,14 +33,14 @@ import java.util.ResourceBundle;
 
 public class AdminMessageView implements View, Initializable {
     private static Stage popupWindow;
-    private final AdminMessageViewController controller;
+    private final ClientMasterController controller;
     @FXML
     private TreeTableView<PlatoMessageEntry> messageTable;
     @FXML
     private JFXTextArea message;
 
     public AdminMessageView() {
-        controller = new AdminMessageViewController(Client.getClientInfo());
+        controller = Client.getConnector().getController();
     }
 
     @Override

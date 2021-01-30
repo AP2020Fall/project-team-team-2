@@ -1,22 +1,21 @@
 package view.admin;
 
-import controller.admin.AdminMainMenuController;
+import controller.ClientMasterController.ClientMasterController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import main.Client;
-import model.Entry.FriendRequestEntry;
-import model.Entry.GameEntry;
 import model.Entry.PlayerEntry;
 import view.Tab;
 import view.TabHandler;
-import view.player.PlayerProfileView;
 
 import javax.swing.text.html.ImageView;
 import java.io.IOException;
@@ -26,10 +25,10 @@ import java.util.ResourceBundle;
 public class AdminPlayerListMenu implements Tab, Initializable {
     @FXML
     private TableView<PlayerEntry> playerList;
-    private AdminMainMenuController controller;
+    private ClientMasterController controller;
 
     public AdminPlayerListMenu() {
-        controller = new AdminMainMenuController(Client.getClientInfo());
+        controller =Client.getConnector().getController();
     }
 
     @Override
@@ -62,7 +61,7 @@ public class AdminPlayerListMenu implements Tab, Initializable {
             if (event.getClickCount() == 2) {
                 if (playerList.getSelectionModel().getSelectedItems().size() != 0) {
                     PlayerEntry playerEntry = playerList.getSelectionModel().getSelectedItems().get(0);
-                    TabHandler.getTabHandler().push(new AdminProfileView(controller.getPlayer(playerEntry)));
+                    TabHandler.getTabHandler().push(new AdminProfileView(playerEntry.getName()));
                 }
             }
 

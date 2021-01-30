@@ -70,7 +70,6 @@ public abstract class Account {
 
 
     public void setImage(String url) {
-
         this.avatar = saveImageToFile(new Image(url),this.accountId);
     }
 
