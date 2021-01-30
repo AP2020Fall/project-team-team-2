@@ -77,7 +77,7 @@ public class PlayerGameMenuController extends Controller {
 
     public String getCasualEvent() {
         Event casual = new Event(game.getName(), LocalDate.now(), LocalDate.now(), 0, generateId(),
-                "Casual", game.getImage());
+                "Casual", game.getImageURL());
         Event.addEvent(casual);
         return casual.getEventId();
     }

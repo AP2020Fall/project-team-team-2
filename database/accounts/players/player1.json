@@ -12,7 +12,9 @@
   ],
   "messages": [],
   "favouriteGames": [],
-  "suggestions": [],
+  "suggestions": [
+    "75DAC676"
+  ],
   "bio": "No bio is given.",
   "firstName": "player1",
   "lastName": "player1",
@@ -27,5 +29,5 @@
     "day": 16
   },
   "isRobot": false,
-  "avatar": "file:/E:/IdeaProjects/project-team-2/database/accounts/images/A9694569.jpg"
+  "avatar": "file:/C:/Users/emadz/Desktop/Codes/IntelliJ/AP/Project/project-team-team-2/database/accounts/images/A9694569.jpg"
 }

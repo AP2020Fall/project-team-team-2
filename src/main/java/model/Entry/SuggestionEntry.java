@@ -10,7 +10,7 @@ public class SuggestionEntry {
     {
         gameName= suggestion.getGameName();
         suggestionId = suggestion.getSuggestionId();
-        playerName = suggestion.getPlayer().getUsername();
+        playerName = suggestion.getPlayerName();
     }
 
     public String getGameName() {

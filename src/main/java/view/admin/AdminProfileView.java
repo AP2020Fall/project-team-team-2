@@ -96,7 +96,7 @@ public class AdminProfileView implements Tab, Initializable {
         lastPlayColumn.setCellValueFactory(new PropertyValueFactory<>("lastPlay"));
         gameHistoryList.setPlaceholder(new Label("Player has not played a game."));
         gameHistoryList.getColumns().addAll(gameImageColumn, gameNameColumn, frequencyColumn, winsColumn, scoreColumn, lastPlayColumn);
-        gameHistoryList.getItems().addAll(controller.getGameHistory());
+        gameHistoryList.getItems().addAll(controller.getAdminGameHistory());
     }
 
 }

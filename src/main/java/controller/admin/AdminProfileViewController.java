@@ -7,6 +7,8 @@ import model.Entry.GameLogSummaryEntry;
 import model.GameLogSummary;
 import model.Player;
 
+import java.util.ArrayList;
+
 public class AdminProfileViewController {
     private final Player player;
 
@@ -56,10 +58,7 @@ public class AdminProfileViewController {
         return player.getImageURL();
     }//done
 
-    public ObservableList<GameLogSummaryEntry> getGameHistory() {
-        ObservableList<GameLogSummaryEntry> result = FXCollections.observableArrayList();
-        for (GameLogSummary gameLog : player.getGameLogSummaries())
-            result.add(new GameLogSummaryEntry(gameLog));
-        return result;
+    public ArrayList<GameLogSummary> getGameHistory() {
+        return player.getGameLogSummaries();
     }
 }

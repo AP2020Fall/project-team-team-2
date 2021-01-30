@@ -44,22 +44,22 @@ public class AdminGamesMenuController extends Controller {
         return result;
     }
 
-    public ArrayList<EventEntry> getPastEvents() {
-        ArrayList<EventEntry> result = new ArrayList<>();
+    public ArrayList<Event> getPastEvents() {
+        ArrayList<Event> result = new ArrayList<>();
         for (Event event : Event.getEvents()) {
             if (event.getEnd().isBefore(ChronoLocalDate.from(LocalDateTime.now()))) {
-                result.add(new EventEntry(event));
+                result.add(event);
             }
         }
         return result;
     }
 
-    public ArrayList<EventEntry> getOngoingEvents() {
-        ArrayList<EventEntry> result = new ArrayList<>();
+    public ArrayList<Event> getOngoingEvents() {
+        ArrayList<Event> result = new ArrayList<>();
         for (Event event : Event.getEvents()) {
             if (event.getStart().isBefore(ChronoLocalDate.from(LocalDateTime.now())) &&
                     event.getEnd().isAfter(ChronoLocalDate.from(LocalDateTime.now()))) {
-                result.add(new EventEntry(event));
+                result.add(event);
             }
         }
         return result;

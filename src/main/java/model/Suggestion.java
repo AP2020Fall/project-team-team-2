@@ -12,14 +12,14 @@ import java.util.Scanner;
 
 public class Suggestion {
     private static final ArrayList<Suggestion> suggestions = new ArrayList<>();
-    private final String gameId;
+    private final String gameName;
     private final String suggestionId;
-    private final String playerId;
+    private final String playerName;
 
     public Suggestion(Game game, String suggestionId, Player player) {
-        this.gameId = game.getGameId();
+        this.gameName = game.getName();
         this.suggestionId = suggestionId;
-        this.playerId = player.getAccountId();
+        this.playerName = player.getUsername();
     }
 
     public static ArrayList<Suggestion> getSuggestions() {
@@ -30,19 +30,12 @@ public class Suggestion {
         suggestions.add(suggestion);
     }
 
-    public Player getPlayer() {
-        //throw NullPointerException if there is any error
-        return Objects.requireNonNull( Player.getPlayerById(playerId));
-    }
-
-    public Game getGame() {
-        //throw NullPointerException if there is any error
-        return Objects.requireNonNull(Game.getGameById(gameId));
+    public String getPlayerName() {
+        return playerName;
     }
 
     public String getGameName() {
-        //throw NullPointerException if there is any error
-        return Objects.requireNonNull( Game.getGameById(gameId)).getName();
+         return gameName;
     }
 
     public String getSuggestionId() {
@@ -63,7 +56,7 @@ public class Suggestion {
                 file.delete();
         } catch (Exception ignored) {
         }
-        this.getPlayer().removeSuggestion(this);
+        Player.getPlayerByUsername( this.getPlayerName()).removeSuggestion(this);
         Suggestion.getSuggestions().remove(this);
     }
 
@@ -110,6 +103,6 @@ public class Suggestion {
     @Override
     public String toString() {
         //throw NullPointerException if there is any error
-        return "Game suggested: " +Objects.requireNonNull( Game.getGameById(gameId)).getName();
+        return "Game suggested: " +gameName;
     }
 }

@@ -1201,7 +1201,7 @@ public class ClientMasterController {
 
     public ObservableList<PlayerEntry> getPlayers() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getPlayers", "controller.admin.AdminMainMenuController"
+        Command command = new Command("getAllPlayers", "controller.admin.AdminMainMenuController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         ArrayList<Player> players = new Gson().fromJson(answer, new TypeToken<ArrayList<Player>>() {
@@ -1232,6 +1232,25 @@ public class ClientMasterController {
         Command command = new Command("deleteSuggestion", "controller.admin.AdminMainMenuController"
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void addSuggestion(String text, String text1) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        params.add(text1);
+        Command command = new Command("addSuggestion", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public boolean playerBeenSuggested(String text, String text1) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
+        params.add(text1);
+        Command command = new Command("playerBeenSuggested", "controller.admin.AdminMainMenuController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
     }
 
     //######################## AdminMessageViewController Commands ########################\\
@@ -1327,6 +1346,18 @@ public class ClientMasterController {
         return new Image(url);
     }
 
+    public ObservableList<GameLogSummaryEntry> getAdminGameHistory() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getGameHistory", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        ArrayList<GameLogSummary> gameLogSummaries = new Gson().fromJson(answer, new TypeToken<ArrayList<GameLogSummary>>() {
+        }.getType());
+        ObservableList<GameLogSummaryEntry> result = FXCollections.observableArrayList();
+        for (GameLogSummary gameLog : gameLogSummaries)
+            result.add(new GameLogSummaryEntry(gameLog));
+        return result;
+    }
 
 
     //######################## AdminPlayerListMenu Commands ########################\\

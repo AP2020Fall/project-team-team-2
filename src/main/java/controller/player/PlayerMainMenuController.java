@@ -124,7 +124,7 @@ public class PlayerMainMenuController {
         //returns the list of suggested games to player.
         ArrayList<Game> result = new ArrayList<>();
         for (Suggestion suggestion : player.getSuggestions())
-            result.add(suggestion.getGame());
+            result.add(Game.getGameByGameName( suggestion.getGameName()));
         return result;
     }
 

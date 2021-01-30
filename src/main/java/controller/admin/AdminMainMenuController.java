@@ -123,4 +123,5 @@ public class AdminMainMenuController extends Controller {
     public ArrayList<Player> getAllPlayers() {
         return Account.getAllPlayers();
     }
+
 }
