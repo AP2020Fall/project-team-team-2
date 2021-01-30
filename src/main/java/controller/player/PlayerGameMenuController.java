@@ -81,4 +81,7 @@ public class PlayerGameMenuController extends Controller {
         Event.addEvent(casual);
         return casual.getEventId();
     }
+    public Game getGame(){
+        return game;
+    }
 }
