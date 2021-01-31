@@ -1525,28 +1525,14 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
     }
-    /*
 
     public void mainChangeTurn() {
-        int currentTurnIndex = this.players.indexOf(this.currentPlayer);
-        if (currentTurnIndex != this.players.size() - 1) {
-            this.currentPlayer = this.players.get(currentTurnIndex + 1);
-        } else {
-            this.currentPlayer = this.players.get(0);
-        }
-        if (!getPlacementFinished()) {
-            checkPlacementFinished();
-        }
-        RiskGameView.currentTimeStamp = System.currentTimeMillis() / 1000L;
-        currentTimeStamp = System.currentTimeMillis() / 1000L;
-        setDraftDone(false);
-        setAttackDone(false);
-        setFortifyDone(false);
-        attackDestination = null;
-        attackWon = false;
-        resetNotif();
-        beginDraftDone = false;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("mainChangeTurn", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
 
     public String changeTurn() {
         String toPrint;
