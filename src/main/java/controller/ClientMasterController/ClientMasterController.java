@@ -1867,6 +1867,14 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
+
+    public void rejectRequest(Player player) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        Command command = new Command("rejectRequest", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
     /*
 
     public void addFriend(Player player) {
