@@ -1608,20 +1608,15 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
-    /*
-
     public String leaveTheGame() {
-        Player prevPlayer = currentPlayer;
-        checkWinner();
-        if (gameIsPlaying) {
-            mainChangeTurn();
-            players.remove(prevPlayer);
-            makeCountryEmpty(prevPlayer);
-            return "Player " + prevPlayer.getUsername() + " Exit The Game";
-        } else {
-            return "Player " + prevPlayer.getUsername() + " Won";
-        }
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("leaveTheGame", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+
+    /*
 
     public void makeCountryEmpty(Player player) {
         for (List<Country> countries : gameCountries) {
