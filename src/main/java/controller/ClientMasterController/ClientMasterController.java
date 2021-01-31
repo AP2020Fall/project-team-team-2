@@ -1722,40 +1722,18 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
 
-    public int[][] getFogOfWarMap(Player currentPlayer) {
-        int row = gameCountries.size();
-        int column = gameCountries.get(0).size();
-        int[][] countryNumbers = new int[row][column];
+    public int[][] getCountryByDetails(Player currentPlayer) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(currentPlayer);
+        Command command = new Command("getCountryByDetails", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
 
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < column; j++) {
-                countryNumbers[i][j] = 0;
-            }
-        }
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < column; j++) {
-                if (gameCountries.get(i).get(j).getOwner() != null) {
-                    if (gameCountries.get(i).get(j).getOwner().getUsername().equals(currentPlayer.getUsername())
-                            || gameCountries.get(i).get(j).getOwner().getFriends().contains(currentPlayer)
-                    ) {
-                        countryNumbers[i][j] = 1;
-                        changeNumberElement(i - 1, j - 1, countryNumbers, 2);
-                        changeNumberElement(i - 1, j, countryNumbers, 2);
-                        changeNumberElement(i - 1, j + 1, countryNumbers, 2);
-                        changeNumberElement(i, j - 1, countryNumbers, 2);
-                        changeNumberElement(i, j + 1, countryNumbers, 2);
-                        changeNumberElement(i + 1, j - 1, countryNumbers, 2);
-                        changeNumberElement(i + 1, j, countryNumbers, 2);
-                        changeNumberElement(i + 1, j + 1, countryNumbers, 2);
-                    }
-                }
-            }
-        }
-
-        return countryNumbers;
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, int[][].class);
     }
+    /*
 
     public void changeNumberElement(int i, int j, int[][] inputArray, int number) {
         try {
