@@ -1399,7 +1399,7 @@ public class ClientMasterController {
         Command command = new Command("getGameCountries", "controller.admin.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer, String.class);
+        return new Gson().fromJson(answer, List<List<>>.class);
     }
 
     public void makeRobotPlayers() {
@@ -1407,6 +1407,14 @@ public class ClientMasterController {
         Command command = new Command("makeRobotPlayers", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public Boolean getGameIsPlaying() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getGameIsPlaying", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
     }
     /*
 
