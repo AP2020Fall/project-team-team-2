@@ -1565,21 +1565,15 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
-    /*
-
     public String showMap() {
-        String lineString = "";
-        for (List<Country> listCountries : gameCountries) {
-            for (Country country : listCountries) {
-                if (!country.equals(listCountries.get(listCountries.size() - 1))) {
-                    lineString = lineString + country.toString() + " | ";
-                } else {
-                    lineString = lineString + country.toString() + "\n";
-                }
-            }
-        }
-        return lineString.trim();
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("showMap", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+
+    /*
 
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
