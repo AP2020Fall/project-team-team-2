@@ -1987,11 +1987,16 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-/*
-    public void setPrimitiveSettings(String index, Object value) {
-        this.primitiveSettings.put(index, value);
-    }
 
+    public void setPrimitiveSettings(String index, Object value) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(index);
+        params.add(value);
+        Command command = new Command("setPrimitiveSettings", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+/*
     public String generateGameId() {
         return UUID.randomUUID().toString().replace("-", "");
     }
