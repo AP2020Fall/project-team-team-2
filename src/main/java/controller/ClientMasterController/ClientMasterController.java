@@ -1884,6 +1884,15 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Player.class);
     }
+
+    public boolean checkCountryIsAlliance(Country destination) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(destination);
+        Command command = new Command("checkCountryIsAlliance", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
     /*
     public boolean checkCountryIsAlliance(Country destination) {
         if (destination.getOwner() != null) {
