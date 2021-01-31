@@ -1394,14 +1394,6 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
-    public List<List<Country>> getGameCountries() {
-        ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getGameCountries", "controller.admin.RiskGameController"
-                , params, Client.getClientInfo());
-        String answer = Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer, List<List<Country>>.class);
-    }
-
     public void makeRobotPlayers() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("makeRobotPlayers", "controller.risk.RiskGameController"
