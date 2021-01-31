@@ -1596,51 +1596,19 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Player.class);
     }
-    /*
 
     public String placeSoldier(int i, int j, int soldiers) {
-        String toPrint = "";
-        if (soldiers > getCurrentPlayer().getDraftSoldiers()) {
-            toPrint = "You do not have enough soldiers";
-            return toPrint;
-        }
-        Country toCheckCountry = this.getCountryByDetails(i, j);
-        if (!this.getDraftDone()) {
-            if (toCheckCountry.getName().equals("") || toCheckCountry.getBlizzard()) {
-                toPrint = "Chosen country is invalid. Please try again";
-            } else {
-                if (toCheckCountry.getOwner() == null || toCheckCountry.getOwner().equals(currentPlayer)) {
-                    toCheckCountry.setOwner(currentPlayer);
-                    toCheckCountry.addSoldiers(soldiers);
-                    toPrint = currentPlayer.getPlayerNumber() + " add " + soldiers + " soldier to "
-                            + toCheckCountry.getName();
-                } else {
-                    toPrint = "Please choose a country that is yours or no one has been chosen it yet";
-                }
-            }
-        } else {
-            toPrint = "You have been done your draft turn.";
-        }
-        if (getPlacementFinished() == false) {
-            boolean allDone = false;
-            for (Player player : players) {
-                if (player.getDraftSoldiers() != 3) {
-                    allDone = false;
-                    break;
-                } else {
-                    allDone = true;
-                }
-            }
-            if (allDone == true) {
-                setPlacementFinished(true);
-                toPrint += "\nGame has been started";
-                mainChangeTurn();
-                toPrint += "\nit's player " + currentPlayer.getUsername() + " turn to draft";
-                draftDone = false;
-            }
-        }
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        params.add(soldiers);
+        Command command = new Command("placeSoldier", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+
+    /*
 
     public String leaveTheGame() {
         Player prevPlayer = currentPlayer;
