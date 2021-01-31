@@ -1744,25 +1744,9 @@ public class ClientMasterController {
         Command command = new Command("changeNumberElement", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
-
-    }
-    /*
-
-    public void changeNumberElement(int i, int j, int[][] inputArray, int number) {
-        try {
-            if (inputArray[i][j] != 1) {
-                inputArray[i][j] = number;
-            }
-        } catch (Exception e) {
-        }
     }
 
     /*
-        int row = gameCountries.size();
-        int column = gameCountries.get(0).size();
-        int[][] countryNumbers = new int[row][column];
-
-        countryNumbers = setFogOfWarMap(currentPlayer);
 
     public void setBlizzard() {
         if ((boolean) primitiveSettings.get("Blizzards")) {
