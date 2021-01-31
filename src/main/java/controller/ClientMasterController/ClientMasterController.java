@@ -1416,12 +1416,15 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Boolean.class);
     }
-    /*
 
-
-    public boolean getGameIsPlaying() {
-        return gameIsPlaying;
+    public Boolean getFogStatus() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getFogStatus", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
     }
+    /*
 
     public boolean getFogStatus() {
         return fogIsSet;
