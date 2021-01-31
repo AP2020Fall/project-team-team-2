@@ -1808,15 +1808,19 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
     }
-    /*
 
     public boolean checkCountryIsYours(int i, int j) {
-        if (currentPlayer.equals(gameCountries.get(i - 1).get(j - 1).getOwner())) {
-            return true;
-        } else {
-            return false;
-        }
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        Command command = new Command("checkCountryIsYours", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
     }
+
+    /*
+
 
     public String addCard() {
         int rnd = new Random().nextInt(Card.values().length);
