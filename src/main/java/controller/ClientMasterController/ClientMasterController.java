@@ -1363,4 +1363,24 @@ public class ClientMasterController {
     //######################## AdminPlayerListMenu Commands ########################\\
 
 
+
+    //######################## MatchCardController Commands ########################\\
+
+ /*   public String getViewAdminFriendCount() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getViewAdminFriendCount", "controller.admin.AdminProfileViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+*/
+    public void incPlayerSoldier(Player player, int soldierNumber) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        params.add(soldierNumber);
+        Command command = new Command("incPlayerSoldier", "controller.risk.MatchCardController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
 }
