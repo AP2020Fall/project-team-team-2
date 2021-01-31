@@ -1850,20 +1850,18 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
     }
-    /*
-
-    public boolean getCheckRequests() {
-        return currentPlayer.checkPlayerHasRequest() && (!draftDone || !beginDraftDone);
-    }
 
     public String addRequest(Player player) {
-        if (!player.getRequests().contains(currentPlayer)) {
-            player.addGameRequest(currentPlayer);
-            return "Request sent successfully";
-        } else {
-            return "You have been requested to this player";
-        }
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        Command command = new Command("addRequest", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+
+
+    /*
 
     public void addFriend(Player player) {
         player.addGameFriend(player);
