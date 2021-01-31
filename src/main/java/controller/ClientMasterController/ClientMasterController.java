@@ -1760,128 +1760,17 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
     }
-    /*
-
-
-    public String nextPart() {
-        String toPrint = "";
-        if (getPlacementFinished()) {
-            if (draftDone && !attackDone && !fortifyDone) {
-                toPrint = "Draft done, Start Attacking";
-                if (attackDone && !fortifyDone) {
-                    toPrint = "Attack done, Start fortifying";
-                    if (fortifyDone) {
-                        toPrint = "Fortify done, try turn over";
-                    } else {
-                        toPrint = "Please first try to fortify , then use `turn over`";
-                    }
-                } else {
-                    toPrint = "Please first Attack to a country then try next";
-                }
-            } else {
-
-            }
-        } else {
-            if (draftDone) {
-                toPrint = "wanna change your turn? you should use 'turn over'";
-            } else {
-                toPrint = "You should draft your ";
-            }
-        }
-        return toPrint;
-    }
 
     public boolean checkWinner() {
-        boolean finished = true;
-        boolean toCheck = false;
-        if (players.size() == 1) {
-            toCheck = true;
-        }
-        if (!getPlacementFinished() && !toCheck) {
-            return false;
-        }
-        for (List<Country> countries : gameCountries) {
-            for (Country country : countries) {
-                if (country.getOwner() != null) {
-                    if (!country.getOwner().equals(currentPlayer) && !toCheck) {
-                        finished = false;
-                        break;
-                    }
-                }
-            }
-        }
-        if (finished) {
-            this.winner = currentPlayer;
-            this.gameIsPlaying = false;
-            for (Player player : players) {
-                player.resetRequestAndFriends();
-            }
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("checkWinner", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
 
-            Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
-                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, this.winner,
-                    3 + event.getScore(), 1 + event.getScore() / 2, 0);
-            return true;
-            /*GameLogSummary gameLog = currentPlayer.getGameHistory("Risk");
-            if (gameLog == null) {
-                gameLog = new GameLogSummary("Risk", generateId());
-                currentPlayer.addGameLog(gameLog);
-            }
-            gameLog.updateForWin(3, LocalDateTime.now());
-            Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
-                    "Game \"Risk\" @RiskGameController doesn't exist.");
-            PlayLog playLog = new PlayLog("Risk", players, currentPlayer, LocalDateTime.now());
-            game.addPlayLog(playLog);
-            for (Player player : players) {
-                if (player.equals(currentPlayer)) {
-                    continue;
-                }
-                gameLog = player.getGameHistory("Risk");
-                if (gameLog == null) {
-                    gameLog = new GameLog("Risk", generateId());
-                    player.addGameLog(gameLog);
-                }
-                gameLog.updateForLoss(0, LocalDateTime.now());
-
-            }
-            if (finished) {
-                return finished;
-            }
-        }
-        if (!finished) {
-            finished = true;
-            for (List<Country> countries : gameCountries) {
-                for (Country country : countries) {
-                    if (country.getSoldiers() != 1 && country.getSoldiers() != 0) {
-                        finished = false;
-                        break;
-                    }
-                }
-            }
-        }
-        if (finished) {
-            for (Player player : players) {
-                player.resetRequestAndFriends();
-            }
-            this.gameIsPlaying = false;
-            Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
-                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,
-                    3 + event.getScore(), 1 + event.getScore() / 2, 0);
-            /*Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
-                    "Game \"Risk\" @RiskGameController doesn't exist.");
-            PlayLog playLog = new PlayLog("Risk", players, null, LocalDateTime.now());
-            game.addPlayLog(playLog);
-            for (Player player : players) {
-                GameLog gameLog = player.getGameHistory("Risk");
-                if (gameLog == null) {
-                    gameLog = new GameLog("Risk", generateId());
-                    player.addGameLog(gameLog);
-                }
-                gameLog.updateForWin(1, LocalDateTime.now());
-            }
-        }
-        ;
-        return finished;
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
     }
+    /*
 
     public boolean checkAdditionalPlayers(Player player) {
         boolean toCheck = true;
