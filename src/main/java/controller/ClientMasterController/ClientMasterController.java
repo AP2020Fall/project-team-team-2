@@ -1504,44 +1504,20 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
-
 
     public String fortify(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
-        String toPrint = "";
-        if (!fortifyDone) {
-            boolean sourceCountryValid = false;
-            boolean destinationCountryValid = false;
-            Country source = getCountryByDetails(sourceI, sourceJ);
-            Country destination = getCountryByDetails(destI, destJ);
-            if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
-                sourceCountryValid = true;
-            }
-            if (destination.getOwner() != null && destination.getOwner().equals(currentPlayer)) {
-                destinationCountryValid = true;
-            }
-            if (!sourceCountryValid) {
-                toPrint = "Source country is not valid";
-            } else if (sourceCountryValid && (!destinationCountryValid || destination.getBlizzard())) {
-                toPrint = "Destination country is not valid";
-            } else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers() - 1) || soldiers < 1)) {
-                toPrint = "Soldiers are not enough or not valid";
-            } else if (fortifyNeighbourhoodCheck(source, destination)) {
-                turnDone = true;
-                source.addSoldiers(-1 * soldiers);
-                destination.addSoldiers(soldiers);
-                toPrint = "Move " + soldiers + " soldiers from " + source.getName() + " to " + destination.getName();
-                setFortifyDone(true);
-                i = null;
-                j = null;
-            } else {
-                toPrint = "there is not any path between source and destination country";
-            }
-        } else {
-            toPrint = "Fortify has been done";
-        }
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(sourceI);
+        params.add(sourceJ);
+        params.add(destI);
+        params.add(destJ);
+        params.add(soldiers);
+        Command command = new Command("fortify", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+    /*
 
     public String next() {
         String toPrint = "";
