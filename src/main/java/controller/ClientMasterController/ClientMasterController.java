@@ -1835,19 +1835,15 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
-    /*
-
     public String showWhatToDo() {
-        String toPrint = "";
-        if (!draftDone) {
-            toPrint += "Draft";
-        } else if (!attackDone) {
-            toPrint += "Attack";
-        } else if (!fortifyDone) {
-            toPrint += "Fortify";
-        }
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("showWhatToDo", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+
+    /*
 
     public Integer getI() {
         return i;
