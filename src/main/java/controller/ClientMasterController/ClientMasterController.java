@@ -1469,20 +1469,15 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
-    /*
-    public void checkAllPlayersAdded() {
-        boolean toCheck = true;
-        outerLoop:
-        for (List<Country> countries : gameCountries) {
-            for (Country country : countries) {
-                if (country.getSoldiers() == 0) {
-                    toCheck = false;
-                    break outerLoop;
-                }
-            }
-        }
-        allPlayersAddedSoldier = toCheck;
+    public Boolean getAllPlayersAdded() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getAllPlayersAdded", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
     }
+
+    /*
 
     public boolean getAllPlayersAdded() {
         return allPlayersAddedSoldier;
