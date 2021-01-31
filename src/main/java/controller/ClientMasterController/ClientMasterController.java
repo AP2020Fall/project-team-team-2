@@ -1746,15 +1746,13 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
-    /*
-
     public void setBlizzard() {
-        if ((boolean) primitiveSettings.get("Blizzards")) {
-            int rndRow = new Random().nextInt(gameCountries.size());
-            int rndCol = new Random().nextInt(gameCountries.get(0).size());
-            gameCountries.get(rndRow).get(rndCol).enableBlizzard();
-        }
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("setBlizzard", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
 
     public boolean isPath(int CountryNumbers[][], int n, int m) {
         // Defining visited array to keep
