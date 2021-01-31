@@ -1733,6 +1733,19 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, int[][].class);
     }
+
+
+    public void changeNumberElement(int i, int j, int[][] inputArray, int number) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        params.add(inputArray);
+        params.add(number);
+        Command command = new Command("changeNumberElement", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+
+    }
     /*
 
     public void changeNumberElement(int i, int j, int[][] inputArray, int number) {
