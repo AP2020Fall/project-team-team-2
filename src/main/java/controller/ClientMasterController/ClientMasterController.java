@@ -1963,13 +1963,13 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, int.class);
     }
-    /*
+
     public void setAllianceType(boolean type) {
-        if(type){
-            setPrimitiveSettings("Alliance", true);
-        }else{
-            setPrimitiveSettings("Alliance", false);
-        }
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(type);
+        Command command = new Command("setAllianceType", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
     /*
     public void setBlizzardsType(boolean type) {
