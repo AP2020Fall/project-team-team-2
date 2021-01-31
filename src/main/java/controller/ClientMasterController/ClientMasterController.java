@@ -1770,27 +1770,18 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
     }
-    /*
 
     public boolean checkAdditionalPlayers(Player player) {
-        boolean toCheck = true;
-        outerLoop:
-        for (List<Country> countries : gameCountries) {
-            for (Country country : countries) {
-                if (country.getOwner() != null) {
-                    if (country.getOwner().equals(player)) {
-                        toCheck = false;
-                        break outerLoop;
-                    }
-                }
-            }
-        }
-        if (toCheck) {
-            players.remove(player);
-        }
-        return toCheck;
-    }
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        Command command = new Command("checkAdditionalPlayers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
 
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
+    /*
     public boolean getAttackWon() {
         return this.attackWon;
     }
