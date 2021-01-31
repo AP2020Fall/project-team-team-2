@@ -1439,43 +1439,20 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
-
-
-    public void setStartSoldiers() {
-        int number = 1;
-        for (Player player : players) {
-            player.addDraftSoldier(startSoldiers);
-            player.setPlayerNumber(number);
-            number++;
-        }
-    }
 
     public String draft(int i, int j, int soldiers) {
-        String toPrint = "";
-
-        if (!draftDone) {
-            Country destination = getCountryByDetails(i, j);
-            if (soldiers > currentPlayer.getDraftSoldiers() || soldiers < 1) {
-                toPrint = "Soldiers are not enough or invalid";
-            } else if (destination.getName().equals("") || destination.getBlizzard()) {
-                toPrint = "Destination country is not valid";
-            } else {
-                if (!destination.getOwner().equals(getCurrentPlayer())) {
-                    toPrint = "This country is not yours";
-                } else {
-                    placeSoldier(i, j, soldiers);
-                    currentPlayer.addDraftSoldier(-1 * soldiers);
-                    toPrint = "" + soldiers + " soldiers added to " + destination.getName() + " successfully";
-                    draftDone = true;
-                }
-            }
-        } else {
-            toPrint = "Draft has been done";
-        }
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        params.add(soldiers);
+        Command command = new Command("draft", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
+
+    /*
     public String beginDraft(int i, int j, int soldiers) {
         String toPrint = "";
         if (!beginDraftDone) {
