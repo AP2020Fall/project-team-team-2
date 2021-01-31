@@ -1402,18 +1402,14 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
-    /*
-    public List<List<Country>> getGameCountries() {
-        return gameCountries;
-    }
-
     public void makeRobotPlayers() {
-        String mainBotName = "Robot";
-        for (int i = 1; i < (int) primitiveSettings.get("PlayersNum"); i++) {
-            Player newRobotPlayer = new Player(mainBotName + " " + i, mainBotName + " " + i);
-            players.add(newRobotPlayer);
-        }
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("makeRobotPlayers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
+
 
     public boolean getGameIsPlaying() {
         return gameIsPlaying;
