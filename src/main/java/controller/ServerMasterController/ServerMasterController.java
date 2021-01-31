@@ -2,11 +2,20 @@ package controller.ServerMasterController;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import controller.risk.MatchCardController;
+import controller.risk.RiskGameController;
+import controller.risk.StartGameController;
 import main.Command;
 import model.Account;
+import model.RiskGame;
 import org.javatuples.Pair;
 
 public class ServerMasterController {
+
+    MatchCardController matchCardController;
+    RiskGameController riskGameController;
+    StartGameController startGameController;
+
     public Pair<String, String> takeAction(String input) {
         Command command = Command.fromJson(input);
         if (command.getCommand().equals("endConnection")) {
@@ -26,6 +35,11 @@ public class ServerMasterController {
         } else
             return "Test was unsuccessful.";
     }
+
+
+
+
+
 
 
 }
