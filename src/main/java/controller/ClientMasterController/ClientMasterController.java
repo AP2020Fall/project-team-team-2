@@ -1497,17 +1497,15 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Boolean.class);
     }
-    /*
-    public boolean getSoldierPlaced() {
-        return soldierPlacedAfterWin;
-    }
 
-    private void addDestinationCardsToSource(Player sourcePlayer, Player destinationPlayer) {
-        for (Card card : destinationPlayer.getCards()) {
-            sourcePlayer.addCard(card);
-            System.out.println("Card of destination player added to current player. Card : " + card);
-        }
+    public void addDestinationCardsToSource() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("addDestinationCardsToSource", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
+
 
     public String fortify(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
         String toPrint = "";
