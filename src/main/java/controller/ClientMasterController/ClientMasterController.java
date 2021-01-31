@@ -1624,10 +1624,14 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
-    /*
     public boolean getDraftDone() {
-        return draftDone;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getDraftDone", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
     }
+    /*
 
     public void setDraftDone(boolean status) {
         draftDone = status;
