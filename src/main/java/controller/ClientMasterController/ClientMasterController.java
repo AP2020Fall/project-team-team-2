@@ -1699,20 +1699,15 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Player.class);
     }
-    /*
 
     public String getStatus() {
-        String toPrint = "";
-        if (!draftDone) {
-            toPrint = "Please draft your soldiers in one of available countries";
-        } else if (!attackDone) {
-            toPrint = "Please attack to one of the valid countries";
-        } else if (!fortifyDone) {
-            toPrint = "if you want to move your soldiers, you can try now!";
-        }
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getStatus", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
-
+    /*
     public void autoPlace() {
         do {
             boolean allDone = false;
