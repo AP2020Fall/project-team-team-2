@@ -1781,6 +1781,14 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
     }
+
+    public boolean getAttackWon() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getAttackWon", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
     /*
     public boolean getAttackWon() {
         return this.attackWon;
