@@ -1955,27 +1955,15 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
+
     public int generateSoldiersNumber(){
-        int soldierNumber = 0;
-        switch ((Integer)this.primitiveSettings.get("Map Number")){
-            case 0: soldierNumber = 10;break;
-            case 1:
-            case 6:
-                soldierNumber = 20;break;
-            case 2:
-            case 4:
-                soldierNumber = 25;break;
-            case 3: soldierNumber = 30;break;
-            case 5: soldierNumber = 15;break;
-            case 7:
-            case 9:
-                soldierNumber = 26;break;
-            case 8: soldierNumber = 32;break;
-            case 10: soldierNumber = 40;break;
-        }
-        return soldierNumber;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("generateSoldiersNumber", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, int.class);
     }
+    /*
     public void setAllianceType(boolean type) {
         if(type){
             setPrimitiveSettings("Alliance", true);
@@ -1983,6 +1971,7 @@ public class ClientMasterController {
             setPrimitiveSettings("Alliance", false);
         }
     }
+    /*
     public void setBlizzardsType(boolean type) {
         if(type){
             setPrimitiveSettings("Blizzards", true);
