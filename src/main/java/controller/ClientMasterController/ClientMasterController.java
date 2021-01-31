@@ -1893,33 +1893,22 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
     }
-    /*
-    public boolean checkCountryIsAlliance(Country destination) {
-        if (destination.getOwner() != null) {
-            if (currentPlayer.getGameFriends().contains(destination.getOwner())) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
 
     public boolean checkTime() {
-        if (System.currentTimeMillis() / 1000L - currentTimeStamp > duration) {
-            mainChangeTurn();
-            currentTimeStamp = System.currentTimeMillis() / 1000L;
-            return false;
-        } else {
-            return true;
-        }
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("checkTime", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
     }
 
     public void updateCurrentTime() {
-        currentTimeStamp = System.currentTimeMillis() / 1000L;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("updateCurrentTime", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
-
+/*
     public void getProgressBar(ProgressBar progressBar) {
         this.progressBar = progressBar;
 //        timer = new AnimationTimer() {
