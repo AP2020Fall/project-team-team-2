@@ -1663,11 +1663,15 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
 
     public void matchCardAddSoldiers(int soldiersNumber) {
-        matchCardController.incPlayerSoldier(currentPlayer, soldiersNumber);
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(soldiersNumber);
+        Command command = new Command("matchCardAddSoldiers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
 
     public Country getCountryByDetails(int i, int j) {
         return gameCountries.get(i - 1).get(j - 1);
