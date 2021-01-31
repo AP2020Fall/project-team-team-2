@@ -35,7 +35,7 @@ import model.Player;
 import view.View;
 import view.ViewHandler;
 
-import javax.xml.bind.SchemaOutputResolver;
+//import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
