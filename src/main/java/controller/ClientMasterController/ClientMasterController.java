@@ -1947,14 +1947,15 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
     }
-/*
+
     public void setFogType(boolean type) {
-        if(type){
-            setPrimitiveSettings("Fog of War", true);
-        }else{
-            setPrimitiveSettings("Fog of War", false);
-        }
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(type);
+        Command command = new Command("setFogType", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
     public int generateSoldiersNumber(){
         int soldierNumber = 0;
         switch ((Integer)this.primitiveSettings.get("Map Number")){
