@@ -1580,11 +1580,15 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
 
     public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(players);
+        Command command = new Command("setPlayers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
 
     public Player getCurrentPlayer() {
         return currentPlayer;
