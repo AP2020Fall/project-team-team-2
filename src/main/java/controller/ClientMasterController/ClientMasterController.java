@@ -1678,8 +1678,6 @@ public class ClientMasterController {
         params.add(j);
         Command command = new Command("getCountryByDetails", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Country.class);
     }
@@ -1728,8 +1726,6 @@ public class ClientMasterController {
         params.add(currentPlayer);
         Command command = new Command("getCountryByDetails", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, int[][].class);
     }
@@ -1765,8 +1761,6 @@ public class ClientMasterController {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("checkWinner", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
     }
@@ -1776,8 +1770,6 @@ public class ClientMasterController {
         params.add(player);
         Command command = new Command("checkAdditionalPlayers", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
     }
@@ -1916,29 +1908,5 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-/*
-    public void attackAnimation(String result) {
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                Notifications notify = null;
-                Image img = new Image(String.valueOf(getClass().getResource("/images/attack.png")));
-                System.out.println(img);
-                notify = Notifications.create().title("Attack!")
-                        .graphic(new ImageView(img))
-                        .text(result)
-                        .hideAfter(javafx.util.Duration.seconds(2))
-                        .position(Pos.TOP_CENTER);
-                notify.darkStyle();
-                notify.showInformation();
-                notify.graphic(new ImageView(img));
-            }
-        });
-    }
-}
-
-
-*/
 
 }
