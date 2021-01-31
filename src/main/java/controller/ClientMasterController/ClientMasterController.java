@@ -1913,11 +1913,16 @@ public class ClientMasterController {
 
     //######################## StartGameController Commands ########################\\
 
-    /*
-    public StartGameController(ArrayList<Player> players , Event event){
-        setPrimitiveSettings("Players" , players);
-        this.event = event;
+    public RiskGameView startGame() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("startGame", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, RiskGameView.class);
     }
+
+
+    /*
     public RiskGameView startGame() {
         return new RiskGameView(this.primitiveSettings , generateSoldiersNumber() , event);
     }
