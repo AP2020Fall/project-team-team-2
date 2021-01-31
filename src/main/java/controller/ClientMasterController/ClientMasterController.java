@@ -1588,11 +1588,15 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
 
     public Player getCurrentPlayer() {
-        return currentPlayer;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getCurrentPlayer", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Player.class);
     }
+    /*
 
     public String placeSoldier(int i, int j, int soldiers) {
         String toPrint = "";
