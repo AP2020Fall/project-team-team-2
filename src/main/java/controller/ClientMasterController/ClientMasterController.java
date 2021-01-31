@@ -1789,14 +1789,15 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
     }
-    /*
-    public boolean getAttackWon() {
-        return this.attackWon;
-    }
 
     public int getCurrentPlayerIndex() {
-        return currentPlayer.getPlayerNumber();
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getCurrentPlayerIndex", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, int.class);
     }
+    /*
 
     public String draftAfterWin(int i, int j, int soldiers) {
         String toPrint = "";
