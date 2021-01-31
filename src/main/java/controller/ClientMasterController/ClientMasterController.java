@@ -1996,15 +1996,24 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-/*
+
     public String generateGameId() {
-        return UUID.randomUUID().toString().replace("-", "");
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("generateGameId", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public void setMapSoldiers(Country country, int soldiers) {
-        country.setSoldiers(soldiers);
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(country);
+        params.add(soldiers);
+        Command command = new Command("setMapSoldiers", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
 
-     */
+
 
 }
