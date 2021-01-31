@@ -1462,6 +1462,12 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public void checkAllPlayersAdded() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("checkAllPlayersAdded", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
 
     /*
     public void checkAllPlayersAdded() {
