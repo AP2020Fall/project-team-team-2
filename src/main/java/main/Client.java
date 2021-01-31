@@ -10,9 +10,9 @@ import view.login.WelcomeMenu;
 public class Client extends Application {
     private static ClientConnector connector;
     private static ClientInfo clientInfo;
-
-    public static void updateClientInfo(ClientInfo NewClientInfo) {
-        clientInfo = NewClientInfo;
+    private static String token;
+    public static void updateClientInfo(ClientInfo newClientInfo) {
+        clientInfo = newClientInfo;
     }
 
     public static void main(String[] args) {
@@ -33,9 +33,18 @@ public class Client extends Application {
         return clientInfo;
     }
 
+    public static String getToken() {
+        return token;
+    }
+
+    public static void updateToken(String newToken) {
+        token = newToken;
+    }
+
     @Override
     public void start(Stage primaryStage) {
         clientInfo = new ClientInfo();
+        token = "";
         initializeConnector();
         primaryStage.setOnCloseRequest(event -> {
             connector.getController().endConnection();

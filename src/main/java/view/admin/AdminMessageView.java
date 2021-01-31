@@ -2,12 +2,8 @@ package view.admin;
 
 import com.jfoenix.controls.JFXTextArea;
 import controller.ClientMasterController.ClientMasterController;
-import controller.Controller;
-import controller.admin.AdminMessageViewController;
-import controller.player.PlatoMessageController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -93,9 +89,9 @@ public class AdminMessageView implements View, Initializable {
         dayColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("day"));
 
         TreeItem<PlatoMessageEntry> messageRoot = new TreeItem<>(controller.getMessageRoot());
-        if (controller.hasMessage()) {
+        if (controller.adminHasMessage()) {
             ObservableList<TreeItem<PlatoMessageEntry>> messages = FXCollections.observableArrayList();
-            for (ArrayList<PlatoMessageEntry> messageEntries : controller.platoBotsMessages()) {
+            for (ArrayList<PlatoMessageEntry> messageEntries : controller.adminsMessages()) {
                 TreeItem<PlatoMessageEntry> dayRoot = new TreeItem<>();
                 for (PlatoMessageEntry messageEntry : messageEntries)
                     dayRoot.getChildren().add(new TreeItem<>(messageEntry));

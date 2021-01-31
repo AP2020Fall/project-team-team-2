@@ -1,13 +1,13 @@
 package model;
 
 import controller.Controller;
-import controller.player.PlayerMainMenuController;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Objects;
 
 public class Player extends Account {
     private double money;
@@ -41,7 +41,7 @@ public class Player extends Account {
         friends = new ArrayList<>();
         receivedFriendRequests = new ArrayList<>();
         sentFriendRequests = new ArrayList<>();
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<>();
         messages = new ArrayList<>();
         favouriteGames = new ArrayList<>();
         suggestions = new ArrayList<>();
@@ -254,6 +254,7 @@ public class Player extends Account {
 
 
     public ArrayList<Message> getMessages() {
+        Collections.sort(messages);
         return messages;
     }
 

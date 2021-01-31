@@ -2,6 +2,8 @@ package model;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Admin extends Account {
     private ArrayList<Message> sentMessages;
@@ -20,6 +22,7 @@ public class Admin extends Account {
     }
 
     public ArrayList<Message> getSentMessages() {
+        Collections.sort(sentMessages);
         return sentMessages;
     }
 }

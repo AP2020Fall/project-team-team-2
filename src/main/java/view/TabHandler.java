@@ -33,7 +33,7 @@ public class TabHandler {
         try {
             borderPane.setCenter(viewArrayList.get(index).show());
         } catch (IOException ignored) {
-            Logger.getLogger("Show view error");//todo exit
+            System.err.println("Show view error");
         }
     }
 

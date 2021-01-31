@@ -2,12 +2,12 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class Message {
+public class Message implements Comparable {
     private final String message;
     private final String messageId;
     private final LocalDateTime time;
 
-    public Message(String message, String messageId, LocalDateTime time) {
+    public Message(String message, String messageId, LocalDateTime time)  {
         this.message = message;
         this.messageId = messageId;
         this.time = time;
@@ -31,5 +31,12 @@ public class Message {
 
     public LocalDateTime getTime() {
         return time;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(o instanceof Message)
+        return ((Message)o).time.compareTo(this.time);
+        return 0;
     }
 }

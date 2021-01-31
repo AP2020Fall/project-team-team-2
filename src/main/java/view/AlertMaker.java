@@ -42,7 +42,7 @@ public class AlertMaker {
         File file;
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image files", "*.png", "*.jpeg", "*.jpg"));
+                new FileChooser.ExtensionFilter("Image files", "*.jpeg"));
         //todo maybe needs fixing
         file = fileChooser.showOpenDialog(new Stage());
         if (file != null) {
