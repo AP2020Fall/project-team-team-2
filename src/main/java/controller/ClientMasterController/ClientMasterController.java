@@ -1548,11 +1548,15 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
-    /*
-
-    public boolean getPlacementFinished() {
-        return this.placementFinished;
+    public Boolean getPlacementFinished() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getPlacementFinished", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
     }
+
+    /*
 
     public String matchCards(int type) {
         String toPrint = "";
