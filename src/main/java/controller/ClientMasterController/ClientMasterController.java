@@ -1915,34 +1915,21 @@ public class ClientMasterController {
 
     public RiskGameView startGame() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("startGame", "controller.risk.RiskGameController"
+        Command command = new Command("startGame", "controller.risk.StartGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, RiskGameView.class);
     }
 
-
-    /*
-    public RiskGameView startGame() {
-        return new RiskGameView(this.primitiveSettings , generateSoldiersNumber() , event);
-    }
-
-    public static java.util.Map<String, Object> getPrimitiveSettings() {
-        return primitiveSettings;
-    }
-
     public String setMapNumber(int mapNumber) {
-        boolean checkExistence = model.Map.checkMapExists(mapNumber);
-        String callback = "";
-        if (checkExistence) {
-            setPrimitiveSettings("Map Number", mapNumber);
-            callback = "Map Number Changed To " + mapNumber;
-        } else {
-            callback = "No Map Exists With This Number";
-        }
-        return callback;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(mapNumber);
+        Command command = new Command("setMapNumber", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
-
+/*
     public String setPlayerNumber(int playerNumber) {
         String callback = "";
         if (playerNumber > 3) {
