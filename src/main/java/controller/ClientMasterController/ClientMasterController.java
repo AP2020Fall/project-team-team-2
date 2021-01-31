@@ -1827,16 +1827,15 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
-    /*
-
-
     public String showMatchOptions() {
-        String toPrint = "1-type1,type1,type1 score:4" + "\n" +
-                "2-type2,type2,type2 score:6" + "\n" +
-                "3-type3,type3,type3 score:8" + "\n" +
-                "4-type1,type2,type3 score:10" + "\n";
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("showMatchOptions", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+
+    /*
 
     public String showWhatToDo() {
         String toPrint = "";
