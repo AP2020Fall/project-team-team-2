@@ -1971,15 +1971,15 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
-    public void setBlizzardsType(boolean type) {
-        if(type){
-            setPrimitiveSettings("Blizzards", true);
-        }else{
-            setPrimitiveSettings("Blizzards", false);
-        }
-    }
 
+    public void setBlizzardsType(boolean type) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(type);
+        Command command = new Command("setBlizzardsType", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+/*
     public void setPlacementType(boolean type) {
         if(type){
             setPrimitiveSettings("Placement", true);
