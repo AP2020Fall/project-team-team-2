@@ -1908,23 +1908,15 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-/*
-    public void getProgressBar(ProgressBar progressBar) {
-        this.progressBar = progressBar;
-//        timer = new AnimationTimer() {
-//            @Override
-//            public void handle(long now) {
-//                double progressed = Double.valueOf(System.currentTimeMillis() / 1000L - currentTimeStamp) / Double.valueOf(duration);
-//                progressBar.setProgress(progressed);
-//                if (progressed >= 1) {
-//                    mainChangeTurn();
-//                    progressBar.setProgress(0);
-//                }
-//            }
-//        };
-//        timer.start();
-    }
 
+    public void getProgressBar(ProgressBar progressBar) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(progressBar);
+        Command command = new Command("getProgressBar", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+/*
     public void attackAnimation(String result) {
         Platform.runLater(new Runnable() {
 
