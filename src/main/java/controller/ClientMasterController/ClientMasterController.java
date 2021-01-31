@@ -2,22 +2,31 @@ package controller.ClientMasterController;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import main.Client;
 import main.Command;
 import model.*;
 import model.Entry.*;
+import org.controlsfx.control.Notifications;
 import view.TabHandler;
 import view.admin.AdminProfileView;
 import view.player.PlayerProfileView;
 import view.player.PlayerRunGameView;
+import view.risk.RiskGameView;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.*;
@@ -1382,5 +1391,1222 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
+
+
+    //######################## RiskGameController Commands ########################\\
+
+    public void shapeMap() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("shapeMap", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    /*
+    public List<List<Country>> getGameCountries() {
+        return gameCountries;
+    }
+
+    public void makeRobotPlayers() {
+        String mainBotName = "Robot";
+        for (int i = 1; i < (int) primitiveSettings.get("PlayersNum"); i++) {
+            Player newRobotPlayer = new Player(mainBotName + " " + i, mainBotName + " " + i);
+            players.add(newRobotPlayer);
+        }
+    }
+
+    public boolean getGameIsPlaying() {
+        return gameIsPlaying;
+    }
+
+    public boolean getFogStatus() {
+        return fogIsSet;
+    }
+
+    public int getRemainSoldiers() {
+        return currentPlayer.getNewSoldiers();
+    }
+
+    public void setStartSoldiers() {
+        int number = 1;
+        for (Player player : players) {
+            player.addDraftSoldier(startSoldiers);
+            player.setPlayerNumber(number);
+            number++;
+        }
+    }
+
+    public String draft(int i, int j, int soldiers) {
+        String toPrint = "";
+
+        if (!draftDone) {
+            Country destination = getCountryByDetails(i, j);
+            if (soldiers > currentPlayer.getDraftSoldiers() || soldiers < 1) {
+                toPrint = "Soldiers are not enough or invalid";
+            } else if (destination.getName().equals("") || destination.getBlizzard()) {
+                toPrint = "Destination country is not valid";
+            } else {
+                if (!destination.getOwner().equals(getCurrentPlayer())) {
+                    toPrint = "This country is not yours";
+                } else {
+                    placeSoldier(i, j, soldiers);
+                    currentPlayer.addDraftSoldier(-1 * soldiers);
+                    toPrint = "" + soldiers + " soldiers added to " + destination.getName() + " successfully";
+                    draftDone = true;
+                }
+            }
+        } else {
+            toPrint = "Draft has been done";
+        }
+        return toPrint;
+    }
+
+    public String beginDraft(int i, int j, int soldiers) {
+        String toPrint = "";
+        if (!beginDraftDone) {
+            Country destination = getCountryByDetails(i, j);
+            if (soldiers > currentPlayer.getDraftSoldiers() || soldiers < 1) {
+                toPrint = "Soldiers are not enough or invalid";
+            } else if (destination.getName().equals("") || destination.getBlizzard()) {
+                toPrint = "Destination country is not valid";
+            } else {
+                if (destination.getOwner() != null) {
+                    if (!destination.getOwner().equals(getCurrentPlayer())) {
+                        toPrint = "This country is not yours";
+                    } else {
+                        placeSoldier(i, j, soldiers);
+                        currentPlayer.addDraftSoldier(-1 * soldiers);
+                        toPrint = "" + soldiers + " soldiers added to " + destination.getName() + " successfully";
+                        beginDraftDone = true;
+                    }
+                } else {
+                    placeSoldier(i, j, soldiers);
+                    currentPlayer.addDraftSoldier(-1 * soldiers);
+                    toPrint = "" + soldiers + " soldiers added to " + destination.getName() + " successfully";
+                    beginDraftDone = true;
+                }
+            }
+        } else {
+            toPrint = "Draft has been done";
+        }
+        checkAllPlayersAdded();
+        return toPrint;
+    }
+
+    public void checkAllPlayersAdded() {
+        boolean toCheck = true;
+        outerLoop:
+        for (List<Country> countries : gameCountries) {
+            for (Country country : countries) {
+                if (country.getSoldiers() == 0) {
+                    toCheck = false;
+                    break outerLoop;
+                }
+            }
+        }
+        allPlayersAddedSoldier = toCheck;
+    }
+
+    public boolean getAllPlayersAdded() {
+        return allPlayersAddedSoldier;
+    }
+
+    public String attack(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
+        String toPrint = "";
+        boolean isFriend = false;
+        if (!attackDone) {
+            boolean sourceCountryValid = false;
+            boolean destinationCountryValid = false;
+            Country source = getCountryByDetails(sourceI, sourceJ);
+            Country destination = getCountryByDetails(destI, destJ);
+            isFriend = checkCountryIsAlliance(destination);
+            boolean errorFound = false;
+            if (!source.getName().equals("")) {
+                if (source.getOwner().equals(currentPlayer)) {
+                    sourceCountryValid = true;
+                }
+            }
+            if (!destination.getName().equals("")) {
+                if (destination.getOwner() != null) {
+                    if (!destination.getOwner().equals(currentPlayer)) {
+                        destinationCountryValid = true;
+                    }
+                } else {
+                    destination.setOwner(currentPlayer);
+                    this.attackWon = true;
+                    this.attackDestination = destination;
+                    toPrint += "\nYou now should add one to " + (source.getSoldiers() - 1) + " soldiers to "
+                            + destination.getName();
+                    sourceCountryWinner = source;
+                }
+            }
+            if (!sourceCountryValid && !errorFound) {
+                toPrint = "Source country is not valid";
+                errorFound = true;
+            }
+            if (sourceCountryValid && (!destinationCountryValid || destination.getBlizzard()) && !errorFound) {
+                toPrint = "Destination country is not valid";
+                errorFound = true;
+            }
+            if (sourceCountryValid && destinationCountryValid && (soldiers > source.getSoldiers() || soldiers < 0
+                    || source.getSoldiers() <= 1) && !errorFound) {
+                toPrint = "Soldiers are not enough or not valid";
+                errorFound = true;
+            }
+            if (!draftDone && !errorFound) {
+                toPrint = "Draft didn't completed yet";
+                errorFound = true;
+            }
+            if (isFriend && !errorFound) {
+                toPrint = "This Country is Alliance";
+                errorFound = true;
+            }
+            if (errorFound) {
+
+            } else if (attackNeighbourhoodCheck(source, destination)) {
+                boolean inWar = true;
+                audioClip.play();
+                String result = "";
+                do {
+                    int randomNumberSource = (int) (Math.random() * (6 - 0 + 1)) + 0;
+                    int randomNumberDestination = (int) (Math.random() * (6 - 0 + 1)) + 0;
+                    toPrint = "Source Dice : " + randomNumberSource + " - Destination Dice : " + randomNumberDestination;
+                    if (randomNumberSource > randomNumberDestination) {
+                        destination.addSoldiers(-1);
+                        toPrint = toPrint + " Destination Country Lost 1 soldier! , Destination Soldiers "
+                                + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
+                    } else if (randomNumberDestination > randomNumberSource) {
+                        source.addSoldiers(-1);
+                        soldiers--;
+                        toPrint = toPrint + " Source Country Lost 1 soldier! , Destination Soldiers "
+                                + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
+                    } else {
+                        source.addSoldiers(-1);
+                        soldiers--;
+                        toPrint = toPrint + " Source Country Lost 1 soldier! , Destination Soldiers "
+                                + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
+                    }
+                    if (soldiers == 0 || destination.getSoldiers() == 0 || source.getSoldiers() == 1) {
+                        inWar = false;
+                        if (source.getSoldiers() == 1 || soldiers == 0) {
+                            toPrint = "attack failed";
+                            result = "Failed";
+                        } else {
+                            toPrint = "attack was successful";
+                            result = "Successful";
+                            if (!gotCards) {
+                                toPrint += "\nYou Got new Card!\n : Card " + addCard() + " \nhas been added to you";
+                                gotCards = true;
+                            }
+                            if (source.getSoldiers() == 2) {
+                                source.addSoldiers(-1);
+                                destination.addSoldiers(+1);
+                                Player tempPlayer = destination.getOwner();
+                                destination.setOwner(currentPlayer);
+                                boolean playerDone = checkAdditionalPlayers(tempPlayer);
+                                if (playerDone) {
+                                    addDestinationCardsToSource(source.getOwner(), tempPlayer);
+                                }
+
+                            } else {
+                                Player tempPlayer = destination.getOwner();
+                                destination.setOwner(currentPlayer);
+                                boolean playerDone = checkAdditionalPlayers(tempPlayer);
+                                if (playerDone) {
+                                    addDestinationCardsToSource(source.getOwner(), tempPlayer);
+                                }
+                                this.soldierPlacedAfterWin = false;
+                                this.attackWon = true;
+                                this.attackDestination = destination;
+                                toPrint += "\nYou now should add one to \n" + (source.getSoldiers() - 1) + " soldiers to \n"
+                                        + destination.getName();
+                                sourceCountryWinner = source;
+                                draftDone = false;
+                            }
+                        }
+                        attackAnimation(result);
+                        i = null;
+                        j = null;
+                        deselect();
+                    }
+                } while (inWar);
+            } else {
+                toPrint = "there is not any path between source and destination country";
+            }
+        } else {
+            toPrint = "Attack has been done";
+        }
+        return toPrint;
+    }
+
+    public boolean getSoldierPlaced() {
+        return soldierPlacedAfterWin;
+    }
+
+    private void addDestinationCardsToSource(Player sourcePlayer, Player destinationPlayer) {
+        for (Card card : destinationPlayer.getCards()) {
+            sourcePlayer.addCard(card);
+            System.out.println("Card of destination player added to current player. Card : " + card);
+        }
+    }
+
+    public String fortify(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
+        String toPrint = "";
+        if (!fortifyDone) {
+            boolean sourceCountryValid = false;
+            boolean destinationCountryValid = false;
+            Country source = getCountryByDetails(sourceI, sourceJ);
+            Country destination = getCountryByDetails(destI, destJ);
+            if (source.getOwner() != null && source.getOwner().equals(currentPlayer)) {
+                sourceCountryValid = true;
+            }
+            if (destination.getOwner() != null && destination.getOwner().equals(currentPlayer)) {
+                destinationCountryValid = true;
+            }
+            if (!sourceCountryValid) {
+                toPrint = "Source country is not valid";
+            } else if (sourceCountryValid && (!destinationCountryValid || destination.getBlizzard())) {
+                toPrint = "Destination country is not valid";
+            } else if (sourceCountryValid && destinationCountryValid && (soldiers > (source.getSoldiers() - 1) || soldiers < 1)) {
+                toPrint = "Soldiers are not enough or not valid";
+            } else if (fortifyNeighbourhoodCheck(source, destination)) {
+                turnDone = true;
+                source.addSoldiers(-1 * soldiers);
+                destination.addSoldiers(soldiers);
+                toPrint = "Move " + soldiers + " soldiers from " + source.getName() + " to " + destination.getName();
+                setFortifyDone(true);
+                i = null;
+                j = null;
+            } else {
+                toPrint = "there is not any path between source and destination country";
+            }
+        } else {
+            toPrint = "Fortify has been done";
+        }
+        return toPrint;
+    }
+
+    public String next() {
+        String toPrint = "";
+        audioClip.stop();
+        if (getPlacementFinished()) {
+            if (soldierPlacedAfterWin) {
+                if (!draftDone) {
+                    toPrint = "Next part, Start Attacking";
+                    draftDone = true;
+                } else if (!attackDone) {
+                    toPrint = "Next part, Start Fortifying";
+                    attackDone = true;
+                } else if (!fortifyDone) {
+                    fortifyDone = true;
+                    toPrint = "Next part, Please try `turn over` to go to next turn";
+                } else {
+                    toPrint = "Try `turn over`";
+                }
+            } else {
+                toPrint = "Please First try to draft in destination country";
+            }
+        } else {
+            if (beginDraftDone) {
+                toPrint = "Draft done, please try next turn icon";
+            } else {
+                toPrint = "You didnt draft any soldier please try draft some";
+            }
+        }
+        return toPrint;
+    }
+
+    public void mainChangeTurn() {
+        int currentTurnIndex = this.players.indexOf(this.currentPlayer);
+        if (currentTurnIndex != this.players.size() - 1) {
+            this.currentPlayer = this.players.get(currentTurnIndex + 1);
+        } else {
+            this.currentPlayer = this.players.get(0);
+        }
+        if (!getPlacementFinished()) {
+            checkPlacementFinished();
+        }
+        RiskGameView.currentTimeStamp = System.currentTimeMillis() / 1000L;
+        currentTimeStamp = System.currentTimeMillis() / 1000L;
+        setDraftDone(false);
+        setAttackDone(false);
+        setFortifyDone(false);
+        attackDestination = null;
+        attackWon = false;
+        resetNotif();
+        beginDraftDone = false;
+    }
+
+    public String changeTurn() {
+        String toPrint;
+        boolean checkWinner = checkWinner();
+        if (checkWinner) {
+            if (this.winner != null) {
+                toPrint = "Game has been finished." + " " + currentPlayer.getUsername() + " is this winner";
+            } else {
+                toPrint = "Game has been finished in draw.";
+            }
+            return toPrint;
+        }
+        if (!getPlacementFinished()) {
+            if (beginDraftDone) {
+                mainChangeTurn();
+                toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
+                setDraftDone(false);
+                setAttackDone(false);
+                setFortifyDone(false);
+                gotCards = false;
+            } else {
+                toPrint = "You didn't place any soldier, please first try to place a soldier in remain countries.";
+            }
+        } else {
+            if (draftDone) {
+                /*Todo: attack doesn't need to be checked(?)
+                if (attackDone) {
+                    if (fortifyDone) {
+                        turnDone = false;
+                        mainChangeTurn();
+                        toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
+                        setDraftDone(false);
+                        setAttackDone(false);
+                        setFortifyDone(false);
+                        gotCards = false;
+                    } else {
+                        toPrint = "You didn't fortify yet.";
+                    }
+                } else {
+                    toPrint = "You didn't attack yet.";
+                }
+            } else {
+                toPrint = "You didn't place any soldier, please first try to place a soldier in your countries.";
+            }
+        }
+        return toPrint;
+    }
+
+    public void checkPlacementFinished() {
+        boolean toCheck = true;
+        for (Player player : getPlayers()) {
+            if (player.getDraftSoldiers() != 0) {
+                toCheck = false;
+                break;
+            }
+        }
+        if (toCheck) {
+            placementFinished = true;
+        }
+    }
+
+    public static java.util.Map<String, Object> getPrimitiveSettings() {
+        return primitiveSettings;
+    }
+
+    public boolean getPlacementFinished() {
+        return this.placementFinished;
+    }
+
+    public String matchCards(int type) {
+        String toPrint = "";
+        switch (type) {
+            case 1:
+                toPrint = Card.matchCard(currentPlayer.getCards(), 1, currentPlayer);
+                break;
+            case 2:
+                toPrint = Card.matchCard(currentPlayer.getCards(), 2, currentPlayer);
+                break;
+            case 3:
+                toPrint = Card.matchCard(currentPlayer.getCards(), 3, currentPlayer);
+                break;
+            case 4:
+                toPrint = Card.matchCard(currentPlayer.getCards(), 4, currentPlayer);
+                break;
+        }
+        return toPrint;
+    }
+
+    public String showMap() {
+        String lineString = "";
+        for (List<Country> listCountries : gameCountries) {
+            for (Country country : listCountries) {
+                if (!country.equals(listCountries.get(listCountries.size() - 1))) {
+                    lineString = lineString + country.toString() + " | ";
+                } else {
+                    lineString = lineString + country.toString() + "\n";
+                }
+            }
+        }
+        return lineString.trim();
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public String placeSoldier(int i, int j, int soldiers) {
+        String toPrint = "";
+        if (soldiers > getCurrentPlayer().getDraftSoldiers()) {
+            toPrint = "You do not have enough soldiers";
+            return toPrint;
+        }
+        Country toCheckCountry = this.getCountryByDetails(i, j);
+        if (!this.getDraftDone()) {
+            if (toCheckCountry.getName().equals("") || toCheckCountry.getBlizzard()) {
+                toPrint = "Chosen country is invalid. Please try again";
+            } else {
+                if (toCheckCountry.getOwner() == null || toCheckCountry.getOwner().equals(currentPlayer)) {
+                    toCheckCountry.setOwner(currentPlayer);
+                    toCheckCountry.addSoldiers(soldiers);
+                    toPrint = currentPlayer.getPlayerNumber() + " add " + soldiers + " soldier to "
+                            + toCheckCountry.getName();
+                } else {
+                    toPrint = "Please choose a country that is yours or no one has been chosen it yet";
+                }
+            }
+        } else {
+            toPrint = "You have been done your draft turn.";
+        }
+        if (getPlacementFinished() == false) {
+            boolean allDone = false;
+            for (Player player : players) {
+                if (player.getDraftSoldiers() != 3) {
+                    allDone = false;
+                    break;
+                } else {
+                    allDone = true;
+                }
+            }
+            if (allDone == true) {
+                setPlacementFinished(true);
+                toPrint += "\nGame has been started";
+                mainChangeTurn();
+                toPrint += "\nit's player " + currentPlayer.getUsername() + " turn to draft";
+                draftDone = false;
+            }
+        }
+        return toPrint;
+    }
+
+    public String leaveTheGame() {
+        Player prevPlayer = currentPlayer;
+        checkWinner();
+        if (gameIsPlaying) {
+            mainChangeTurn();
+            players.remove(prevPlayer);
+            makeCountryEmpty(prevPlayer);
+            return "Player " + prevPlayer.getUsername() + " Exit The Game";
+        } else {
+            return "Player " + prevPlayer.getUsername() + " Won";
+        }
+    }
+
+    public void makeCountryEmpty(Player player) {
+        for (List<Country> countries : gameCountries) {
+            for (Country country : countries) {
+                if (country.getOwner() != null) {
+                    if (country.getOwner().equals(player)) {
+                        country.emptyCountry();
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean getDraftDone() {
+        return draftDone;
+    }
+
+    public void setDraftDone(boolean status) {
+        draftDone = status;
+    }
+
+    public boolean getTurnDone() {
+        return turnDone;
+    }
+
+
+    public void setAttackDone(boolean status) {
+        attackDone = status;
+    }
+
+    public void setFortifyDone(boolean status) {
+        this.fortifyDone = status;
+    }
+
+    public void matchCardAddSoldiers(int soldiersNumber) {
+        matchCardController.incPlayerSoldier(currentPlayer, soldiersNumber);
+    }
+
+    public Country getCountryByDetails(int i, int j) {
+        return gameCountries.get(i - 1).get(j - 1);
+//        Country toReturnCountry = new Country();
+//        for (List<Country> countries : this.gameCountries) {
+//            for (Country country : countries) {
+//                if (country.getNumberOfContinentCountry() == countryContinentNumber && country.getContinent()
+//                        .substring(0, 2).toUpperCase().equals(shortName)) {
+//
+//                    toReturnCountry = country;
+//                }
+//            }
+//        }
+    }
+
+    public String showTurn() {
+        String toPrint = "It's " + currentPlayer.getUsername() + " Player";
+        return toPrint;
+    }
+
+    public Player getTurn() {
+        return currentPlayer;
+    }
+
+    public String getStatus() {
+        String toPrint = "";
+        if (!draftDone) {
+            toPrint = "Please draft your soldiers in one of available countries";
+        } else if (!attackDone) {
+            toPrint = "Please attack to one of the valid countries";
+        } else if (!fortifyDone) {
+            toPrint = "if you want to move your soldiers, you can try now!";
+        }
+        return toPrint;
+    }
+
+    public void autoPlace() {
+        do {
+            boolean allDone = false;
+            for (Player player : players) {
+                if (player.getDraftSoldiers() != 3) {
+                    allDone = false;
+                    break;
+                } else {
+                    allDone = true;
+                }
+            }
+
+            if (allDone == true) {
+                break;
+            }
+
+            if (currentPlayer.getDraftSoldiers() == 3) {
+                continue;
+            }
+            int rows = gameCountries.size() - 1;
+            int columns = gameCountries.get(0).size() - 1;
+            int randomRow = (int) (Math.random() * (rows - 0 + 1) + 0);
+            int randomColumn = (int) (Math.random() * (columns + 1));
+            Country getRandomCountry = gameCountries.get(randomRow).get(randomColumn);
+            if ((getRandomCountry.getOwner() == null || getRandomCountry.getOwner().equals(currentPlayer)) && !getRandomCountry.getBlizzard()) {
+                getRandomCountry.setOwner(currentPlayer);
+                getRandomCountry.addSoldiers(1);
+                currentPlayer.addDraftSoldier(-1);
+                mainChangeTurn();
+            }
+        } while (true);
+        setPlacementFinished(true);
+    }
+
+    public void setPlacementFinished(boolean placementFinished) {
+        this.placementFinished = placementFinished;
+    }
+
+    public int[][] getFogOfWarMap(Player currentPlayer) {
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
+        int[][] countryNumbers = new int[row][column];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                countryNumbers[i][j] = 0;
+            }
+        }
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (gameCountries.get(i).get(j).getOwner() != null) {
+                    if (gameCountries.get(i).get(j).getOwner().getUsername().equals(currentPlayer.getUsername())
+                            || gameCountries.get(i).get(j).getOwner().getFriends().contains(currentPlayer)
+                    ) {
+                        countryNumbers[i][j] = 1;
+                        changeNumberElement(i - 1, j - 1, countryNumbers, 2);
+                        changeNumberElement(i - 1, j, countryNumbers, 2);
+                        changeNumberElement(i - 1, j + 1, countryNumbers, 2);
+                        changeNumberElement(i, j - 1, countryNumbers, 2);
+                        changeNumberElement(i, j + 1, countryNumbers, 2);
+                        changeNumberElement(i + 1, j - 1, countryNumbers, 2);
+                        changeNumberElement(i + 1, j, countryNumbers, 2);
+                        changeNumberElement(i + 1, j + 1, countryNumbers, 2);
+                    }
+                }
+            }
+        }
+
+        return countryNumbers;
+    }
+
+    public void changeNumberElement(int i, int j, int[][] inputArray, int number) {
+        try {
+            if (inputArray[i][j] != 1) {
+                inputArray[i][j] = number;
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    /*
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
+        int[][] countryNumbers = new int[row][column];
+
+        countryNumbers = setFogOfWarMap(currentPlayer);
+
+    public void setBlizzard() {
+        if ((boolean) primitiveSettings.get("Blizzards")) {
+            int rndRow = new Random().nextInt(gameCountries.size());
+            int rndCol = new Random().nextInt(gameCountries.get(0).size());
+            gameCountries.get(rndRow).get(rndCol).enableBlizzard();
+        }
+    }
+
+    public boolean isPath(int CountryNumbers[][], int n, int m) {
+        // Defining visited array to keep
+        // track of already visited indexes
+        boolean visited[][]
+                = new boolean[n][m];
+
+        // Flag to indicate whether the
+        // path exists or not
+        boolean flag = false;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // if matrix[i][j] is source
+                // and it is not visited
+                if (CountryNumbers[i][j] == 1 && !visited[i][j])
+                    // Starting from i, j and
+                    // then finding the path
+                    if (isPath(CountryNumbers, i, j, visited)) {
+                        // if path exists
+                        flag = true;
+                        break;
+                    }
+            }
+        }
+        if (flag)
+            return true;
+        else
+            return false;
+    }
+
+    // Method for checking boundries
+    public boolean isSafe(int i, int j, int CountryNumbers[][]) {
+
+        if (i >= 0 && i < CountryNumbers.length && j >= 0 && j < CountryNumbers[0].length)
+            return true;
+        return false;
+    }
+
+    // Returns true if there is a
+    // path from a source (a
+    // cell with value 1) to a
+    // destination (a cell with
+    // value 2)
+    public boolean isPath(int CountryNumbers[][], int i, int j, boolean visited[][]) {
+
+        // Checking the boundries, walls and
+        // whether the cell is unvisited
+        if (isSafe(i, j, CountryNumbers) && CountryNumbers[i][j] != 0 && !visited[i][j]) {
+            // Make the cell visited
+            visited[i][j] = true;
+
+            // if the cell is the required
+            // destination then return true
+            if (CountryNumbers[i][j] == 2)
+                return true;
+
+            // traverse up
+            boolean up = isPath(CountryNumbers, i - 1, j, visited);
+
+            // if path is found in up
+            // direction return true
+            if (up)
+                return true;
+
+            // traverse up
+            boolean upRight = isPath(CountryNumbers, i - 1, j + 1, visited);
+
+            // if path is found in up
+            // direction return true
+            if (upRight)
+                return true;
+
+            // traverse up
+            boolean upLeft = isPath(CountryNumbers, i - 1, j - 1, visited);
+
+            // if path is found in up
+            // direction return true
+            if (upLeft)
+                return true;
+
+            // traverse left
+            boolean left = isPath(CountryNumbers, i, j - 1, visited);
+
+            // if path is found in left
+            // direction return true
+            if (left)
+                return true;
+
+            // traverse right
+            boolean right = isPath(CountryNumbers, i, j + 1, visited);
+
+            // if path is found in right
+            // direction return true
+            if (right)
+                return true;
+
+            // traverse down
+            boolean down = isPath(CountryNumbers, i + 1, j, visited);
+
+            // if path is found in down
+            // direction return true
+            if (down)
+                return true;
+
+            // traverse down
+            boolean downRight = isPath(CountryNumbers, i + 1, j + 1, visited);
+
+            // if path is found in down
+            // direction return true
+            if (downRight)
+                return true;
+
+            // traverse down
+            boolean downLeft = isPath(CountryNumbers, i + 1, j - 1, visited);
+
+            // if path is found in down
+            // direction return true
+            if (downLeft)
+                return true;
+
+        }
+        // no path has been found
+        return false;
+    }
+
+    public int[][] attackMakeCountryNumbers(Country sourceCountry, Country destinationCountry) {
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
+        int[][] countryNumbers = new int[row][column];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (gameCountries.get(i).get(j).getName().equals(sourceCountry.getName())) {
+                    countryNumbers[i][j] = 1;
+                } else if (gameCountries.get(i).get(j).getName().equals(destinationCountry.getName())) {
+                    countryNumbers[i][j] = 2;
+                } else {
+                    countryNumbers[i][j] = 0;
+                }
+            }
+        }
+
+        return countryNumbers;
+    }
+
+    public int[][] fortifyMakeCountryNumbers(Country sourceCountry, Country destinationCountry) {
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
+        int[][] countryNumbers = new int[row][column];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (!gameCountries.get(i).get(j).getBlizzard()) {
+                    if (gameCountries.get(i).get(j).getOwner() != null) {
+                        if (gameCountries.get(i).get(j).getName().equals(sourceCountry.getName())) {
+                            countryNumbers[i][j] = 1;
+                        } else if (gameCountries.get(i).get(j).getName().equals(destinationCountry.getName())) {
+                            countryNumbers[i][j] = 2;
+                        } else if (gameCountries.get(i).get(j).getOwner().getUsername().equals(sourceCountry.getOwner().getUsername())) {
+                            countryNumbers[i][j] = 3;
+                        } else {
+                            countryNumbers[i][j] = 0;
+                        }
+                    }
+                } else {
+                    countryNumbers[i][j] = 0;
+                }
+            }
+        }
+
+        return countryNumbers;
+    }
+
+    public boolean attackNeighbourhoodCheck(Country sourceCountry, Country destinationCountry) {
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
+        int[][] countryNumbers = attackMakeCountryNumbers(sourceCountry, destinationCountry);
+
+        return isPath(countryNumbers, row, column);
+    }
+
+    public boolean fortifyNeighbourhoodCheck(Country sourceCountry, Country destinationCountry) {
+        int row = gameCountries.size();
+        int column = gameCountries.get(0).size();
+        int[][] countryNumbers = fortifyMakeCountryNumbers(sourceCountry, destinationCountry);
+
+        return isPath(countryNumbers, row, column);
+    }
+
+    public String nextPart() {
+        String toPrint = "";
+        if (getPlacementFinished()) {
+            if (draftDone && !attackDone && !fortifyDone) {
+                toPrint = "Draft done, Start Attacking";
+                if (attackDone && !fortifyDone) {
+                    toPrint = "Attack done, Start fortifying";
+                    if (fortifyDone) {
+                        toPrint = "Fortify done, try turn over";
+                    } else {
+                        toPrint = "Please first try to fortify , then use `turn over`";
+                    }
+                } else {
+                    toPrint = "Please first Attack to a country then try next";
+                }
+            } else {
+
+            }
+        } else {
+            if (draftDone) {
+                toPrint = "wanna change your turn? you should use 'turn over'";
+            } else {
+                toPrint = "You should draft your ";
+            }
+        }
+        return toPrint;
+    }
+
+    public boolean checkWinner() {
+        boolean finished = true;
+        boolean toCheck = false;
+        if (players.size() == 1) {
+            toCheck = true;
+        }
+        if (!getPlacementFinished() && !toCheck) {
+            return false;
+        }
+        for (List<Country> countries : gameCountries) {
+            for (Country country : countries) {
+                if (country.getOwner() != null) {
+                    if (!country.getOwner().equals(currentPlayer) && !toCheck) {
+                        finished = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (finished) {
+            this.winner = currentPlayer;
+            this.gameIsPlaying = false;
+            for (Player player : players) {
+                player.resetRequestAndFriends();
+            }
+
+            Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, this.winner,
+                    3 + event.getScore(), 1 + event.getScore() / 2, 0);
+            return true;
+            /*GameLogSummary gameLog = currentPlayer.getGameHistory("Risk");
+            if (gameLog == null) {
+                gameLog = new GameLogSummary("Risk", generateId());
+                currentPlayer.addGameLog(gameLog);
+            }
+            gameLog.updateForWin(3, LocalDateTime.now());
+            Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist.");
+            PlayLog playLog = new PlayLog("Risk", players, currentPlayer, LocalDateTime.now());
+            game.addPlayLog(playLog);
+            for (Player player : players) {
+                if (player.equals(currentPlayer)) {
+                    continue;
+                }
+                gameLog = player.getGameHistory("Risk");
+                if (gameLog == null) {
+                    gameLog = new GameLog("Risk", generateId());
+                    player.addGameLog(gameLog);
+                }
+                gameLog.updateForLoss(0, LocalDateTime.now());
+
+            }
+            if (finished) {
+                return finished;
+            }*/
+        }
+        if (!finished) {
+            finished = true;
+            for (List<Country> countries : gameCountries) {
+                for (Country country : countries) {
+                    if (country.getSoldiers() != 1 && country.getSoldiers() != 0) {
+                        finished = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (finished) {
+            for (Player player : players) {
+                player.resetRequestAndFriends();
+            }
+            this.gameIsPlaying = false;
+            Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,
+                    3 + event.getScore(), 1 + event.getScore() / 2, 0);
+            /*Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist.");
+            PlayLog playLog = new PlayLog("Risk", players, null, LocalDateTime.now());
+            game.addPlayLog(playLog);
+            for (Player player : players) {
+                GameLog gameLog = player.getGameHistory("Risk");
+                if (gameLog == null) {
+                    gameLog = new GameLog("Risk", generateId());
+                    player.addGameLog(gameLog);
+                }
+                gameLog.updateForWin(1, LocalDateTime.now());
+            }
+        }
+        ;
+        return finished;
+    }
+
+    public boolean checkAdditionalPlayers(Player player) {
+        boolean toCheck = true;
+        outerLoop:
+        for (List<Country> countries : gameCountries) {
+            for (Country country : countries) {
+                if (country.getOwner() != null) {
+                    if (country.getOwner().equals(player)) {
+                        toCheck = false;
+                        break outerLoop;
+                    }
+                }
+            }
+        }
+        if (toCheck) {
+            players.remove(player);
+        }
+        return toCheck;
+    }
+
+    public boolean getAttackWon() {
+        return this.attackWon;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayer.getPlayerNumber();
+    }
+
+    public String draftAfterWin(int i, int j, int soldiers) {
+        String toPrint = "";
+        Country destination = getCountryByDetails(i, j);
+        if (soldiers > sourceCountryWinner.getSoldiers() - 1 || soldiers < 1) {
+            toPrint = "Soldiers are not enough or invalid, Please try between one and "
+                    + (sourceCountryWinner.getSoldiers() - 1);
+        } else if (destination.getName().equals("")) {
+            toPrint = "Destination country is not valid";
+        } else {
+            if (!destination.getOwner().equals(getCurrentPlayer())) {
+                toPrint = "This country is not yours";
+            } else {
+                if (destination.equals(this.attackDestination)) {
+                    destination.addSoldiers(soldiers);
+                    sourceCountryWinner.addSoldiers(-1 * soldiers);
+                    toPrint = "" + soldiers + " soldiers added to " + destination.getName() + " successfully";
+                    attackWon = false;
+                    attackDestination = null;
+                    sourceCountryWinner = null;
+                    draftDone = true;
+                    soldierPlacedAfterWin = true;
+                } else {
+                    toPrint = "Please try the previous destination country, not others";
+                }
+            }
+        }
+        return toPrint;
+    }
+
+    public boolean checkCountryIsYours(int i, int j) {
+        if (currentPlayer.equals(gameCountries.get(i - 1).get(j - 1).getOwner())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String addCard() {
+        int rnd = new Random().nextInt(Card.values().length);
+        Card toGetCard = Card.values()[rnd];
+        currentPlayer.addCard(toGetCard);
+        return toGetCard.name();
+    }
+
+    public String showMatchOptions() {
+        String toPrint = "1-type1,type1,type1 score:4" + "\n" +
+                "2-type2,type2,type2 score:6" + "\n" +
+                "3-type3,type3,type3 score:8" + "\n" +
+                "4-type1,type2,type3 score:10" + "\n";
+        return toPrint;
+    }
+
+    public String showWhatToDo() {
+        String toPrint = "";
+        if (!draftDone) {
+            toPrint += "Draft";
+        } else if (!attackDone) {
+            toPrint += "Attack";
+        } else if (!fortifyDone) {
+            toPrint += "Fortify";
+        }
+        return toPrint;
+    }
+
+    public Integer getI() {
+        return i;
+    }
+
+    public void setI(Integer i) {
+        this.i = i;
+    }
+
+    public Integer getJ() {
+        return j;
+    }
+
+    public void setJ(Integer j) {
+        this.j = j;
+    }
+
+    public void deselect() {
+        i = null;
+        j = null;
+    }
+
+    public boolean getCheckRequests() {
+        return currentPlayer.checkPlayerHasRequest() && (!draftDone || !beginDraftDone);
+    }
+
+    public String addRequest(Player player) {
+        if (!player.getRequests().contains(currentPlayer)) {
+            player.addGameRequest(currentPlayer);
+            return "Request sent successfully";
+        } else {
+            return "You have been requested to this player";
+        }
+    }
+
+    public void addFriend(Player player) {
+        player.addGameFriend(player);
+    }
+
+    public void rejectRequest(Player player) {
+        player.rejectRequest(player);
+    }
+
+    public Player getPlayerByPlayerNumber(int number) {
+        for (Player player : players) {
+            if (player.getPlayerNumber() == number) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public void notifSent() {
+        notifSent = true;
+    }
+
+    public void resetNotif() {
+        notifSent = false;
+    }
+
+    public boolean getNotifSent() {
+        return notifSent;
+    }
+
+    public boolean checkCountryIsAlliance(Country destination) {
+        if (destination.getOwner() != null) {
+            if (currentPlayer.getGameFriends().contains(destination.getOwner())) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkTime() {
+        if (System.currentTimeMillis() / 1000L - currentTimeStamp > duration) {
+            mainChangeTurn();
+            currentTimeStamp = System.currentTimeMillis() / 1000L;
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void updateCurrentTime() {
+        currentTimeStamp = System.currentTimeMillis() / 1000L;
+    }
+
+    public void getProgressBar(ProgressBar progressBar) {
+        this.progressBar = progressBar;
+//        timer = new AnimationTimer() {
+//            @Override
+//            public void handle(long now) {
+//                double progressed = Double.valueOf(System.currentTimeMillis() / 1000L - currentTimeStamp) / Double.valueOf(duration);
+//                progressBar.setProgress(progressed);
+//                if (progressed >= 1) {
+//                    mainChangeTurn();
+//                    progressBar.setProgress(0);
+//                }
+//            }
+//        };
+//        timer.start();
+    }
+
+    public void attackAnimation(String result) {
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                Notifications notify = null;
+                Image img = new Image(String.valueOf(getClass().getResource("/images/attack.png")));
+                System.out.println(img);
+                notify = Notifications.create().title("Attack!")
+                        .graphic(new ImageView(img))
+                        .text(result)
+                        .hideAfter(javafx.util.Duration.seconds(2))
+                        .position(Pos.TOP_CENTER);
+                notify.darkStyle();
+                notify.showInformation();
+                notify.graphic(new ImageView(img));
+            }
+        });
+    }
+}
+
+    public void setStartSoldiers() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("setStartSoldiers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+*/
 
 }
