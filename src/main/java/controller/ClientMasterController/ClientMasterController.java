@@ -1647,12 +1647,16 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
     }
-    /*
-
 
     public void setAttackDone(boolean status) {
-        attackDone = status;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(status);
+        Command command = new Command("setAttackDone", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
+
 
     public void setFortifyDone(boolean status) {
         this.fortifyDone = status;
