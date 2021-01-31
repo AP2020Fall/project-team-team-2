@@ -1938,20 +1938,16 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
     }
-/*
-    public String setDurationTime(int number) {
-        String callback = "";
-        if (number <= 0) {
-            callback = "You should choose a number bigger than zero";
-        } else if (number > 75) {
-            callback = "You can't choose a number bigger than 75 seconds";
-        } else {
-            setPrimitiveSettings("Duration", number);
-            callback = "Duration changed to " + number;
-        }
-        return callback;
-    }
 
+    public String setDurationTime(int number) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(number);
+        Command command = new Command("setDurationTime", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+/*
     public void setFogType(boolean type) {
         if(type){
             setPrimitiveSettings("Fog of War", true);
