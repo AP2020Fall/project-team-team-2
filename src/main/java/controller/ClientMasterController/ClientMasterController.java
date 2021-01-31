@@ -1875,37 +1875,16 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
-
-    public void addFriend(Player player) {
-        player.addGameFriend(player);
-    }
-
-    public void rejectRequest(Player player) {
-        player.rejectRequest(player);
-    }
 
     public Player getPlayerByPlayerNumber(int number) {
-        for (Player player : players) {
-            if (player.getPlayerNumber() == number) {
-                return player;
-            }
-        }
-        return null;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(number);
+        Command command = new Command("getPlayerByPlayerNumber", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Player.class);
     }
-
-    public void notifSent() {
-        notifSent = true;
-    }
-
-    public void resetNotif() {
-        notifSent = false;
-    }
-
-    public boolean getNotifSent() {
-        return notifSent;
-    }
-
+    /*
     public boolean checkCountryIsAlliance(Country destination) {
         if (destination.getOwner() != null) {
             if (currentPlayer.getGameFriends().contains(destination.getOwner())) {
