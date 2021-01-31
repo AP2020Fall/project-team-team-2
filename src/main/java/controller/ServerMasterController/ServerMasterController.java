@@ -16,6 +16,12 @@ public class ServerMasterController {
     RiskGameController riskGameController;
     StartGameController startGameController;
 
+    public ServerMasterController(){
+
+        riskGameController = new RiskGameController();
+        startGameController = new StartGameController();
+    }
+
     public Pair<String, String> takeAction(String input) {
         Command command = Command.fromJson(input);
         if (command.getCommand().equals("endConnection")) {
