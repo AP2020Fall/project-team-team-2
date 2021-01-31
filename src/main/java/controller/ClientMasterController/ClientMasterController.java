@@ -1683,12 +1683,15 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Country.class);
     }
-    /*
 
     public String showTurn() {
-        String toPrint = "It's " + currentPlayer.getUsername() + " Player";
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("showTurn", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+    /*
 
     public Player getTurn() {
         return currentPlayer;
