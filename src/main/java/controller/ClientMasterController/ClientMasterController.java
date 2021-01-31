@@ -1432,6 +1432,13 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, int.class);
     }
+
+    public void setStartSoldiers() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("setStartSoldiers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
     /*
 
 
@@ -2353,7 +2360,7 @@ public class ClientMasterController {
             }
             if (finished) {
                 return finished;
-            }*/
+            }
         }
         if (!finished) {
             finished = true;
@@ -2608,12 +2615,6 @@ public class ClientMasterController {
     }
 }
 
-    public void setStartSoldiers() {
-        ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("setStartSoldiers", "controller.risk.RiskGameController"
-                , params, Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
-    }
 
 */
 
