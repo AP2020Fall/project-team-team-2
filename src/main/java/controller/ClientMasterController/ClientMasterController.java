@@ -732,14 +732,14 @@ public class ClientMasterController {
         ArrayList<Message> messages = new Gson().fromJson(answer, new TypeToken<ArrayList<Message>>() {
         }.getType());
         ArrayList<ArrayList<PlatoMessageEntry>> result = new ArrayList<>();
-        java.util.Map<LocalDate, List<Message>> map = new HashMap<LocalDate, List<Message>>();
+        java.util.SortedMap<LocalDate, List<Message>> map = new TreeMap<>();
         for (Message item : messages) {
             List<Message> list = map.get(item.getTime().toLocalDate());
             if (list == null) {
                 list = new ArrayList<Message>();
                 map.put(item.getTime().toLocalDate(), list);
             }
-            list.add(item);
+            list.add(0, item);
         }
         for (Map.Entry<LocalDate, List<Message>> mapEntry : map.entrySet()) {
 
@@ -1266,9 +1266,47 @@ public class ClientMasterController {
 
     public void sendMessage(String text) {
         ArrayList<Object> params = new ArrayList<>();
+        params.add(text);
         Command command = new Command("sendMessage", "controller.admin.AdminMessageViewController"
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public boolean adminHasMessage() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("hasMessage", "controller.admin.AdminMessageViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
+    }
+
+    public ArrayList<ArrayList<PlatoMessageEntry>> adminsMessages() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("platoBotsMessages", "controller.admin.AdminMessageViewController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        ArrayList<Message> messages = new Gson().fromJson(answer, new TypeToken<ArrayList<Message>>() {
+        }.getType());
+        ArrayList<ArrayList<PlatoMessageEntry>> result = new ArrayList<>();
+        java.util.Map<LocalDate, List<Message>> map = new TreeMap<>();
+        for (Message item : messages) {
+            List<Message> list = map.get(item.getTime().toLocalDate());
+            if (list == null) {
+                list = new ArrayList<Message>();
+                map.put(item.getTime().toLocalDate(), list);
+            }
+            list.add(0,item);
+        }
+        for (Map.Entry<LocalDate, List<Message>> mapEntry : map.entrySet()) {
+
+            ArrayList<PlatoMessageEntry> platoMessageEntries = new ArrayList<>();
+            platoMessageEntries.add(new PlatoMessageEntry(mapEntry.getKey()));
+            for (Message message : mapEntry.getValue())
+                platoMessageEntries.add(new PlatoMessageEntry(message));
+            result.add(platoMessageEntries);
+        }
+
+        return result;
     }
 
     //######################## AdminProfileView Commands ########################\\

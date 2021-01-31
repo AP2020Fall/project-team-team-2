@@ -38,7 +38,7 @@ public class ViewHandler {
         try {
             viewStack.peek().show(window);
         } catch (IOException exception) {
-            Logger.getLogger("Show view error");//todo exit
+            System.err.println("Show view error");//todo exit
         }
     }
 

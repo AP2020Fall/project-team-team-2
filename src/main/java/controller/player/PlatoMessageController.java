@@ -16,7 +16,7 @@ public class PlatoMessageController {
     private final Player player;
 
     public PlatoMessageController(ClientInfo clientInfo) {
-        this.player = Player.getPlayerByUsername(clientInfo.getPlayerUsername());
+        this.player = Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
         if (player == null)
             System.err.println("Player passed to PlatoMessageController is null.");
     }
