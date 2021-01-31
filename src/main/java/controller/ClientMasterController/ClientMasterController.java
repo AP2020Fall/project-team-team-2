@@ -1556,26 +1556,16 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, Boolean.class);
     }
 
-    /*
-
     public String matchCards(int type) {
-        String toPrint = "";
-        switch (type) {
-            case 1:
-                toPrint = Card.matchCard(currentPlayer.getCards(), 1, currentPlayer);
-                break;
-            case 2:
-                toPrint = Card.matchCard(currentPlayer.getCards(), 2, currentPlayer);
-                break;
-            case 3:
-                toPrint = Card.matchCard(currentPlayer.getCards(), 3, currentPlayer);
-                break;
-            case 4:
-                toPrint = Card.matchCard(currentPlayer.getCards(), 4, currentPlayer);
-                break;
-        }
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(type);
+        Command command = new Command("matchCards", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+
+    /*
 
     public String showMap() {
         String lineString = "";
