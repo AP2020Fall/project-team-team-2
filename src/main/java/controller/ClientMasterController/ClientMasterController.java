@@ -1671,21 +1671,19 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
 
     public Country getCountryByDetails(int i, int j) {
-        return gameCountries.get(i - 1).get(j - 1);
-//        Country toReturnCountry = new Country();
-//        for (List<Country> countries : this.gameCountries) {
-//            for (Country country : countries) {
-//                if (country.getNumberOfContinentCountry() == countryContinentNumber && country.getContinent()
-//                        .substring(0, 2).toUpperCase().equals(shortName)) {
-//
-//                    toReturnCountry = country;
-//                }
-//            }
-//        }
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        Command command = new Command("getCountryByDetails", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Country.class);
     }
+    /*
 
     public String showTurn() {
         String toPrint = "It's " + currentPlayer.getUsername() + " Player";
