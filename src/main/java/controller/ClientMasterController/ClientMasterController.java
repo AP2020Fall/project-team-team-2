@@ -1714,10 +1714,15 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
+
     public void setPlacementFinished(boolean placementFinished) {
-        this.placementFinished = placementFinished;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(placementFinished);
+        Command command = new Command("setPlacementFinished", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
 
     public int[][] getFogOfWarMap(Player currentPlayer) {
         int row = gameCountries.size();
