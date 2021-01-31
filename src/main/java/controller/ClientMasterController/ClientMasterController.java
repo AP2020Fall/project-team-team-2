@@ -1929,18 +1929,16 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
     }
-/*
-    public String setPlayerNumber(int playerNumber) {
-        String callback = "";
-        if (playerNumber > 3) {
-            callback = "Invalid Number of Player, Please try a number less than 3";
-        } else {
-            setPrimitiveSettings("PlayersNum", playerNumber);
-            callback = "Players Number Set to " + playerNumber;
-        }
-        return callback;
-    }
 
+    public String setPlayerNumber(int playerNumber) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(playerNumber);
+        Command command = new Command("setPlayerNumber", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+/*
     public String setDurationTime(int number) {
         String callback = "";
         if (number <= 0) {
