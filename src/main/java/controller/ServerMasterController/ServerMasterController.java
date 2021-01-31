@@ -7,8 +7,13 @@ import controller.risk.RiskGameController;
 import controller.risk.StartGameController;
 import main.Command;
 import model.Account;
+import model.Event;
+import model.Player;
 import model.RiskGame;
 import org.javatuples.Pair;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class ServerMasterController {
 
@@ -18,8 +23,18 @@ public class ServerMasterController {
 
     public ServerMasterController(){
 
-        riskGameController = new RiskGameController();
-        startGameController = new StartGameController();
+    }
+
+    public void createMatchCardController(Player player) {
+        matchCardController = new MatchCardController(player);
+    }
+
+    public void createRiskGameController(Map<String, Object> primitiveSettings, int soldiers, Event event) {
+        riskGameController = new RiskGameController(primitiveSettings, soldiers, event);
+    }
+
+    public void createStartGameController(ArrayList<Player> players, Event event) {
+        startGameController = new StartGameController(players, event);
     }
 
     public Pair<String, String> takeAction(String input) {
