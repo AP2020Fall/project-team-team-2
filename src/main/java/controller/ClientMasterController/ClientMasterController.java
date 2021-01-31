@@ -1520,7 +1520,7 @@ public class ClientMasterController {
 
     public String next() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("fortify", "controller.admin.RiskGameController"
+        Command command = new Command("next", "controller.admin.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1532,71 +1532,23 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
 
     public String changeTurn() {
-        String toPrint;
-        boolean checkWinner = checkWinner();
-        if (checkWinner) {
-            if (this.winner != null) {
-                toPrint = "Game has been finished." + " " + currentPlayer.getUsername() + " is this winner";
-            } else {
-                toPrint = "Game has been finished in draw.";
-            }
-            return toPrint;
-        }
-        if (!getPlacementFinished()) {
-            if (beginDraftDone) {
-                mainChangeTurn();
-                toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
-                setDraftDone(false);
-                setAttackDone(false);
-                setFortifyDone(false);
-                gotCards = false;
-            } else {
-                toPrint = "You didn't place any soldier, please first try to place a soldier in remain countries.";
-            }
-        } else {
-            if (draftDone) {
-                /*Todo: attack doesn't need to be checked(?)
-                if (attackDone) {
-                    if (fortifyDone) {
-                        turnDone = false;
-                        mainChangeTurn();
-                        toPrint = "Next Turn done successfully, It's " + currentPlayer.getUsername() + " turn";
-                        setDraftDone(false);
-                        setAttackDone(false);
-                        setFortifyDone(false);
-                        gotCards = false;
-                    } else {
-                        toPrint = "You didn't fortify yet.";
-                    }
-                } else {
-                    toPrint = "You didn't attack yet.";
-                }
-            } else {
-                toPrint = "You didn't place any soldier, please first try to place a soldier in your countries.";
-            }
-        }
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("changeTurn", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
 
     public void checkPlacementFinished() {
-        boolean toCheck = true;
-        for (Player player : getPlayers()) {
-            if (player.getDraftSoldiers() != 0) {
-                toCheck = false;
-                break;
-            }
-        }
-        if (toCheck) {
-            placementFinished = true;
-        }
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("checkPlacementFinished", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
 
-    public static java.util.Map<String, Object> getPrimitiveSettings() {
-        return primitiveSettings;
-    }
+    /*
 
     public boolean getPlacementFinished() {
         return this.placementFinished;
