@@ -1979,15 +1979,15 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-/*
-    public void setPlacementType(boolean type) {
-        if(type){
-            setPrimitiveSettings("Placement", true);
-        }else{
-            setPrimitiveSettings("Placement", false);
-        }
-    }
 
+    public void setPlacementType(boolean type) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(type);
+        Command command = new Command("setPlacementType", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+/*
     public void setPrimitiveSettings(String index, Object value) {
         this.primitiveSettings.put(index, value);
     }
