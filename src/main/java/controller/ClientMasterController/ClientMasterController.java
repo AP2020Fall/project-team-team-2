@@ -1707,41 +1707,14 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
     }
-    /*
+
     public void autoPlace() {
-        do {
-            boolean allDone = false;
-            for (Player player : players) {
-                if (player.getDraftSoldiers() != 3) {
-                    allDone = false;
-                    break;
-                } else {
-                    allDone = true;
-                }
-            }
-
-            if (allDone == true) {
-                break;
-            }
-
-            if (currentPlayer.getDraftSoldiers() == 3) {
-                continue;
-            }
-            int rows = gameCountries.size() - 1;
-            int columns = gameCountries.get(0).size() - 1;
-            int randomRow = (int) (Math.random() * (rows - 0 + 1) + 0);
-            int randomColumn = (int) (Math.random() * (columns + 1));
-            Country getRandomCountry = gameCountries.get(randomRow).get(randomColumn);
-            if ((getRandomCountry.getOwner() == null || getRandomCountry.getOwner().equals(currentPlayer)) && !getRandomCountry.getBlizzard()) {
-                getRandomCountry.setOwner(currentPlayer);
-                getRandomCountry.addSoldiers(1);
-                currentPlayer.addDraftSoldier(-1);
-                mainChangeTurn();
-            }
-        } while (true);
-        setPlacementFinished(true);
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("autoPlace", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
-
+    /*
     public void setPlacementFinished(boolean placementFinished) {
         this.placementFinished = placementFinished;
     }
