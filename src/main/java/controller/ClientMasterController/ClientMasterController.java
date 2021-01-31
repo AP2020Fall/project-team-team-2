@@ -1631,12 +1631,15 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
     }
-    /*
 
     public void setDraftDone(boolean status) {
-        draftDone = status;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(status);
+        Command command = new Command("setDraftDone", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
-
+    /*
     public boolean getTurnDone() {
         return turnDone;
     }
