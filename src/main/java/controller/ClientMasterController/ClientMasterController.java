@@ -1797,36 +1797,18 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, int.class);
     }
-    /*
 
     public String draftAfterWin(int i, int j, int soldiers) {
-        String toPrint = "";
-        Country destination = getCountryByDetails(i, j);
-        if (soldiers > sourceCountryWinner.getSoldiers() - 1 || soldiers < 1) {
-            toPrint = "Soldiers are not enough or invalid, Please try between one and "
-                    + (sourceCountryWinner.getSoldiers() - 1);
-        } else if (destination.getName().equals("")) {
-            toPrint = "Destination country is not valid";
-        } else {
-            if (!destination.getOwner().equals(getCurrentPlayer())) {
-                toPrint = "This country is not yours";
-            } else {
-                if (destination.equals(this.attackDestination)) {
-                    destination.addSoldiers(soldiers);
-                    sourceCountryWinner.addSoldiers(-1 * soldiers);
-                    toPrint = "" + soldiers + " soldiers added to " + destination.getName() + " successfully";
-                    attackWon = false;
-                    attackDestination = null;
-                    sourceCountryWinner = null;
-                    draftDone = true;
-                    soldierPlacedAfterWin = true;
-                } else {
-                    toPrint = "Please try the previous destination country, not others";
-                }
-            }
-        }
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        params.add(soldiers);
+        Command command = new Command("draftAfterWin", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+    /*
 
     public boolean checkCountryIsYours(int i, int j) {
         if (currentPlayer.equals(gameCountries.get(i - 1).get(j - 1).getOwner())) {
