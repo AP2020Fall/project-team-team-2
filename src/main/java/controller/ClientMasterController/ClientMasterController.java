@@ -1819,15 +1819,16 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, boolean.class);
     }
 
+    public String addCard() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("addCard", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
     /*
 
-
-    public String addCard() {
-        int rnd = new Random().nextInt(Card.values().length);
-        Card toGetCard = Card.values()[rnd];
-        currentPlayer.addCard(toGetCard);
-        return toGetCard.name();
-    }
 
     public String showMatchOptions() {
         String toPrint = "1-type1,type1,type1 score:4" + "\n" +
