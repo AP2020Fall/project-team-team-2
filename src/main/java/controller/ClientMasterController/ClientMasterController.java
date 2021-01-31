@@ -1399,7 +1399,7 @@ public class ClientMasterController {
         Command command = new Command("getGameCountries", "controller.admin.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer, List<List<>>.class);
+        return new Gson().fromJson(answer, List<List<Country>>.class);
     }
 
     public void makeRobotPlayers() {
