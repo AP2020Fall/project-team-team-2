@@ -1517,37 +1517,15 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
     }
-    /*
 
     public String next() {
-        String toPrint = "";
-        audioClip.stop();
-        if (getPlacementFinished()) {
-            if (soldierPlacedAfterWin) {
-                if (!draftDone) {
-                    toPrint = "Next part, Start Attacking";
-                    draftDone = true;
-                } else if (!attackDone) {
-                    toPrint = "Next part, Start Fortifying";
-                    attackDone = true;
-                } else if (!fortifyDone) {
-                    fortifyDone = true;
-                    toPrint = "Next part, Please try `turn over` to go to next turn";
-                } else {
-                    toPrint = "Try `turn over`";
-                }
-            } else {
-                toPrint = "Please First try to draft in destination country";
-            }
-        } else {
-            if (beginDraftDone) {
-                toPrint = "Draft done, please try next turn icon";
-            } else {
-                toPrint = "You didnt draft any soldier please try draft some";
-            }
-        }
-        return toPrint;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("fortify", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
     }
+    /*
 
     public void mainChangeTurn() {
         int currentTurnIndex = this.players.indexOf(this.currentPlayer);
