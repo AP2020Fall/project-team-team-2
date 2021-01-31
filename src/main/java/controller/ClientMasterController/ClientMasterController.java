@@ -1639,10 +1639,15 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
+
     public boolean getTurnDone() {
-        return turnDone;
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getTurnDone", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
     }
+    /*
 
 
     public void setAttackDone(boolean status) {
