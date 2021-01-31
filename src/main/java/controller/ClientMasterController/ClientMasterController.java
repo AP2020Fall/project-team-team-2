@@ -1573,11 +1573,14 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
-    /*
-
     public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(currentPlayer);
+        Command command = new Command("setCurrentPlayer", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
 
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
