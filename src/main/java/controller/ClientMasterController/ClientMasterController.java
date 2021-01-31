@@ -1489,137 +1489,15 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
     }
-    /*
 
-
-    public String attack(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
-        String toPrint = "";
-        boolean isFriend = false;
-        if (!attackDone) {
-            boolean sourceCountryValid = false;
-            boolean destinationCountryValid = false;
-            Country source = getCountryByDetails(sourceI, sourceJ);
-            Country destination = getCountryByDetails(destI, destJ);
-            isFriend = checkCountryIsAlliance(destination);
-            boolean errorFound = false;
-            if (!source.getName().equals("")) {
-                if (source.getOwner().equals(currentPlayer)) {
-                    sourceCountryValid = true;
-                }
-            }
-            if (!destination.getName().equals("")) {
-                if (destination.getOwner() != null) {
-                    if (!destination.getOwner().equals(currentPlayer)) {
-                        destinationCountryValid = true;
-                    }
-                } else {
-                    destination.setOwner(currentPlayer);
-                    this.attackWon = true;
-                    this.attackDestination = destination;
-                    toPrint += "\nYou now should add one to " + (source.getSoldiers() - 1) + " soldiers to "
-                            + destination.getName();
-                    sourceCountryWinner = source;
-                }
-            }
-            if (!sourceCountryValid && !errorFound) {
-                toPrint = "Source country is not valid";
-                errorFound = true;
-            }
-            if (sourceCountryValid && (!destinationCountryValid || destination.getBlizzard()) && !errorFound) {
-                toPrint = "Destination country is not valid";
-                errorFound = true;
-            }
-            if (sourceCountryValid && destinationCountryValid && (soldiers > source.getSoldiers() || soldiers < 0
-                    || source.getSoldiers() <= 1) && !errorFound) {
-                toPrint = "Soldiers are not enough or not valid";
-                errorFound = true;
-            }
-            if (!draftDone && !errorFound) {
-                toPrint = "Draft didn't completed yet";
-                errorFound = true;
-            }
-            if (isFriend && !errorFound) {
-                toPrint = "This Country is Alliance";
-                errorFound = true;
-            }
-            if (errorFound) {
-
-            } else if (attackNeighbourhoodCheck(source, destination)) {
-                boolean inWar = true;
-                audioClip.play();
-                String result = "";
-                do {
-                    int randomNumberSource = (int) (Math.random() * (6 - 0 + 1)) + 0;
-                    int randomNumberDestination = (int) (Math.random() * (6 - 0 + 1)) + 0;
-                    toPrint = "Source Dice : " + randomNumberSource + " - Destination Dice : " + randomNumberDestination;
-                    if (randomNumberSource > randomNumberDestination) {
-                        destination.addSoldiers(-1);
-                        toPrint = toPrint + " Destination Country Lost 1 soldier! , Destination Soldiers "
-                                + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
-                    } else if (randomNumberDestination > randomNumberSource) {
-                        source.addSoldiers(-1);
-                        soldiers--;
-                        toPrint = toPrint + " Source Country Lost 1 soldier! , Destination Soldiers "
-                                + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
-                    } else {
-                        source.addSoldiers(-1);
-                        soldiers--;
-                        toPrint = toPrint + " Source Country Lost 1 soldier! , Destination Soldiers "
-                                + destination.getSoldiers() + " - Source Soldiers " + source.getSoldiers();
-                    }
-                    if (soldiers == 0 || destination.getSoldiers() == 0 || source.getSoldiers() == 1) {
-                        inWar = false;
-                        if (source.getSoldiers() == 1 || soldiers == 0) {
-                            toPrint = "attack failed";
-                            result = "Failed";
-                        } else {
-                            toPrint = "attack was successful";
-                            result = "Successful";
-                            if (!gotCards) {
-                                toPrint += "\nYou Got new Card!\n : Card " + addCard() + " \nhas been added to you";
-                                gotCards = true;
-                            }
-                            if (source.getSoldiers() == 2) {
-                                source.addSoldiers(-1);
-                                destination.addSoldiers(+1);
-                                Player tempPlayer = destination.getOwner();
-                                destination.setOwner(currentPlayer);
-                                boolean playerDone = checkAdditionalPlayers(tempPlayer);
-                                if (playerDone) {
-                                    addDestinationCardsToSource(source.getOwner(), tempPlayer);
-                                }
-
-                            } else {
-                                Player tempPlayer = destination.getOwner();
-                                destination.setOwner(currentPlayer);
-                                boolean playerDone = checkAdditionalPlayers(tempPlayer);
-                                if (playerDone) {
-                                    addDestinationCardsToSource(source.getOwner(), tempPlayer);
-                                }
-                                this.soldierPlacedAfterWin = false;
-                                this.attackWon = true;
-                                this.attackDestination = destination;
-                                toPrint += "\nYou now should add one to \n" + (source.getSoldiers() - 1) + " soldiers to \n"
-                                        + destination.getName();
-                                sourceCountryWinner = source;
-                                draftDone = false;
-                            }
-                        }
-                        attackAnimation(result);
-                        i = null;
-                        j = null;
-                        deselect();
-                    }
-                } while (inWar);
-            } else {
-                toPrint = "there is not any path between source and destination country";
-            }
-        } else {
-            toPrint = "Attack has been done";
-        }
-        return toPrint;
+    public Boolean getSoldierPlaced() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getSoldierPlaced", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
     }
-
+    /*
     public boolean getSoldierPlaced() {
         return soldierPlacedAfterWin;
     }
