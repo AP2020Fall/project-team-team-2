@@ -44,4 +44,11 @@ public class ClientInfo {
     public void setPlayerUsername(String playerUsername) {
         this.playerUsername = playerUsername;
     }
+
+    public void unsetLoggedInUsername() {
+        loggedInUsername = "";
+        gameName = "";
+        eventId = "";
+        playerUsername = "";
+    }
 }

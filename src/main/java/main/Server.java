@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import model.*;
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -105,7 +106,7 @@ public class Server extends Application {
             while (!Thread.interrupted()) {
                 try {
                     input = dataInputStream.readUTF();
-                    Pair<String, String> answer = controller.takeAction(input);
+                    Triplet<String, String,String> answer = controller.takeAction(input);
                     dataOutputStream.writeUTF(new Gson().toJson(answer));
                     dataOutputStream.flush();
                     System.out.println("[SERVER]: Command: " + input + " was sent.");

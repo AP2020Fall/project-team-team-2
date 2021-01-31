@@ -73,7 +73,7 @@ public class PlayerAccountMenu implements Tab, Initializable {
     @FXML
     private void logout() throws IOException {
         PlayerMainMenuLayout.getAudioClip().stop();
-        //controller.logout();
+        controller.logout();
         TabHandler.getTabHandler().logout();
         ViewHandler.getViewHandler().logout();
     }

@@ -250,6 +250,12 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, Boolean.class);
     }
 
+    public void logout() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("logout", "controller.login.LoginController", params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
     public void delete(String text) {
         ArrayList<Object> params = new ArrayList<>();
         params.add(text);

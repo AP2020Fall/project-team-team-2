@@ -11,13 +11,14 @@ public class Command {
     private final String declaringClass;
     private final ArrayList<Object> params;
     private ClientInfo clientInfo;
+    private String authToken;
 
     public Command(String command, String declaringClass, ArrayList<Object> params, ClientInfo clientInfo) {
         this.command = command;
         this.declaringClass = declaringClass;
         this.params = (ArrayList<Object>) params.clone();
         this.clientInfo = clientInfo;
-
+        this.authToken = Client.getToken();
     }
 
     public static Command fromJson(String json) {
@@ -40,9 +41,13 @@ public class Command {
         return params;
     }
 
+    public String getAuthToken() {
+        return authToken;
+    }
+
     /*public String getDeclaringClass() {
-        return declaringClass;
-    }*/
+            return declaringClass;
+        }*/
     public Class getDeclaringClass() {
         try {
             return Class.forName(declaringClass);

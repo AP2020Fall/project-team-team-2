@@ -1,7 +1,9 @@
 package controller.login;
 
 import controller.Controller;
+import controller.ServerMasterController.ServerMasterController;
 import main.ClientInfo;
+import main.Token;
 import model.Account;
 import model.Admin;
 import model.Player;
@@ -10,10 +12,11 @@ import java.util.Objects;
 
 public class LoginController extends Controller {
     private ClientInfo clientInfo;
-
+    private Token token;
     public LoginController(ClientInfo clientInfo) {
         super(clientInfo);
         this.clientInfo = clientInfo;
+        this.token = ServerMasterController.getCurrentToken();
     }
 
     public void delete(String username) {
@@ -29,9 +32,10 @@ public class LoginController extends Controller {
         //throws NullPointerException if username doesn't exist
         Account loggedIn = Objects.requireNonNull(Account.getAccountByUsername(username),
                 "Username passed to LoginController.login doesn't exist.");
-        if (clientInfo != null) {
+        //if (clientInfo != null) {
             clientInfo.setLoggedInUsername(loggedIn.getUsername());
-        }
+            token.setLogin(loggedIn);
+       // }
         if (loggedIn instanceof Admin) {
             //new AdminMainMenuLayoutController().login((Admin) loggedIn);
             return true;
@@ -40,6 +44,11 @@ public class LoginController extends Controller {
             return false;
         }
         return false;
+    }
+    public void logout()
+    {
+            clientInfo.unsetLoggedInUsername();
+            token.setLogout();
     }
 
 }
