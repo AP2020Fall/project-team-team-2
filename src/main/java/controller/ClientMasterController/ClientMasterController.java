@@ -1616,20 +1616,15 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
-    /*
-
     public void makeCountryEmpty(Player player) {
-        for (List<Country> countries : gameCountries) {
-            for (Country country : countries) {
-                if (country.getOwner() != null) {
-                    if (country.getOwner().equals(player)) {
-                        country.emptyCountry();
-                    }
-                }
-            }
-        }
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        Command command = new Command("makeCountryEmpty", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
 
+    /*
     public boolean getDraftDone() {
         return draftDone;
     }
