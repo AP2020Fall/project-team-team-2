@@ -1655,12 +1655,15 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-    /*
-
 
     public void setFortifyDone(boolean status) {
-        this.fortifyDone = status;
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(status);
+        Command command = new Command("setFortifyDone", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
     }
+    /*
 
     public void matchCardAddSoldiers(int soldiersNumber) {
         matchCardController.incPlayerSoldier(currentPlayer, soldiersNumber);
