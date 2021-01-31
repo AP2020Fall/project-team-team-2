@@ -1843,28 +1843,14 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
+    public boolean getCheckRequests() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getCheckRequests", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
     /*
-
-    public Integer getI() {
-        return i;
-    }
-
-    public void setI(Integer i) {
-        this.i = i;
-    }
-
-    public Integer getJ() {
-        return j;
-    }
-
-    public void setJ(Integer j) {
-        this.j = j;
-    }
-
-    public void deselect() {
-        i = null;
-        j = null;
-    }
 
     public boolean getCheckRequests() {
         return currentPlayer.checkPlayerHasRequest() && (!draftDone || !beginDraftDone);
