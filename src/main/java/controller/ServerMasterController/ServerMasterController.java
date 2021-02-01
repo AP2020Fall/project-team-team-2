@@ -80,6 +80,12 @@ public class ServerMasterController {
 
 
 
+    /* Database Methods */
+    public boolean storeInDatabase(Map<String,Object> input , String tableName){
+        return true;
+    }
+
+
     //######################## MatchCardController Commands ########################\\
 /*
     public void incPlayerSoldier(Player player, int soldierNumber) {
