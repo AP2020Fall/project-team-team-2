@@ -6,17 +6,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConnectToSQL {
-    public static Statement connection() {
+    public static void connection(String query) {
         try (
                 Connection conn = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/riskgamedatabase",
                         "root", "rootpass1");   // For MySQL only
                 Statement stmt = conn.createStatement();
         ) {
-            return stmt;
+            stmt.executeQuery(query);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
     }
 }

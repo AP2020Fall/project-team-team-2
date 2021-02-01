@@ -109,16 +109,7 @@ public class ServerMasterController {
             }
         }
         query += columns+")"+ " VALUES (" + values+")";
-        try (
-                Connection conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/riskgamedatabase",
-                        "root", "rootpass1");   // For MySQL only
-                Statement stmt = conn.createStatement();
-        ) {
-            stmt.executeUpdate(query);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        ConnectToSQL.connection(query);
         return true;
     }
 
