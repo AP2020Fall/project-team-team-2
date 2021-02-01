@@ -35,7 +35,7 @@ import java.util.Map;
 public class ClientMasterController {
     private static ClientMasterController controller;
 
-    private ClientMasterController() {
+    public ClientMasterController() {
     }
 
     public static ClientMasterController getController() {

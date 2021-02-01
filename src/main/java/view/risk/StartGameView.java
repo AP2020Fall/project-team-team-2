@@ -1,5 +1,6 @@
 package view.risk;
 
+import controller.ClientMasterController.ClientMasterController;
 import controller.risk.StartGameController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class StartGameView implements View, Initializable {
-    private StartGameController startGameController;
+    public static ClientMasterController clientMasterController;
+    //private StartGameController startGameController;
     @FXML
     private ToggleButton friendToggle;
     @FXML
@@ -41,7 +43,8 @@ public class StartGameView implements View, Initializable {
 
 
     public StartGameView(ArrayList<Player> players, Event event) {
-        this.startGameController = new StartGameController(players, event);
+        clientMasterController = new ClientMasterController();
+        //this.startGameController = new StartGameController(players, event);
     }
 
     public static boolean checkToggle(boolean inputBoolean) {
