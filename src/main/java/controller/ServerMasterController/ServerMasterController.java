@@ -12,7 +12,12 @@ import model.*;
 import org.javatuples.Pair;
 import view.risk.RiskGameView;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -35,6 +40,11 @@ public class ServerMasterController {
 
     }
 
+    public static void main(String[] args) {
+        Map<String ,Object> newMap = new HashMap<>();
+        newMap.put("first_name" , "Ali");
+        insertInDatabase(newMap , "players");
+    }
     public void createMatchCardController(Player player) {
         matchCardController = new MatchCardController(player);
     }
@@ -81,7 +91,34 @@ public class ServerMasterController {
 
 
     /* Database Methods */
-    public boolean storeInDatabase(Map<String,Object> input , String tableName){
+    public static boolean insertInDatabase(Map<String,Object> inputData , String tableName){
+        String query = "";
+        query += "INSERT INTO " + tableName + " (";
+        int i = 0;
+        String columns = "";
+        String values = "";
+
+        for (Map.Entry<String, Object> entry : inputData.entrySet()) {
+            i++;
+            if(i != inputData.size()){
+                columns += entry.getKey()+",";
+                values += "'"+entry.getValue() + "',";
+            }else {
+                columns += entry.getKey();
+                values += "'" + entry.getValue() + "'";
+            }
+        }
+        query += columns+")"+ " VALUES (" + values+")";
+        try (
+                Connection conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/riskgamedatabase",
+                        "root", "rootpass1");   // For MySQL only
+                Statement stmt = conn.createStatement();
+        ) {
+            stmt.executeUpdate(query);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return true;
     }
 
