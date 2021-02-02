@@ -1478,12 +1478,18 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, boolean.class);
     }
 
-    public ArrayList<Player> getRiskPlayers() {
+    public ObservableList<Player> getRiskPlayers() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getPlayers", "controller.admin.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer, ArrayList<Player>.class);
+        ArrayList<Player> players = new Gson().fromJson(answer, new TypeToken<ArrayList<Player>>() {
+        }.getType());
+        ObservableList<Player> result = FXCollections.observableArrayList();
+        for (Player player : players) {
+            result.add(player);
+        }
+        return result;
     }
 
     public void shapeMap() {
