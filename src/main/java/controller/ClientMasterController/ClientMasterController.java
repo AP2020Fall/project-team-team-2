@@ -1478,6 +1478,14 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, boolean.class);
     }
 
+    public ArrayList<Player> getPlayers() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getPlayers", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, ArrayList<Player>.class);
+    }
+
     public void shapeMap() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("shapeMap", "controller.risk.RiskGameController"
