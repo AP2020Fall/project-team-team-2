@@ -1449,10 +1449,33 @@ public class ClientMasterController {
 
     public int[][] getFogOfWarMap(Player currentPlayer) {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getGameCountries", "controller.admin.RiskGameController"
+        Command command = new Command("getFogOfWarMap", "controller.admin.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, int[][].class);
+    }
+
+
+    public void notifSent() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("notifSent", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void resetNotif() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("resetNotif", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public boolean getNotifSent() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getNotifSent", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
     }
 
     public void shapeMap() {
