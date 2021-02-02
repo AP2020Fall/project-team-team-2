@@ -12,8 +12,8 @@ import model.*;
 import org.javatuples.Pair;
 import view.risk.RiskGameView;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 
 
 import main.Token;
@@ -22,28 +22,49 @@ import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
 import java.nio.channels.Pipe;
+import java.util.Map;
 
 public class ServerMasterController {
-  MatchCardController matchCardController;
+    MatchCardController matchCardController;
     RiskGameController riskGameController;
     StartGameController startGameController;
     private static Token token;
+
     public static Token getCurrentToken() {
         return token;
     }
 
+    public ServerMasterController() {
 
-    public Triplet<String, String,String> takeAction(String input){
+    }
+
+    public static void main(String[] args) throws SQLException {
+        System.out.println(whereLike("first_name", "Al", "players"));
+    }
+
+    public void createMatchCardController(Player player) {
+        matchCardController = new MatchCardController(player);
+    }
+
+    public void createRiskGameController(Map<String, Object> primitiveSettings, int soldiers, Event event) {
+        riskGameController = new RiskGameController(primitiveSettings, soldiers, event);
+    }
+
+    public void createStartGameController(ArrayList<Player> players, Event event) {
+        startGameController = new StartGameController(players, event);
+    }
+
+
+    public Triplet<String, String, String> takeAction(String input) {
         Command command = Command.fromJson(input);
-         token = Token.decrypt(command.getAuthToken());
-        if(!token.validate(command.getClientInfo()))
-        {
-            return new Triplet<>("Token is invalid",new Gson().toJson(command.getClientInfo()),
-                   token.encrypt());
+        token = Token.decrypt(command.getAuthToken());
+        if (!token.validate(command.getClientInfo())) {
+            return new Triplet<>("Token is invalid", new Gson().toJson(command.getClientInfo()),
+                    token.encrypt());
         }
         if (command.getCommand().equals("endConnection")) {
             return new Triplet<>("Connection is terminated.", new Gson().toJson(command.getClientInfo()),
-                   token.encrypt());
+                    token.encrypt());
         }
         if (command.getDeclaringClass() == null)
             return new Triplet<>("", new Gson().toJson(command.getClientInfo()),
@@ -63,12 +84,823 @@ public class ServerMasterController {
     }
 
 
-
-
     /* Database Methods */
-    public boolean storeInDatabase(Map<String,Object> input , String tableName){
-        return true;
+    /* Insert */
+    /* Example
+        Map<String, Object> newMap = new HashMap<>();
+        newMap.put("first_name", "Javad");
+        System.out.println(insertInDatabase(newMap, "players"));
+    */
+    public static boolean insertInDatabase(Map<String, Object> inputData, String tableName) {
+        String query = "";
+        query += "INSERT INTO " + tableName + " (";
+        int i = 0;
+        String columns = "";
+        String values = "";
+
+        for (Map.Entry<String, Object> entry : inputData.entrySet()) {
+            i++;
+            if (i != inputData.size()) {
+                columns += entry.getKey() + ",";
+                values += "'" + entry.getValue() + "',";
+            } else {
+                columns += entry.getKey();
+                values += "'" + entry.getValue() + "'";
+            }
+        }
+
+        Statement stmt = null;
+        query += columns + ")" + " VALUES (" + values + ")";
+        try {
+            Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/riskgamedatabase",
+                    "root", "rootpass1");   // For MySQL only
+            stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            conn.close();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return false;
     }
 
+    /* Select */
+    /* Example
+        Map<String, Object> newMap = new HashMap<>();
+        newMap.put("first_name", "Javad");
+        System.out.println(selectFromDatabase(newMap, "players"));
+    */
+    public static Map<String, List<Object>> selectFromDatabase(Map<String, Object> inputData, String tableName) {
+        String query = "";
+        query += "SELECT * FROM " + tableName;
+        int i = 0;
+        query += " WHERE ";
+
+        for (Map.Entry<String, Object> entry : inputData.entrySet()) {
+            i++;
+            if (i != inputData.size()) {
+                query += entry.getKey() + "=" + "'" + entry.getValue() + "',";
+            } else {
+                query += entry.getKey() + "=" + "'" + entry.getValue() + "'";
+            }
+        }
+
+        Map<String, List<Object>> returnSelectedData = new HashMap<>();
+        Connection conn = null;   // For MySQL only
+        try {
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/riskgamedatabase",
+                    "root", "rootpass1");
+            Statement stmt = null;
+            stmt =conn.createStatement() ;
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData metadata = rs.getMetaData();
+            int columnCount = metadata.getColumnCount();
+
+            ArrayList<String> columns = new ArrayList<>();
+            for (int j = 1; j < columnCount; j++) {
+                String columnName = metadata.getColumnName(j);
+                columns.add(columnName);
+            }
+
+            while(rs.next()){
+                for(String columnName : columns){
+                    if(returnSelectedData.containsKey(columnName)){
+                        returnSelectedData.get(columnName).add(rs.getString(columnName));
+                    }else{
+                        List<Object> tempList = new ArrayList<>();
+                        tempList.add(rs.getString(columnName));
+                        returnSelectedData.put(columnName,tempList);
+                    }
+                }
+            }
+            return returnSelectedData;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    /* Delete */
+
+    /* Example
+        Map<String, Object> newMap = new HashMap<>();
+        newMap.put("first_name", "Javad");
+        System.out.println(deleteFromTable(newMap, "players"));
+    * */
+    public static boolean deleteFromTable(Map<String,Object> inputData , String tableName){
+        String query = "";
+        query += "DELETE FROM " + tableName;
+        int i = 0;
+        query += " WHERE ";
+
+        for (Map.Entry<String, Object> entry : inputData.entrySet()) {
+            i++;
+            if (i != inputData.size()) {
+                query += entry.getKey() + "=" + "'" + entry.getValue() + "',";
+            } else {
+                query += entry.getKey() + "=" + "'" + entry.getValue() + "'";
+            }
+        }
+
+        Map<String, List<Object>> returnSelectedData = new HashMap<>();
+        Connection conn = null;   // For MySQL only
+        try {
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/riskgamedatabase",
+                    "root", "rootpass1");
+            Statement stmt = null;
+            stmt =conn.createStatement() ;
+            stmt.executeUpdate(query);
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+    /* Select */
+    /* Example
+        System.out.println(whereLike("first_name", "Al", "players"));
+    */
+    public static Map<String, List<Object>> whereLike(String inputColumnName,String like, String tableName) {
+        String query = "";
+        query += "SELECT * FROM " + tableName;
+        int i = 0;
+        query += " WHERE " + inputColumnName + " LIKE '%" +like + "%'";
+
+
+
+        Map<String, List<Object>> returnSelectedData = new HashMap<>();
+        Connection conn = null;   // For MySQL only
+        try {
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/riskgamedatabase",
+                    "root", "rootpass1");
+            Statement stmt = null;
+            stmt =conn.createStatement() ;
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData metadata = rs.getMetaData();
+            int columnCount = metadata.getColumnCount();
+
+            ArrayList<String> columns = new ArrayList<>();
+            for (int j = 1; j < columnCount; j++) {
+                String columnName = metadata.getColumnName(j);
+                columns.add(columnName);
+            }
+
+            while(rs.next()){
+                for(String columnName : columns){
+                    if(returnSelectedData.containsKey(columnName)){
+                        returnSelectedData.get(columnName).add(rs.getString(columnName));
+                    }else{
+                        List<Object> tempList = new ArrayList<>();
+                        tempList.add(rs.getString(columnName));
+                        returnSelectedData.put(columnName,tempList);
+                    }
+                }
+            }
+            return returnSelectedData;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+    //######################## MatchCardController Commands ########################\\
+/*
+    public void incPlayerSoldier(Player player, int soldierNumber) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        params.add(soldierNumber);
+        Command command = new Command("incPlayerSoldier", "controller.risk.MatchCardController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+
+    //######################## RiskGameController Commands ########################\\
+
+    public void shapeMap() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("shapeMap", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void makeRobotPlayers() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("makeRobotPlayers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public Boolean getGameIsPlaying() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getGameIsPlaying", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
+    }
+
+    public Boolean getFogStatus() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getFogStatus", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
+    }
+
+    public int getRemainSoldiers() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getRemainSoldiers", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, int.class);
+    }
+
+    public void setStartSoldiers() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("setStartSoldiers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public String draft(int i, int j, int soldiers) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        params.add(soldiers);
+        Command command = new Command("draft", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String beginDraft(int i, int j, int soldiers) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        params.add(soldiers);
+        Command command = new Command("beginDraft", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void checkAllPlayersAdded() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("checkAllPlayersAdded", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public Boolean getAllPlayersAdded() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getAllPlayersAdded", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
+    }
+
+    public String attack(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(sourceI);
+        params.add(sourceJ);
+        params.add(destI);
+        params.add(destJ);
+        params.add(soldiers);
+        Command command = new Command("attack", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public Boolean getSoldierPlaced() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getSoldierPlaced", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
+    }
+
+    public void addDestinationCardsToSource() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("addDestinationCardsToSource", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public String fortify(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(sourceI);
+        params.add(sourceJ);
+        params.add(destI);
+        params.add(destJ);
+        params.add(soldiers);
+        Command command = new Command("fortify", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String next() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("next", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void mainChangeTurn() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("mainChangeTurn", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public String changeTurn() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("changeTurn", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void checkPlacementFinished() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("checkPlacementFinished", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public Boolean getPlacementFinished() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getPlacementFinished", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
+    }
+
+    public String matchCards(int type) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(type);
+        Command command = new Command("matchCards", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String showMap() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("showMap", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(currentPlayer);
+        Command command = new Command("setCurrentPlayer", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(players);
+        Command command = new Command("setPlayers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public Player getCurrentPlayer() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getCurrentPlayer", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Player.class);
+    }
+
+    public String placeSoldier(int i, int j, int soldiers) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        params.add(soldiers);
+        Command command = new Command("placeSoldier", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String leaveTheGame() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("leaveTheGame", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void makeCountryEmpty(Player player) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        Command command = new Command("makeCountryEmpty", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public boolean getDraftDone() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getDraftDone", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
+
+    public void setDraftDone(boolean status) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(status);
+        Command command = new Command("setDraftDone", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public boolean getTurnDone() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getTurnDone", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
+
+    public void setAttackDone(boolean status) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(status);
+        Command command = new Command("setAttackDone", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void setFortifyDone(boolean status) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(status);
+        Command command = new Command("setFortifyDone", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void matchCardAddSoldiers(int soldiersNumber) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(soldiersNumber);
+        Command command = new Command("matchCardAddSoldiers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public Country getCountryByDetails(int i, int j) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        Command command = new Command("getCountryByDetails", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Country.class);
+    }
+
+    public String showTurn() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("showTurn", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public Player getTurn() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getTurn", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Player.class);
+    }
+
+    public String getStatus() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getStatus", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void autoPlace() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("autoPlace", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void setPlacementFinished(boolean placementFinished) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(placementFinished);
+        Command command = new Command("setPlacementFinished", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public int[][] getCountryByDetails(Player currentPlayer) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(currentPlayer);
+        Command command = new Command("getCountryByDetails", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, int[][].class);
+    }
+
+
+    public void changeNumberElement(int i, int j, int[][] inputArray, int number) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        params.add(inputArray);
+        params.add(number);
+        Command command = new Command("changeNumberElement", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void setBlizzard() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("setBlizzard", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public String nextPart() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("nextPart", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public boolean checkWinner() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("checkWinner", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
+
+    public boolean checkAdditionalPlayers(Player player) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        Command command = new Command("checkAdditionalPlayers", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
+
+    public boolean getAttackWon() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getAttackWon", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
+
+    public int getCurrentPlayerIndex() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getCurrentPlayerIndex", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, int.class);
+    }
+
+    public String draftAfterWin(int i, int j, int soldiers) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        params.add(soldiers);
+        Command command = new Command("draftAfterWin", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public boolean checkCountryIsYours(int i, int j) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        params.add(j);
+        Command command = new Command("checkCountryIsYours", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
+
+    public String addCard() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("addCard", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String showMatchOptions() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("showMatchOptions", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String showWhatToDo() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("showWhatToDo", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public boolean getCheckRequests() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getCheckRequests", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
+
+    public String addRequest(Player player) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        Command command = new Command("addRequest", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void addFriend(Player player) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        Command command = new Command("addFriend", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void rejectRequest(Player player) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(player);
+        Command command = new Command("rejectRequest", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public Player getPlayerByPlayerNumber(int number) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(number);
+        Command command = new Command("getPlayerByPlayerNumber", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Player.class);
+    }
+
+    public boolean checkCountryIsAlliance(Country destination) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(destination);
+        Command command = new Command("checkCountryIsAlliance", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
+
+    public boolean checkTime() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("checkTime", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, boolean.class);
+    }
+
+    public void updateCurrentTime() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("updateCurrentTime", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void getProgressBar(ProgressBar progressBar) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(progressBar);
+        Command command = new Command("getProgressBar", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+
+
+    //######################## StartGameController Commands ########################\\
+
+    public RiskGameView startGame() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("startGame", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, RiskGameView.class);
+    }
+
+    public String setMapNumber(int mapNumber) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(mapNumber);
+        Command command = new Command("setMapNumber", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String setPlayerNumber(int playerNumber) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(playerNumber);
+        Command command = new Command("setPlayerNumber", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public String setDurationTime(int number) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(number);
+        Command command = new Command("setDurationTime", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void setFogType(boolean type) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(type);
+        Command command = new Command("setFogType", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public int generateSoldiersNumber(){
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("generateSoldiersNumber", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, int.class);
+    }
+
+    public void setAllianceType(boolean type) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(type);
+        Command command = new Command("setAllianceType", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void setBlizzardsType(boolean type) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(type);
+        Command command = new Command("setBlizzardsType", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void setPlacementType(boolean type) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(type);
+        Command command = new Command("setPlacementType", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void setPrimitiveSettings(String index, Object value) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(index);
+        params.add(value);
+        Command command = new Command("setPrimitiveSettings", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public String generateGameId() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("generateGameId", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, String.class);
+    }
+
+    public void setMapSoldiers(Country country, int soldiers) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(country);
+        params.add(soldiers);
+        Command command = new Command("setMapSoldiers", "controller.risk.StartGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+
+*/
 
 }
