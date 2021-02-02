@@ -22,6 +22,7 @@ public class ServerMasterController {
         String player_id = "12345";
         Map<String,Object> tempMap = new HashMap<>();
         tempMap.put("player_id" , player_id);
+        System.out.println(SQLConnector.selectFromDatabase(tempMap,"players"));
     }
 
     public static void logout() {

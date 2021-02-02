@@ -90,7 +90,7 @@ public abstract class Account extends Application {
         resultMap.put("avatar_address",this.avatar);
         resultMap.put("player_id",this.accountId);
         resultMap.put("bio",this.bio);
-        resultMap.put("is_admin",this.isRobot);
+        resultMap.put("is_admin",this.isRobot ? 1:0);
         return resultMap;
     }
 
