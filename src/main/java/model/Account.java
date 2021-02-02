@@ -76,6 +76,8 @@ public abstract class Account {
         bio = "No bio is given.";
     }
 
+
+
     public String getFirstName() {
         return firstName;
     }
@@ -244,6 +246,11 @@ public abstract class Account {
         } else {
             return createPlayer(thisAccount);
         }
+    }
+
+    public static ArrayList<Player> getAllPlayers() {
+        ArrayList<Player> result = new ArrayList<>();
+        return result;
     }
 
     /*public static ArrayList<Player> getAllPlayers() {

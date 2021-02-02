@@ -51,6 +51,10 @@ public class Player extends Account {
         super(botName, username);
     }
 
+    public static void add(Player player) {
+    }
+
+
     public double getMoney() {
         return money;
     }
@@ -349,7 +353,7 @@ public class Player extends Account {
             iterator.remove();
         }
         suggestions.clear();
-        Account.getAllAccounts().remove(this);
+        //Account.getAllAccounts().remove(this);
 
     }
 

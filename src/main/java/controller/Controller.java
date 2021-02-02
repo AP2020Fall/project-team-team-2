@@ -41,12 +41,7 @@ public class Controller {
     }
 
     public Boolean usernameExist(String username) {
-        for (Account account : Account.getAllAccounts()) {
-            if (account.getUsername().equals(username)) {
-                return true;
-            }
-        }
-        return false;
+        return Account.getAccountByUsername(username) != null;
     }
 
     public Boolean checkEmail(String email) {
@@ -63,10 +58,9 @@ public class Controller {
 
 
     public Boolean usernameAndPasswordMatch(String username, String password) {
-        for (Account account : Account.getAllAccounts()) {
-            if (account.getUsername().equals(username)) {
-                return account.getPassword().equals(password);
-            }
+        Account account = Account.getAccountByUsername(username);
+        if (account != null) {
+            return account.getPassword().equals(password);
         }
         return false;
     }
@@ -131,11 +125,9 @@ public class Controller {
     }
 
     public Boolean isUsernamePlayer(String username) {
-        for (Account account : Account.getAllAccounts()) {
-            if (account.getUsername().equals(username) && account instanceof Player) {
-                return true;
-            }
-        }
+        Account account = Account.getAccountByUsername(username);
+        if(account != null)
+            return account instanceof Player;
         return false;
     }
 
