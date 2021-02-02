@@ -95,11 +95,11 @@ public abstract class Account extends Application {
     }
 
 
-    private Map<String, List<Object>> SQLGetCurrentPlayer()
+    private List<Map<String, Object>> SQLGetCurrentPlayer()
     {
         java.util.Map<String, Object> newMap = new HashMap<>();
         newMap.put("player_id", this.accountId);
-        Map<String, List<Object>> thisAccount =
+        List<Map<String, Object>> thisAccount =
                 SQLConnector.selectFromDatabase(newMap, "players");
         System.out.println(thisAccount);
         if(thisAccount == null || thisAccount.isEmpty())
@@ -117,7 +117,8 @@ public abstract class Account extends Application {
     }
     public  String getImageURL()
     {
-        Map<String,List<Object>> accountData = this.SQLGetCurrentPlayer();
+        List<Map<String,Object>> accountData = this.SQLGetCurrentPlayer();
+        /* ToDo */
         if(accountData != null) {
             System.out.println(accountData);
             return (String) accountData.get("avatar_address").get(0);
