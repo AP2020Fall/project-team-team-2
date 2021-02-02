@@ -44,7 +44,7 @@ public class Client extends Application {
     @Override
     public void start(Stage primaryStage) {
         clientInfo = new ClientInfo();
-        token = "";
+        token = new Token().encrypt();
         initializeConnector();
         primaryStage.setOnCloseRequest(event -> {
             connector.getController().endConnection();

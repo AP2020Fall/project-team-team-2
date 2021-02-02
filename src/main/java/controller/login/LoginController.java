@@ -1,5 +1,6 @@
 package controller.login;
 
+import com.google.gson.Gson;
 import controller.Controller;
 import controller.ServerMasterController.ServerMasterController;
 import main.ClientInfo;
@@ -13,6 +14,7 @@ import java.util.Objects;
 public class LoginController extends Controller {
     private ClientInfo clientInfo;
     private Token token;
+
     public LoginController(ClientInfo clientInfo) {
         super(clientInfo);
         this.clientInfo = clientInfo;
@@ -33,9 +35,9 @@ public class LoginController extends Controller {
         Account loggedIn = Objects.requireNonNull(Account.getAccountByUsername(username),
                 "Username passed to LoginController.login doesn't exist.");
         //if (clientInfo != null) {
-            clientInfo.setLoggedInUsername(loggedIn.getUsername());
-            token.setLogin(loggedIn);
-       // }
+        clientInfo.setLoggedInUsername(loggedIn.getUsername());
+        token.setLogin(loggedIn);
+        // }
         if (loggedIn instanceof Admin) {
             //new AdminMainMenuLayoutController().login((Admin) loggedIn);
             return true;
@@ -45,10 +47,11 @@ public class LoginController extends Controller {
         }
         return false;
     }
-    public void logout()
-    {
-            clientInfo.unsetLoggedInUsername();
-            token.setLogout();
+
+    public void logout() {
+        clientInfo.unsetLoggedInUsername();
+        token.setLogout();
+        ServerMasterController.logout();
     }
 
 }
