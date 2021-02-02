@@ -63,9 +63,7 @@ public class RiskGameController extends Controller {
     }
 
     public RiskGameController(java.util.Map<String, Object> primitiveSettings, int soldiers, Event event) {
-        //todo remove
         super(Client.getClientInfo());
-        //todo remove
         this.primitiveSettings = primitiveSettings;
         this.event = event;
         this.players = (ArrayList<Player>) primitiveSettings.get("Players");
@@ -507,7 +505,6 @@ public class RiskGameController extends Controller {
             }
         } else {
             if (draftDone) {
-                /*Todo: attack doesn't need to be checked(?)*/
                 if (attackDone) {
                     if (fortifyDone) {
                         turnDone = false;

@@ -32,7 +32,20 @@ public class ServerMasterController {
     }
 
     public static void main(String[] args) throws SQLException {
-        System.out.println(whereLike("first_name", "Al", "players"));
+        /*
+        Get Admin Messages
+            Map<String, Object> newMap = new HashMap<>();
+            newMap.put("is_admin", "1");
+            String admin_id =(String) (selectFromDatabase(newMap, "players").get("player_id").get(0));
+            newMap.clear();
+            newMap.put("account_id" , admin_id);
+            System.out.println(selectFromDatabase(newMap,"messages"));
+        */
+        Map<String, Object> newMap = new HashMap<>();
+        newMap.put("status", GameLogStates.DRAWN);
+        newMap.put("game_name","Salam");
+        System.out.println(insertInDatabase(newMap,"game_log"));
+
     }
 
     public static void logout() {
@@ -93,7 +106,6 @@ public class ServerMasterController {
                 values += "'" + entry.getValue() + "'";
             }
         }
-
         Statement stmt = null;
         query += columns + ")" + " VALUES (" + values + ")";
         try {
@@ -145,7 +157,7 @@ public class ServerMasterController {
             int columnCount = metadata.getColumnCount();
 
             ArrayList<String> columns = new ArrayList<>();
-            for (int j = 1; j < columnCount; j++) {
+            for (int j = 1; j <= columnCount; j++) {
                 String columnName = metadata.getColumnName(j);
                 columns.add(columnName);
             }
@@ -184,7 +196,7 @@ public class ServerMasterController {
         for (Map.Entry<String, Object> entry : inputData.entrySet()) {
             i++;
             if (i != inputData.size()) {
-                query += entry.getKey() + "=" + "'" + entry.getValue() + "',";
+                query += entry.getKey() + "=" + "'" + entry.getValue() + "' AND ";
             } else {
                 query += entry.getKey() + "=" + "'" + entry.getValue() + "'";
             }
@@ -192,6 +204,7 @@ public class ServerMasterController {
 
         Map<String, List<Object>> returnSelectedData = new HashMap<>();
         Connection conn = null;   // For MySQL only
+        System.out.println(query);
         try {
             conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/riskgamedatabase",
@@ -228,12 +241,12 @@ public class ServerMasterController {
             ResultSet rs = stmt.executeQuery(query);
             ResultSetMetaData metadata = rs.getMetaData();
             int columnCount = metadata.getColumnCount();
-
             ArrayList<String> columns = new ArrayList<>();
-            for (int j = 1; j < columnCount; j++) {
+            for (int j = 1; j <= columnCount; j++) {
                 String columnName = metadata.getColumnName(j);
                 columns.add(columnName);
             }
+
 
             while(rs.next()){
                 for(String columnName : columns){
