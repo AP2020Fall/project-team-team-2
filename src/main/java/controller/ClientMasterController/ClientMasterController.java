@@ -1444,7 +1444,13 @@ public class ClientMasterController {
         Command command = new Command("getGameCountries", "controller.admin.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer, List<List<Country>>.class);
+        List<List<Country>> gameCountries = new Gson().fromJson(answer, new TypeToken<List<List<Country>>>() {
+        }.getType());
+        ObservableList<List<Country>> result = FXCollections.observableArrayList();
+        for (List<Country> listCountries : gameCountries) {
+            result.add(listCountries);
+        }
+        return result;
     }
 
     public int[][] getFogOfWarMap(Player currentPlayer) {
