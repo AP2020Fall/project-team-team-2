@@ -1431,6 +1431,14 @@ public class ClientMasterController {
 
     //######################## RiskGameController Commands ########################\\
 
+    public static java.util.Map<String, Object> getPrimitiveSettings() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getGameIsPlaying", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, java.util.Map<String, Object>.class);
+    }
+
     public void shapeMap() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("shapeMap", "controller.risk.RiskGameController"
@@ -1945,6 +1953,46 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
+
+    public Integer getI() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getI", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Integer.class);
+    }
+
+    public void setI(Integer i) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(i);
+        Command command = new Command("setI", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+
+    public Integer getJ() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getJ", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Integer.class);
+    }
+
+    public void setJ(Integer j) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(j);
+        Command command = new Command("setJ", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void deselect() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("deselect", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
 
 
     //######################## StartGameController Commands ########################\\

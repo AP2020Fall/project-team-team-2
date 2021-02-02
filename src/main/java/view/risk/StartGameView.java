@@ -86,9 +86,9 @@ public class StartGameView implements View, Initializable {
         chooseMapNumber(mapNum.getText());
         changeDurationTime(limitTimeNum.getText());
         changePlayersNumber(playerNum.getText());
-        int mapNum = (int) startGameController.getPrimitiveSettings().get("Map Number");
+        int mapNum = (int) clientMasterController.getPrimitiveSettings().get("Map Number");
         if (mapNum <= 10 && mapNum >= 1) {
-            ViewHandler.getViewHandler().push(this.startGameController.startGame());
+            ViewHandler.getViewHandler().push(this.clientMasterController.startGame());
         }
     }
 
@@ -102,37 +102,37 @@ public class StartGameView implements View, Initializable {
 
     public void changePlayersNumber(String strNumber) {
         int playerNumber = Integer.parseInt(strNumber);
-        String callback = startGameController.setPlayerNumber(playerNumber);
+        String callback = clientMasterController.setPlayerNumber(playerNumber);
         System.out.println(callback);
 
     }
 
     public void chooseMapNumber(String strNumber) {
         int mapNumber = Integer.parseInt(strNumber);
-        String callback = startGameController.setMapNumber(mapNumber);
+        String callback = clientMasterController.setMapNumber(mapNumber);
         System.out.println(callback);
     }
 
     public void changeDurationTime(String strNumber) {
         int number = Integer.parseInt(strNumber);
-        String callback = startGameController.setDurationTime(number);
+        String callback = clientMasterController.setDurationTime(number);
         System.out.println(callback);
     }
 
     public void placementType(boolean type) {
-        startGameController.setPlacementType(type);
+        clientMasterController.setPlacementType(type);
     }
 
     public void allianceType(boolean selected) {
-        startGameController.setAllianceType(selected);
+        clientMasterController.setAllianceType(selected);
     }
 
     public void blizzardsType(boolean type) {
-        startGameController.setBlizzardsType(type);
+        clientMasterController.setBlizzardsType(type);
     }
 
     public void fogsType(boolean type) {
-        startGameController.setFogType(type);
+        clientMasterController.setFogType(type);
     }
 
     @Override
