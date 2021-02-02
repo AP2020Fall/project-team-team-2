@@ -1436,7 +1436,9 @@ public class ClientMasterController {
         Command command = new Command("getPrimitiveSettings", "controller.admin.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer, java.util.Map<String, Object>.class);
+        java.util.Map<String, Object> primitiveSettings = new Gson().fromJson(answer, new TypeToken<java.util.Map<String, Object>>() {
+        }.getType());
+        return primitiveSettings;
     }
 
     public List<List<Country>> getGameCountries() {
