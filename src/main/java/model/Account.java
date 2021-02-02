@@ -2,8 +2,12 @@ package model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import controller.ServerMasterController.SQLConnector;
+import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import main.Server;
 
 import javax.imageio.ImageIO;
 import javax.swing.text.html.ImageView;
@@ -17,9 +21,12 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-public abstract class Account {
+public abstract class Account extends Application {
     protected static ArrayList<Account> allAccounts = new ArrayList<>();
     private static String rememberMeUsername;
     private static String rememberMePassword;
@@ -58,14 +65,65 @@ public abstract class Account {
     public static void setRememberMeUsername(String rememberMeUsername) {
         Account.rememberMeUsername = rememberMeUsername;
     }
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        System.out.println("shit happened here");
+    }
+
+    public static void main(String[] args) {
+        Account test = new Player("Emad","Zing","Emad","12345","bye","Emad.z","434311",
+                4.0);
+        SQLConnector.insertInDatabase(test.SQLAccountToMap(),"players");
+        System.out.println(test.getImageURL());
+    }
+
+    private Map<String,Object> SQLAccountToMap()
+    {
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("first_name",this.firstName);
+        resultMap.put("last_name",this.lastName);
+        resultMap.put("username",this.username);
+        resultMap.put("hash_password",this.password);
+        resultMap.put("email_address",this.email);
+        resultMap.put("phone_number",this.phoneNumber);
+        resultMap.put("register_date",this.registerDay);
+        resultMap.put("avatar_address",this.avatar);
+        resultMap.put("player_id",this.accountId);
+        resultMap.put("bio",this.bio);
+        resultMap.put("is_admin",this.isRobot);
+        return resultMap;
+    }
+
+
+    private Map<String, List<Object>> SQLGetCurrentPlayer()
+    {
+        java.util.Map<String, Object> newMap = new HashMap<>();
+        newMap.put("player_id", this.accountId);
+        Map<String, List<Object>> thisAccount =
+                SQLConnector.selectFromDatabase(newMap, "players");
+        System.out.println(thisAccount);
+        if(thisAccount == null || thisAccount.isEmpty())
+        {
+            System.err.println("Not a valid entry");
+            return null;
+        }
+        return thisAccount;
+    }
 
     public Image getImage() {
-        File file = new File("database\\accounts\\images\\" + accountId + ".jpg");
-        return new Image(file.toURI().toString());
+        return new Image(getImageURL());
+        //File file = new File("database\\accounts\\images\\" + accountId + ".jpg");
+        //return new Image(file.toURI().toString());
     }
     public  String getImageURL()
     {
-        return avatar;
+        Map<String,List<Object>> accountData = this.SQLGetCurrentPlayer();
+        if(accountData != null) {
+            System.out.println(accountData);
+            return (String) accountData.get("avatar_address").get(0);
+        }
+        return "";
+        //return avatar;
     }
 
 

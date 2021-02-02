@@ -1,6 +1,7 @@
 package main;
 
 import com.google.gson.Gson;
+import controller.ServerMasterController.SQLConnector;
 import controller.ServerMasterController.ServerMasterController;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -15,6 +16,7 @@ import java.util.Scanner;
 
 public class Server extends Application {
     private static final int PORT_NUMBER = 6660;
+    private final SQLConnector SQL_CONNECTOR = new SQLConnector();
     private static Server server;
 
     public Server() {
@@ -25,6 +27,12 @@ public class Server extends Application {
             return server = new Server();
         return server;
     }
+    public SQLConnector getSQL()
+    {
+        return SQL_CONNECTOR;
+    }
+
+
 
     //todo make it non javafx
     public static void main(String[] args) throws IOException {
