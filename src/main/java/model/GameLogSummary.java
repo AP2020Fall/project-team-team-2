@@ -20,6 +20,12 @@ public class GameLogSummary {
         this.score = 0;
         gameLogs = new ArrayList<>();
     }
+
+    public static GameLogSummary getGameLogSummaryById(String gameLogSummaryId) {
+        //todo
+        return new GameLogSummary("fee","feafswe");
+    }
+
     public int getFrequency() {
         return frequency;
     }

@@ -1,30 +1,19 @@
 package model;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import controller.ServerMasterController.SQLConnector;
-import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import javafx.stage.Stage;
-import main.Server;
 
 import javax.imageio.ImageIO;
-import javax.swing.text.html.ImageView;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public abstract class Account {
     private static String rememberMeUsername;
@@ -38,8 +27,8 @@ public abstract class Account {
     private String email;
     private String phoneNumber;
     private LocalDate registerDay;
-    private boolean isAdmin = false;
-    private boolean isRobot = false;
+    private final boolean isAdmin;
+    private final boolean isRobot = false;
     private String avatar;
 
     public static String getRememberMePassword() {
@@ -61,9 +50,11 @@ public abstract class Account {
     public Account(String botName, String username) {
         this.firstName = botName;
         this.username = username;
+        this.isAdmin = false;
     }
 
-    public Account(String firstName, String lastName, String accountName, String accountId, String password, String email, String phoneNumber) {
+    public Account(String firstName, String lastName, String accountName, String accountId, String password,
+                   String email, String phoneNumber,boolean isAdmin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = accountName;
@@ -74,8 +65,8 @@ public abstract class Account {
         setImage("/images/blankProfile.jpg");
         registerDay = LocalDate.now();
         bio = "No bio is given.";
+        this.isAdmin = isAdmin;
     }
-
 
 
     public String getFirstName() {
@@ -114,6 +105,10 @@ public abstract class Account {
         return (int) ChronoUnit.DAYS.between(registerDay, LocalDate.now());
     }
 
+    public LocalDate getRegisterDay() {
+        return registerDay;
+    }
+
     public Image getImage() {
         return new Image(getImageURL());
         //File file = new File("database\\accounts\\images\\" + accountId + ".jpg");
@@ -132,102 +127,102 @@ public abstract class Account {
 
     public void setBio(String bio) {
         this.bio = bio;
+        editField("bio", bio);
     }
 
     public void setPassword(String password) {
-
         this.password = password;
+        editField("hash_password", password);
     }
 
     public void setEmail(String email) {
         this.email = email;
+        editField("email_address", email);
+
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        editField("phone_number", phoneNumber);
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+        editField("first_name", firstName);
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+        editField("last_name", lastName);
     }
 
     public void setUsername(String username) {
         this.username = username;
+        editField("username", username);
     }
 
     public void setImage(String url) {
         this.avatar = saveImageToFile(new Image(url), this.accountId);
+        editField("avatar_address", this.avatar);
     }
 
     public boolean isAdmin() {
         return isAdmin;
     }
 
-    private Map<String, Object> SQLAccountToMap() {
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("first_name", this.firstName);
-        resultMap.put("last_name", this.lastName);
-        resultMap.put("username", this.username);
-        resultMap.put("hash_password", this.password);
-        resultMap.put("email_address", this.email);
-        resultMap.put("phone_number", this.phoneNumber);
-        resultMap.put("register_date", this.registerDay.toString());
-        resultMap.put("avatar_address", this.avatar);
-        resultMap.put("player_id", this.accountId);
-        resultMap.put("bio", this.bio);
-        resultMap.put("is_admin", isAdmin ? 1 : 0);
-        return resultMap;
-    }
-    private static Admin createAdmin(Map<String,List<Object>> admin)
-    {
-        return new Admin((String) admin.get("first_name").get(0), (String) admin.get("last_name").get(0),
-                (String) admin.get("username").get(0), (String) admin.get("player_id").get(0),
-                (String) admin.get("hash_password").get(0), (String) admin.get("email_address").get(0),
-                (String) admin.get("phone_number").get(0));
+    public void editField(String field, String value) {
+        Map<String, Object> conditionMap = new HashMap<>();
+        conditionMap.put("player_id", this.accountId);
+        Map<String, Object> newValueMap = new HashMap<>();
+        newValueMap.put(field, value);
+        SQLConnector.updateTable(conditionMap, newValueMap, "players");
     }
 
-    private static Player createPlayer(Map<String, List<Object>> player) {
-        return new Player((String) player.get("first_name").get(0), (String) player.get("last_name").get(0),
-                (String) player.get("username").get(0), (String) player.get("player_id").get(0),
-                (String) player.get("hash_password").get(0), (String) player.get("email_address").get(0),
-                (String) player.get("phone_number").get(0),(Double) player.get("money").get(0));
+    private static Admin createAdmin(Map<String, Object> admin) {
+        return new Admin((String) admin.get("first_name"), (String) admin.get("last_name"),
+                (String) admin.get("username"), (String) admin.get("player_id"),
+                (String) admin.get("hash_password"), (String) admin.get("email_address"),
+                (String) admin.get("phone_number"));
+    }
+
+    private static Player createPlayer(Map<String, Object> player) {
+        return new Player((String) player.get("first_name"), (String) player.get("last_name"),
+                (String) player.get("username"), (String) player.get("player_id"),
+                (String) player.get("hash_password"), (String) player.get("email_address"),
+                (String) player.get("phone_number"), (Double) player.get("money"));
     }
 
 
     public static Admin getAdmin() {
         java.util.Map<String, Object> newMap = new HashMap<>();
         newMap.put("is_admin", 1);
-        Map<String, List<Object>> thisAccount =
+        List<Map<String, Object>> allAccounts =
                 SQLConnector.selectFromDatabase(newMap, "players");
-        if (thisAccount == null || thisAccount.isEmpty()) {
-            System.err.println("[DATABASE]: Admin entry couldn't be found");
+        if (allAccounts == null || allAccounts.isEmpty()) {
+            System.out.println("[MODEL]: Admin entry couldn't be found");
             return null;
         }
-        return createAdmin(thisAccount);
+        return createAdmin(allAccounts.get(0));
     }
 
-    private static Map<String, List<Object>> SQLAccountSearch(String column,String value) {
+    private static Map<String, Object> SQLAccountSearch(String column, String value) {
         java.util.Map<String, Object> newMap = new HashMap<>();
         newMap.put(column, value);
-        Map<String, List<Object>> thisAccount =
+        List<Map<String, Object>> thisAccount =
                 SQLConnector.selectFromDatabase(newMap, "players");
         if (thisAccount == null || thisAccount.isEmpty()) {
-            System.err.println("[MODEL]: Account with " + column + " = " + value + " couldn't be found");
+            System.out.println("[MODEL]: Account with " + column + " = " + value + " couldn't be found");
             return null;
         }
-        return thisAccount;
+        return thisAccount.get(0);
     }
 
     public static Account getAccountByUsername(String username) {
-        Map<String, List<Object>> thisAccount = SQLAccountSearch("username", username);
+        Map<String, Object> thisAccount = SQLAccountSearch("username", username);
         if (thisAccount == null || thisAccount.isEmpty()) {
             return null;
         }
-        if (thisAccount.get("is_admin").get(0).equals(1)) {
+        if (thisAccount.get("is_admin").equals(1)) {
             return createAdmin(thisAccount);
         } else {
             return createPlayer(thisAccount);
@@ -235,13 +230,12 @@ public abstract class Account {
     }
 
 
-
     public static Account getAccountById(String id) {
-        Map<String, List<Object>> thisAccount = SQLAccountSearch("player_id", id);
+        Map<String, Object> thisAccount = SQLAccountSearch("player_id", id);
         if (thisAccount == null || thisAccount.isEmpty()) {
             return null;
         }
-        if (thisAccount.get("is_admin").get(0).equals(1)) {
+        if (thisAccount.get("is_admin").equals(1)) {
             return createAdmin(thisAccount);
         } else {
             return createPlayer(thisAccount);
@@ -250,6 +244,12 @@ public abstract class Account {
 
     public static ArrayList<Player> getAllPlayers() {
         ArrayList<Player> result = new ArrayList<>();
+        java.util.Map<String, Object> newMap = new HashMap<>();
+        newMap.put("is_admin", 0);
+        List<Map<String, Object>> thisAccount =
+                SQLConnector.selectFromDatabase(newMap, "players");
+        for (Map<String, Object> account : thisAccount)
+            result.add(createPlayer(account));
         return result;
     }
 
@@ -382,4 +382,5 @@ public abstract class Account {
                         "\nphoneNumber: " + phoneNumber + "\n"
                 ;
     }
+
 }
