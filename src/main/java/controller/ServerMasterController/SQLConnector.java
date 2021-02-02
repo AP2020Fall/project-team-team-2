@@ -63,7 +63,7 @@ public class SQLConnector {
         newMap.put("first_name", "Javad");
         System.out.println(selectFromDatabase(newMap, "players"));
     */
-    public static Map<String, List<Object>> selectFromDatabase(Map<String, Object> inputData, String tableName) {
+    public static List<Map<String, Object>> selectFromDatabase(Map<String, Object> inputData, String tableName) {
         String query = "";
         query += "SELECT * FROM " + tableName;
         int i = 0;
@@ -78,7 +78,7 @@ public class SQLConnector {
             }
         }
 
-        Map<String, List<Object>> returnSelectedData = new HashMap<>();
+        List<Map<String, Object>> returnSelectedData = new ArrayList<>();
         Connection conn = null;   // For MySQL only
         try {
             conn = DriverManager.getConnection(
@@ -97,15 +97,11 @@ public class SQLConnector {
             }
 
             while(rs.next()){
+                Map<String , Object> tempMap = new HashMap<>();
                 for(String columnName : columns){
-                    if(returnSelectedData.containsKey(columnName)){
-                        returnSelectedData.get(columnName).add(rs.getString(columnName));
-                    }else{
-                        List<Object> tempList = new ArrayList<>();
-                        tempList.add(rs.getString(columnName));
-                        returnSelectedData.put(columnName,tempList);
-                    }
+                    tempMap.put(columnName,rs.getString(columnName));
                 }
+                returnSelectedData.add(tempMap);
             }
             return returnSelectedData;
         } catch (SQLException throwables) {
@@ -156,7 +152,7 @@ public class SQLConnector {
     /* Example
         System.out.println(whereLike("first_name", "Al", "players"));
     */
-    public static Map<String, List<Object>> whereLike(String inputColumnName,String like, String tableName) {
+    public static List<Map<String, Object>> whereLike(String inputColumnName,String like, String tableName) {
         String query = "";
         query += "SELECT * FROM " + tableName;
         int i = 0;
@@ -164,7 +160,7 @@ public class SQLConnector {
 
 
 
-        Map<String, List<Object>> returnSelectedData = new HashMap<>();
+        List<Map<String, Object>> returnSelectedData = new ArrayList<>();
         Connection conn = null;   // For MySQL only
         try {
             conn = DriverManager.getConnection(
@@ -183,15 +179,11 @@ public class SQLConnector {
 
 
             while(rs.next()){
+                Map<String,Object> tempMap = new HashMap<>();
                 for(String columnName : columns){
-                    if(returnSelectedData.containsKey(columnName)){
-                        returnSelectedData.get(columnName).add(rs.getString(columnName));
-                    }else{
-                        List<Object> tempList = new ArrayList<>();
-                        tempList.add(rs.getString(columnName));
-                        returnSelectedData.put(columnName,tempList);
-                    }
+                    tempMap.put(columnName , rs.getString(columnName));
                 }
+                returnSelectedData.add(tempMap);
             }
             return returnSelectedData;
         } catch (SQLException throwables) {
