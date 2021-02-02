@@ -1478,7 +1478,7 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, boolean.class);
     }
 
-    public ArrayList<Player> getPlayers() {
+    public ArrayList<Player> getRiskPlayers() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getPlayers", "controller.admin.RiskGameController"
                 , params, Client.getClientInfo());

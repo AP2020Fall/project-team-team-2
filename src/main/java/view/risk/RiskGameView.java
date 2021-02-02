@@ -806,7 +806,7 @@ public class RiskGameView implements View, Initializable {
 
         String playerImageAddress = "/images/player_";
         int bigCircleSize = 0;
-        if (clientMasterController.getPlayers().size() <= 3) {
+        if (clientMasterController.getRiskPlayers().size() <= 3) {
             bigCircleSize = 100;
         } else {
             bigCircleSize = 60;
@@ -814,7 +814,7 @@ public class RiskGameView implements View, Initializable {
         rightVBox.getChildren().clear();
         playerLabels.clear();
         playersCircles.clear();
-        for (Player player : clientMasterController.getPlayers()) {
+        for (Player player : clientMasterController.getRiskPlayers()) {
             Image friendImage = new Image(String.valueOf(getClass().getResource("/images/friend.png")));
             Circle friendCircle = new Circle(20);
             friendCircle.setFill(new ImagePattern(friendImage));
@@ -855,7 +855,7 @@ public class RiskGameView implements View, Initializable {
     public void updatePlayerLabels() {
         int i = 0;
         for (Label label : playerLabels) {
-            label.setText(String.valueOf(clientMasterController.getPlayers().get(i).getDraftSoldiers()));
+            label.setText(String.valueOf(clientMasterController.getRiskPlayers().get(i).getDraftSoldiers()));
             i++;
         }
     }
