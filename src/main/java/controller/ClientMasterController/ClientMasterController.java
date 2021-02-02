@@ -1447,6 +1447,14 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, List<List<Country>>.class);
     }
 
+    public int[][] getFogOfWarMap(Player currentPlayer) {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getGameCountries", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, int[][].class);
+    }
+
     public void shapeMap() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("shapeMap", "controller.risk.RiskGameController"
