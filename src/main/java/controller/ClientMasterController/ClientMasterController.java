@@ -1433,10 +1433,18 @@ public class ClientMasterController {
 
     public static java.util.Map<String, Object> getPrimitiveSettings() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getGameIsPlaying", "controller.admin.RiskGameController"
+        Command command = new Command("getPrimitiveSettings", "controller.admin.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, java.util.Map<String, Object>.class);
+    }
+
+    public List<List<Country>> getGameCountries() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getGameCountries", "controller.admin.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, List<List<Country>>.class);
     }
 
     public void shapeMap() {
