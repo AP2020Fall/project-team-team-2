@@ -203,4 +203,21 @@ public class SQLConnector {
         }
         return null;
     }
+    public static Map<String,Object> toMap(String... inputs){
+        Map<String, Object> returnMap = new HashMap<>();
+        int i = 0 ;
+        String columnName = "";
+        String value = "";
+        for(String input :inputs){
+            i++;
+            if(i%2 ==1){
+                /*Column Name*/
+                columnName = input;
+            }else{
+                value = input;
+                returnMap.put(columnName,value);
+            }
+        }
+        return returnMap;
+    }
 }
