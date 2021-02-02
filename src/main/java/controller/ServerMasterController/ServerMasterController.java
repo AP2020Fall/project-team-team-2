@@ -35,10 +35,15 @@ public class ServerMasterController {
         System.out.println(whereLike("first_name", "Al", "players"));
     }
 
+    public static void logout() {
+        token = new Token();
+    }
+
     public Triplet<String, String, String> takeAction(String input) {
         Command command = Command.fromJson(input);
-        token = Token.decrypt(command.getAuthToken());
-        if (!token.validate(command.getClientInfo())) {
+        token = Token.validate(command.getAuthToken(),command.getClientInfo());
+        if (token.isTokenFalse()) {
+
             return new Triplet<>("Token is invalid", new Gson().toJson(command.getClientInfo()),
                     token.encrypt());
         }
