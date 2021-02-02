@@ -10,15 +10,11 @@ import java.util.Map;
 
 public class SQLConnector {
     public static void main(String[] args) throws SQLException {
-        /*
-        Get Admin Messages
-            Map<String, Object> newMap = new HashMap<>();
-            newMap.put("is_admin", "1");
-            String admin_id =(String) (selectFromDatabase(newMap, "players").get("player_id").get(0));
-            newMap.clear();
-            newMap.put("account_id" , admin_id);
-            System.out.println(selectFromDatabase(newMap,"messages"));
-        */
+        Map<String, Object> newMap = new HashMap<>();
+        Map<String, Object> newMap2 = new HashMap<>();
+        newMap.put("first_name", "Ali");
+        newMap2.put("hash_password","new_Password");
+        System.out.println(updateTable(newMap,newMap2,"players"));
     }
     /* Database Methods */
     /* Insert */
@@ -202,6 +198,42 @@ public class SQLConnector {
             throwables.printStackTrace();
         }
         return null;
+    }
+    /* Edit (Update) */
+    public static boolean updateTable(Map<String,Object> conditions,Map<String,Object> newValues , String tableName){
+        String query = "UPDATE " + tableName + " SET ";
+        int i = 0;
+        for(Map.Entry<String, Object> entry : newValues.entrySet()){
+            i++;
+            if(i == newValues.size()){
+                query += entry.getKey() + "='" + entry.getValue()+"'";
+            }else{
+                query += entry.getKey() + "='" + entry.getValue() +"',";
+            }
+        }
+        query += " WHERE ";
+        i = 0;
+        for(Map.Entry<String, Object> entry : conditions.entrySet()){
+            i++;
+            if(i == conditions.size()){
+                query += entry.getKey() + "='" + entry.getValue()+"'";
+            }else{
+                query += entry.getKey() + "='" + entry.getValue() +"' AND ";
+            }
+        }
+        Statement stmt = null;
+        try {
+            Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/riskgamedatabase",
+                    "root", "rootpass1");   // For MySQL only
+            stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            conn.close();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
     }
     public static Map<String,Object> toMap(String... inputs){
         Map<String, Object> returnMap = new HashMap<>();
