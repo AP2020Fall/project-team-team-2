@@ -30,7 +30,7 @@ public class FriendRequest {
         friendId = (String) friendRequest.get("friend_id");
         playerId = (String) friendRequest.get("player_id");
         friendRequestId = (String) friendRequest.get("friend_request_id");
-        accepted = (FriendRequestState) friendRequest.get("status");
+        accepted = FriendRequestState.valueOf((String) friendRequest.get("status"));
     }
 
     public Player getFriend() {
@@ -57,7 +57,7 @@ public class FriendRequest {
         resultMap.put("player_id", this.playerId);
         resultMap.put("friend_request_id", this.friendRequestId);
         resultMap.put("status", this.accepted);
-        SQLConnector.insertInDatabase(resultMap,"players");
+        SQLConnector.insertInDatabase(resultMap,"friend_requests");
     }
 
     /*public static void open() throws FileNotFoundException {

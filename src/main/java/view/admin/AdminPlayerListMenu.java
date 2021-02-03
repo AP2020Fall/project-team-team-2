@@ -48,10 +48,11 @@ public class AdminPlayerListMenu implements Tab, Initializable {
         playerAvatar.setCellValueFactory(new PropertyValueFactory<>("avatar"));
         TableColumn<PlayerEntry, String> playerName = new TableColumn<>("Name");
         playerName.setCellValueFactory(new PropertyValueFactory<>("name"));
-
+        TableColumn<PlayerEntry, String> playerStatus = new TableColumn<>("Status");
+        playerStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         playerList.setPlaceholder(new Label("No player has registered."));
         playerList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        playerList.getColumns().addAll(playerAvatar, playerName);
+        playerList.getColumns().addAll(playerAvatar, playerName,playerStatus);
         playerList.getItems().addAll(controller.getPlayers());
     }
 

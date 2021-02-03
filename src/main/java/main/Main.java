@@ -19,7 +19,7 @@ public class Main extends Application {
             //Account.open();
             //Event.open();
             //Suggestion.open();
-            Game.open();
+            //Game.open();
            // FriendRequest.open();
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,7 +32,7 @@ public class Main extends Application {
             //Account.save();
            // Event.save();
             //Suggestion.save();
-            Game.save();
+            //.save();
            // FriendRequest.save();
         } catch (Exception e) {
             e.getStackTrace();

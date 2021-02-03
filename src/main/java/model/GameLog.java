@@ -39,7 +39,7 @@ public class GameLog {
         gameName = (String)gameLog.get("game_name");
         enemyUsernames =new Gson().fromJson((String) gameLog.get("enemies"), new TypeToken<ArrayList<String>>() {
         }.getType());
-        result = (GameLogStates) gameLog.get("status");
+        result = GameLogStates.valueOf((String) gameLog.get("status"));
         gameLogId = (String)gameLog.get("game_log_id");
         timeFinished = LocalDateTime.parse( (String)gameLog.get("time_finished"));
     }

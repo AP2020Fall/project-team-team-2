@@ -40,6 +40,7 @@ public class LoginController extends Controller {
         //if (clientInfo != null) {
         clientInfo.setLoggedInUsername(loggedIn.getUsername());
         token.setLogin(loggedIn);
+        loggedIn.setStatus("Online");
         // }
         if (loggedIn instanceof Admin) {
             //new AdminMainMenuLayoutController().login((Admin) loggedIn);
@@ -52,6 +53,8 @@ public class LoginController extends Controller {
     }
 
     public void logout() {
+        Account loggedIn = Account.getAccountByUsername(clientInfo.getLoggedInUsername());
+        if(loggedIn != null) loggedIn.setStatus("Offline");
         clientInfo.unsetLoggedInUsername();
         token.setLogout();
         ServerMasterController.logout();

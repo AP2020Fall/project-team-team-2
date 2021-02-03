@@ -86,7 +86,7 @@ public class Player extends Account {
         resultMap.put("received_friend_request", new Gson().toJson(player.getSQLReceivedFriendRequests()));
         resultMap.put("sent_friend_request", new Gson().toJson(player.getSQLSentFriendRequests()));
         resultMap.put("player_messages", new Gson().toJson(player.getSQLMessages()));
-        resultMap.put("favourite_games", new Gson().toJson(player.getSQLFavouriteGames()));
+        resultMap.put("favourite_game", new Gson().toJson(player.getSQLFavouriteGames()));
         resultMap.put("suggestions", new Gson().toJson(player.getSQLSuggestions()));
         SQLConnector.insertInDatabase(resultMap, "players");
 
@@ -244,10 +244,12 @@ public class Player extends Account {
 
     public void addFriend(Player friend) {
         friends.add(friend.getUsername());
+        editField("friends",new Gson().toJson(friends));
     }
 
     public void removeFriend(Player friend) {
         friends.remove(friend.getUsername());
+        editField("friends",new Gson().toJson(friends));
     }
 
 
@@ -269,10 +271,12 @@ public class Player extends Account {
 
     public void addReceivedFriendRequest(FriendRequest friendRequest) {
         receivedFriendRequests.add(friendRequest.getFriendRequestId());
+        editField("received_friend_request",new Gson().toJson(receivedFriendRequests));
     }
 
     public void addSentFriendRequest(FriendRequest friendRequest) {
         sentFriendRequests.add(friendRequest.getFriendRequestId());
+        editField("sent_friend_request",new Gson().toJson(sentFriendRequests));
     }
 
     public FriendRequest getFriendRequestByUsername(String username) {
@@ -288,10 +292,12 @@ public class Player extends Account {
 
     public void removeReceivedFriendRequest(FriendRequest friendRequest) {
         receivedFriendRequests.remove(friendRequest.getFriendRequestId());
+        editField("received_friend_request",new Gson().toJson(receivedFriendRequests));
     }
 
     public void removeSentFriendRequest(FriendRequest friendRequest) {
         sentFriendRequests.remove(friendRequest.getFriendRequestId());
+        editField("sent_friend_request",new Gson().toJson(sentFriendRequests));
     }
 
 
