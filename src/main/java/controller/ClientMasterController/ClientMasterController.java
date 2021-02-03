@@ -965,6 +965,14 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return  new Gson().fromJson(answer, Boolean.class);
     }
+    public ArrayList<Player> getReadyPlayers()
+    {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getReadyPlayers", "controller.player.PlayerAvailableGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return  new Gson().fromJson(answer,new TypeToken<ArrayList<Player>>() {}.getType());
+    }
 
     //######################## AdminEventMenu Commands ########################\\
 

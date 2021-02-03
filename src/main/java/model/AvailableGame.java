@@ -60,7 +60,7 @@ public class AvailableGame {
     }
 
     public Boolean playerJoin(Player loggedIn) {
-        if((int) primitiveSetting.get("PlayersNum") < joinedPlayers.size()) {
+        if( Math.round((Double) primitiveSetting.get("PlayersNum")) < joinedPlayers.size()) {
             joinedPlayers.add(loggedIn);
             return true;
         }
@@ -69,6 +69,7 @@ public class AvailableGame {
 
     public void playerQuit(Player player) {
         joinedPlayers.remove(player);
+        readyPlayers.remove(player);
         if(joinedPlayers.isEmpty())
             availableGames.remove(this);
     }
@@ -78,10 +79,10 @@ public class AvailableGame {
             readyPlayers.add(player);
     }
     public boolean allReady() {
-        if ((int) primitiveSetting.get("PlayersNum") == readyPlayers.size()) {
-            return true;
-        }
-        return false;
+        return  Math.round((Double) primitiveSetting.get("PlayersNum")) == readyPlayers.size();
     }
 
+    public ArrayList<Player> getReadyPlayers() {
+        return readyPlayers;
+    }
 }

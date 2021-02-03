@@ -81,6 +81,7 @@ public class PlayerAvailableGameView implements Tab, Initializable {
     @FXML
     void playerReady() {
         controller.playerReady();
+
     }
 
 

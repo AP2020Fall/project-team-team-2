@@ -34,4 +34,9 @@ public class PlayerAvailableGameController {
     {
         return availableGame.allReady();
     }
+
+    public ArrayList<Player> getReadyPlayers()
+    {
+        return availableGame.getReadyPlayers();
+    }
 }
