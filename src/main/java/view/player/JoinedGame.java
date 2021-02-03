@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -13,6 +14,8 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.Player;
 import view.View;
+import view.ViewHandler;
+import view.login.LoginMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,11 +30,12 @@ public class JoinedGame implements View, Initializable {
         players.add(new Player("name","safmkl23"));
         players.add(new Player("name","safmkl3"));
         players.add(new Player("name","safmkl4"));
-        new JoinedGame(players);
+        ViewHandler.getViewHandler().push(new JoinedGame(players));
     }
     @FXML
     public static HBox hBoxContainer;
     public static List<Player> joinedPlayers;
+    private Button back;
     public JoinedGame(List<Player> joinedPlayers){
         JoinedGame.joinedPlayers = joinedPlayers;
     }
@@ -62,6 +66,9 @@ public class JoinedGame implements View, Initializable {
             playerVBox.setSpacing(30);
             JoinedGame.hBoxContainer.getChildren().add(playerVBox);
         }
+    }
+    @FXML
+    public void leaveTheGame(){
 
     }
 }
