@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 public class PlayerAvailableGameView implements Tab, Initializable {
 
     @FXML
-    public static HBox hBoxContainer;
+    public HBox hBoxContainer;
     @FXML
     private Button back;
 
@@ -47,10 +47,10 @@ public class PlayerAvailableGameView implements Tab, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //updateVBox();
+        updateVBox();
     }
     public void updateVBox(){
-        PlayerAvailableGameView.hBoxContainer.getChildren().clear();
+        hBoxContainer.getChildren().clear();
         for(Player player: controller.getJoinedPlayers()) {
             Circle circle = new Circle(60);
             circle.setFill(new ImagePattern(player.getImage()));
@@ -58,7 +58,7 @@ public class PlayerAvailableGameView implements Tab, Initializable {
             VBox playerVBox = new VBox(circle,playerName);
             playerVBox.setAlignment(Pos.CENTER);
             playerVBox.setSpacing(30);
-            PlayerAvailableGameView.hBoxContainer.getChildren().add(playerVBox);
+            hBoxContainer.getChildren().add(playerVBox);
         }
     }
 
