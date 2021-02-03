@@ -16,7 +16,7 @@ public class Main extends Application {
 
     private static void openFiles() {
         try {
-            Account.open();
+            //Account.open();
             Event.open();
             Suggestion.open();
             Game.open();
@@ -29,7 +29,7 @@ public class Main extends Application {
 
     private static void saveFiles() {
         try {
-            Account.save();
+            //Account.save();
             Event.save();
             Suggestion.save();
             Game.save();

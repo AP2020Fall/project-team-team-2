@@ -44,7 +44,7 @@ public class RegisterController extends Controller {
         Player player = new Player(additionalInfo.get(0), additionalInfo.get(1), username, generateId(),
                 password, additionalInfo.get(3), additionalInfo.get(2),
                 Double.parseDouble(additionalInfo.get(4)));
-        Account.getAllAccounts().add(player);
+        Player.add(player);
         return player;
     }
 
@@ -52,7 +52,7 @@ public class RegisterController extends Controller {
         //creates an admin object and returns it
         Admin admin = new Admin(additionalInfo.get(0), additionalInfo.get(1), username,
                 generateId(), password, additionalInfo.get(3), additionalInfo.get(2));
-        Account.getAllAccounts().add(admin);
+        Admin.add(admin);
         return admin;
     }
 

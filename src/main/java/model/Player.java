@@ -1,31 +1,27 @@
 package model;
 
+import com.google.gson.Gson;
 import controller.Controller;
+import controller.ServerMasterController.SQLConnector;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
+import java.util.Map;
 
 public class Player extends Account {
     private double money;
-    private int score;
-    private int loses;
-    private int wins;
-    private int draws;
-    private ArrayList<GameLogSummary> gameLogSummaries;
+    private ArrayList<String> gameLogSummaries;
     private ArrayList<String> friends;
     private ArrayList<String> receivedFriendRequests;
     private ArrayList<String> sentFriendRequests;
-    private ArrayList<Message> messages;
+    private ArrayList<String> messages;
     private ArrayList<String> favouriteGames;
     private ArrayList<String> suggestions;
 
 
 
-    private transient ArrayList<Card> cards = new ArrayList<Card>();
+    private transient ArrayList<Card> cards = new ArrayList<>();
     private transient int newSoldiers;
     private transient int playerNumber;
     private transient int draftSoldiers = 0;
@@ -34,9 +30,9 @@ public class Player extends Account {
 
     public Player(String firstName, String lastName, String username, String accountId,
                   String password, String email, String phoneNumber, double money) {
-        super(firstName, lastName, username, accountId, password, email, phoneNumber);
+        super(firstName, lastName, username, accountId, password, email, phoneNumber,false);
         this.money = money;
-        this.score = 0;
+        //this.score = 0;
         gameLogSummaries = new ArrayList<>();
         friends = new ArrayList<>();
         receivedFriendRequests = new ArrayList<>();
@@ -51,13 +47,72 @@ public class Player extends Account {
         super(botName, username);
     }
 
+    public static void add(Player player) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("first_name", player.getFirstName());
+        resultMap.put("last_name", player.getLastName());
+        resultMap.put("username", player.getUsername());
+        resultMap.put("hash_password", player.getPassword());
+        resultMap.put("email_address", player.getEmail());
+        resultMap.put("phone_number", player.getPhoneNumber());
+        resultMap.put("register_date", player.getRegisterDay().toString());
+        resultMap.put("avatar_address", player.getImageURL());
+        resultMap.put("player_id", player.getAccountId());
+        resultMap.put("bio", player.getBio());
+        resultMap.put("is_admin", player.isAdmin() ? 1 : 0);
+        resultMap.put("money",String.valueOf(player.getMoney()));
+        resultMap.put("game_log_summaries",new Gson().toJson(player.getSQLGameLogSummaries()));
+        resultMap.put("friends",new Gson().toJson(player.getSQLFriends()));
+        resultMap.put("received_friend_request",new Gson().toJson(player.getSQLReceivedFriendRequests()));
+        resultMap.put("sent_friend_request",new Gson().toJson(player.getSQLSentFriendRequests()));
+        resultMap.put("player_messages",new Gson().toJson(player.getSQLMessages()));
+        resultMap.put("favourite_games",new Gson().toJson(player.getSQLFavouriteGames()));
+        resultMap.put("suggestions",new Gson().toJson(player.getSQLSuggestions()));
+
+        SQLConnector.insertInDatabase(resultMap, "players");
+
+    }
+
+    public ArrayList<String > getSQLGameLogSummaries()
+    {
+        return gameLogSummaries;
+    }
+
+    public ArrayList<String > getSQLFriends()
+    {
+        return friends;
+    }
+    public ArrayList<String > getSQLReceivedFriendRequests()
+    {
+        return receivedFriendRequests;
+    }
+    public ArrayList<String > getSQLSentFriendRequests()
+    {
+        return sentFriendRequests;
+    }
+    public ArrayList<String > getSQLMessages()
+    {
+        return messages;
+    }
+    public ArrayList<String > getSQLFavouriteGames()
+    {
+        return favouriteGames;
+    }
+    public ArrayList<String > getSQLSuggestions()
+    {
+        return suggestions;
+    }
+
+
+
+
     public double getMoney() {
         return money;
     }
 
     public int getScore() {
         int result = 0;
-       for(GameLogSummary gameLogSummary: gameLogSummaries)
+       for(GameLogSummary gameLogSummary: this.getGameLogSummaries())
            result += gameLogSummary.getScore();
        return result;
     }
@@ -66,25 +121,28 @@ public class Player extends Account {
         this.money = money;
     }
 
-    public void setScore(int score) {
+    /* public void setScore(int score) {
         this.score += score;
-    }
+    }*/
 
     public ArrayList<GameLogSummary> getGameLogSummaries() {
-        return gameLogSummaries;
+        ArrayList<GameLogSummary> result = new ArrayList<>();
+        for (String gameLogSummaryId: gameLogSummaries)
+            result.add(GameLogSummary.getGameLogSummaryById(gameLogSummaryId));
+        return result;
     }
 
 
     public GameLogSummary getGameLogLastGamePlayed() {
-        if (gameLogSummaries.isEmpty()) {
+        if (this.getGameLogSummaries().isEmpty()) {
             return null;
         }
-        gameLogSummaries.sort((a, b) -> b.getLastPlay().compareTo(a.getLastPlay()));
-        return gameLogSummaries.get(0);
+        this.getGameLogSummaries().sort((a, b) -> b.getLastPlay().compareTo(a.getLastPlay()));
+        return this.getGameLogSummaries().get(0);
     }
 
     public GameLogSummary getGameHistory(String gameName) {
-        for (GameLogSummary gameLogSummary : gameLogSummaries)
+        for (GameLogSummary gameLogSummary : this.getGameLogSummaries())
             if (gameLogSummary.getGameName().equals(gameName))
                 return gameLogSummary;
         return null;
@@ -137,11 +195,19 @@ public class Player extends Account {
     }
 
     private void addGameLogSummary(GameLogSummary gameLog) {
-        gameLogSummaries.add(gameLog);
+        gameLogSummaries.add(gameLog.getGameLogSummaryId());
+        editField("game_log_summaries",new Gson().toJson(gameLogSummaries));
     }
 
     public void removeGameLog(Game game) {
-        gameLogSummaries.removeIf(o -> o.getGameName().equals(game.getName()));
+        //todo make it better if it doesnt work
+        ArrayList<GameLogSummary> checker = this.getGameLogSummaries();
+        for (int i = 0 ; i < checker.size(); i++)
+        {
+            if(checker.get(i).getGameName().equals(game.getName()))
+                gameLogSummaries.remove(i);
+        }
+        editField("game_log_summaries",new Gson().toJson(gameLogSummaries));
     }
 
 
@@ -254,8 +320,13 @@ public class Player extends Account {
 
 
     public ArrayList<Message> getMessages() {
-        Collections.sort(messages);
-        return messages;
+        ArrayList<Message> result = new ArrayList<>();
+        for(String messageId:messages)
+        {
+            result.add(Message.getMessageById(messageId));
+        }
+        Collections.sort(result);
+        return result;
     }
 
 
@@ -293,7 +364,7 @@ public class Player extends Account {
 
     public int getNumberOfWins() {
         int wins = 0;
-        for (GameLogSummary gameLogSummary : gameLogSummaries)
+        for (GameLogSummary gameLogSummary : this.getGameLogSummaries())
             wins += gameLogSummary.getWins();
         return wins;
     }
@@ -349,7 +420,7 @@ public class Player extends Account {
             iterator.remove();
         }
         suggestions.clear();
-        Account.getAllAccounts().remove(this);
+        //Account.getAllAccounts().remove(this);
 
     }
 
@@ -423,7 +494,7 @@ public class Player extends Account {
         numbers[2] = number3;
         return numbers;
     }
-
+/*
     public void setDraws() {
         this.draws++;
     }
@@ -435,7 +506,7 @@ public class Player extends Account {
     public void setLoses() {
         this.loses++;
     }
-
+*/
     public void addGameRequest(Player player){
         requests.add(player);
     }
@@ -469,4 +540,6 @@ public class Player extends Account {
         this.cards = new ArrayList<Card>();
     }
 
+    public void addMessage(String messageId) {
+    }
 }
