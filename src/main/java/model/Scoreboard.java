@@ -59,12 +59,12 @@ public class Scoreboard {
 
     public void updateScoreboard(PlayLog playLog) {
         //create an entry for every player and increment the number of times they play.
-        for(Player player: playLog.getPlayers())
+        for(String player: playLog.getPlayers())
         {
-            Entry entry = findPlayerEntry(player.getUsername());
+            Entry entry = findPlayerEntry(player);
             if(entry == null)
             {
-                entries.add(new Entry(player.getUsername(),0,1));
+                entries.add(new Entry(player,0,1));
             }
             else
             {
@@ -73,7 +73,7 @@ public class Scoreboard {
         }
         //increment the wins of the winner
         if(playLog.getWinner() != null) {
-            Entry entry = Objects.requireNonNull(findPlayerEntry(playLog.getWinner().getUsername()),
+            Entry entry = Objects.requireNonNull(findPlayerEntry(playLog.getWinner()),
                     "Invalid PlayLog has been passed to Scoreboard.");
             entry.setWins(entry.getWins() + 1);
         }

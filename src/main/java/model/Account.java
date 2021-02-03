@@ -28,6 +28,7 @@ public abstract class Account {
     private String phoneNumber;
     private LocalDate registerDay;
     private final boolean isAdmin;
+    private String status;
     private final boolean isRobot = false;
     private String avatar;
 
@@ -54,7 +55,7 @@ public abstract class Account {
     }
 
     public Account(String firstName, String lastName, String accountName, String accountId, String password,
-                   String email, String phoneNumber,boolean isAdmin) {
+                   String email, String phoneNumber, boolean isAdmin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = accountName;
@@ -68,11 +69,10 @@ public abstract class Account {
         this.isAdmin = isAdmin;
     }
 
-    public Account(Map<String,Object> map)
-    {
+    public Account(Map<String, Object> map) {
         this.firstName = (String) map.get("first_name");
         this.lastName = (String) map.get("last_name");
-        this.username = (String)map.get("last_name");
+        this.username = (String) map.get("username");
         this.accountId = (String) map.get("player_id");
         this.password = (String) map.get("hash_password");
         this.email = (String) map.get("email_address");
@@ -81,6 +81,7 @@ public abstract class Account {
         this.registerDay = LocalDate.parse((String) map.get("register_date"));
         this.bio = (String) map.get("bio");
         this.isAdmin = String.valueOf(map.get("is_admin")).equals("1");
+        this.status = (String) map.get("status");
     }
 
 
@@ -126,18 +127,14 @@ public abstract class Account {
 
     public Image getImage() {
         return new Image(getImageURL());
-        //File file = new File("database\\accounts\\images\\" + accountId + ".jpg");
-        //return new Image(file.toURI().toString());
     }
 
     public String getImageURL() {
-       /* Map<String, List<Object>> accountData = this.SQLGetCurrentPlayer();
-        if (accountData != null) {
-            System.out.println(accountData);
-            return (String) accountData.get("avatar_address").get(0);
-        }
-        return "";*/
         return avatar;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public void setBio(String bio) {
@@ -181,6 +178,11 @@ public abstract class Account {
         editField("avatar_address", this.avatar);
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+        editField("status", this.status);
+    }
+
     public boolean isAdmin() {
         return isAdmin;
     }
@@ -203,7 +205,6 @@ public abstract class Account {
             System.out.println("[MODEL]: Admin entry couldn't be found");
             return null;
         }
-        System.out.println("fsewfewefeq");
         return new Admin(allAccounts.get(0));
     }
 
@@ -221,7 +222,6 @@ public abstract class Account {
 
     public static Account getAccountByUsername(String username) {
         Map<String, Object> thisAccount = SQLAccountSearch("username", username);
-        System.out.println(thisAccount);
         if (thisAccount == null || thisAccount.isEmpty()) {
             return null;
         }
@@ -244,6 +244,7 @@ public abstract class Account {
             return new Player(thisAccount);
         }
     }
+
 
     public static ArrayList<Player> getAllPlayers() {
         ArrayList<Player> result = new ArrayList<>();

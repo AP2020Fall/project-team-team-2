@@ -40,8 +40,8 @@ public class Server extends Application {
         try {
            // Account.open();
            // Event.open();
-            Suggestion.open();
-            Game.open();
+            //Suggestion.open();
+            //Game.open();
            // FriendRequest.open();
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,8 +53,8 @@ public class Server extends Application {
         try {
             //Account.save();
             //Event.save();
-            Suggestion.save();
-            Game.save();
+            //Suggestion.save();
+            //Game.save();
             //FriendRequest.save();
         } catch (Exception e) {
             e.getStackTrace();

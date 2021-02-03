@@ -1,6 +1,7 @@
 package model;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import controller.Controller;
 import controller.ServerMasterController.SQLConnector;
 
@@ -21,7 +22,6 @@ public class Player extends Account {
     private ArrayList<String> suggestions;
 
 
-
     private transient ArrayList<Card> cards = new ArrayList<>();
     private transient int newSoldiers;
     private transient int playerNumber;
@@ -31,9 +31,8 @@ public class Player extends Account {
 
     public Player(String firstName, String lastName, String username, String accountId,
                   String password, String email, String phoneNumber, double money) {
-        super(firstName, lastName, username, accountId, password, email, phoneNumber,false);
+        super(firstName, lastName, username, accountId, password, email, phoneNumber, false);
         this.money = money;
-        //this.score = 0;
         gameLogSummaries = new ArrayList<>();
         friends = new ArrayList<>();
         receivedFriendRequests = new ArrayList<>();
@@ -50,6 +49,21 @@ public class Player extends Account {
 
     public Player(Map<String, Object> player) {
         super(player);
+        this.money = Double.parseDouble((String) player.get("money"));
+        gameLogSummaries = new Gson().fromJson((String) player.get("game_log_summaries")
+                , new TypeToken<ArrayList<String>>() {}.getType());
+        friends =  new Gson().fromJson((String) player.get("friends")
+                , new TypeToken<ArrayList<String>>() {}.getType());
+        receivedFriendRequests =  new Gson().fromJson((String) player.get("received_friend_request")
+                , new TypeToken<ArrayList<String>>() {}.getType());
+        sentFriendRequests =  new Gson().fromJson((String) player.get("sent_friend_request")
+                , new TypeToken<ArrayList<String>>() {}.getType());
+        messages =  new Gson().fromJson((String) player.get("player_messages")
+                , new TypeToken<ArrayList<String>>() {}.getType());
+        favouriteGames =  new Gson().fromJson((String) player.get("favourite_game")
+                , new TypeToken<ArrayList<String>>() {}.getType());
+        suggestions =  new Gson().fromJson((String) player.get("suggestions")
+                , new TypeToken<ArrayList<String>>() {}.getType());
     }
 
     public static void add(Player player) {
@@ -65,51 +79,46 @@ public class Player extends Account {
         resultMap.put("player_id", player.getAccountId());
         resultMap.put("bio", player.getBio());
         resultMap.put("is_admin", player.isAdmin() ? 1 : 0);
-        resultMap.put("money",String.valueOf(player.getMoney()));
-        resultMap.put("game_log_summaries",new Gson().toJson(player.getSQLGameLogSummaries()));
-        resultMap.put("friends",new Gson().toJson(player.getSQLFriends()));
-        resultMap.put("received_friend_request",new Gson().toJson(player.getSQLReceivedFriendRequests()));
-        resultMap.put("sent_friend_request",new Gson().toJson(player.getSQLSentFriendRequests()));
-        resultMap.put("player_messages",new Gson().toJson(player.getSQLMessages()));
-        resultMap.put("favourite_games",new Gson().toJson(player.getSQLFavouriteGames()));
-        resultMap.put("suggestions",new Gson().toJson(player.getSQLSuggestions()));
-
+        resultMap.put("status", player.getStatus());
+        resultMap.put("money", String.valueOf(player.getMoney()));
+        resultMap.put("game_log_summaries", new Gson().toJson(player.getSQLGameLogSummaries()));
+        resultMap.put("friends", new Gson().toJson(player.getSQLFriends()));
+        resultMap.put("received_friend_request", new Gson().toJson(player.getSQLReceivedFriendRequests()));
+        resultMap.put("sent_friend_request", new Gson().toJson(player.getSQLSentFriendRequests()));
+        resultMap.put("player_messages", new Gson().toJson(player.getSQLMessages()));
+        resultMap.put("favourite_games", new Gson().toJson(player.getSQLFavouriteGames()));
+        resultMap.put("suggestions", new Gson().toJson(player.getSQLSuggestions()));
         SQLConnector.insertInDatabase(resultMap, "players");
 
     }
 
-    public ArrayList<String > getSQLGameLogSummaries()
-    {
+    public ArrayList<String> getSQLGameLogSummaries() {
         return gameLogSummaries;
     }
 
-    public ArrayList<String > getSQLFriends()
-    {
+    public ArrayList<String> getSQLFriends() {
         return friends;
     }
-    public ArrayList<String > getSQLReceivedFriendRequests()
-    {
+
+    public ArrayList<String> getSQLReceivedFriendRequests() {
         return receivedFriendRequests;
     }
-    public ArrayList<String > getSQLSentFriendRequests()
-    {
+
+    public ArrayList<String> getSQLSentFriendRequests() {
         return sentFriendRequests;
     }
-    public ArrayList<String > getSQLMessages()
-    {
+
+    public ArrayList<String> getSQLMessages() {
         return messages;
     }
-    public ArrayList<String > getSQLFavouriteGames()
-    {
+
+    public ArrayList<String> getSQLFavouriteGames() {
         return favouriteGames;
     }
-    public ArrayList<String > getSQLSuggestions()
-    {
+
+    public ArrayList<String> getSQLSuggestions() {
         return suggestions;
     }
-
-
-
 
     public double getMoney() {
         return money;
@@ -117,22 +126,20 @@ public class Player extends Account {
 
     public int getScore() {
         int result = 0;
-       for(GameLogSummary gameLogSummary: this.getGameLogSummaries())
-           result += gameLogSummary.getScore();
-       return result;
+        for (GameLogSummary gameLogSummary : this.getGameLogSummaries())
+            result += gameLogSummary.getScore();
+        return result;
     }
 
     public void setMoney(double money) {
         this.money = money;
     }
 
-    /* public void setScore(int score) {
-        this.score += score;
-    }*/
+
 
     public ArrayList<GameLogSummary> getGameLogSummaries() {
         ArrayList<GameLogSummary> result = new ArrayList<>();
-        for (String gameLogSummaryId: gameLogSummaries)
+        for (String gameLogSummaryId : gameLogSummaries)
             result.add(GameLogSummary.getGameLogSummaryById(gameLogSummaryId));
         return result;
     }
@@ -154,15 +161,16 @@ public class Player extends Account {
     }
 
     public static void addGameLog(ArrayList<Player> players, Game game, GameStates gameState, Player winner,
-                                  int win,int draw,int lose) {
+                                  int win, int draw, int lose) {
         if (winner != null) {
-            GameLogSummary gameLog = winner.getGameHistory("Risk");
+            GameLogSummary gameLog = winner.getGameHistory(game.getName());
             if (gameLog == null) {
                 gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
                 winner.addGameLogSummary(gameLog);
+                gameLog.addGameLogSummary();
             }
             gameLog.updateForWin(win, LocalDateTime.now(), new GameLog(winner, getEnemies(players, winner),
-                    game.getName(), GameLogStates.WON, LocalDateTime.now()));
+                    game.getName(), GameLogStates.WON, LocalDateTime.now(),Controller.generateId(0)));
 
 
             for (Player player : players) {
@@ -171,9 +179,10 @@ public class Player extends Account {
                     if (gameLog == null) {
                         gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
                         player.addGameLogSummary(gameLog);
+                        gameLog.addGameLogSummary();
                     }
                     gameLog.updateForLoss(lose, LocalDateTime.now(), new GameLog(player, getEnemies(players, player),
-                            game.getName(), GameLogStates.LOST, LocalDateTime.now()));
+                            game.getName(), GameLogStates.LOST, LocalDateTime.now(),Controller.generateId(0)));
                 }
             }
         } else {
@@ -182,37 +191,39 @@ public class Player extends Account {
                 if (gameLog == null) {
                     gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
                     player.addGameLogSummary(gameLog);
+                    gameLog.addGameLogSummary();
                 }
                 gameLog.updateForDraw(draw, LocalDateTime.now(), new GameLog(player, getEnemies(players, player),
-                        game.getName(), GameLogStates.DRAWN, LocalDateTime.now()));
+                        game.getName(), GameLogStates.DRAWN, LocalDateTime.now(),Controller.generateId(0)));
             }
         }
-        PlayLog playLog = new PlayLog(game.getName(), players, winner, LocalDateTime.now());
+        PlayLog playLog = new PlayLog(game.getName(), players, winner, LocalDateTime.now(),Controller.generateId(0));
+        playLog.addPlayLog();
         game.addPlayLog(playLog);
     }
 
     private static ArrayList<Player> getEnemies(ArrayList<Player> players, Player winner) {
         ArrayList<Player> result = new ArrayList<>();
-        for(Player player: players)
-            if(!player.getAccountId().equals(winner.getAccountId()))
+        for (Player player : players)
+            if (!player.getAccountId().equals(winner.getAccountId()))
                 result.add(player);
-            return result;
+        return result;
     }
 
     private void addGameLogSummary(GameLogSummary gameLog) {
         gameLogSummaries.add(gameLog.getGameLogSummaryId());
-        editField("game_log_summaries",new Gson().toJson(gameLogSummaries));
+        editField("game_log_summaries", new Gson().toJson(gameLogSummaries));
     }
 
     public void removeGameLog(Game game) {
         //todo make it better if it doesnt work
         ArrayList<GameLogSummary> checker = this.getGameLogSummaries();
-        for (int i = 0 ; i < checker.size(); i++)
-        {
-            if(checker.get(i).getGameName().equals(game.getName()))
+        for (int i = 0; i < checker.size(); i++) {
+            if (checker.get(i).getGameName().equals(game.getName())) {
                 gameLogSummaries.remove(i);
+            }
         }
-        editField("game_log_summaries",new Gson().toJson(gameLogSummaries));
+        editField("game_log_summaries", new Gson().toJson(gameLogSummaries));
     }
 
 
@@ -326,8 +337,7 @@ public class Player extends Account {
 
     public ArrayList<Message> getMessages() {
         ArrayList<Message> result = new ArrayList<>();
-        for(String messageId:messages)
-        {
+        for (String messageId : messages) {
             result.add(Message.getMessageById(messageId));
         }
         Collections.sort(result);
@@ -376,24 +386,6 @@ public class Player extends Account {
 
 
     public void delete() {
-        File file = new File("database" + "\\" + "accounts" + "\\" + "players" + "\\" +
-                this.getUsername() + ".json");
-        try {
-            if (file.exists())
-                file.delete();
-        } catch (Exception ignored) {
-        }
-
-        File imageFile = new File("database" + "\\" + "accounts" + "\\" + "images" + "\\" +
-                this.getAccountId() + ".jpg");
-        try {
-            if (imageFile.exists())
-                imageFile.delete();
-        } catch (Exception ignored) {
-            System.out.println("image not found!");
-        }
-
-        gameLogSummaries.clear();
         for (String username : friends) {
             Player friend = Objects.requireNonNull(Player.getPlayerByUsername(username));
             friend.removeFriend(this);
@@ -417,15 +409,24 @@ public class Player extends Account {
         messages.clear();
 
         favouriteGames.clear();
-        Iterator<String> iterator = suggestions.iterator();
-        while (iterator.hasNext()) {
-            String res = iterator.next();
-            Suggestion suggestion = Objects.requireNonNull(Suggestion.getSuggestionById(res));
-            Suggestion.getSuggestions().remove(suggestion);
-            iterator.remove();
-        }
+        Suggestion.deletePlayerSuggestion(getUsername());
+
         suggestions.clear();
-        //Account.getAllAccounts().remove(this);
+
+        Map<String, Object> event = new HashMap<>();
+        event.put("player_id", getAccountId());
+        if (SQLConnector.deleteFromTable(event, "events")) {
+            File imageFile = new File("database\\account\\images\\" + getAccountId() + ".jpg");
+            try {
+                if (imageFile.exists())
+                    imageFile.delete();
+            } catch (Exception ignored) {
+                System.out.println("player image not found!");
+            }
+        }
+        else{
+            System.out.println("[MODEL]: Account with event ID = " + getAccountId() + " couldn't be deleted");
+        }
 
     }
 
@@ -433,7 +434,7 @@ public class Player extends Account {
     public String toString() {
         return super.toString()
                 + "money: " + getMoney() + "$\n";
-             //   + "registered: " + getDayOfRegister() + " days ago\n";
+        //   + "registered: " + getDayOfRegister() + " days ago\n";
     }
 
 
@@ -478,19 +479,20 @@ public class Player extends Account {
     public ArrayList<Card> getCards() {
         return cards;
     }
-    public int[] getCardsNumber(){
+
+    public int[] getCardsNumber() {
         int[] numbers = new int[3];
         int number1 = 0;
         int number2 = 0;
         int number3 = 0;
-        for(Card card : cards){
-            if(card.equals(Card.CARD_1)){
+        for (Card card : cards) {
+            if (card.equals(Card.CARD_1)) {
                 number1++;
             }
-            if(card.equals(Card.CARD_2)){
+            if (card.equals(Card.CARD_2)) {
                 number2++;
             }
-            if(card.equals(Card.CARD_3)){
+            if (card.equals(Card.CARD_3)) {
                 number3++;
             }
         }
@@ -499,26 +501,29 @@ public class Player extends Account {
         numbers[2] = number3;
         return numbers;
     }
-/*
-    public void setDraws() {
-        this.draws++;
-    }
 
-    public void setWins() {
-        this.wins++;
-    }
+    /*
+        public void setDraws() {
+            this.draws++;
+        }
 
-    public void setLoses() {
-        this.loses++;
-    }
-*/
-    public void addGameRequest(Player player){
+        public void setWins() {
+            this.wins++;
+        }
+
+        public void setLoses() {
+            this.loses++;
+        }
+    */
+    public void addGameRequest(Player player) {
         requests.add(player);
     }
-    public void addGameFriend(Player player){
+
+    public void addGameFriend(Player player) {
         gameFriends.add(player);
     }
-    public void rejectRequest(Player player){
+
+    public void rejectRequest(Player player) {
         requests.remove(player);
     }
 
@@ -526,22 +531,25 @@ public class Player extends Account {
         return requests;
     }
 
-    public boolean checkPlayerHasRequest(){
-        if(requests.size() > 0){
+    public boolean checkPlayerHasRequest() {
+        if (requests.size() > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    public void setRequestAndFriendsList(){
+
+    public void setRequestAndFriendsList() {
         this.requests = new ArrayList<Player>();
         this.gameFriends = new ArrayList<Player>();
     }
-    public void resetRequestAndFriends(){
+
+    public void resetRequestAndFriends() {
         this.requests.clear();
         this.gameFriends.clear();
     }
-    public void setCard(){
+
+    public void setCard() {
         this.cards = new ArrayList<Card>();
     }
 

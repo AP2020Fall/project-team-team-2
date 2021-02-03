@@ -18,7 +18,7 @@ public class Main extends Application {
         try {
             //Account.open();
             //Event.open();
-            Suggestion.open();
+            //Suggestion.open();
             Game.open();
            // FriendRequest.open();
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public class Main extends Application {
         try {
             //Account.save();
            // Event.save();
-            Suggestion.save();
+            //Suggestion.save();
             Game.save();
            // FriendRequest.save();
         } catch (Exception e) {

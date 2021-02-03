@@ -32,8 +32,11 @@ public class LoginController extends Controller {
     public Boolean login(String username) {
         //logins into account
         //throws NullPointerException if username doesn't exist
-        Account loggedIn = Objects.requireNonNull(Account.getAccountByUsername(username),
-                "Username passed to LoginController.login doesn't exist.");
+        Account loggedIn = Account.getAccountByUsername(username);
+        if(loggedIn == null) {
+            System.err.println("Username passed to LoginController.login doesn't exist.");
+            return false;
+        }
         //if (clientInfo != null) {
         clientInfo.setLoggedInUsername(loggedIn.getUsername());
         token.setLogin(loggedIn);

@@ -46,14 +46,6 @@ public class Event {
         this.score = (int) map.get("score");
         this.comment = (String)map.get("event_comment");
     }
-
-    public static ArrayList<Event> getEvents() {
-        ArrayList<Event> result = new ArrayList<>();
-        //todo
-      //  for (Map<String,Object> )
-        return result;
-    }
-
     /*
     private static Event openEvent(File file) throws FileNotFoundException {
         StringBuilder json = fileToString(file);
@@ -162,6 +154,21 @@ public class Event {
             return null;
         }
         return thisAccount;
+    }
+
+    public static ArrayList<Event> getEvents() {
+        ArrayList<Event> result = new ArrayList<>();
+        List<Map<String,Object>> eventList = SQLConnector.getWholeTable("events");
+        if(eventList == null || eventList.isEmpty())
+        {
+            System.out.println("[MODEL]: no Event could be found");
+            return result;
+        }
+        for (Map<String,Object> event:eventList)
+        {
+            result.add(new Event(event));
+        }
+        return result;
     }
 
     public static Event getEventById(String eventId) {
