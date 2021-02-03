@@ -94,4 +94,11 @@ public class PlayerRunGameController extends Controller {
         availableGame.createGame();
         return availableGame.getAvailableGameId();
     }
+
+    public Boolean joinAvailableGame(String availableGameId)
+    {
+        AvailableGame availableGame = AvailableGame.getAvailableGameById(availableGameId);
+        if(availableGame == null) return false;
+        return availableGame.playerJoin(loggedIn);
+    }
 }

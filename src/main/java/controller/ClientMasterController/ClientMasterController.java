@@ -925,6 +925,26 @@ public class ClientMasterController {
         return new Gson().fromJson(answer,String.class);
     }
 
+
+    public ArrayList<Player> getJoinedPlayers() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getJoinedPlayers", "controller.player.PlayerAvailableGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+
+        return new Gson().fromJson(answer, new TypeToken<ArrayList<Player>>() {}.getType());
+    }
+
+    public Boolean joinAvailableGame(String availableGameId) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(availableGameId);
+        Command command = new Command("joinAvailableGame", "controller.player.PlayerRunGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+
+        return new Gson().fromJson(answer, Boolean.class);
+    }
+
     //######################## AdminEventMenu Commands ########################\\
 
     public String getAdminEventGameName() {

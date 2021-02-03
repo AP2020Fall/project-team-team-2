@@ -25,6 +25,13 @@ public class AvailableGame {
         return availableGames;
     }
 
+    public static AvailableGame getAvailableGameById(String availableGameId) {
+        for(AvailableGame availableGame :availableGames)
+            if(availableGame.getAvailableGameId().equals(availableGameId))
+                return availableGame;
+            return null;
+    }
+
     public Map<String, Object> getPrimitiveSetting() {
         return primitiveSetting;
     }
@@ -48,5 +55,10 @@ public class AvailableGame {
 
     public String getAvailableGameId() {
         return availableGameId;
+    }
+
+    public Boolean playerJoin(Player loggedIn) {
+        joinedPlayers.add(loggedIn);
+        return true;
     }
 }

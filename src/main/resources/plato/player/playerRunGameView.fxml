@@ -117,7 +117,10 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="riskBackground">
                      <children>
-                        <TableView fx:id="currentGames" layoutX="51.0" layoutY="28.0" onMouseClicked="#gameTableSelect" prefHeight="546.0" prefWidth="903.0" />
+                        <TableView fx:id="currentGames" layoutX="51.0" layoutY="28.0" onMouseClicked="#gameTableSelect" prefHeight="546.0" prefWidth="903.0">
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy></TableView>
                      </children>
                   </AnchorPane>
                </content>
