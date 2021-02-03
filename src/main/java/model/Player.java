@@ -6,6 +6,7 @@ import controller.ServerMasterController.SQLConnector;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Map;
 
@@ -47,6 +48,10 @@ public class Player extends Account {
         super(botName, username);
     }
 
+    public Player(Map<String, Object> player) {
+        super(player);
+    }
+
     public static void add(Player player) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("first_name", player.getFirstName());
@@ -55,7 +60,7 @@ public class Player extends Account {
         resultMap.put("hash_password", player.getPassword());
         resultMap.put("email_address", player.getEmail());
         resultMap.put("phone_number", player.getPhoneNumber());
-        resultMap.put("register_date", player.getRegisterDay().toString());
+        resultMap.put("register_date", player.getRegisterDay().format(DateTimeFormatter.ISO_DATE_TIME));
         resultMap.put("avatar_address", player.getImageURL());
         resultMap.put("player_id", player.getAccountId());
         resultMap.put("bio", player.getBio());

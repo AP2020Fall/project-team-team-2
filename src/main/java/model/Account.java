@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +68,21 @@ public abstract class Account {
         registerDay = LocalDate.now();
         bio = "No bio is given.";
         this.isAdmin = isAdmin;
+    }
+
+    public Account(Map<String,Object> map)
+    {
+        this.firstName = (String) map.get("first_name");
+        this.lastName = (String) map.get("last_name");
+        this.username = (String)map.get("last_name");
+        this.accountId = (String) map.get("player_id");
+        this.password = (String) map.get("hash_password");
+        this.email = (String) map.get("email_address");
+        this.phoneNumber = (String) map.get("phone_number");
+        setImage((String) map.get("avatar_address"));
+        this.registerDay = LocalDate.parse((String) map.get("timestamp"), DateTimeFormatter.ISO_DATE_TIME);
+        this.bio = (String) map.get("bio");
+        this.isAdmin = String.valueOf(map.get("is_admin")).equals("1");
     }
 
 
@@ -178,20 +195,6 @@ public abstract class Account {
         SQLConnector.updateTable(conditionMap, newValueMap, "players");
     }
 
-    private static Admin createAdmin(Map<String, Object> admin) {
-        return new Admin((String) admin.get("first_name"), (String) admin.get("last_name"),
-                (String) admin.get("username"), (String) admin.get("player_id"),
-                (String) admin.get("hash_password"), (String) admin.get("email_address"),
-                (String) admin.get("phone_number"));
-    }
-
-    private static Player createPlayer(Map<String, Object> player) {
-        return new Player((String) player.get("first_name"), (String) player.get("last_name"),
-                (String) player.get("username"), (String) player.get("player_id"),
-                (String) player.get("hash_password"), (String) player.get("email_address"),
-                (String) player.get("phone_number"), (Double) player.get("money"));
-    }
-
 
     public static Admin getAdmin() {
         java.util.Map<String, Object> newMap = new HashMap<>();
@@ -202,7 +205,8 @@ public abstract class Account {
             System.out.println("[MODEL]: Admin entry couldn't be found");
             return null;
         }
-        return createAdmin(allAccounts.get(0));
+        System.out.println("fsewfewefeq");
+        return new Admin(allAccounts.get(0));
     }
 
     private static Map<String, Object> SQLAccountSearch(String column, String value) {
@@ -219,13 +223,14 @@ public abstract class Account {
 
     public static Account getAccountByUsername(String username) {
         Map<String, Object> thisAccount = SQLAccountSearch("username", username);
+        System.out.println(thisAccount);
         if (thisAccount == null || thisAccount.isEmpty()) {
             return null;
         }
-        if (thisAccount.get("is_admin").equals(1)) {
-            return createAdmin(thisAccount);
+        if (String.valueOf(thisAccount.get("is_admin")).equals("1")) {
+            return new Admin(thisAccount);
         } else {
-            return createPlayer(thisAccount);
+            return new Player(thisAccount);
         }
     }
 
@@ -236,9 +241,9 @@ public abstract class Account {
             return null;
         }
         if (thisAccount.get("is_admin").equals(1)) {
-            return createAdmin(thisAccount);
+            return new Admin(thisAccount);
         } else {
-            return createPlayer(thisAccount);
+            return new Player(thisAccount);
         }
     }
 
@@ -249,7 +254,7 @@ public abstract class Account {
         List<Map<String, Object>> thisAccount =
                 SQLConnector.selectFromDatabase(newMap, "players");
         for (Map<String, Object> account : thisAccount)
-            result.add(createPlayer(account));
+            result.add(new Player(account));
         return result;
     }
 

@@ -23,8 +23,9 @@ public class AdminMainMenuController extends Controller {
 
     public AdminMainMenuController(ClientInfo clientInfo) {
         super(clientInfo);
-        this.admin = Objects.requireNonNull((Admin)Account.getAccountByUsername(clientInfo.getLoggedInUsername()),
-                "Admin passed to AdminMainMenuController is null.");
+        this.admin = (Admin) Account.getAccountByUsername(clientInfo.getLoggedInUsername());
+        if (admin == null)
+            System.err.println("Admin passed to AdminMainMenuController is null.");
     }
 
     public String getUsername() {

@@ -2,8 +2,10 @@ package model;
 
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import controller.ServerMasterController.SQLConnector;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,6 +16,14 @@ public class Admin extends Account {
     public Admin(String firstName, String lastName, String username, String accountId, String password, String email, String phoneNumber) {
         super(firstName, lastName, username, accountId, password, email, phoneNumber,true);
         sentMessages = new ArrayList<>();
+    }
+
+    public Admin(Map<String,Object> map)
+    {
+        super(map);
+        System.out.println("i have been here");
+        sentMessages = new Gson().fromJson((String) map.get("admin_messages"), new TypeToken<ArrayList<String>>() {}.getType());
+        System.out.println("i have been here as well");
     }
 
     public static boolean isAdminExist() {
@@ -28,7 +38,7 @@ public class Admin extends Account {
         resultMap.put("hash_password", admin.getPassword());
         resultMap.put("email_address", admin.getEmail());
         resultMap.put("phone_number", admin.getPhoneNumber());
-        resultMap.put("register_date", admin.getRegisterDay().toString());
+        resultMap.put("register_date", admin.getRegisterDay().format(DateTimeFormatter.ISO_DATE_TIME));
         resultMap.put("avatar_address", admin.getImageURL());
         resultMap.put("player_id", admin.getAccountId());
         resultMap.put("bio", admin.getBio());
