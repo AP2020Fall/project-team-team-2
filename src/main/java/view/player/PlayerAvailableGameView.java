@@ -51,11 +51,20 @@ public class PlayerAvailableGameView implements Tab, Initializable {
     }
     public void updateVBox(){
         hBoxContainer.getChildren().clear();
+        System.out.println(controller.getReadyPlayers());
         for(Player player: controller.getJoinedPlayers()) {
             Circle circle = new Circle(60);
             circle.setFill(new ImagePattern(player.getImage()));
             Label playerName = new Label(player.getUsername());
-            VBox playerVBox = new VBox(circle,playerName);
+            Circle turn = new Circle(20);
+            if(controller.getReadyPlayers().contains(player)){
+                turn.getStyleClass().clear();
+                turn.getStyleClass().add("status_on");
+            }else{
+                turn.getStyleClass().clear();
+                turn.getStyleClass().add("none_active");
+            }
+            VBox playerVBox = new VBox(circle,playerName,turn);
             playerVBox.setAlignment(Pos.CENTER);
             playerVBox.setSpacing(30);
             hBoxContainer.getChildren().add(playerVBox);
@@ -81,7 +90,7 @@ public class PlayerAvailableGameView implements Tab, Initializable {
     @FXML
     void playerReady() {
         controller.playerReady();
-
+        updateVBox();
     }
 
 
