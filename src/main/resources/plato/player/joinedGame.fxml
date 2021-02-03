@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane prefHeight="620.0" prefWidth="1020.0" styleClass="riskBackground" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="plato.player.JoinedGame">
+<AnchorPane prefHeight="620.0" prefWidth="1020.0" styleClass="riskBackground" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane prefHeight="200.0" prefWidth="200.0" />
       <HBox fx:id="hBoxContainer" alignment="CENTER" prefHeight="527.0" prefWidth="800.0" spacing="10.0" />
