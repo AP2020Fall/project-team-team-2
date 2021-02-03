@@ -61,13 +61,28 @@ public class PlayerAvailableGameView implements Tab, Initializable {
             PlayerAvailableGameView.hBoxContainer.getChildren().add(playerVBox);
         }
     }
-    @FXML
-    public void leaveTheGame(){
-        TabHandler.getTabHandler().back();
-    }
+
     @FXML
     void refresh() {
         updateVBox();
     }
+
+
+
+    @FXML
+    private Button ready;
+
+    @FXML
+    void leave() {
+        TabHandler.getTabHandler().back();
+
+    }
+
+    @FXML
+    void playerReady() {
+
+    }
+
+
 
 }

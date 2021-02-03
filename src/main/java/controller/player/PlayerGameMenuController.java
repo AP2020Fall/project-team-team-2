@@ -22,7 +22,7 @@ public class PlayerGameMenuController extends Controller {
     }
 
     public Boolean isFavorite() {
-        return player.getFavouriteGames().contains(game);
+        return player.isGameFavourite(game.getGameId());
     }
 
     public void removeFromFavorites() {

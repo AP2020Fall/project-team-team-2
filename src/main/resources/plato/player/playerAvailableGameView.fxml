@@ -10,7 +10,8 @@
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
       <HBox fx:id="hBoxContainer" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="527.0" prefWidth="800.0" spacing="10.0" />
       <VBox layoutX="809.0" layoutY="11.0" prefHeight="625.0" prefWidth="220.0" />
-      <Button fx:id="back" layoutX="49.0" layoutY="548.0" mnemonicParsing="false" styleClass="buttons" text="Leave" />
-      <Button fx:id="back1" layoutX="210.0" layoutY="548.0" mnemonicParsing="false" onAction="#refresh" styleClass="buttons" text="Refresh" />
+      <Button fx:id="back" layoutX="49.0" layoutY="548.0" mnemonicParsing="false" onAction="#leave" styleClass="buttons" text="Leave" />
+      <Button fx:id="refresh" layoutX="210.0" layoutY="548.0" mnemonicParsing="false" onAction="#refresh" styleClass="buttons" text="Refresh" />
+      <Button fx:id="ready" layoutX="546.0" layoutY="548.0" mnemonicParsing="false" onAction="#playerReady" styleClass="buttons" text="Ready" />
    </children>
 </Pane>

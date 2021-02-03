@@ -563,4 +563,8 @@ public class Player extends Account {
 
     public void addMessage(String messageId) {
     }
+
+    public Boolean isGameFavourite(String gameId) {
+        return favouriteGames.contains(gameId);
+    }
 }
