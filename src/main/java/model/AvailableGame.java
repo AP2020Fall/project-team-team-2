@@ -60,7 +60,7 @@ public class AvailableGame {
     }
 
     public Boolean playerJoin(Player loggedIn) {
-        if( Math.round((Double) primitiveSetting.get("PlayersNum")) < joinedPlayers.size()) {
+        if( Math.round((Double) primitiveSetting.get("PlayersNum")) > joinedPlayers.size()) {
             joinedPlayers.add(loggedIn);
             return true;
         }
@@ -75,8 +75,9 @@ public class AvailableGame {
     }
 
     public void playerReady(Player player) {
-        if(joinedPlayers.contains(player) && !readyPlayers.contains(player))
+        if(isPlayerInIt(joinedPlayers,player) && !isPlayerInIt(readyPlayers,player))
             readyPlayers.add(player);
+
     }
     public boolean allReady() {
         return  Math.round((Double) primitiveSetting.get("PlayersNum")) == readyPlayers.size();
@@ -84,5 +85,12 @@ public class AvailableGame {
 
     public ArrayList<Player> getReadyPlayers() {
         return readyPlayers;
+    }
+    public Boolean isPlayerInIt(ArrayList<Player> list, Player player)
+    {
+        for(Player player1 : list)
+            if(player.getUsername().equals(player1.getUsername()))
+                return true;
+            return false;
     }
 }
