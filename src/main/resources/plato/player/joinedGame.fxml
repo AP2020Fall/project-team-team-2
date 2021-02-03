@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane prefHeight="620.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="plato.player.JoinedGame">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="200.0" />
+      <HBox fx:id="hBoxContainer" alignment="CENTER" prefHeight="618.0" prefWidth="800.0" spacing="10.0" />
+   </children>
+</AnchorPane>
