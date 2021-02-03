@@ -141,7 +141,7 @@ public class Event {
         resultMap.put("avatar_address", event.getImageURL());
         resultMap.put("event_id", event.getEventId());
         resultMap.put("event_comment", event.getComment());
-        SQLConnector.insertInDatabase(resultMap,"event");
+        SQLConnector.insertInDatabase(resultMap,"events");
     }
 
     public static List<Map<String, Object>> SQLEventSearch(String column, String value) {

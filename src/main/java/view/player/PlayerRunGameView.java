@@ -8,15 +8,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import main.Client;
+import model.Entry.AvailableGameEntry;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
+import view.ViewHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,6 +50,33 @@ public class PlayerRunGameView implements Tab, Initializable {
     @FXML
     private Label eventMode;
 
+    @FXML
+    private ToggleButton friendToggle;
+
+    @FXML
+    private ToggleButton manualPlacementToggle;
+
+    @FXML
+    private ToggleButton blizzardToggle;
+
+    @FXML
+    private Button startButton;
+
+    @FXML
+    private ToggleButton fogWarToggle;
+
+    @FXML
+    private TextField playerNum;
+
+    @FXML
+    private TextField mapNum;
+
+    @FXML
+    private TextField limitTimeNum;
+
+    @FXML
+    private TableView<AvailableGameEntry> currentGames;
+
     public PlayerRunGameView(String gameName, String eventId) {
         Client.getClientInfo().setGameName(gameName);
         Client.getClientInfo().setEventId(eventId);
@@ -67,6 +96,7 @@ public class PlayerRunGameView implements Tab, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeInfo();
+        initializeCurrentGamesTable();
     }
 
     @FXML
@@ -131,5 +161,98 @@ public class PlayerRunGameView implements Tab, Initializable {
             updateImage(player5Avatar, textField.getText());
 
         }
+    }
+
+    public static boolean checkToggle(boolean inputBoolean) {
+        if (inputBoolean) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @FXML
+    public void friendAction() {
+        allianceType(checkToggle(!friendToggle.isSelected()));
+    }
+
+    @FXML
+    public void blizzardAction() {
+        blizzardsType(checkToggle(!blizzardToggle.isSelected()));
+    }
+
+    @FXML
+    public void manualPlacement() {
+        placementType(checkToggle(!manualPlacementToggle.isSelected()));
+    }
+
+    @FXML
+    public void fogWar() {
+        fogsType(checkToggle(!fogWarToggle.isSelected()));
+    }
+
+    @FXML
+    public void playersNum() {
+        String playersNum = playerNum.getText();
+        changePlayersNumber(playersNum);
+    }
+
+    @FXML
+    public void startButtonClick() {
+        chooseMapNumber(mapNum.getText());
+        changeDurationTime(limitTimeNum.getText());
+        changePlayersNumber(playerNum.getText());
+        int mapNum = (int) controller.getPrimitiveSettings().get("Map Number");
+        if (mapNum <= 10 && mapNum >= 1) {
+            ViewHandler.getViewHandler().push(this.controller.startGame());
+        }
+    }
+
+    public boolean checkIntInput(Object input) {
+        if (input instanceof Integer) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void changePlayersNumber(String strNumber) {
+        int playerNumber = Integer.parseInt(strNumber);
+        String callback = controller.setPlayerNumber(playerNumber);
+        System.out.println(callback);
+
+    }
+
+    public void chooseMapNumber(String strNumber) {
+        int mapNumber = Integer.parseInt(strNumber);
+        String callback = controller.setMapNumber(mapNumber);
+        System.out.println(callback);
+    }
+
+    public void changeDurationTime(String strNumber) {
+        int number = Integer.parseInt(strNumber);
+        String callback = controller.setDurationTime(number);
+        System.out.println(callback);
+    }
+
+    public void placementType(boolean type) {
+        controller.setPlacementType(type);
+    }
+
+    public void allianceType(boolean selected) {
+        controller.setAllianceType(selected);
+    }
+
+    public void blizzardsType(boolean type) {
+        controller.setBlizzardsType(type);
+    }
+
+    public void fogsType(boolean type) {
+        controller.setFogType(type);
+    }
+
+    private void initializeCurrentGamesTable()
+    {
+
     }
 }

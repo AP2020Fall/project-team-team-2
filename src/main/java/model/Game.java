@@ -157,6 +157,8 @@ public class Game {
         resultMap.put("avatar_address",game.getImageURL());
         resultMap.put("play_log_id",new Gson().toJson(game.playLogs));
         resultMap.put("scoreboard",new Gson().toJson(game.getScoreboard()));
+
+        SQLConnector.insertInDatabase(resultMap,"game");
     }
 
     public static Game getGameByGameName(String gameName) {

@@ -361,10 +361,12 @@ public class Player extends Account {
 
     public void addFavouriteGame(Game game) {
         favouriteGames.add(game.getGameId());
+        editField("favourite_game", new Gson().toJson(favouriteGames));
     }
 
     public void removeFavouriteGame(Game game) {
         favouriteGames.remove(game.getGameId());
+        editField("favourite_game", new Gson().toJson(favouriteGames));
     }
 
 

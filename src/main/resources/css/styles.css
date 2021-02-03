@@ -175,10 +175,17 @@
     -fx-background-color: #ff55a0;
     -fx-background-radius: 20;
 }
+.tab{
+    -fx-pref-width: 330;
+    -fx-background-color: #ff55a0;
+}
+.tab-header-background{
+    -fx-background-color:transparent
+}
 
-
-
-
+.gameTabPage{
+    -fx-background-color: #ff55a0;
+}
 
 /* Game Part */
 .country {
