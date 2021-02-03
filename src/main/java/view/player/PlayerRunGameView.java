@@ -269,8 +269,8 @@ public class PlayerRunGameView implements Tab, Initializable {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
                 if (currentGames.getSelectionModel().getSelectedItems().size() != 0) {
-                    //GameEntry gameEntry = currentGames.getSelectionModel().getSelectedItems().get(0);
-                   // TabHandler.getTabHandler().push(new PlayerGameMenu(gameEntry.getName()));
+                    AvailableGameEntry gameEntry = currentGames.getSelectionModel().getSelectedItems().get(0);
+                    TabHandler.getTabHandler().push(new PlayerAvailableGameView(gameEntry.getAvailableGameId()));
                 }
             }
 

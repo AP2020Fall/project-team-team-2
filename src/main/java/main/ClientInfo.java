@@ -5,12 +5,14 @@ public class ClientInfo {
     private String gameName;
     private String eventId;
     private String playerUsername;
+    private String availableGameId;
 
     public ClientInfo() {
         loggedInUsername = "";
         gameName = "";
         eventId = "";
         playerUsername = "";
+        availableGameId =  "";
     }
 
     public String getLoggedInUsername() {
@@ -45,10 +47,19 @@ public class ClientInfo {
         this.playerUsername = playerUsername;
     }
 
+    public String getAvailableGameId() {
+        return availableGameId;
+    }
+
+    public void setAvailableGameId(String availableGameId) {
+        this.availableGameId = availableGameId;
+    }
+
     public void unsetLoggedInUsername() {
         loggedInUsername = "";
         gameName = "";
         eventId = "";
         playerUsername = "";
+        availableGameId = "";
     }
 }
