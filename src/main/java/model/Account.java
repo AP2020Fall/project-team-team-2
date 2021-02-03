@@ -9,8 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,7 +78,7 @@ public abstract class Account {
         this.email = (String) map.get("email_address");
         this.phoneNumber = (String) map.get("phone_number");
         setImage((String) map.get("avatar_address"));
-        this.registerDay = LocalDate.parse((String) map.get("timestamp"), DateTimeFormatter.ISO_DATE_TIME);
+        this.registerDay = LocalDate.parse((String) map.get("register_date"));
         this.bio = (String) map.get("bio");
         this.isAdmin = String.valueOf(map.get("is_admin")).equals("1");
     }

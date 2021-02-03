@@ -40,8 +40,8 @@ public class Event {
     {
         this.gameName = (String) map.get("game_name");
         this.eventId = (String) map.get("event_id");
-        this.start = LocalDate.parse((String) map.get("start_date"), DateTimeFormatter.ISO_DATE_TIME);
-        this.end = LocalDate.parse((String) map.get("end_date"), DateTimeFormatter.ISO_DATE_TIME);
+        this.start = LocalDate.parse((String) map.get("start_date"));
+        this.end = LocalDate.parse((String) map.get("end_date"));
         setImage((String) map.get("avatar_address"));
         this.score = (int) map.get("score");
         this.comment = (String)map.get("event_comment");
@@ -143,8 +143,8 @@ public class Event {
     public static void addEvent(Event event) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("game_name", event.getGameName());
-        resultMap.put("start_date", event.getStart().format(DateTimeFormatter.ISO_DATE_TIME));
-        resultMap.put("end_date", event.getEnd().format(DateTimeFormatter.ISO_DATE_TIME));
+        resultMap.put("start_date", event.getStart().toString());
+        resultMap.put("end_date", event.getEnd().toString());
         resultMap.put("score", event.getScore());
         resultMap.put("avatar_address", event.getImageURL());
         resultMap.put("event_id", event.getEventId());
