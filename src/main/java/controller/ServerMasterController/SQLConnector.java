@@ -14,7 +14,7 @@ public class SQLConnector {
         Map<String, Object> newMap2 = new HashMap<>();
         newMap.put("first_name", "Ali");
         newMap2.put("hash_password","new_Password");
-        System.out.println(updateTable(newMap,newMap2,"players"));
+        System.out.println(getWholeTable("players"));
     }
     /* Database Methods */
     /* Insert */
@@ -226,6 +226,41 @@ public class SQLConnector {
             throwables.printStackTrace();
         }
         return false;
+    }
+    /* Get Whole Table */
+    public static List<Map<String,Object>> getWholeTable(String tableName){
+        String query = "";
+        query += "SELECT * FROM " + tableName;
+        List<Map<String, Object>> returnSelectedData = new ArrayList<>();
+        Connection conn = null;   // For MySQL only
+        try {
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/riskgamedatabase",
+                    "root", "rootpass1");
+            Statement stmt = null;
+            stmt =conn.createStatement() ;
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData metadata = rs.getMetaData();
+            int columnCount = metadata.getColumnCount();
+
+            ArrayList<String> columns = new ArrayList<>();
+            for (int j = 1; j <= columnCount; j++) {
+                String columnName = metadata.getColumnName(j);
+                columns.add(columnName);
+            }
+
+            while(rs.next()){
+                Map<String , Object> tempMap = new HashMap<>();
+                for(String columnName : columns){
+                    tempMap.put(columnName,rs.getString(columnName));
+                }
+                returnSelectedData.add(tempMap);
+            }
+            return returnSelectedData;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
     public static Map<String,Object> toMap(String... inputs){
         Map<String, Object> returnMap = new HashMap<>();
