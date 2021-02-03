@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import main.Client;
 import model.Player;
 import view.Tab;
+import view.TabHandler;
 import view.View;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class PlayerAvailableGameView implements Tab, Initializable {
 
     @Override
     public Parent show() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/game/plato/player/playerAvailableGameView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerAvailableGameView.fxml"));
         loader.setController(this);
         return loader.load();
     }
@@ -62,7 +63,7 @@ public class PlayerAvailableGameView implements Tab, Initializable {
     }
     @FXML
     public void leaveTheGame(){
-
+        TabHandler.getTabHandler().back();
     }
 
 

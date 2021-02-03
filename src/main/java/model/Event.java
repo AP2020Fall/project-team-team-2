@@ -43,7 +43,7 @@ public class Event {
         this.start = LocalDate.parse((String) map.get("start_date"));
         this.end = LocalDate.parse((String) map.get("end_date"));
         setImage((String) map.get("avatar_address"));
-        this.score = (int) map.get("score");
+        this.score = Integer.parseInt((String) map.get("score"));
         this.comment = (String)map.get("event_comment");
     }
     /*
@@ -159,20 +159,17 @@ public class Event {
 
     public static ArrayList<Event> getEvents() {
         ArrayList<Event> result = new ArrayList<>();
-        System.out.println("here &1");
         List<Map<String,Object>> eventList = SQLConnector.getWholeTable("events");
-        System.out.println("here &2");
         if(eventList == null || eventList.isEmpty())
         {
             System.out.println("[MODEL]: no Event could be found");
             return result;
         }
-        System.out.println("here &3");
         for (Map<String,Object> event:eventList)
         {
+            if(!event.get("event_comment").equals("Casual"))
             result.add(new Event(event));
         }
-        System.out.println("here &4");
         return result;
     }
 

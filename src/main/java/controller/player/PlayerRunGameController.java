@@ -1,5 +1,7 @@
 package controller.player;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import controller.Controller;
 import javafx.scene.image.Image;
 import main.ClientInfo;
@@ -83,9 +85,11 @@ public class PlayerRunGameController extends Controller {
     public ArrayList<AvailableGame> getAvailableGames() {
         return AvailableGame.getAvailableGames();
     }
-    public String createAvailableGame(Map<String, Object> primitiveSettings) {
+    public String createAvailableGame(String primitiveSettingsString) {
         ArrayList<Player> players = new ArrayList<>();
         players.add(loggedIn);
+        Map<String, Object> primitiveSettings = new Gson().fromJson(primitiveSettingsString,
+                new TypeToken<Map<String, Object>>() { }.getType());
         AvailableGame availableGame = new AvailableGame(primitiveSettings,players,game,event,generateId());
         availableGame.createGame();
         return availableGame.getAvailableGameId();

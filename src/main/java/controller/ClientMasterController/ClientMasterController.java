@@ -1,6 +1,7 @@
 package controller.ClientMasterController;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.jfoenix.controls.JFXTextField;
@@ -917,7 +918,7 @@ public class ClientMasterController {
 
     public String createAvailableGame(Map<String, Object> primitiveSettings) {
         ArrayList<Object> params = new ArrayList<>();
-        params.add(primitiveSettings);
+        params.add(new Gson().toJson( primitiveSettings));
         Command command = new Command("createAvailableGame", "controller.player.PlayerRunGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());

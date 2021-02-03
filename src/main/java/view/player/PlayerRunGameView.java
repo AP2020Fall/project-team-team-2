@@ -1,5 +1,6 @@
 package view.player;
 
+import com.google.gson.Gson;
 import com.jfoenix.controls.JFXTextField;
 import controller.ClientMasterController.ClientMasterController;
 import javafx.event.ActionEvent;
@@ -86,21 +87,20 @@ public class PlayerRunGameView implements Tab, Initializable {
     private java.util.Map<String, Object> primitiveSettings = new HashMap<>();
 
     public PlayerRunGameView(String gameName, String eventId) {
-        primitiveSettings.put("Map Number", 1);
+        primitiveSettings.put("Map Number",1);
         primitiveSettings.put("Placement", false);
         primitiveSettings.put("Alliance", false);
         primitiveSettings.put("Blizzards", false);
-        primitiveSettings.put("Fog of War", false);
-        primitiveSettings.put("Duration", 0);
-        primitiveSettings.put("PlayersNum", 2);
-        primitiveSettings.put("Players" , null);
+        primitiveSettings.put("Fog of War",false);
+        primitiveSettings.put("Duration", false);
+        primitiveSettings.put("PlayersNum",false);
+        //primitiveSettings.put("Players" , null);
         Client.getClientInfo().setGameName(gameName);
         Client.getClientInfo().setEventId(eventId);
         controller = Client.getConnector().getController();
         usernames = new ArrayList<>();
         //usernames.add(Client.getClientInfo().getLoggedIn().getUsername());
         searchContextMenu = new ContextMenu();
-        System.out.println("here");
     }
 
     @Override
@@ -112,11 +112,8 @@ public class PlayerRunGameView implements Tab, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("here 1");
         initializeInfo();
-        System.out.println("here 2");
         initializeCurrentGamesTable();
-        System.out.println("here 3");
     }
 
     @FXML
@@ -274,7 +271,7 @@ public class PlayerRunGameView implements Tab, Initializable {
 
     public int generateSoldiersNumber(){
         int soldierNumber = 0;
-        switch ((Integer)this.primitiveSettings.get("Map Number")){
+        switch ((Integer) this.primitiveSettings.get("Map Number")){
             case 0: soldierNumber = 10;break;
             case 1:
             case 6:
@@ -359,7 +356,7 @@ public class PlayerRunGameView implements Tab, Initializable {
         }
     }
     public void setPrimitiveSettings(String index, Object value) {
-        this.primitiveSettings.put(index, value);
+        this.primitiveSettings.put(index,value);
     }
 
 
