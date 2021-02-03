@@ -93,7 +93,7 @@ public class PlayerRunGameView implements Tab, Initializable {
         primitiveSettings.put("Blizzards", false);
         primitiveSettings.put("Fog of War",false);
         primitiveSettings.put("Duration", false);
-        primitiveSettings.put("PlayersNum",false);
+        primitiveSettings.put("PlayersNum",0);
         //primitiveSettings.put("Players" , null);
         Client.getClientInfo().setGameName(gameName);
         Client.getClientInfo().setEventId(eventId);

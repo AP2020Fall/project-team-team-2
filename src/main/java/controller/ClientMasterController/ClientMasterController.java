@@ -944,6 +944,27 @@ public class ClientMasterController {
 
         return new Gson().fromJson(answer, Boolean.class);
     }
+    public void playerReady() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("playerReady", "controller.player.PlayerAvailableGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public void playerQuit() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("playerReady", "controller.player.PlayerAvailableGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public boolean arePlayerReady() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("allPlayerReady", "controller.player.PlayerAvailableGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return  new Gson().fromJson(answer, Boolean.class);
+    }
 
     //######################## AdminEventMenu Commands ########################\\
 
@@ -1619,7 +1640,7 @@ public class ClientMasterController {
 
     public Boolean getAllPlayersAdded() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getAllPlayersAdded", "controller.admin.RiskGameController"
+        Command command = new Command("getAllPlayersAdded", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Boolean.class);
@@ -2201,7 +2222,6 @@ public class ClientMasterController {
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
-
 
 
 }

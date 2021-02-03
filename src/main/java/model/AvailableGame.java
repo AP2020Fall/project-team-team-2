@@ -9,6 +9,7 @@ public class AvailableGame {
     private static ArrayList<AvailableGame> availableGames = new ArrayList<>();
     private final Map<String,Object> primitiveSetting;
     private final ArrayList<Player> joinedPlayers;
+    private final ArrayList<Player> readyPlayers;
     private final String availableGameId;
     private final Game game;
     private final Event event;
@@ -16,6 +17,7 @@ public class AvailableGame {
     public AvailableGame(Map<String, Object> primitiveSetting, ArrayList<Player> joinedPlayers, Game game, Event event,String id) {
         this.primitiveSetting = primitiveSetting;
         this.joinedPlayers = joinedPlayers;
+        this.readyPlayers = new ArrayList<>();
         this.game = game;
         this.event = event;
         availableGameId = id;
@@ -58,7 +60,28 @@ public class AvailableGame {
     }
 
     public Boolean playerJoin(Player loggedIn) {
-        joinedPlayers.add(loggedIn);
-        return true;
+        if((int) primitiveSetting.get("PlayersNum") < joinedPlayers.size()) {
+            joinedPlayers.add(loggedIn);
+            return true;
+        }
+        return false;
     }
+
+    public void playerQuit(Player player) {
+        joinedPlayers.remove(player);
+        if(joinedPlayers.isEmpty())
+            availableGames.remove(this);
+    }
+
+    public void playerReady(Player player) {
+        if(joinedPlayers.contains(player) && !readyPlayers.contains(player))
+            readyPlayers.add(player);
+    }
+    public boolean allReady() {
+        if ((int) primitiveSetting.get("PlayersNum") == readyPlayers.size()) {
+            return true;
+        }
+        return false;
+    }
+
 }

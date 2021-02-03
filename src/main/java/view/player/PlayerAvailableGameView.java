@@ -59,6 +59,11 @@ public class PlayerAvailableGameView implements Tab, Initializable {
             playerVBox.setAlignment(Pos.CENTER);
             playerVBox.setSpacing(30);
             hBoxContainer.getChildren().add(playerVBox);
+            if(controller.arePlayerReady())
+            {
+                System.out.println("Game is about to be played ");
+            }
+
         }
     }
 
@@ -67,20 +72,15 @@ public class PlayerAvailableGameView implements Tab, Initializable {
         updateVBox();
     }
 
-
-
-    @FXML
-    private Button ready;
-
     @FXML
     void leave() {
+        controller.playerQuit();
         TabHandler.getTabHandler().back();
-
     }
 
     @FXML
     void playerReady() {
-
+        controller.playerReady();
     }
 
 
