@@ -48,6 +48,10 @@ public class Player extends Account {
         super(botName, username);
     }
 
+    public Player(Map<String, Object> player) {
+        super(player);
+    }
+
     public static void add(Player player) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("first_name", player.getFirstName());

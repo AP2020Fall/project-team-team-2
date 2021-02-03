@@ -107,12 +107,7 @@ public class Controller {
     }
 
     public boolean isEventIdExists(String eventId) {
-        for (Event event : Event.getEvents()) {
-            if (event.getEventId().equals(eventId)) {
-                return true;
-            }
-        }
-        return false;
+        return Event.getEventById(eventId) != null;
     }
 
     public Boolean isSuggestionIdExists(String suggestionId) {

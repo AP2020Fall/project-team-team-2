@@ -17,10 +17,10 @@ public class Main extends Application {
     private static void openFiles() {
         try {
             //Account.open();
-            Event.open();
+            //Event.open();
             Suggestion.open();
             Game.open();
-            FriendRequest.open();
+           // FriendRequest.open();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -30,10 +30,10 @@ public class Main extends Application {
     private static void saveFiles() {
         try {
             //Account.save();
-            Event.save();
+           // Event.save();
             Suggestion.save();
             Game.save();
-            FriendRequest.save();
+           // FriendRequest.save();
         } catch (Exception e) {
             e.getStackTrace();
         }

@@ -6,12 +6,15 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
+import javax.jws.Oneway;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
@@ -134,14 +137,10 @@ public class Game {
     }
 
     private void removeEvents() {
-        ArrayList<Event> eventsMustDelete = new ArrayList<>();
-        for (Event event : Event.getEvents()) {
-            if (event.getGameName().equals(this.name)) {
-                eventsMustDelete.add(event);
-            }
-        }
-        for (Event event : eventsMustDelete) {
-            event.delete();
+        List<Map<String,Object>> eventsMustDelete =
+                Event.SQLEventSearch("game_name",this.name);
+        for (Map<String, Object> event : eventsMustDelete) {
+            Event.delete(event.get("event_id"));
         }
     }
 

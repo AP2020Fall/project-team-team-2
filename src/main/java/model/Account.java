@@ -196,15 +196,6 @@ public abstract class Account {
     }
 
 
-
-    private static Player createPlayer(Map<String, Object> player) {
-        return new Player((String) player.get("first_name"), (String) player.get("last_name"),
-                (String) player.get("username"), (String) player.get("player_id"),
-                (String) player.get("hash_password"), (String) player.get("email_address"),
-                (String) player.get("phone_number"), (Double) player.get("money"));
-    }
-
-
     public static Admin getAdmin() {
         java.util.Map<String, Object> newMap = new HashMap<>();
         newMap.put("is_admin", 1);
@@ -239,7 +230,7 @@ public abstract class Account {
         if (String.valueOf(thisAccount.get("is_admin")).equals("1")) {
             return new Admin(thisAccount);
         } else {
-            return createPlayer(thisAccount);
+            return new Player(thisAccount);
         }
     }
 
@@ -252,7 +243,7 @@ public abstract class Account {
         if (thisAccount.get("is_admin").equals(1)) {
             return new Admin(thisAccount);
         } else {
-            return createPlayer(thisAccount);
+            return new Player(thisAccount);
         }
     }
 
@@ -263,7 +254,7 @@ public abstract class Account {
         List<Map<String, Object>> thisAccount =
                 SQLConnector.selectFromDatabase(newMap, "players");
         for (Map<String, Object> account : thisAccount)
-            result.add(createPlayer(account));
+            result.add(new Player(account));
         return result;
     }
 
