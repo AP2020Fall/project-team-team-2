@@ -32,22 +32,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class PlayerRunGameView implements Tab, Initializable {
-    private static java.util.Map<String, Object> primitiveSettings = new HashMap<String, Object>();
-    private Event event;
-
-    {
-        primitiveSettings.put("Map Number", 1);
-        primitiveSettings.put("Placement", false);
-        primitiveSettings.put("Alliance", false);
-        primitiveSettings.put("Blizzards", false);
-        primitiveSettings.put("Fog of War", false);
-        primitiveSettings.put("Duration", 0);
-        primitiveSettings.put("PlayersNum", 2);
-        primitiveSettings.put("Players" , null);
-    }
     private final ContextMenu searchContextMenu;
-    private final ArrayList<String> usernames;
-    private final ClientMasterController controller;
     @FXML
     private JFXTextField player2Name;
     @FXML
@@ -96,13 +81,26 @@ public class PlayerRunGameView implements Tab, Initializable {
     @FXML
     private TableView<AvailableGameEntry> currentGames;
 
+    private final ArrayList<String> usernames;
+    private final ClientMasterController controller;
+    private java.util.Map<String, Object> primitiveSettings = new HashMap<>();
+
     public PlayerRunGameView(String gameName, String eventId) {
+        primitiveSettings.put("Map Number", 1);
+        primitiveSettings.put("Placement", false);
+        primitiveSettings.put("Alliance", false);
+        primitiveSettings.put("Blizzards", false);
+        primitiveSettings.put("Fog of War", false);
+        primitiveSettings.put("Duration", 0);
+        primitiveSettings.put("PlayersNum", 2);
+        primitiveSettings.put("Players" , null);
         Client.getClientInfo().setGameName(gameName);
         Client.getClientInfo().setEventId(eventId);
         controller = Client.getConnector().getController();
         usernames = new ArrayList<>();
         //usernames.add(Client.getClientInfo().getLoggedIn().getUsername());
         searchContextMenu = new ContextMenu();
+        System.out.println("here");
     }
 
     @Override
@@ -114,8 +112,11 @@ public class PlayerRunGameView implements Tab, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("here 1");
         initializeInfo();
+        System.out.println("here 2");
         initializeCurrentGamesTable();
+        System.out.println("here 3");
     }
 
     @FXML
@@ -221,9 +222,10 @@ public class PlayerRunGameView implements Tab, Initializable {
         chooseMapNumber(mapNum.getText());
         changeDurationTime(limitTimeNum.getText());
         changePlayersNumber(playerNum.getText());
-        int mapNum = (int) controller.getPrimitiveSettings().get("Map Number");
+        int mapNum = (int) primitiveSettings.get("Map Number");
         if (mapNum <= 10 && mapNum >= 1) {
-            ViewHandler.getViewHandler().push(this.controller.startGame());
+
+            TabHandler.getTabHandler().push(new PlayerAvailableGameView(controller.createAvailableGame(primitiveSettings)));
         }
     }
 
@@ -237,49 +239,39 @@ public class PlayerRunGameView implements Tab, Initializable {
 
     public void changePlayersNumber(String strNumber) {
         int playerNumber = Integer.parseInt(strNumber);
-        String callback = controller.setPlayerNumber(playerNumber);
+        String callback = setPlayerNumber(playerNumber);
         System.out.println(callback);
 
     }
 
     public void chooseMapNumber(String strNumber) {
         int mapNumber = Integer.parseInt(strNumber);
-        String callback = controller.setMapNumber(mapNumber);
+        String callback = setMapNumber(mapNumber);
         System.out.println(callback);
     }
 
     public void changeDurationTime(String strNumber) {
         int number = Integer.parseInt(strNumber);
-        String callback = controller.setDurationTime(number);
+        String callback = setDurationTime(number);
         System.out.println(callback);
     }
 
     public void placementType(boolean type) {
-        controller.setPlacementType(type);
+        setPlacementType(type);
     }
 
     public void allianceType(boolean selected) {
-        controller.setAllianceType(selected);
+       setAllianceType(selected);
     }
 
     public void blizzardsType(boolean type) {
-        controller.setBlizzardsType(type);
+        setBlizzardsType(type);
     }
 
     public void fogsType(boolean type) {
-        controller.setFogType(type);
+       setFogType(type);
     }
 
-    private void initializeCurrentGamesTable()
-    {
-        TableColumn<AvailableGameEntry, ImageView> gameNameColumn = new TableColumn<>("Game Name");
-        gameNameColumn.setCellValueFactory(new PropertyValueFactory<>("gameName"));
-
-
-        currentGames.setPlaceholder(new Label("No game has been created."));
-        currentGames.getColumns().addAll(gameNameColumn);
-        currentGames.getItems().addAll(controller.getAvailableGames());
-    }
     public int generateSoldiersNumber(){
         int soldierNumber = 0;
         switch ((Integer)this.primitiveSettings.get("Map Number")){
@@ -368,6 +360,19 @@ public class PlayerRunGameView implements Tab, Initializable {
     }
     public void setPrimitiveSettings(String index, Object value) {
         this.primitiveSettings.put(index, value);
+    }
+
+
+
+    private void initializeCurrentGamesTable()
+    {
+        TableColumn<AvailableGameEntry, ImageView> gameNameColumn = new TableColumn<>("Game Name");
+        gameNameColumn.setCellValueFactory(new PropertyValueFactory<>("gameName"));
+
+
+        currentGames.setPlaceholder(new Label("No game has been created."));
+        currentGames.getColumns().addAll(gameNameColumn);
+        currentGames.getItems().addAll(controller.getAvailableGames());
     }
     @FXML
     void gameTableSelect(MouseEvent event) {

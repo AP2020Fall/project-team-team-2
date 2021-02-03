@@ -915,6 +915,15 @@ public class ClientMasterController {
         return result;
     }
 
+    public String createAvailableGame(Map<String, Object> primitiveSettings) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(primitiveSettings);
+        Command command = new Command("createAvailableGame", "controller.player.PlayerRunGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer,String.class);
+    }
+
     //######################## AdminEventMenu Commands ########################\\
 
     public String getAdminEventGameName() {

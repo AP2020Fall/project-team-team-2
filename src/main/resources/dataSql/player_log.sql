@@ -6,6 +6,7 @@ create table player_log
 	usernames varchar(20000) charset utf8 null,
 	winner varchar(50) null,
 	time varchar(50) null,
-	game_name varchar(50) null
+	game_name varchar(50) null,
+	play_log_id varchar(20) null
 );
 

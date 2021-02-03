@@ -19,7 +19,7 @@ public class PlayerProfileViewController extends Controller {
         if (player == null)
             System.err.println("Player passed to PlayerProfileViewController is null");
         this.logged = Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
-        if (player == null)
+        if (logged == null)
             System.err.println("Player passed to PlayerProfileViewController is null");
     }
 

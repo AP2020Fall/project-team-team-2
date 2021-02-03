@@ -139,6 +139,7 @@ public class Event {
         resultMap.put("end_date", event.getEnd().toString());
         resultMap.put("score", event.getScore());
         resultMap.put("avatar_address", event.getImageURL());
+        System.out.println(event.getImageURL());
         resultMap.put("event_id", event.getEventId());
         resultMap.put("event_comment", event.getComment());
         SQLConnector.insertInDatabase(resultMap,"events");
@@ -158,16 +159,20 @@ public class Event {
 
     public static ArrayList<Event> getEvents() {
         ArrayList<Event> result = new ArrayList<>();
+        System.out.println("here &1");
         List<Map<String,Object>> eventList = SQLConnector.getWholeTable("events");
+        System.out.println("here &2");
         if(eventList == null || eventList.isEmpty())
         {
             System.out.println("[MODEL]: no Event could be found");
             return result;
         }
+        System.out.println("here &3");
         for (Map<String,Object> event:eventList)
         {
             result.add(new Event(event));
         }
+        System.out.println("here &4");
         return result;
     }
 

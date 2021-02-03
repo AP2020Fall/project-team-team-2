@@ -49,8 +49,8 @@ public class PlayerAvailableGameView implements Tab, Initializable {
 
     }
     public static void updateVBox(){
-        PlayerAvailableGameView.hBoxContainer.getChildren().clear();
-        for(Player player: PlayerAvailableGameView.joinedPlayers) {
+        //PlayerAvailableGameView.hBoxContainer.getChildren().clear();
+        /*for(Player player: PlayerAvailableGameView.joinedPlayers) {
             Circle circle = new Circle(60);
             circle.setFill(new ImagePattern(player.getImage()));
             Label playerName = new Label(player.getUsername());
@@ -58,7 +58,7 @@ public class PlayerAvailableGameView implements Tab, Initializable {
             playerVBox.setAlignment(Pos.CENTER);
             playerVBox.setSpacing(30);
             PlayerAvailableGameView.hBoxContainer.getChildren().add(playerVBox);
-        }
+        }*/
     }
     @FXML
     public void leaveTheGame(){

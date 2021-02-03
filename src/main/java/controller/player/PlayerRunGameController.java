@@ -1,33 +1,29 @@
 package controller.player;
 
-import com.jfoenix.controls.JFXTextField;
 import controller.Controller;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import main.Client;
 import main.ClientInfo;
 import model.AvailableGame;
-import model.Entry.AvailableGameEntry;
 import model.Event;
 import model.Game;
 import model.Player;
-import view.risk.StartGameView;
-import view.ViewHandler;
-import view.player.PlayerRunGameView;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public class PlayerRunGameController extends Controller {
     private final Game game;
     private final Event event;
-
+    private final Player loggedIn;
     public PlayerRunGameController(ClientInfo clientInfo) {
         super(clientInfo);
+        this.loggedIn = Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
+        if(loggedIn == null)
+        {
+            System.err.println("Player passed to PlayerRunGameController is null.");
+
+        }
         this.game = Game.getGameByGameName(clientInfo.getGameName());
         if (game == null)
             System.err.println("Game passed to PlayerRunGameController is null.");
@@ -72,7 +68,7 @@ public class PlayerRunGameController extends Controller {
         return Player.getPlayerByUsername(username).getImage();
     }
 
-    public void runGame(ArrayList<String> usernames) {
+   public void runGame(ArrayList<String> usernames) {
         ArrayList<Player> players = new ArrayList<>();
         System.out.println("Players ready to play are:");
         for (String username : usernames) {
@@ -83,7 +79,15 @@ public class PlayerRunGameController extends Controller {
         System.out.println("lets go play");
         // ViewHandler.getViewHandler().push(new StartGameView(players,event));
     }
+
     public ArrayList<AvailableGame> getAvailableGames() {
         return AvailableGame.getAvailableGames();
+    }
+    public String createAvailableGame(Map<String, Object> primitiveSettings) {
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(loggedIn);
+        AvailableGame availableGame = new AvailableGame(primitiveSettings,players,game,event,generateId());
+        availableGame.createGame();
+        return availableGame.getAvailableGameId();
     }
 }
