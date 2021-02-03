@@ -902,6 +902,19 @@ public class ClientMasterController {
         return searchPlayer(username).getImage();
     }
 
+    public ArrayList< AvailableGameEntry> getAvailableGames() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getAvailableGames", "controller.player.PlayerRunGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        ArrayList<AvailableGame> availableGames = new Gson().fromJson(answer, new TypeToken<ArrayList<AvailableGame>>() {
+        }.getType());
+        ArrayList< AvailableGameEntry> result = new ArrayList<>();
+        for (AvailableGame availableGame : availableGames)
+            result.add(new AvailableGameEntry(availableGame));
+        return result;
+    }
+
     //######################## AdminEventMenu Commands ########################\\
 
     public String getAdminEventGameName() {

@@ -9,12 +9,15 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import main.Client;
 import model.Entry.AvailableGameEntry;
+import model.Entry.GameEntry;
 import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
@@ -253,6 +256,24 @@ public class PlayerRunGameView implements Tab, Initializable {
 
     private void initializeCurrentGamesTable()
     {
+        TableColumn<AvailableGameEntry, ImageView> gameNameColumn = new TableColumn<>("Game Name");
+        gameNameColumn.setCellValueFactory(new PropertyValueFactory<>("gameName"));
 
+
+        currentGames.setPlaceholder(new Label("No game has been created."));
+        currentGames.getColumns().addAll(gameNameColumn);
+        currentGames.getItems().addAll(controller.getAvailableGames());
+    }
+    @FXML
+    void gameTableSelect(MouseEvent event) {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                if (currentGames.getSelectionModel().getSelectedItems().size() != 0) {
+                    //GameEntry gameEntry = currentGames.getSelectionModel().getSelectedItems().get(0);
+                   // TabHandler.getTabHandler().push(new PlayerGameMenu(gameEntry.getName()));
+                }
+            }
+
+        }
     }
 }

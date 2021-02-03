@@ -9,6 +9,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import main.Client;
 import main.ClientInfo;
+import model.AvailableGame;
+import model.Entry.AvailableGameEntry;
 import model.Event;
 import model.Game;
 import model.Player;
@@ -80,5 +82,8 @@ public class PlayerRunGameController extends Controller {
         }
         System.out.println("lets go play");
         // ViewHandler.getViewHandler().push(new StartGameView(players,event));
+    }
+    public ArrayList<AvailableGame> getAvailableGames() {
+        return AvailableGame.getAvailableGames();
     }
 }
