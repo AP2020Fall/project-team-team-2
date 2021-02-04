@@ -31,9 +31,9 @@ public class StartGameController implements Initializable{
         setPrimitiveSettings("Players" , players);
         this.event = event;
     }
-    public RiskGameView startGame() {
-        return new RiskGameView(this.primitiveSettings , generateSoldiersNumber() , event);
-    }
+    /*public RiskGameView startGame() {
+        //return new RiskGameView(this.primitiveSettings , generateSoldiersNumber() , event);
+    }*/
 
     public static java.util.Map<String, Object> getPrimitiveSettings() {
         return primitiveSettings;

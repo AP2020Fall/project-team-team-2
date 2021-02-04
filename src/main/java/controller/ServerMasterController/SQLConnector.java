@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 public class SQLConnector {
-    public static void main(String[] args) throws SQLException {
+    /*public static void main(String[] args) throws SQLException {
         Map<String, Object> newMap = new HashMap<>();
         Map<String, Object> newMap2 = new HashMap<>();
         newMap.put("first_name", "Ali");
         newMap2.put("hash_password","new_Password");
         System.out.println(getWholeTable("players"));
-    }
+    }*/
     /* Database Methods */
     /* Insert */
     /* Example

@@ -15,13 +15,14 @@ import java.util.Map;
 import java.util.Random;
 
 public class RiskGame {
+    private static ArrayList<RiskGame> riskGames = new ArrayList<>();
     private Player turn;
     private String status;
     private ArrayList<Player> originalPlayers;
     private ProgressBar progressBar;
     private AnimationTimer timer;
     private AudioClip audioClip;
-    private static java.util.Map<String, Object> primitiveSettings;
+    private java.util.Map<String, Object> primitiveSettings;
     private ArrayList<Player> players;
     private boolean gameIsPlaying = true;
     private boolean draftDone;
@@ -49,18 +50,18 @@ public class RiskGame {
     private Player winner;
     private boolean soldierPlacedAfterWin = true;
     private Event event;
-    private static List<Player> allPlayers;
-    private static Player playingUser;
+    private  List<Player> allPlayers;
+    private  Player playingUser;
     private final String riskGameId;
     /* Status Of player : Drafting - Attacking - Fortifing */
-    private static String playerStatus;
+    private  String playerStatus;
 
-    public RiskGame(AvailableGame availableGame,String riskGameId , int soldiers , Event event){
+    public RiskGame(AvailableGame availableGame, int soldiers , Event event){
 
         this.primitiveSettings = availableGame.getPrimitiveSetting();
         this.event = event;
         this.players = (ArrayList<Player>) primitiveSettings.get("Players");
-        this.riskGameId = riskGameId;
+        this.riskGameId = availableGame.getAvailableGameId();
 
         for (Player player : this.players) {
             player.setCard();
@@ -76,6 +77,14 @@ public class RiskGame {
 
         currentPlayer = players.get(0);
         /* Show Turn*/
+        riskGames.add(this);
+    }
+
+    public static RiskGame getRiskGameById(String availableGameId) {
+        for (RiskGame riskGame:riskGames)
+            if(riskGame.riskGameId.equals(availableGameId))
+                return riskGame;
+            return null;
     }
 
     public void shapeMap() {
@@ -166,8 +175,8 @@ public class RiskGame {
         return turn;
     }
 
-    public static void addPlayer(Player player) {
-        RiskGame.allPlayers.add(player);
+    public  void addPlayer(Player player) {
+        allPlayers.add(player);
     }
 
     public Player getCurrentPlayer() {
@@ -202,7 +211,7 @@ public class RiskGame {
         return winner;
     }
 
-    public static Map<String, Object> getPrimitiveSettings() {
+    public Map<String, Object> getPrimitiveSettings() {
         return primitiveSettings;
     }
 
@@ -238,7 +247,7 @@ public class RiskGame {
         return event;
     }
 
-    public static List<Player> getAllPlayers() {
+    public List<Player> getAllPlayers() {
         return allPlayers;
     }
 
@@ -305,8 +314,8 @@ public class RiskGame {
     public boolean getGameIsPlaying(){
         return gameIsPlaying;
     }
-    public static void setPrimitiveSettings(Map<String, Object> primitiveSettings) {
-        RiskGame.primitiveSettings = primitiveSettings;
+    public  void setPrimitiveSettings(Map<String, Object> primitiveSettings) {
+       this.primitiveSettings = primitiveSettings;
     }
 
     public void setGameCountries(List<List<Country>> gameCountries) {
@@ -329,8 +338,8 @@ public class RiskGame {
         this.startSoldiers = startSoldiers;
     }
 
-    public static void setAllPlayers(List<Player> allPlayers) {
-        RiskGame.allPlayers = allPlayers;
+    public void setAllPlayers(List<Player> allPlayers) {
+        this.allPlayers = allPlayers;
     }
 
     public void setTurnDone(boolean turnDone) {
@@ -360,19 +369,19 @@ public class RiskGame {
     public void setWinner(Player winner) {
         this.winner = winner;
     }
-    public static Player getPlayingUser() {
+    public  Player getPlayingUser() {
         return playingUser;
     }
 
-    public static void setPlayerStatus(String playerStatus) {
-        RiskGame.playerStatus = playerStatus;
+    public void setPlayerStatus(String playerStatus) {
+        this.playerStatus = playerStatus;
     }
 
-    public static void setPlayingUser(Player playingUser) {
-        RiskGame.playingUser = playingUser;
+    public void setPlayingUser(Player playingUser) {
+        this.playingUser = playingUser;
     }
 
-    public static String getPlayerStatus() {
+    public  String getPlayerStatus() {
         return playerStatus;
     }
 

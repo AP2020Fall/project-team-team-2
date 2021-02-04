@@ -35,7 +35,7 @@ public class ClientConnector {
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             controller = ClientMasterController.getController();
-            (new ServerListener(socket,dataOutputStream,dataInputStream)).start();
+            //(new ServerListener(socket,dataOutputStream,dataInputStream)).start();
 
         } catch (IOException e) {
             System.err.println(e.getMessage());

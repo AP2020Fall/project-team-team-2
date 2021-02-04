@@ -92,7 +92,7 @@ public class PlayerRunGameView implements Tab, Initializable {
         primitiveSettings.put("Alliance", false);
         primitiveSettings.put("Blizzards", false);
         primitiveSettings.put("Fog of War",false);
-        primitiveSettings.put("Duration", false);
+        primitiveSettings.put("Duration", 20);
         primitiveSettings.put("PlayersNum",0);
         //primitiveSettings.put("Players" , null);
         Client.getClientInfo().setGameName(gameName);
@@ -137,7 +137,7 @@ public class PlayerRunGameView implements Tab, Initializable {
     }
 
     private void initializeInfo() {
-        gameAvatar.setImage(controller.getGameImage());
+        gameAvatar.setImage(controller.getRunGameImage());
         eventMode.setText(controller.getEventMode());
     }
 

@@ -314,10 +314,10 @@ public class ClientMasterController {
 
     public Image getGameImage() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getGame", "controller.player.PlayerGameMenuController"
+        Command command = new Command("getImage", "controller.player.PlayerGameMenuController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer, Game.class).getImage();
+        return new Image(new Gson().fromJson(answer, String.class));
     }
 
     public boolean hasPlayedGame() {
@@ -889,6 +889,15 @@ public class ClientMasterController {
         Command command = new Command("getEventMode", "controller.player.PlayerRunGameController"
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
+    }
+
+    public Image getRunGameImage()
+    {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getGameImage", "controller.player.PlayerRunGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Image(new Gson().fromJson(answer, String.class));
     }
 
     public String getEventMode() {
@@ -1522,9 +1531,9 @@ public class ClientMasterController {
 
     //######################## RiskGameController Commands ########################\\
 
-    public static java.util.Map<String, Object> getPrimitiveSettings() {
+    public java.util.Map<String, Object> getPrimitiveSettings() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getPrimitiveSettings", "controller.admin.RiskGameController"
+        Command command = new Command("getPrimitiveSettings", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         java.util.Map<String, Object> primitiveSettings = new Gson().fromJson(answer, new TypeToken<java.util.Map<String, Object>>() {
@@ -1534,7 +1543,7 @@ public class ClientMasterController {
 
     public List<List<Country>> getGameCountries() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getGameCountries", "controller.admin.RiskGameController"
+        Command command = new Command("getGameCountries", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         List<List<Country>> gameCountries = new Gson().fromJson(answer, new TypeToken<List<List<Country>>>() {
@@ -1548,7 +1557,7 @@ public class ClientMasterController {
 
     public int[][] getFogOfWarMap(Player currentPlayer) {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getFogOfWarMap", "controller.admin.RiskGameController"
+        Command command = new Command("getFogOfWarMap", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, int[][].class);
@@ -1557,21 +1566,21 @@ public class ClientMasterController {
 
     public void notifSent() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("notifSent", "controller.admin.RiskGameController"
+        Command command = new Command("notifSent", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
 
     public void resetNotif() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("resetNotif", "controller.admin.RiskGameController"
+        Command command = new Command("resetNotif", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
 
     public boolean getNotifSent() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getNotifSent", "controller.admin.RiskGameController"
+        Command command = new Command("getNotifSent", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
@@ -1579,7 +1588,7 @@ public class ClientMasterController {
 
     public ObservableList<Player> getRiskPlayers() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getPlayers", "controller.admin.RiskGameController"
+        Command command = new Command("getPlayers", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         ArrayList<Player> players = new Gson().fromJson(answer, new TypeToken<ArrayList<Player>>() {
@@ -1607,7 +1616,7 @@ public class ClientMasterController {
 
     public Boolean getGameIsPlaying() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getGameIsPlaying", "controller.admin.RiskGameController"
+        Command command = new Command("getGameIsPlaying", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Boolean.class);
@@ -1615,7 +1624,7 @@ public class ClientMasterController {
 
     public Boolean getFogStatus() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getFogStatus", "controller.admin.RiskGameController"
+        Command command = new Command("getFogStatus", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Boolean.class);
@@ -1623,7 +1632,7 @@ public class ClientMasterController {
 
     public int getRemainSoldiers() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getRemainSoldiers", "controller.admin.RiskGameController"
+        Command command = new Command("getRemainSoldiers", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, int.class);
@@ -1641,7 +1650,7 @@ public class ClientMasterController {
         params.add(i);
         params.add(j);
         params.add(soldiers);
-        Command command = new Command("draft", "controller.admin.RiskGameController"
+        Command command = new Command("draft", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1652,7 +1661,7 @@ public class ClientMasterController {
         params.add(i);
         params.add(j);
         params.add(soldiers);
-        Command command = new Command("beginDraft", "controller.admin.RiskGameController"
+        Command command = new Command("beginDraft", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1680,7 +1689,7 @@ public class ClientMasterController {
         params.add(destI);
         params.add(destJ);
         params.add(soldiers);
-        Command command = new Command("attack", "controller.admin.RiskGameController"
+        Command command = new Command("attack", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1688,7 +1697,7 @@ public class ClientMasterController {
 
     public Boolean getSoldierPlaced() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getSoldierPlaced", "controller.admin.RiskGameController"
+        Command command = new Command("getSoldierPlaced", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Boolean.class);
@@ -1708,7 +1717,7 @@ public class ClientMasterController {
         params.add(destI);
         params.add(destJ);
         params.add(soldiers);
-        Command command = new Command("fortify", "controller.admin.RiskGameController"
+        Command command = new Command("fortify", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1716,7 +1725,7 @@ public class ClientMasterController {
 
     public String next() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("next", "controller.admin.RiskGameController"
+        Command command = new Command("next", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1731,7 +1740,7 @@ public class ClientMasterController {
 
     public String changeTurn() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("changeTurn", "controller.admin.RiskGameController"
+        Command command = new Command("changeTurn", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1746,7 +1755,7 @@ public class ClientMasterController {
 
     public Boolean getPlacementFinished() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getPlacementFinished", "controller.admin.RiskGameController"
+        Command command = new Command("getPlacementFinished", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Boolean.class);
@@ -1755,7 +1764,7 @@ public class ClientMasterController {
     public String matchCards(int type) {
         ArrayList<Object> params = new ArrayList<>();
         params.add(type);
-        Command command = new Command("matchCards", "controller.admin.RiskGameController"
+        Command command = new Command("matchCards", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1763,7 +1772,7 @@ public class ClientMasterController {
 
     public String showMap() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("showMap", "controller.admin.RiskGameController"
+        Command command = new Command("showMap", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1787,7 +1796,7 @@ public class ClientMasterController {
 
     public Player getCurrentPlayer() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getCurrentPlayer", "controller.admin.RiskGameController"
+        Command command = new Command("getCurrentPlayer", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Player.class);
@@ -1798,7 +1807,7 @@ public class ClientMasterController {
         params.add(i);
         params.add(j);
         params.add(soldiers);
-        Command command = new Command("placeSoldier", "controller.admin.RiskGameController"
+        Command command = new Command("placeSoldier", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1806,7 +1815,7 @@ public class ClientMasterController {
 
     public String leaveTheGame() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("leaveTheGame", "controller.admin.RiskGameController"
+        Command command = new Command("leaveTheGame", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1822,7 +1831,7 @@ public class ClientMasterController {
 
     public boolean getDraftDone() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getDraftDone", "controller.admin.RiskGameController"
+        Command command = new Command("getDraftDone", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
@@ -1838,7 +1847,7 @@ public class ClientMasterController {
 
     public boolean getTurnDone() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getTurnDone", "controller.admin.RiskGameController"
+        Command command = new Command("getTurnDone", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, boolean.class);
@@ -1880,7 +1889,7 @@ public class ClientMasterController {
 
     public String showTurn() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("showTurn", "controller.admin.RiskGameController"
+        Command command = new Command("showTurn", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -1888,7 +1897,7 @@ public class ClientMasterController {
 
     public Player getTurn() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getTurn", "controller.admin.RiskGameController"
+        Command command = new Command("getTurn", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Player.class);
@@ -1896,7 +1905,7 @@ public class ClientMasterController {
 
     public String getStatus() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("getStatus", "controller.admin.RiskGameController"
+        Command command = new Command("getStatus", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, String.class);
@@ -2250,7 +2259,7 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
-
+/*
     public String getRiskGameMapNumber() {
     }
 
@@ -2258,5 +2267,5 @@ public class ClientMasterController {
     }
 
     public boolean getRiskGamePlacement() {
-    }
+    }*/
 }

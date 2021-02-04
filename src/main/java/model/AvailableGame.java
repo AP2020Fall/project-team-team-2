@@ -1,21 +1,24 @@
 package model;
 
+import controller.risk.RiskGameController;
 import main.Server;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 public class AvailableGame {
     private static final ArrayList<AvailableGame> availableGames = new ArrayList<>();
-    private final Map<String,Object> primitiveSetting;
-    private final Map<Player,Server.ClientHandler> joinedPlayers;
+    private final Map<String, Object> primitiveSetting;
+    private transient final Map<Player, Server.ClientHandler> joinedPlayers;
     private final ArrayList<Player> readyPlayers;
     private final String availableGameId;
 
     private final Game game;
     private final Event event;
 
-    public AvailableGame(Map<String, Object> primitiveSetting, Map<Player,Server.ClientHandler> joinedPlayers, Game game, Event event,String id) {
+    public AvailableGame(Map<String, Object> primitiveSetting, Map<Player, Server.ClientHandler> joinedPlayers, Game game, Event event, String id) {
         this.primitiveSetting = primitiveSetting;
         this.joinedPlayers = joinedPlayers;
         this.readyPlayers = new ArrayList<>();
@@ -29,10 +32,10 @@ public class AvailableGame {
     }
 
     public static AvailableGame getAvailableGameById(String availableGameId) {
-        for(AvailableGame availableGame :availableGames)
-            if(availableGame.getAvailableGameId().equals(availableGameId))
+        for (AvailableGame availableGame : availableGames)
+            if (availableGame.getAvailableGameId().equals(availableGameId))
                 return availableGame;
-            return null;
+        return null;
     }
 
     public Map<String, Object> getPrimitiveSetting() {
@@ -40,7 +43,10 @@ public class AvailableGame {
     }
 
     public ArrayList<Player> getJoinedPlayers() {
-        return (ArrayList<Player>) joinedPlayers.keySet();
+        ArrayList<Player> result = new ArrayList<>();
+        for(Map.Entry<Player, Server.ClientHandler> entry: joinedPlayers.entrySet())
+            result.add(entry.getKey());
+        return result;
     }
 
     public Game getGame() {
@@ -51,8 +57,7 @@ public class AvailableGame {
         return event;
     }
 
-    public void createGame()
-    {
+    public void createGame() {
         availableGames.add(this);
     }
 
@@ -60,48 +65,59 @@ public class AvailableGame {
         return availableGameId;
     }
 
-    public Boolean playerJoin(Server.ClientHandler clientHandler,Player loggedIn) {
-        if( Math.round((Double) primitiveSetting.get("PlayersNum")) > joinedPlayers.size()) {
-            joinedPlayers.put( loggedIn,clientHandler);
+    public Boolean playerJoin(Server.ClientHandler clientHandler, Player loggedIn) {
+        if (Math.round((Double) primitiveSetting.get("PlayersNum")) > joinedPlayers.size()
+                && !isPlayerInIt(joinedPlayers.keySet(), loggedIn.getUsername())) {
+            joinedPlayers.put(loggedIn, clientHandler);
             return true;
         }
         return false;
     }
 
     public void playerQuit(Player player) {
-        joinedPlayers.removeIf(p -> p.getUsername().equals(player.getUsername()));
+        //joinedPlayers.removeIf(p -> p.getUsername().equals(player.getUsername()));
+
+        joinedPlayers.entrySet().removeIf(joined -> joined.getKey().getUsername().equals(player.getUsername()));
         readyPlayers.removeIf(p -> p.getUsername().equals(player.getUsername()));
-        if(joinedPlayers.isEmpty())
+        if (joinedPlayers.isEmpty())
             availableGames.remove(this);
     }
 
     public void playerReady(Player player) {
-        if(isPlayerInIt(joinedPlayers,player.getUsername()) && !isPlayerInIt(readyPlayers,player.getUsername()))
+        if (isPlayerInIt(joinedPlayers.keySet(), player.getUsername()) && !isPlayerInIt(readyPlayers, player.getUsername()))
             readyPlayers.add(player);
 
     }
+
     public boolean allReady() {
-        return  Math.round((Double) primitiveSetting.get("PlayersNum")) == readyPlayers.size();
+        return Math.round((Double) primitiveSetting.get("PlayersNum")) == readyPlayers.size();
     }
 
-    public Boolean isPlayerReady(String username)
-    {
-        return isPlayerInIt(readyPlayers,username);
+    public Boolean isPlayerReady(String username) {
+        return isPlayerInIt(readyPlayers, username);
     }
 
     public ArrayList<Player> getReadyPlayers() {
         return readyPlayers;
     }
-    public Boolean isPlayerInIt(ArrayList<Player> list, String player)
-    {
-        for(Player player1 : list)
-            if(player1.getUsername().equals(player))
+
+    public Boolean isPlayerInIt(ArrayList<Player> list, String player) {
+        for (Player player1 : list)
+            if (player1.getUsername().equals(player))
                 return true;
-            return false;
+        return false;
+    }
+
+    public Boolean isPlayerInIt(Set<Player> playerSet, String username) {
+        for (Player player : playerSet)
+            if (player.getUsername().equals(username))
+                return true;
+        return false;
     }
 
     public String startGame() {
         //todo do something if needed
+        new RiskGame(this, 20,event);
         return availableGameId;
     }
 }

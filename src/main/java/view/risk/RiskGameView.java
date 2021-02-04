@@ -2,6 +2,7 @@ package view.risk;
 
 import com.google.gson.internal.LinkedHashTreeMap;
 import com.jfoenix.controls.JFXHamburger;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import controller.ClientMasterController.ClientMasterController;
 import controller.risk.RiskGameController;
 import javafx.animation.AnimationTimer;
@@ -210,22 +211,22 @@ public class RiskGameView implements View, Initializable {
     private Label label_5_4;
     @FXML
     private Label label_5_5;
-    private RiskGameController clientMasterController;
 
     /* public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, Event event) {
         // this.riskGameController = new RiskGameController(primitiveSettings, soldiers, event);
          this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
          this.duration = (int) primitiveSettings.get("Duration");
-         if (!(boolean) clientMasterController.getPrimitiveSettings().get("Placement")) {
+         if (!(boolean) controller.getPrimitiveSettings().get("Placement")) {
              autoPlace();
          }
      }*/
     public RiskGameView(String availableGameId) {
         controller = Client.getConnector().getController();
         Client.getClientInfo().setAvailableGameId(availableGameId);
-        this.mapNum = controller.getRiskGameMapNumber();
-        this.duration = controller.getRiskGameDuration();
-        if (!controller.getRiskGamePlacement()) {
+        System.out.println(controller.getPrimitiveSettings());
+        this.mapNum = (String) controller.getPrimitiveSettings().get("Map Number");
+        this.duration = (int) controller.getPrimitiveSettings().get("Duration");
+        if (!(Boolean) controller.getPrimitiveSettings().get("Placement")) {
             autoPlace();
         }
 
@@ -233,12 +234,12 @@ public class RiskGameView implements View, Initializable {
 
     @FXML
     private void loseManually(MouseEvent e) throws URISyntaxException {
-        changeNotifText(clientMasterController.leaveTheGame());
+        changeNotifText(controller.leaveTheGame());
         makeRightHBox();
         colorizeCountry();
         putCountryName();
         updatePlayerLabels();
-        if (!clientMasterController.getGameIsPlaying()) {
+        if (!controller.getGameIsPlaying()) {
             ViewHandler.getViewHandler().exitGame();
         }
     }
@@ -310,18 +311,18 @@ public class RiskGameView implements View, Initializable {
 
     @FXML
     private void countryClick(MouseEvent e) {
-        if (clientMasterController.checkTime()) {
+        if (controller.checkTime()) {
             int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
             int i = indices[0];
             int j = indices[1];
             int soliders = 0;
             try {
                 soliders = Integer.parseInt(inputNumber.getText());
-                if (clientMasterController.getPlacementFinished()) {
+                if (controller.getPlacementFinished()) {
                     switch (showWhatToDo()) {
                         case "Draft":
                             if (!inputNumber.getText().isEmpty()) {
-                                if (!clientMasterController.getAttackWon()) {
+                                if (!controller.getAttackWon()) {
                                     changeNotifText(draft(i, j, soliders));
                                 } else {
                                     changeNotifText(draftAfterWin(i, j, soliders));
@@ -329,16 +330,16 @@ public class RiskGameView implements View, Initializable {
                             }
                             break;
                         case "Attack":
-                            if (clientMasterController.getI() == null || clientMasterController.getJ() == null) {
-                                if (clientMasterController.checkCountryIsYours(i, j)) {
-                                    clientMasterController.setI(i);
-                                    clientMasterController.setJ(j);
+                            if (controller.getI() == null || controller.getJ() == null) {
+                                if (controller.checkCountryIsYours(i, j)) {
+                                    controller.setI(i);
+                                    controller.setJ(j);
                                 } else {
                                     changeNotifText("This Country Is Not Yours");
                                 }
                             } else {
                                 if (!inputNumber.getText().isEmpty()) {
-                                    changeNotifText(attack(clientMasterController.getI(), clientMasterController.getJ(),
+                                    changeNotifText(attack(controller.getI(), controller.getJ(),
                                             i, j, soliders));
                                     try {
                                         makeRightHBox();
@@ -349,26 +350,26 @@ public class RiskGameView implements View, Initializable {
                             }
                             break;
                         case "Fortify":
-                            if (clientMasterController.getI() == null || clientMasterController.getJ() == null) {
-                                if (clientMasterController.checkCountryIsYours(i, j)) {
-                                    clientMasterController.setI(i);
-                                    clientMasterController.setJ(j);
+                            if (controller.getI() == null || controller.getJ() == null) {
+                                if (controller.checkCountryIsYours(i, j)) {
+                                    controller.setI(i);
+                                    controller.setJ(j);
                                 } else {
                                     changeNotifText("This Country Is Not Yours");
                                 }
                             } else {
                                 if (!inputNumber.getText().isEmpty()) {
-                                    changeNotifText(fortify(clientMasterController.getI(), clientMasterController.getJ(),
+                                    changeNotifText(fortify(controller.getI(), controller.getJ(),
                                             i, j, soliders));
                                 }
                             }
                             break;
                     }
                 } else {
-                    if (clientMasterController.getAllPlayersAdded()) {
-                        clientMasterController.beginDraft(i, j, soliders);
+                    if (controller.getAllPlayersAdded()) {
+                        controller.beginDraft(i, j, soliders);
                     } else {
-                        clientMasterController.beginDraft(i, j, 1);
+                        controller.beginDraft(i, j, 1);
                     }
                 }
             } catch (NumberFormatException ex) {
@@ -411,7 +412,7 @@ public class RiskGameView implements View, Initializable {
     }
 
     private void deselect() {
-        clientMasterController.deselect();
+        controller.deselect();
     }
 
     public int[] getCountryIndices(String countryClicked) {
@@ -443,59 +444,59 @@ public class RiskGameView implements View, Initializable {
 
 
     private String showWhatToDo() {
-        return clientMasterController.showWhatToDo();
+        return controller.showWhatToDo();
     }
 
     public String placeSoldier(int i, int j, int soldiers) {
-        String toPrint = this.clientMasterController.placeSoldier(i, j, soldiers);
+        String toPrint = this.controller.placeSoldier(i, j, soldiers);
         return toPrint;
     }
 
     public String draft(int i, int j, int soldiers) {
-        String toPrint = this.clientMasterController.draft(i, j, soldiers);
+        String toPrint = this.controller.draft(i, j, soldiers);
         return toPrint;
     }
 
     public String attack(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
-        String toPrint = clientMasterController.attack(sourceI, sourceJ, destI, destJ, soldiers);
+        String toPrint = controller.attack(sourceI, sourceJ, destI, destJ, soldiers);
         return toPrint;
     }
 
     public String fortify(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
-        String toPrint = this.clientMasterController.fortify(sourceI, sourceJ, destI, destJ, soldiers);
+        String toPrint = this.controller.fortify(sourceI, sourceJ, destI, destJ, soldiers);
         return toPrint;
     }
 
     public String next() {
-        String toPrint = clientMasterController.next();
+        String toPrint = controller.next();
         return toPrint;
     }
 
     public void autoPlace() {
-        clientMasterController.autoPlace();
+        controller.autoPlace();
     }
 
     public String nextTurn() {
-        String toPrint = clientMasterController.changeTurn();
+        String toPrint = controller.changeTurn();
         sendNotif();
         return toPrint;
     }
 
     public void showTurn() {
-        String toPrint = clientMasterController.showTurn();
+        String toPrint = controller.showTurn();
     }
 
     public void showOptions() {
-        String toPrint = clientMasterController.showMatchOptions();
+        String toPrint = controller.showMatchOptions();
     }
 
     public String matchCards(int typical) {
-        String toPrint = clientMasterController.matchCards(typical);
+        String toPrint = controller.matchCards(typical);
         return toPrint;
     }
 
     public String draftAfterWin(int i, int j, int soldiers) {
-        String toPrint = clientMasterController.draftAfterWin(i, j, soldiers);
+        String toPrint = controller.draftAfterWin(i, j, soldiers);
         return toPrint;
     }
 
@@ -578,15 +579,15 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void putCountryName() {
-        List<List<Country>> countries = this.clientMasterController.getGameCountries();
+        List<List<Country>> countries = controller.getGameCountries();
         int row = countries.size();
         int columns = countries.get(0).size();
         int[][] toShowFog = new int[row][columns];
-        toShowFog = clientMasterController.getFogOfWarMap(clientMasterController.getCurrentPlayer());
+        toShowFog = controller.getFogOfWarMap(controller.getCurrentPlayer());
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 allLabels[i][j].setText("");
-                if (!clientMasterController.getFogStatus() || !clientMasterController.getPlacementFinished()) {
+                if (!controller.getFogStatus() || !controller.getPlacementFinished()) {
                     allLabels[i][j].setText(countries.get(i).get(j).getName() + "\n" + countries.get(i).get(j).getSoldiers());
                 } else {
                     int numberCheck = toShowFog[i][j];
@@ -609,12 +610,12 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void colorizeCountry() {
-        List<List<Country>> countries = this.clientMasterController.getGameCountries();
+        List<List<Country>> countries = this.controller.getGameCountries();
         int row = countries.size();
         int columns = countries.get(0).size();
         int[][] toShowFog = new int[row][columns];
-        toShowFog = clientMasterController.getFogOfWarMap(clientMasterController.getCurrentPlayer());
-        boolean fogStatus = clientMasterController.getFogStatus();
+        toShowFog = controller.getFogOfWarMap(controller.getCurrentPlayer());
+        boolean fogStatus = controller.getFogStatus();
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
                 Player owner = countries.get(i).get(j).getOwner();
@@ -676,17 +677,17 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void setColorTurn() {
-        clientMasterController.checkWinner();
-        if (clientMasterController.getGameIsPlaying()) {
+        controller.checkWinner();
+        if (controller.getGameIsPlaying()) {
             for (Map.Entry<Integer, Circle> entry : playersCircles.entrySet()) {
                 entry.getValue().getStyleClass().clear();
                 entry.getValue().getStyleClass().add("none_active");
             }
 
-            int turnIndex = clientMasterController.getCurrentPlayerIndex();
+            int turnIndex = controller.getCurrentPlayerIndex();
             playersCircles.get(turnIndex).getStyleClass().clear();
             playersCircles.get(turnIndex).getStyleClass().add("status_on");
-            for (Player player : clientMasterController.getCurrentPlayer().getFriends()) {
+            for (Player player : controller.getCurrentPlayer().getFriends()) {
                 int playerNumber = player.getPlayerNumber();
                 playersCircles.get(playerNumber - 1).getStyleClass().clear();
                 playersCircles.get(playerNumber - 1).getStyleClass().add("friend");
@@ -727,12 +728,12 @@ public class RiskGameView implements View, Initializable {
             @Override
             public void handle(MouseEvent event) {
                 int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
-                Player player = clientMasterController.getPlayerByPlayerNumber(playerNumber);
+                Player player = controller.getPlayerByPlayerNumber(playerNumber);
                 if (player != null) {
                     notification("Accepted!", "You accepted this player as friend");
-                    clientMasterController.getCurrentPlayer().getRequests().remove(player);
-                    clientMasterController.getCurrentPlayer().getGameFriends().add(player);
-                    player.getGameFriends().add(clientMasterController.getCurrentPlayer());
+                    controller.getCurrentPlayer().getRequests().remove(player);
+                    controller.getCurrentPlayer().getGameFriends().add(player);
+                    player.getGameFriends().add(controller.getCurrentPlayer());
                     updateRequestsBox();
                 }
                 event.consume();
@@ -742,16 +743,16 @@ public class RiskGameView implements View, Initializable {
             @Override
             public void handle(MouseEvent event) {
                 int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
-                Player player = clientMasterController.getPlayerByPlayerNumber(playerNumber);
+                Player player = controller.getPlayerByPlayerNumber(playerNumber);
                 if (player != null) {
                     notification("Declined!", "You declined this friend");
-                    clientMasterController.getCurrentPlayer().getRequests().remove(player);
+                    controller.getCurrentPlayer().getRequests().remove(player);
                     updateRequestsBox();
                 }
                 event.consume();
             }
         };
-        for (Player player : clientMasterController.getCurrentPlayer().getRequests()) {
+        for (Player player : controller.getCurrentPlayer().getRequests()) {
             String characterAddress = "/images/player_" + player.getPlayerNumber() + ".png";
             Circle requestedCharacter = new Circle(60);
             try {
@@ -780,7 +781,7 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void setMyCardsLabels() {
-        int[] cardsNumbers = clientMasterController.getCurrentPlayer().getCardsNumber();
+        int[] cardsNumbers = controller.getCurrentPlayer().getCardsNumber();
         int number1 = cardsNumbers[0];
         int number2 = cardsNumbers[1];
         int number3 = cardsNumbers[2];
@@ -790,10 +791,10 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void sendNotif() {
-        boolean checkHasRequest = clientMasterController.getCheckRequests();
-        if (checkHasRequest && !clientMasterController.getNotifSent()) {
+        boolean checkHasRequest = controller.getCheckRequests();
+        if (checkHasRequest && !controller.getNotifSent()) {
             notification("Requests", "You have request(s)");
-            clientMasterController.notifSent();
+            controller.notifSent();
         }
     }
 
@@ -802,10 +803,10 @@ public class RiskGameView implements View, Initializable {
             @Override
             public void handle(MouseEvent event) {
                 int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
-                Player player = clientMasterController.getPlayerByPlayerNumber(playerNumber);
+                Player player = controller.getPlayerByPlayerNumber(playerNumber);
                 if (player != null) {
-                    if (!player.equals(clientMasterController.getCurrentPlayer())) {
-                        changeNotifText(clientMasterController.addRequest(player));
+                    if (!player.equals(controller.getCurrentPlayer())) {
+                        changeNotifText(controller.addRequest(player));
                     } else {
                         changeNotifText("You can`t send friendship to yourself");
                     }
@@ -817,7 +818,7 @@ public class RiskGameView implements View, Initializable {
 
         String playerImageAddress = "/images/player_";
         int bigCircleSize = 0;
-        if (clientMasterController.getRiskPlayers().size() <= 3) {
+        if (controller.getRiskPlayers().size() <= 3) {
             bigCircleSize = 100;
         } else {
             bigCircleSize = 60;
@@ -825,7 +826,7 @@ public class RiskGameView implements View, Initializable {
         rightVBox.getChildren().clear();
         playerLabels.clear();
         playersCircles.clear();
-        for (Player player : clientMasterController.getRiskPlayers()) {
+        for (Player player : controller.getRiskPlayers()) {
             Image friendImage = new Image(String.valueOf(getClass().getResource("/images/friend.png")));
             Circle friendCircle = new Circle(20);
             friendCircle.setFill(new ImagePattern(friendImage));
@@ -860,13 +861,13 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void sendProgressBar() {
-        clientMasterController.getProgressBar(progressBar);
+        controller.getProgressBar(progressBar);
     }
 
     public void updatePlayerLabels() {
         int i = 0;
         for (Label label : playerLabels) {
-            label.setText(String.valueOf(clientMasterController.getRiskPlayers().get(i).getDraftSoldiers()));
+            label.setText(String.valueOf(controller.getRiskPlayers().get(i).getDraftSoldiers()));
             i++;
         }
     }
@@ -897,9 +898,9 @@ public class RiskGameView implements View, Initializable {
                 if (progressed >= 1) {
                     changeNotifText("Your time has been finished");
                     currentTimeStamp = System.currentTimeMillis() / 1000L;
-                    clientMasterController.mainChangeTurn();
+                    controller.mainChangeTurn();
                     progressBar.setProgress(0);
-                    clientMasterController.updateCurrentTime();
+                    controller.updateCurrentTime();
                     colorizeCountry();
                     setColorTurn();
                     setColorMode();
@@ -913,8 +914,8 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void addColorToSelected() {
-        Integer i = clientMasterController.getI();
-        Integer j = clientMasterController.getJ();
+        Integer i = controller.getI();
+        Integer j = controller.getJ();
         if (i != null && j != null) {
             allPaths[i - 1][j - 1].getStyleClass().clear();
             allPaths[i - 1][j - 1].getStyleClass().add("country_selected_source");

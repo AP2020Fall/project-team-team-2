@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import main.Client;
+import main.ClientInfo;
 import model.*;
 
 
@@ -27,15 +28,15 @@ public class RiskGameController extends Controller {
 
 
     ArrayList<Player> originalPlayers;
-    private RiskGame riskGameModel;
+    private final RiskGame riskGameModel;
 
     public ArrayList<Player> getPlayers() {
         return riskGameModel.getPlayers();
     }
 
-    public RiskGameController(AvailableGame availableGame, int soldiers, Event event) {
+    public RiskGameController(ClientInfo clientInfo) {
         super(Client.getClientInfo());
-        this.riskGameModel = new RiskGame(availableGame, "ToDo", soldiers, event);
+        this.riskGameModel =RiskGame.getRiskGameById(clientInfo.getAvailableGameId());
         originalPlayers = new ArrayList<>(riskGameModel.getPlayers());
     }
 
@@ -432,9 +433,9 @@ public class RiskGameController extends Controller {
         }
     }
 
-    /*public static java.util.Map<String, Object> getPrimitiveSettings() {
-        return primitiveSettings;
-    }*/
+    public java.util.Map<String, Object> getPrimitiveSettings() {
+        return riskGameModel.getPrimitiveSettings();
+    }
 
     public boolean getPlacementFinished() {
         return riskGameModel.getPlacementFinished();
@@ -1213,5 +1214,10 @@ public class RiskGameController extends Controller {
                 notify.graphic(new ImageView(img));
             }
         });
+    }
+
+    public List<List<Country>> getCountries()
+    {
+        return riskGameModel.getGameCountries();
     }
 }

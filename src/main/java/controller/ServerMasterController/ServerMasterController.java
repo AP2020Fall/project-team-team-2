@@ -19,15 +19,15 @@ public class ServerMasterController {
     {
         return clientHandler;
     }
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         /*
         * The Socket we got from client
-        * */
+        *
         String player_id = "12345";
         Map<String,Object> tempMap = new HashMap<>();
         tempMap.put("player_id" , player_id);
         System.out.println(SQLConnector.selectFromDatabase(tempMap,"players"));
-    }
+    }*/
 
     public static void logout() {
         token = new Token();

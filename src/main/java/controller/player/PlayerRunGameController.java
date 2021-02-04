@@ -59,8 +59,8 @@ public class PlayerRunGameController extends Controller {
     }*/
 
 
-    public Image getGameImage() {
-        return game.getImage();
+    public String getGameImage() {
+        return game.getImageURL();
     }
 
     public String getEventMode() {
