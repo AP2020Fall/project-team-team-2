@@ -2,6 +2,7 @@ package controller.ServerMasterController;
 
 import com.google.gson.Gson;
 import main.Command;
+import main.Server;
 import main.Token;
 import org.javatuples.Triplet;
 
@@ -10,11 +11,14 @@ import java.util.Map;
 
 public class ServerMasterController {
     private static Token token;
-
+    private static Server.ClientHandler clientHandler;
     public static Token getCurrentToken() {
         return token;
     }
-
+    public static Server.ClientHandler getCurrentClientHandler()
+    {
+        return clientHandler;
+    }
     public static void main(String[] args) {
         /*
         * The Socket we got from client
@@ -29,7 +33,8 @@ public class ServerMasterController {
         token = new Token();
     }
 
-    public Triplet<String, String, String> takeAction(String input) {
+    public Triplet<String, String, String> takeAction(String input, Server.ClientHandler client) {
+        clientHandler = client;
         Command command = Command.fromJson(input);
         token = Token.validate(command.getAuthToken(),command.getClientInfo());
         if (token.isTokenFalse()) {

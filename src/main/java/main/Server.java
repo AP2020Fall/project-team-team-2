@@ -12,12 +12,13 @@ import org.javatuples.Triplet;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Server extends Application {
     private static final int PORT_NUMBER = 6660;
     private static final Server server = new Server();
-
+    private static final ArrayList<ClientHandler> clients = new ArrayList<>();
     public Server() {
     }
 
@@ -45,7 +46,9 @@ public class Server extends Application {
                 System.out.println("[SERVER]: A client Connected!");
                 DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));
                 DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
-                new ClientHandler(clientSocket, dataOutputStream, dataInputStream).start();
+                ClientHandler clientHandler = new ClientHandler(clientSocket, dataOutputStream, dataInputStream);
+                clients.add(clientHandler);
+                clientHandler.start();
             } catch (Exception e) {
                 System.err.println("[SERVER]: Error in accepting client!");
                 break;
@@ -59,7 +62,7 @@ public class Server extends Application {
         (getInstance()).run();
     }
 
-    static class ClientHandler extends Thread {
+    public static class ClientHandler extends Thread {
         Socket clientSocket;
         DataOutputStream dataOutputStream;
         DataInputStream dataInputStream;
@@ -83,9 +86,8 @@ public class Server extends Application {
                     Triplet<String, String, String> answer;
                     input = dataInputStream.readUTF();
                     synchronized (getInstance()) {
-                        answer = controller.takeAction(input);
-                        dataOutputStream.writeUTF(new Gson().toJson(answer));
-                        dataOutputStream.flush();
+                        answer = controller.takeAction(input,this);
+                        writeToClient(new Gson().toJson(answer));
                     }
                     System.out.println("[SERVER]: Command: " + input + " was sent.");
                     System.out.println("[SERVER]: result: " + answer + " is sent.");
@@ -96,10 +98,15 @@ public class Server extends Application {
                     }
                 } catch (Exception e) {
                     System.out.println("[SERVER]: Connection to the client is lost!");
+                    clients.remove(this);
                     Thread.currentThread().interrupt();
                 }
 
             }
+        }
+        public void writeToClient(String answer) throws IOException {
+            dataOutputStream.writeUTF(answer);
+            dataOutputStream.flush();
         }
 
     }

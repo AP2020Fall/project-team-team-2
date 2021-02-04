@@ -3,14 +3,17 @@ package controller.player;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import controller.Controller;
+import controller.ServerMasterController.ServerMasterController;
 import javafx.scene.image.Image;
 import main.ClientInfo;
+import main.Server;
 import model.AvailableGame;
 import model.Event;
 import model.Game;
 import model.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -18,11 +21,11 @@ public class PlayerRunGameController extends Controller {
     private final Game game;
     private final Event event;
     private final Player loggedIn;
+
     public PlayerRunGameController(ClientInfo clientInfo) {
         super(clientInfo);
         this.loggedIn = Player.getPlayerByUsername(clientInfo.getLoggedInUsername());
-        if(loggedIn == null)
-        {
+        if (loggedIn == null) {
             System.err.println("Player passed to PlayerRunGameController is null.");
 
         }
@@ -70,7 +73,7 @@ public class PlayerRunGameController extends Controller {
         return Player.getPlayerByUsername(username).getImage();
     }
 
-   public void runGame(ArrayList<String> usernames) {
+    public void runGame(ArrayList<String> usernames) {
         ArrayList<Player> players = new ArrayList<>();
         System.out.println("Players ready to play are:");
         for (String username : usernames) {
@@ -85,20 +88,21 @@ public class PlayerRunGameController extends Controller {
     public ArrayList<AvailableGame> getAvailableGames() {
         return AvailableGame.getAvailableGames();
     }
+
     public String createAvailableGame(String primitiveSettingsString) {
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(loggedIn);
+        Map< Player,Server.ClientHandler> players = new HashMap<>();
+        players.put( loggedIn,ServerMasterController.getCurrentClientHandler());
         Map<String, Object> primitiveSettings = new Gson().fromJson(primitiveSettingsString,
-                new TypeToken<Map<String, Object>>() { }.getType());
-        AvailableGame availableGame = new AvailableGame(primitiveSettings,players,game,event,generateId());
+                new TypeToken<Map<String, Object>>() {
+                }.getType());
+        AvailableGame availableGame = new AvailableGame(primitiveSettings, players, game, event, generateId());
         availableGame.createGame();
         return availableGame.getAvailableGameId();
     }
 
-    public Boolean joinAvailableGame(String availableGameId)
-    {
+    public Boolean joinAvailableGame(String availableGameId) {
         AvailableGame availableGame = AvailableGame.getAvailableGameById(availableGameId);
-        if(availableGame == null) return false;
-        return availableGame.playerJoin(loggedIn);
+        if (availableGame == null) return false;
+        return availableGame.playerJoin(ServerMasterController.getCurrentClientHandler(),loggedIn);
     }
 }

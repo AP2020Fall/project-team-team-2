@@ -1,6 +1,6 @@
 package model;
 
-import model.Entry.AvailableGameEntry;
+import main.Server;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -8,14 +8,14 @@ import java.util.Map;
 public class AvailableGame {
     private static final ArrayList<AvailableGame> availableGames = new ArrayList<>();
     private final Map<String,Object> primitiveSetting;
-    private final ArrayList<Player> joinedPlayers;
+    private final Map<Player,Server.ClientHandler> joinedPlayers;
     private final ArrayList<Player> readyPlayers;
     private final String availableGameId;
 
     private final Game game;
     private final Event event;
 
-    public AvailableGame(Map<String, Object> primitiveSetting, ArrayList<Player> joinedPlayers, Game game, Event event,String id) {
+    public AvailableGame(Map<String, Object> primitiveSetting, Map<Player,Server.ClientHandler> joinedPlayers, Game game, Event event,String id) {
         this.primitiveSetting = primitiveSetting;
         this.joinedPlayers = joinedPlayers;
         this.readyPlayers = new ArrayList<>();
@@ -40,7 +40,7 @@ public class AvailableGame {
     }
 
     public ArrayList<Player> getJoinedPlayers() {
-        return joinedPlayers;
+        return (ArrayList<Player>) joinedPlayers.keySet();
     }
 
     public Game getGame() {
@@ -60,9 +60,9 @@ public class AvailableGame {
         return availableGameId;
     }
 
-    public Boolean playerJoin(Player loggedIn) {
+    public Boolean playerJoin(Server.ClientHandler clientHandler,Player loggedIn) {
         if( Math.round((Double) primitiveSetting.get("PlayersNum")) > joinedPlayers.size()) {
-            joinedPlayers.add(loggedIn);
+            joinedPlayers.put( loggedIn,clientHandler);
             return true;
         }
         return false;
