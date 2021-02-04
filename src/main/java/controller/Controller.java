@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import main.ClientInfo;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import model.*;
@@ -94,15 +95,19 @@ public class Controller {
         return true;
     }
 
-    public Boolean checkRelativeDate(LocalDate start, LocalDate end) {
+    public Boolean checkRelativeDate(String startString, String endString) {
+        LocalDate start = new Gson().fromJson(startString,LocalDate.class);
+        LocalDate end = new Gson().fromJson(endString,LocalDate.class);
         return start.compareTo(end) < 0;
     }
 
-    public Boolean checkStartDate(LocalDate date) {
+    public Boolean checkStartDate(String dateString) {
+        LocalDate date = new Gson().fromJson(dateString,LocalDate.class);
         return LocalDate.now().compareTo(date) <= 0;
     }
 
-    public Boolean checkEndDate(LocalDate date) {
+    public Boolean checkEndDate(String dateString) {
+        LocalDate date = new Gson().fromJson(dateString,LocalDate.class);
         return LocalDate.now().compareTo(date) < 0;
     }
 

@@ -1,5 +1,6 @@
 package controller.admin;
 
+import com.google.gson.Gson;
 import controller.Controller;
 import main.ClientInfo;
 import model.Event;
@@ -40,17 +41,18 @@ public class AdminEventMenuController extends Controller {
         return event.getComment();
     }//done
 
-    public void edit(String gameName, int score, String image, String comment) {
+    public void edit(String gameName, String score, String image, String comment) {
         event.setGameName(gameName);
-        event.setScore(score);
+        event.setScore(new Gson().fromJson(score,Integer.class));
         event.setImage(image);
         event.setComment(comment);
     }
-    public void addEvent(String gameName, LocalDate start, LocalDate end, int score,String comment,String image) {
+    public void addEvent(String gameName, String start, String end, String score,String comment,String image) {
         //creates a new event and adds it to the list of events.
         //LocalDate startDate = createLocalDate(start);
         // LocalDate endDate = createLocalDate(end);
-        Event event = new Event(gameName, start, end, score, generateId(),comment,image);
+        Event event = new Event(gameName, new Gson().fromJson(start,LocalDate.class),
+                new Gson().fromJson(end,LocalDate.class), new Gson().fromJson(score,Integer.class), generateId(),comment,image);
         Event.addEvent(event);
     }
 }

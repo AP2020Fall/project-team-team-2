@@ -20,6 +20,7 @@ import main.Client;
 import model.Event;
 import view.AlertMaker;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,6 +47,7 @@ public class AddEventPopup implements Initializable {
     @FXML
     private JFXButton editButton;
     private Stage popupWindow;
+    private String avatarAddress;
     private final ClientMasterController controller;
 
     public AddEventPopup(boolean edit, String event) {
@@ -67,6 +69,8 @@ public class AddEventPopup implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        File file = new File("src\\main\\resources\\images\\tournament.png");
+        avatarAddress = file.toURI().toString();
         if (edit) {
             addButton.setVisible(false);
             editButton.setVisible(true);
@@ -97,7 +101,7 @@ public class AddEventPopup implements Initializable {
                     "Invalid Information", "Game does not exist.");
         } else {
             controller.addEvent(gameName.getText(), startDate.getValue(), endDate.getValue(),
-                    Integer.parseInt(score.getText()), detail.getText(), avatar.getImage());
+                    Integer.parseInt(score.getText()), detail.getText(), avatarAddress);
             popupWindow.close();
         }
     }
@@ -113,7 +117,7 @@ public class AddEventPopup implements Initializable {
             AlertMaker.showMaterialDialog(stackRoot, stackRoot.getChildren().get(0), "Okay",
                     "Invalid Information", "Game does not exist.");
         } else {
-            controller.editEvent(gameName.getText(), Integer.parseInt(score.getText()), avatar.getImage(), detail.getText());
+            controller.editEvent(gameName.getText(), Integer.parseInt(score.getText()), avatarAddress, detail.getText());
             popupWindow.close();
         }
     }
@@ -125,8 +129,9 @@ public class AddEventPopup implements Initializable {
 
     @FXML
     void addAvatar() {
-        Image givenImage = new Image(AlertMaker.getImageFromUser());
-        if (givenImage != null) {
+        avatarAddress = AlertMaker.getImageFromUser();
+        if(avatarAddress != null) {
+            Image givenImage = new Image(avatarAddress);
             avatar.setImage(givenImage);
         }
     }

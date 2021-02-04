@@ -16,14 +16,12 @@ import java.util.Scanner;
 
 public class Server extends Application {
     private static final int PORT_NUMBER = 6660;
-    private static Server server;
+    private static final Server server = new Server();
 
     public Server() {
     }
 
     public static Server getInstance() {
-        if (server == null)
-            return server = new Server();
         return server;
     }
 
@@ -31,35 +29,10 @@ public class Server extends Application {
 
     //todo make it non javafx
     public static void main(String[] args) throws IOException {
-        getInstance();
         launch(args);
-
     }
 
-    private static void openFiles() {
-        try {
-           // Account.open();
-           // Event.open();
-            //Suggestion.open();
-            //Game.open();
-           // FriendRequest.open();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
-    }
 
-    private static void saveFiles() {
-        try {
-            //Account.save();
-            //Event.save();
-            //Suggestion.save();
-            //Game.save();
-            //FriendRequest.save();
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-    }
 
     private void run() throws IOException {
         ServerSocket serverSocket = new ServerSocket(PORT_NUMBER);
@@ -83,9 +56,7 @@ public class Server extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        openFiles();
-        Runtime.getRuntime().addShutdownHook(new Thread(Server::saveFiles));
-        (new Server()).run();
+        (getInstance()).run();
     }
 
     static class ClientHandler extends Thread {
@@ -107,11 +78,15 @@ public class Server extends Application {
         public void run() {
             String input;
             while (!Thread.interrupted()) {
+
                 try {
+                    Triplet<String, String, String> answer;
                     input = dataInputStream.readUTF();
-                    Triplet<String, String,String> answer = controller.takeAction(input);
-                    dataOutputStream.writeUTF(new Gson().toJson(answer));
-                    dataOutputStream.flush();
+                    synchronized (getInstance()) {
+                        answer = controller.takeAction(input);
+                        dataOutputStream.writeUTF(new Gson().toJson(answer));
+                        dataOutputStream.flush();
+                    }
                     System.out.println("[SERVER]: Command: " + input + " was sent.");
                     System.out.println("[SERVER]: result: " + answer + " is sent.");
                     if (answer.equals("Connection is terminated.")) {
@@ -123,6 +98,7 @@ public class Server extends Application {
                     System.out.println("[SERVER]: Connection to the client is lost!");
                     Thread.currentThread().interrupt();
                 }
+
             }
         }
 

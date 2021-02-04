@@ -139,7 +139,6 @@ public class Event {
         resultMap.put("end_date", event.getEnd().toString());
         resultMap.put("score", event.getScore());
         resultMap.put("avatar_address", event.getImageURL());
-        System.out.println(event.getImageURL());
         resultMap.put("event_id", event.getEventId());
         resultMap.put("event_comment", event.getComment());
         SQLConnector.insertInDatabase(resultMap,"events");

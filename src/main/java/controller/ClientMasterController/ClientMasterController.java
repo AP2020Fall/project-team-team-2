@@ -120,7 +120,7 @@ public class ClientMasterController {
 
     public boolean checkStartDate(LocalDate value) {
         ArrayList<Object> params = new ArrayList<>();
-        params.add(value);
+        params.add(new Gson().toJson(value));
         Command command = new Command("checkStartDate", "controller.Controller", params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Boolean.class);
@@ -128,7 +128,7 @@ public class ClientMasterController {
 
     public boolean checkEndDate(LocalDate value) {
         ArrayList<Object> params = new ArrayList<>();
-        params.add(value);
+        params.add(new Gson().toJson(value));
         Command command = new Command("checkEndDate", "controller.Controller", params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Boolean.class);
@@ -136,8 +136,8 @@ public class ClientMasterController {
 
     public boolean checkRelativeDate(LocalDate value, LocalDate value1) {
         ArrayList<Object> params = new ArrayList<>();
-        params.add(value);
-        params.add(value1);
+        params.add(new Gson().toJson(value));
+        params.add(new Gson().toJson(value1));
         Command command = new Command("checkRelativeDate", "controller.Controller", params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
         return new Gson().fromJson(answer, Boolean.class);
@@ -973,7 +973,14 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return  new Gson().fromJson(answer,new TypeToken<ArrayList<Player>>() {}.getType());
     }
-
+    public boolean isPlayerReady(String username) {
+        ArrayList<Object> params = new ArrayList<>();
+        params.add(username);
+        Command command = new Command("isPlayerReady", "controller.player.PlayerAvailableGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return  new Gson().fromJson(answer, Boolean.class);
+    }
     //######################## AdminEventMenu Commands ########################\\
 
     public String getAdminEventGameName() {
@@ -1027,22 +1034,26 @@ public class ClientMasterController {
     }
 
 
-    public void addEvent(String text, LocalDate value, LocalDate value1, int parseInt, String text1, Image image) {
+    public void addEvent(String text, LocalDate value, LocalDate value1, int parseInt, String text1, String image) {
         ArrayList<Object> params = new ArrayList<>();
         params.add(text);
+        params.add(new Gson().toJson(value));
+        params.add(new Gson().toJson(value1));
+        params.add(new Gson().toJson(parseInt,Integer.class));
         params.add(text1);
         params.add(image);
-        Command command = new Command("addGame", "controller.admin.AdminGameMenuController"
+        Command command = new Command("addEvent", "controller.admin.AdminEventMenuController"
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
 
-    public void editEvent(String text, int parseInt, Image image, String text1) {
+    public void editEvent(String text, int parseInt, String image, String text1) {
         ArrayList<Object> params = new ArrayList<>();
         params.add(text);
+        params.add(new Gson().toJson(parseInt,Integer.class));
         params.add(text1);
         params.add(image);
-        Command command = new Command("editGame", "controller.admin.AdminGameMenuController"
+        Command command = new Command("edit", "controller.admin.AdminEventMenuController"
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }

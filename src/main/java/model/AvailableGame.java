@@ -68,14 +68,14 @@ public class AvailableGame {
     }
 
     public void playerQuit(Player player) {
-        joinedPlayers.remove(player);
-        readyPlayers.remove(player);
+        joinedPlayers.removeIf(p -> p.getUsername().equals(player.getUsername()));
+        readyPlayers.removeIf(p -> p.getUsername().equals(player.getUsername()));
         if(joinedPlayers.isEmpty())
             availableGames.remove(this);
     }
 
     public void playerReady(Player player) {
-        if(isPlayerInIt(joinedPlayers,player) && !isPlayerInIt(readyPlayers,player))
+        if(isPlayerInIt(joinedPlayers,player.getUsername()) && !isPlayerInIt(readyPlayers,player.getUsername()))
             readyPlayers.add(player);
 
     }
@@ -83,13 +83,18 @@ public class AvailableGame {
         return  Math.round((Double) primitiveSetting.get("PlayersNum")) == readyPlayers.size();
     }
 
+    public Boolean isPlayerReady(String username)
+    {
+        return isPlayerInIt(readyPlayers,username);
+    }
+
     public ArrayList<Player> getReadyPlayers() {
         return readyPlayers;
     }
-    public Boolean isPlayerInIt(ArrayList<Player> list, Player player)
+    public Boolean isPlayerInIt(ArrayList<Player> list, String player)
     {
         for(Player player1 : list)
-            if(player.getUsername().equals(player1.getUsername()))
+            if(player1.getUsername().equals(player))
                 return true;
             return false;
     }

@@ -39,4 +39,9 @@ public class PlayerAvailableGameController {
     {
         return availableGame.getReadyPlayers();
     }
+
+    public Boolean isPlayerReady(String username)
+    {
+        return availableGame.isPlayerReady(username);
+    }
 }
