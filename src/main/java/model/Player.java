@@ -23,9 +23,9 @@ public class Player extends Account {
 
 
     private transient ArrayList<Card> cards = new ArrayList<>();
-    private transient int newSoldiers;
-    private transient int playerNumber;
-    private transient int draftSoldiers = 0;
+    private int newSoldiers;
+    private int playerNumber;
+    private int draftSoldiers = 0;
     private transient ArrayList<Player> requests;
     private transient ArrayList<Player> gameFriends;
 

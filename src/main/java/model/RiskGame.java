@@ -59,8 +59,9 @@ public class RiskGame {
     public RiskGame(AvailableGame availableGame, int soldiers , Event event){
 
         this.primitiveSettings = availableGame.getPrimitiveSetting();
+        System.out.println(this.primitiveSettings);
         this.event = event;
-        this.players = (ArrayList<Player>) primitiveSettings.get("Players");
+        this.players = availableGame.getJoinedPlayers();
         this.riskGameId = availableGame.getAvailableGameId();
 
         for (Player player : this.players) {
@@ -68,13 +69,12 @@ public class RiskGame {
         }
         this.fogIsSet = (boolean) primitiveSettings.get("Fog of War");
         this.startSoldiers = soldiers;
-        this.duration = (int) primitiveSettings.get("Duration");
+        this.duration = (int) Math.round((Double) primitiveSettings.get("Duration"));
         for (Player player : players) {
             player.setRequestAndFriendsList();
         }
         /* Shaping Map*/
         this.shapeMap();
-
         currentPlayer = players.get(0);
         /* Show Turn*/
         riskGames.add(this);
@@ -88,7 +88,7 @@ public class RiskGame {
     }
 
     public void shapeMap() {
-        Integer mapNumber = (Integer) primitiveSettings.get("Map Number");
+        Integer mapNumber = (int) Math.round((Double) primitiveSettings.get("Map Number"));
         String mapFileAddress = "src/main/resources/maps/map_" + String.valueOf(mapNumber) + ".txt";
         Gson newGson = new Gson();
         JsonReader reader = null;

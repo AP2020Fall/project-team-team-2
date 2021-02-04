@@ -224,8 +224,8 @@ public class RiskGameView implements View, Initializable {
         controller = Client.getConnector().getController();
         Client.getClientInfo().setAvailableGameId(availableGameId);
         System.out.println(controller.getPrimitiveSettings());
-        this.mapNum = (String) controller.getPrimitiveSettings().get("Map Number");
-        this.duration = (int) controller.getPrimitiveSettings().get("Duration");
+        this.mapNum = String.valueOf((int) Math.round( (Double) controller.getPrimitiveSettings().get("Map Number")));
+        this.duration = (int) Math.round((Double) controller.getPrimitiveSettings().get("Duration"));
         if (!(Boolean) controller.getPrimitiveSettings().get("Placement")) {
             autoPlace();
         }
@@ -833,29 +833,34 @@ public class RiskGameView implements View, Initializable {
             friendCircle.setOnMouseClicked(addFriendHandler);
             friendCircle.setId("friend_" + player.getPlayerNumber());
 
+            System.out.println(player.getPlayerNumber());
             Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + player.getPlayerNumber() + ".png").toURI()));
             Circle littleCircle = new Circle(10);
             littleCircle.getStyleClass().add("none_active");
             playersCircles.put(player.getPlayerNumber(), littleCircle);
-
+            System.out.println("2");
 
             Label playerLabel = new Label(String.valueOf(player.getDraftSoldiers()));
             playerLabel.getStyleClass().add("player_label");
             playerLabels.add(playerLabel);
+            System.out.println("3");
 
             Circle playerColorCircle = new Circle(10);
             playerColorCircle.getStyleClass().add("country_player_color_" + player.getPlayerNumber());
             VBox verticalBox = new VBox(littleCircle, playerColorCircle, playerLabel);
             verticalBox.setAlignment(Pos.CENTER);
             verticalBox.setSpacing(10);
+            System.out.println("4");
 
             Circle bigCircle = new Circle(bigCircleSize);
-            bigCircle.setFill(new ImagePattern(player.getImage()));
+            bigCircle.setFill(new ImagePattern(new Image(player.getImageURL())));
             bigCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
             HBox tempHBox = new HBox(friendCircle, verticalBox, bigCircle);
             tempHBox.setAlignment(Pos.CENTER);
             tempHBox.setSpacing(10);
             rightVBox.getChildren().add(tempHBox);
+            System.out.println("5");
+
         }
         setColorTurn();
     }
