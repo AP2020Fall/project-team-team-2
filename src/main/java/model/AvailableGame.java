@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class AvailableGame {
-    private static ArrayList<AvailableGame> availableGames = new ArrayList<>();
+    private static final ArrayList<AvailableGame> availableGames = new ArrayList<>();
     private final Map<String,Object> primitiveSetting;
     private final ArrayList<Player> joinedPlayers;
     private final ArrayList<Player> readyPlayers;

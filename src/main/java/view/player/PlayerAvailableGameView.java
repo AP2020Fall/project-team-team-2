@@ -51,6 +51,7 @@ public class PlayerAvailableGameView implements Tab, Initializable {
     }
     public void updateVBox(){
         hBoxContainer.getChildren().clear();
+        System.out.println(controller.getJoinedPlayers());
         for(Player player: controller.getJoinedPlayers()) {
             Circle circle = new Circle(60);
             circle.setFill(new ImagePattern(player.getImage()));

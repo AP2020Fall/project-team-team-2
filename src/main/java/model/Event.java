@@ -20,10 +20,10 @@ import java.util.Map;
 
 public class Event {
     private String gameName;
-    private LocalDate start;
-    private LocalDate end;
+    private final LocalDate start;
+    private final LocalDate end;
     private int score;
-    private String eventId;
+    private final String eventId;
     private String comment;
     private String avatar;
 
@@ -46,23 +46,7 @@ public class Event {
         this.score = Integer.parseInt((String) map.get("score"));
         this.comment = (String)map.get("event_comment");
     }
-    /*
-    private static Event openEvent(File file) throws FileNotFoundException {
-        StringBuilder json = fileToString(file);
-        Event event = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), Event.class);
-        openFileToImage(event);
-        return event;
-    }
 
-    private static StringBuilder fileToString(File file) throws FileNotFoundException {
-        StringBuilder json = new StringBuilder();
-        Scanner reader = new Scanner(file);
-        while (reader.hasNextLine()) json.append(reader.nextLine());
-        reader.close();
-        return json;
-    }
-
-*/
     public String getGameName() {
         return gameName;
     }
@@ -115,14 +99,6 @@ public class Event {
         this.avatar = saveImageToFile(new Image(url),this.eventId);
         editField("avatar_address", this.avatar);
     }
-
-    /*public void setStart(LocalDate start) {
-        this.start = start;
-    }
-    public void setEnd(LocalDate end) {
-        this.end = end;
-    }*/
-
 
     public void editField(String field, Object value) {
         java.util.Map<String, Object> conditionMap = new HashMap<>();
@@ -182,13 +158,6 @@ public class Event {
     }
 
     public void delete() {
-        //events.remove(this);
-        /*File file = new File("database" + "\\" + "events" + "\\event\\" + eventId + ".json");
-        try {
-            if (file.exists())
-                file.delete();
-        } catch (Exception ignored) {
-        }*/
         Map<String, Object> event = new HashMap<>();
         event.put("event_id", eventId);
         if (SQLConnector.deleteFromTable(event, "events")) {
@@ -222,33 +191,6 @@ public class Event {
         }
     }
 
-    /*public static void save() throws IOException {
-        for (Event event : events) {
-            save(event);
-        }
-    }
-
-    private static void save(Event event) throws IOException {
-        String jsonAccount = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().toJson(event);
-        FileWriter file = new FileWriter("database" + "\\" + "events" + "\\event\\" + event.getEventId() + ".json");
-        file.write(jsonAccount);
-        file.close();
-        System.out.println("saving ended " + event.getEventId());
-        saveImageToFile(event.getImage(), event.getEventId());
-        System.out.println("saving image ended " + event.getEventId());
-    }*/
-
-    /*public static void open() throws FileNotFoundException {
-        File folder = new File("database" + "\\" + "events\\event");
-        if (!folder.exists()) {
-            folder.mkdirs();
-        } else {
-            for (File file : folder.listFiles()) {
-                events.add(openEvent(file));
-            }
-        }
-    }*/
-
     public static String saveImageToFile(Image image, String eventId) {
 
         File folder = new File("database\\events\\images");
@@ -265,11 +207,6 @@ public class Event {
             throw new RuntimeException(e);
         }
     }
-
-   /* public static void openFileToImage(Event event) {
-        File file = new File("database\\events\\images\\" + event.getEventId() + ".jpg");
-        event.setImage(file.toURI().toString());
-    }*/
 
     @Override
     public String toString() {

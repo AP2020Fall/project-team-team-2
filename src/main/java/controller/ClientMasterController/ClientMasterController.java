@@ -953,7 +953,7 @@ public class ClientMasterController {
 
     public void playerQuit() {
         ArrayList<Object> params = new ArrayList<>();
-        Command command = new Command("playerReady", "controller.player.PlayerAvailableGameController"
+        Command command = new Command("playerQuit", "controller.player.PlayerAvailableGameController"
                 , params, Client.getClientInfo());
         Client.getConnector().serverQuery(command.toJson());
     }
