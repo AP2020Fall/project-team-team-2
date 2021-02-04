@@ -285,6 +285,8 @@ public class RiskGameController extends Controller {
         }
     }
 
+
+
     public String fortify(int sourceI, int sourceJ, int destI, int destJ, int soldiers) {
         String toPrint = "";
         if (!riskGameModel.getFortifyDone()) {
