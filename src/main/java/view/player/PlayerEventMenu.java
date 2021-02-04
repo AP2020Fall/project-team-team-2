@@ -10,11 +10,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import main.Client;
 import model.Event;
+import view.AlertMaker;
 import view.Tab;
 import view.TabHandler;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class PlayerEventMenu implements Tab, Initializable {
@@ -52,8 +54,24 @@ public class PlayerEventMenu implements Tab, Initializable {
 
     @FXML
     private void join() {
+        if(LocalDate.parse( controller.getEventStartDate()).isBefore(LocalDate.now())
+                && LocalDate.parse(controller.getEventEndDate()).isAfter(LocalDate.now()))
         TabHandler.getTabHandler().push(new PlayerRunGameView(controller.getEventGameName(),
                 Client.getClientInfo().getEventId()));
+        else{
+            if(!LocalDate.parse( controller.getEventStartDate()).isBefore(LocalDate.now()))
+            {
+                AlertMaker.showMaterialDialog(TabHandler.getTabHandler().getStackRoot(),
+                        TabHandler.getTabHandler().getStackRoot().getChildren().get(0),"Okay","Unable to join",
+                        "Event hasn't started yet.");
+            }
+            if(!LocalDate.parse(controller.getEventEndDate()).isAfter(LocalDate.now()))
+            {
+                AlertMaker.showMaterialDialog(TabHandler.getTabHandler().getStackRoot(),
+                        TabHandler.getTabHandler().getStackRoot().getChildren().get(0),"Okay","Unable to join",
+                        "Event has finished.");
+            }
+        }
     }
 
     private void initializeInfo() {

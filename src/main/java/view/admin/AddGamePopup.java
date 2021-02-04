@@ -20,6 +20,7 @@ import main.Client;
 import model.Game;
 import view.AlertMaker;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -61,6 +62,9 @@ public class AddGamePopup implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        File file = new File("src\\main\\resources\\images\\risk.jpg");
+        givenImage = file.toURI().toString();
+        avatar.setImage(new Image(givenImage));
         if (edit) {
             addButton.setVisible(false);
             editButton.setVisible(true);

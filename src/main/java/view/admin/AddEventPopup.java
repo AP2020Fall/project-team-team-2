@@ -71,6 +71,7 @@ public class AddEventPopup implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         File file = new File("src\\main\\resources\\images\\tournament.png");
         avatarAddress = file.toURI().toString();
+        avatar.setImage(new Image(avatarAddress));
         if (edit) {
             addButton.setVisible(false);
             editButton.setVisible(true);
