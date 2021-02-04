@@ -8,6 +8,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.control.ProgressBar;
+import main.Client;
 import model.Event;
 import org.controlsfx.control.Notifications;
 import javafx.fxml.FXML;
@@ -44,7 +45,7 @@ import java.util.*;
 
 public class RiskGameView implements View, Initializable {
     public static long currentTimeStamp = System.currentTimeMillis() / 1000L;
-    public static ClientMasterController clientMasterController;
+    private final ClientMasterController controller;
     private final String mapNum;
     private final SVGPath[][] allPaths = new SVGPath[5][5];
     private final Label[][] allLabels = new Label[5][5];
@@ -210,13 +211,23 @@ public class RiskGameView implements View, Initializable {
     @FXML
     private Label label_5_5;
 
-    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, Event event) {
+   /* public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, Event event) {
        // this.riskGameController = new RiskGameController(primitiveSettings, soldiers, event);
         this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
         this.duration = (int) primitiveSettings.get("Duration");
         if (!(boolean) clientMasterController.getPrimitiveSettings().get("Placement")) {
             autoPlace();
         }
+    }*/
+    public RiskGameView(String availableGameId) {
+        controller = Client.getConnector().getController();
+        Client.getClientInfo().setAvailableGameId(availableGameId);
+        this.mapNum = controller.getRiskGameMapNumber();
+        this.duration = controller.getRiskGameDuration();
+        if (!controller.getRiskGamePlacement()) {
+            autoPlace();
+        }
+
     }
 
     @FXML

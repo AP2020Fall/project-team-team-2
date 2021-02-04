@@ -981,6 +981,14 @@ public class ClientMasterController {
         String answer = Client.getConnector().serverQuery(command.toJson());
         return  new Gson().fromJson(answer, Boolean.class);
     }
+
+    public String createRiskGame() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("createRiskGame", "controller.player.PlayerAvailableGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return  new Gson().fromJson(answer, String.class);
+    }
     //######################## AdminEventMenu Commands ########################\\
 
     public String getAdminEventGameName() {
@@ -2243,4 +2251,12 @@ public class ClientMasterController {
     }
 
 
+    public String getRiskGameMapNumber() {
+    }
+
+    public int getRiskGameDuration() {
+    }
+
+    public boolean getRiskGamePlacement() {
+    }
 }

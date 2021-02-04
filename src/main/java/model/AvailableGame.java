@@ -11,6 +11,7 @@ public class AvailableGame {
     private final ArrayList<Player> joinedPlayers;
     private final ArrayList<Player> readyPlayers;
     private final String availableGameId;
+
     private final Game game;
     private final Event event;
 
@@ -97,5 +98,10 @@ public class AvailableGame {
             if(player1.getUsername().equals(player))
                 return true;
             return false;
+    }
+
+    public String startGame() {
+        //todo do something if needed
+        return availableGameId;
     }
 }

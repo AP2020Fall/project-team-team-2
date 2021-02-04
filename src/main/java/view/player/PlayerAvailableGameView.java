@@ -19,6 +19,8 @@ import model.Player;
 import view.Tab;
 import view.TabHandler;
 import view.View;
+import view.ViewHandler;
+import view.risk.RiskGameView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -70,7 +72,8 @@ public class PlayerAvailableGameView implements Tab, Initializable {
             hBoxContainer.getChildren().add(playerVBox);
             if(controller.arePlayerReady())
             {
-                System.out.println("Game is about to be played ");
+                //System.out.println("Game is about to be played ");
+                ViewHandler.getViewHandler().push(new RiskGameView(controller.createRiskGame()));
             }
 
         }

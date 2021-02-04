@@ -44,4 +44,10 @@ public class PlayerAvailableGameController {
     {
         return availableGame.isPlayerReady(username);
     }
+
+    public String createRiskGame()
+    {
+        //todo upadate player info
+        return availableGame.startGame();
+    }
 }
