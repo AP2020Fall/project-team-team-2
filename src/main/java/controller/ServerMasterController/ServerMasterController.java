@@ -4,18 +4,20 @@ import com.google.gson.Gson;
 import main.Command;
 import main.Server;
 import main.Token;
+import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
+import java.io.DataOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ServerMasterController {
     private static Token token;
-    private static Server.ClientHandler clientHandler;
+    private static Pair<Server.ClientHandler,DataOutputStream> clientHandler;
     public static Token getCurrentToken() {
         return token;
     }
-    public static Server.ClientHandler getCurrentClientHandler()
+    public static Pair<Server.ClientHandler,DataOutputStream> getCurrentClientHandler()
     {
         return clientHandler;
     }
@@ -33,7 +35,7 @@ public class ServerMasterController {
         token = new Token();
     }
 
-    public Triplet<String, String, String> takeAction(String input, Server.ClientHandler client) {
+    public Triplet<String, String, String> takeAction(String input, Pair<Server.ClientHandler, DataOutputStream> client) {
         clientHandler = client;
         Command command = Command.fromJson(input);
         token = Token.validate(command.getAuthToken(),command.getClientInfo());

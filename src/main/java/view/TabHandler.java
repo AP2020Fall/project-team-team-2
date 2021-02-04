@@ -56,7 +56,8 @@ public class TabHandler {
     }
 
     public void refresh() {
-        display();
+        if(!viewArrayList.isEmpty())
+            display();
     }
 
     public Tab current() {

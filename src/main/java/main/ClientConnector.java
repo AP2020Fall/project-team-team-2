@@ -9,12 +9,16 @@ import controller.ServerMasterController.ServerMasterController;
 import model.Account;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
+import view.AlertMaker;
+import view.TabHandler;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class ClientConnector {
     private Socket socket;
+    private Socket readingSocket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
     private ClientMasterController controller;
@@ -22,11 +26,13 @@ public class ClientConnector {
     public void connect(String proxy, int port) {
         try {
             socket = new Socket(proxy, port);
-            System.out.println("[Client]: Successfully connected to server.");
+            System.out.println("[CLIENT]: Successfully connected to server.");
+            readingSocket = new Socket(proxy,port);
+            System.out.println("[CLIENT]: Reading Socket successfully connected to server.");
             initialize();
-            System.out.println("[Client]: Setup successfully finished.");
+            System.out.println("[CLIENT]: Setup successfully finished.");
         } catch (IOException e) {
-            System.err.println("[Client]: Error starting client!");
+            System.err.println("[CLIENT]: Error starting client!");
         }
     }
 
@@ -35,7 +41,7 @@ public class ClientConnector {
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             controller = ClientMasterController.getController();
-            //(new ServerListener(socket,dataOutputStream,dataInputStream)).start();
+            new ServerListener(readingSocket,new DataInputStream(new BufferedInputStream(readingSocket.getInputStream()))).start();
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -67,19 +73,24 @@ public class ClientConnector {
         return controller;
     }
 
+    public static void refresh()
+    {
+        TabHandler.getTabHandler().refresh();
+    }
 
+    public static void notify(String header,String body)
+    {
 
+    }
 
     static class ServerListener extends Thread {
         Socket clientSocket;
-        DataOutputStream dataOutputStream;
         DataInputStream dataInputStream;
         ClientListenerController controller;
 
 
-        public ServerListener(Socket clientSocket, DataOutputStream dataOutputStream, DataInputStream dataInputStream) {
+        public ServerListener(Socket clientSocket, DataInputStream dataInputStream) {
             this.clientSocket = clientSocket;
-            this.dataOutputStream = dataOutputStream;
             this.dataInputStream = dataInputStream;
             controller = new ClientListenerController();
         }
@@ -92,7 +103,6 @@ public class ClientConnector {
                     String input;
                     String answer;
                     input = dataInputStream.readUTF();
-
                     answer = controller.takeAction(input);
 
                     System.out.println("[LISTENER]: Command: " + input + " was sent.");
@@ -103,7 +113,8 @@ public class ClientConnector {
                         break;
                     }
                 } catch (Exception e) {
-                    System.out.println("[LISTER]: Connection to the server is lost!");
+                    System.err.println(e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+                    System.out.println("[LISTENER]: Connection to the server is lost!");
                     Thread.currentThread().interrupt();
                 }
 

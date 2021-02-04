@@ -21,7 +21,7 @@ public class Client extends Application {
 
     private static void initializeConnector() {
         connector = new ClientConnector();
-        int PORT_NUMBER = 6660;
+        int PORT_NUMBER = 2220;
         connector.connect("localhost", PORT_NUMBER);
     }
 

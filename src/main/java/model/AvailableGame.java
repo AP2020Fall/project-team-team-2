@@ -3,6 +3,7 @@ package model;
 import controller.risk.RiskGameController;
 import main.Server;
 
+import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,14 +12,14 @@ import java.util.Set;
 public class AvailableGame {
     private static final ArrayList<AvailableGame> availableGames = new ArrayList<>();
     private final Map<String, Object> primitiveSetting;
-    private transient final Map<Player, Server.ClientHandler> joinedPlayers;
+    private transient final Map<Player, DataOutputStream> joinedPlayers;
     private final ArrayList<Player> readyPlayers;
     private final String availableGameId;
 
     private final Game game;
     private final Event event;
 
-    public AvailableGame(Map<String, Object> primitiveSetting, Map<Player, Server.ClientHandler> joinedPlayers, Game game, Event event, String id) {
+    public AvailableGame(Map<String, Object> primitiveSetting, Map<Player, DataOutputStream> joinedPlayers, Game game, Event event, String id) {
         this.primitiveSetting = primitiveSetting;
         this.joinedPlayers = joinedPlayers;
         this.readyPlayers = new ArrayList<>();
@@ -44,7 +45,7 @@ public class AvailableGame {
 
     public ArrayList<Player> getJoinedPlayers() {
         ArrayList<Player> result = new ArrayList<>();
-        for(Map.Entry<Player, Server.ClientHandler> entry: joinedPlayers.entrySet())
+        for(Map.Entry<Player,DataOutputStream> entry: joinedPlayers.entrySet())
             result.add(entry.getKey());
         return result;
     }
@@ -65,10 +66,16 @@ public class AvailableGame {
         return availableGameId;
     }
 
-    public Boolean playerJoin(Server.ClientHandler clientHandler, Player loggedIn) {
+    public Boolean playerJoin(DataOutputStream dataOutputStream, Player loggedIn) {
         if (Math.round((Double) primitiveSetting.get("PlayersNum")) > joinedPlayers.size()
                 && !isPlayerInIt(joinedPlayers.keySet(), loggedIn.getUsername())) {
-            joinedPlayers.put(loggedIn, clientHandler);
+            joinedPlayers.put(loggedIn, dataOutputStream);
+            for(Map.Entry<Player,DataOutputStream> client: joinedPlayers.entrySet()) {
+                if(!client.getKey().getUsername().equals(loggedIn.getUsername())) {
+                    Server.refresh(client.getValue());
+                    Server.notify(client.getValue(), "Player joined", loggedIn.getUsername() + " joined.");
+                }
+            }
             return true;
         }
         return false;
@@ -79,13 +86,25 @@ public class AvailableGame {
 
         joinedPlayers.entrySet().removeIf(joined -> joined.getKey().getUsername().equals(player.getUsername()));
         readyPlayers.removeIf(p -> p.getUsername().equals(player.getUsername()));
+        for(Map.Entry<Player,DataOutputStream> client: joinedPlayers.entrySet()) {
+            if(!client.getKey().getUsername().equals(player.getUsername())) {
+                Server.refresh(client.getValue());
+                Server.notify(client.getValue(), "Player joined", player.getUsername() + " joined.");
+            }}
+
         if (joinedPlayers.isEmpty())
             availableGames.remove(this);
     }
 
     public void playerReady(Player player) {
-        if (isPlayerInIt(joinedPlayers.keySet(), player.getUsername()) && !isPlayerInIt(readyPlayers, player.getUsername()))
+        if (isPlayerInIt(joinedPlayers.keySet(), player.getUsername()) && !isPlayerInIt(readyPlayers, player.getUsername())) {
             readyPlayers.add(player);
+            for(Map.Entry<Player,DataOutputStream> client: joinedPlayers.entrySet()) {
+                if(!client.getKey().getUsername().equals(player.getUsername())) {
+                    Server.refresh(client.getValue());
+                }
+            }
+        }
 
     }
 

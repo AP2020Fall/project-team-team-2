@@ -160,6 +160,7 @@ public class AlertMaker {
 
     public static void showMaterialDialog(StackPane root, Node nodeToBeBlurred, String button, String header, String body) {
         BoxBlur blur = new BoxBlur(3, 3, 3);
+        System.out.println("shit i am here");
         JFXButton okay = new JFXButton(button);
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
         JFXDialog dialog = new JFXDialog(root, dialogLayout, JFXDialog.DialogTransition.TOP);
@@ -178,6 +179,8 @@ public class AlertMaker {
         });
         nodeToBeBlurred.setEffect(blur);
     }
+
+
 /*
     public static void showTrayMessage(String title, String message) {
         try {

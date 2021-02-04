@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Server extends Application {
-    private static final int PORT_NUMBER = 6660;
+    private static final int PORT_NUMBER = 2220;
     private static final Server server = new Server();
-    private static final ArrayList<ClientHandler> clients = new ArrayList<>();
+    private static final ArrayList<Pair<ClientHandler,DataOutputStream>> clients = new ArrayList<>();
     public Server() {
     }
 
@@ -40,19 +40,42 @@ public class Server extends Application {
         System.out.println("[SERVER]: ServerSocket created successfully.");
         while (true) {
             Socket clientSocket;
+            Socket clientReadingSocket;
             try {
                 System.out.println("[SERVER]: Waiting for Client...");
                 clientSocket = serverSocket.accept();
                 System.out.println("[SERVER]: A client Connected!");
+                clientReadingSocket = serverSocket.accept();
                 DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));
                 DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
+                DataOutputStream ReadingDataOutputStream = new DataOutputStream(new BufferedOutputStream(clientReadingSocket.getOutputStream()));
                 ClientHandler clientHandler = new ClientHandler(clientSocket, dataOutputStream, dataInputStream);
-                clients.add(clientHandler);
+                clients.add(new Pair<>(clientHandler,ReadingDataOutputStream));
                 clientHandler.start();
             } catch (Exception e) {
                 System.err.println("[SERVER]: Error in accepting client!");
                 break;
             }
+        }
+    }
+
+    public static void refresh(DataOutputStream dataOutputStream) {
+        try {
+            Pair<String, String> answer = new Pair<>("refresh", "discard");
+            dataOutputStream.writeUTF(new Gson().toJson(answer));
+            dataOutputStream.flush();
+        } catch (Exception e) {
+            System.out.println("[SERVER]: couldn't refresh the client");
+        }
+    }
+
+    public static void notify(DataOutputStream dataOutputStream,String header, String notification) {
+        try {
+            Pair<String, String> answer = new Pair<>("notify", header + "#" + notification);
+            dataOutputStream.writeUTF(new Gson().toJson(answer));
+            dataOutputStream.flush();
+        } catch (Exception e) {
+            System.out.println("[SERVER]: couldn't notify the client");
         }
     }
 
@@ -86,8 +109,9 @@ public class Server extends Application {
                     Triplet<String, String, String> answer;
                     input = dataInputStream.readUTF();
                     synchronized (getInstance()) {
-                        answer = controller.takeAction(input,this);
-                        writeToClient(new Gson().toJson(answer));
+                        answer = controller.takeAction(input, getCurrentClient(this));
+                        dataOutputStream.writeUTF(new Gson().toJson(answer));
+                        dataOutputStream.flush();
                     }
                     System.out.println("[SERVER]: Command: " + input + " was sent.");
                     System.out.println("[SERVER]: result: " + answer + " is sent.");
@@ -104,10 +128,14 @@ public class Server extends Application {
 
             }
         }
-        public void writeToClient(String answer) throws IOException {
-            dataOutputStream.writeUTF(answer);
-            dataOutputStream.flush();
+        public static Pair<ClientHandler,DataOutputStream> getCurrentClient(ClientHandler clientHandler)
+        {
+            for(Pair<ClientHandler,DataOutputStream> clientHandlerDataOutputStreamPair:clients)
+                if(clientHandlerDataOutputStreamPair.getValue0().equals(clientHandler))
+                    return clientHandlerDataOutputStreamPair;
+                return null;
         }
+
 
     }
 }

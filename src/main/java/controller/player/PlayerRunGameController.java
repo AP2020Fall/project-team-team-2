@@ -12,6 +12,7 @@ import model.Event;
 import model.Game;
 import model.Player;
 
+import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,8 +91,8 @@ public class PlayerRunGameController extends Controller {
     }
 
     public String createAvailableGame(String primitiveSettingsString) {
-        Map< Player,Server.ClientHandler> players = new HashMap<>();
-        players.put( loggedIn,ServerMasterController.getCurrentClientHandler());
+        Map< Player, DataOutputStream> players = new HashMap<>();
+        players.put( loggedIn,ServerMasterController.getCurrentClientHandler().getValue1());
         Map<String, Object> primitiveSettings = new Gson().fromJson(primitiveSettingsString,
                 new TypeToken<Map<String, Object>>() {
                 }.getType());
@@ -103,6 +104,6 @@ public class PlayerRunGameController extends Controller {
     public Boolean joinAvailableGame(String availableGameId) {
         AvailableGame availableGame = AvailableGame.getAvailableGameById(availableGameId);
         if (availableGame == null) return false;
-        return availableGame.playerJoin(ServerMasterController.getCurrentClientHandler(),loggedIn);
+        return availableGame.playerJoin(ServerMasterController.getCurrentClientHandler().getValue1(),loggedIn);
     }
 }
