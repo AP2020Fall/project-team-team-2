@@ -1,15 +1,9 @@
 package model;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import controller.ServerMasterController.SQLConnector;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FriendRequest {
@@ -60,39 +54,6 @@ public class FriendRequest {
         SQLConnector.insertInDatabase(resultMap,"friend_requests");
     }
 
-    /*public static void open() throws FileNotFoundException {
-        File folder = new File("database" + "\\" + "friendsRequests");
-        if (!folder.exists()) {
-            folder.mkdirs();
-        } else {
-            for (File file : folder.listFiles()) {
-                friendRequests.add(openFriendRequest(file));
-            }
-        }
-
-    }
-
-
-    private static FriendRequest openFriendRequest(File file) throws FileNotFoundException {
-        StringBuilder json = fileToString(file);
-        return new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create().fromJson(json.toString(), FriendRequest.class);
-
-    }
-
-    private static StringBuilder fileToString(File file) throws FileNotFoundException {
-        StringBuilder json = new StringBuilder();
-        Scanner reader = new Scanner(file);
-        while (reader.hasNextLine()) json.append(reader.nextLine());
-        reader.close();
-        return json;
-    }
-
-    public static void save() throws IOException {
-        for (FriendRequest friendRequest : friendRequests) {
-            save(friendRequest);
-        }
-    }
-*/
     public void editField(String field, Object value) {
         java.util.Map<String, Object> conditionMap = new HashMap<>();
         conditionMap.put("friend_request_id", this.friendRequestId);
@@ -114,14 +75,6 @@ public class FriendRequest {
     }
 
     public void delete() {
-        /*File file = new File("database" + "\\" + "friendsRequests" + "\\" + this.friendRequestId + ".json");
-        try {
-            if (file.exists())
-                file.delete();
-        } catch (Exception ignored) {
-        }
-        friendRequests.remove(this);
-*/
         Map<String,Object> event = new HashMap<>();
         event.put("friend_request_id",friendRequestId);
         if(!SQLConnector.deleteFromTable(event,"friend_requests"))

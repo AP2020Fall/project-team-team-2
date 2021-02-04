@@ -40,6 +40,15 @@ public class GameLogSummary {
                 }.getType());
     }
 
+    public void editField(String field, String value) {
+        Map<String, Object> conditionMap = new HashMap<>();
+        conditionMap.put("game_log_summary_id", this.gameLogSummaryId);
+        Map<String, Object> newValueMap = new HashMap<>();
+        newValueMap.put(field, value);
+        SQLConnector.updateTable(conditionMap, newValueMap, "game_log_summary");
+    }
+
+
     public int getFrequency() {
         return frequency;
     }
@@ -115,22 +124,27 @@ public class GameLogSummary {
         wins++;
         this.score += score;
         this.lastPlay = lastPlay;
+        gameLog.addGameLog();
         gameLogs.add(gameLog.getGameLogId());
+        editField("game_logs",new Gson().toJson(gameLog));
     }
 
     public void updateForLoss(int score, LocalDateTime lastPlay, GameLog gameLog) {
         frequency++;
         this.score += score;
         this.lastPlay = lastPlay;
+        gameLog.addGameLog();
         gameLogs.add(gameLog.getGameLogId());
+        editField("game_logs",new Gson().toJson(gameLog));
     }
 
     public void updateForDraw(int score, LocalDateTime lastPlay, GameLog gameLog) {
         frequency++;
         this.score += score;
         this.lastPlay = lastPlay;
+        gameLog.addGameLog();
         gameLogs.add(gameLog.getGameLogId());
-
+        editField("game_logs",new Gson().toJson(gameLog));
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Scoreboard {
     public class Entry {
-        private String playerName;
+        private final String playerName;
         //private int score;
         private int wins;
         private int numPlayed;
