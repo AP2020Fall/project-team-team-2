@@ -42,7 +42,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
-/*
+
 public class RiskGameView implements View, Initializable {
     public static long currentTimeStamp = System.currentTimeMillis() / 1000L;
     private final ClientMasterController controller;
@@ -210,15 +210,16 @@ public class RiskGameView implements View, Initializable {
     private Label label_5_4;
     @FXML
     private Label label_5_5;
+    private RiskGameController clientMasterController;
 
-    public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, Event event) {
-       // this.riskGameController = new RiskGameController(primitiveSettings, soldiers, event);
-        this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
-        this.duration = (int) primitiveSettings.get("Duration");
-        if (!(boolean) clientMasterController.getPrimitiveSettings().get("Placement")) {
-            autoPlace();
-        }
-    }
+    /* public RiskGameView(Map<String, Object> primitiveSettings, int soldiers, Event event) {
+        // this.riskGameController = new RiskGameController(primitiveSettings, soldiers, event);
+         this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
+         this.duration = (int) primitiveSettings.get("Duration");
+         if (!(boolean) clientMasterController.getPrimitiveSettings().get("Placement")) {
+             autoPlace();
+         }
+     }*/
     public RiskGameView(String availableGameId) {
         controller = Client.getConnector().getController();
         Client.getClientInfo().setAvailableGameId(availableGameId);
@@ -286,7 +287,6 @@ public class RiskGameView implements View, Initializable {
         setMyCardsLabels();
         aboutStage.show();
     }
-
     @FXML
     private void backToAbout(MouseEvent e) throws IOException, URISyntaxException {
         FXMLLoader requestRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
@@ -922,4 +922,3 @@ public class RiskGameView implements View, Initializable {
     }
 
 }
-*/
