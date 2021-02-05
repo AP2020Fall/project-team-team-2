@@ -7,9 +7,8 @@ import controller.ServerMasterController.SQLConnector;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
 import java.util.Map;
+import java.util.*;
 
 public class Player extends Account {
     private double money;
@@ -21,14 +20,6 @@ public class Player extends Account {
     private ArrayList<String> favouriteGames;
     private ArrayList<String> suggestions;
 
-
-    private transient ArrayList<Card> cards = new ArrayList<>();
-    private int newSoldiers;
-    private int playerNumber;
-    private int draftSoldiers = 0;
-    private transient ArrayList<Player> requests;
-    private transient ArrayList<Player> gameFriends;
-
     public Player(String firstName, String lastName, String username, String accountId,
                   String password, String email, String phoneNumber, double money) {
         super(firstName, lastName, username, accountId, password, email, phoneNumber, false);
@@ -37,7 +28,6 @@ public class Player extends Account {
         friends = new ArrayList<>();
         receivedFriendRequests = new ArrayList<>();
         sentFriendRequests = new ArrayList<>();
-        cards = new ArrayList<>();
         messages = new ArrayList<>();
         favouriteGames = new ArrayList<>();
         suggestions = new ArrayList<>();
@@ -179,16 +169,22 @@ public class Player extends Account {
     public ArrayList<FriendRequest> getReceivedFriendRequests() {
         //throws NullPointerException if there is any error
         ArrayList<FriendRequest> result = new ArrayList<>();
-        for (String friendRequests : receivedFriendRequests)
-            result.add(Objects.requireNonNull(FriendRequest.getFriendRequestById(friendRequests)));
+        for (String friendRequests : receivedFriendRequests) {
+            FriendRequest friendRequest = FriendRequest.getFriendRequestById(friendRequests);
+            if (friendRequest != null)
+                result.add(friendRequest);
+        }
         return result;
     }
 
     public ArrayList<FriendRequest> getSentFriendRequests() {
         //throws NullPointerException if there is any error
         ArrayList<FriendRequest> result = new ArrayList<>();
-        for (String friendRequests : sentFriendRequests)
-            result.add(Objects.requireNonNull(FriendRequest.getFriendRequestById(friendRequests)));
+        for (String friendRequests : sentFriendRequests) {
+            FriendRequest friendRequest = FriendRequest.getFriendRequestById(friendRequests);
+            if (friendRequest != null)
+                result.add(friendRequest);
+        }
         return result;
     }
 
@@ -196,8 +192,8 @@ public class Player extends Account {
         //if username sent a FriendRequest to player, return the FriendRequest else null.
         //throws NullPointerException if there is an error
         for (String friendRequestId : receivedFriendRequests) {
-            FriendRequest friendRequest = Objects.requireNonNull(FriendRequest.getFriendRequestById(friendRequestId));
-            if (friendRequest.getPlayer().getUsername().equals(username))
+            FriendRequest friendRequest = FriendRequest.getFriendRequestById(friendRequestId);
+            if (friendRequest!= null && friendRequest.getPlayer().getUsername().equals(username))
                 return friendRequest;
         }
         return null;
@@ -207,7 +203,9 @@ public class Player extends Account {
         //throws NullPointerException if there is any error
         ArrayList<Suggestion> result = new ArrayList<>();
         for (String suggestion : suggestions) {
-            result.add(Objects.requireNonNull(Suggestion.getSuggestionById(suggestion)));
+            Suggestion suggestion1 = Suggestion.getSuggestionById(suggestion);
+            if(suggestion1 != null)
+            result.add(suggestion1);
         }
         return result;
     }
@@ -268,16 +266,18 @@ public class Player extends Account {
         return wins;
     }
 
-    private static ArrayList<Player> getEnemies(ArrayList<Player> players, Player winner) {
+    private static ArrayList<Player> getEnemies(ArrayList<Gamer> players, Player winner) {
         ArrayList<Player> result = new ArrayList<>();
-        for (Player player : players)
-            if (!player.getAccountId().equals(winner.getAccountId()))
-                result.add(player);
+        for (Gamer player : players)
+            if (!player.getUsername().equals(winner.getUsername()))
+                result.add(Player.getPlayerByUsername(player.getUsername()));
         return result;
     }
 
-    public static void addGameLog(ArrayList<Player> players, Game game, GameStates gameState, Player winner,
+    public static void addGameLog(ArrayList<Gamer> players, Game game, GameStates gameState, Gamer gWinner,
                                   int win, int draw, int lose) {
+
+        Player winner = Player.getPlayerByUsername(gWinner.getUsername());
         if (winner != null) {
             GameLogSummary gameLog = winner.getGameHistory(game.getName());
             if (gameLog == null) {
@@ -289,8 +289,9 @@ public class Player extends Account {
                     game.getName(), GameLogStates.WON, LocalDateTime.now(),Controller.generateId(0)));
 
 
-            for (Player player : players) {
-                if (!player.getAccountId().equals(winner.getAccountId())) {
+            for (Gamer gamer : players) {
+                Player player = Player.getPlayerByUsername(gamer.getUsername());
+                if ( player != null && !player.getAccountId().equals(winner.getAccountId())) {
                     gameLog = player.getGameHistory(game.getName());
                     if (gameLog == null) {
                         gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
@@ -302,15 +303,18 @@ public class Player extends Account {
                 }
             }
         } else {
-            for (Player player : players) {
-                GameLogSummary gameLog = player.getGameHistory(game.getName());
-                if (gameLog == null) {
-                    gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
-                    player.addGameLogSummary(gameLog);
-                    gameLog.addGameLogSummary();
+            for (Gamer gamer : players) {
+                Player player = Player.getPlayerByUsername(gamer.getUsername());
+                if(player != null) {
+                    GameLogSummary gameLog = player.getGameHistory(game.getName());
+                    if (gameLog == null) {
+                        gameLog = new GameLogSummary(game.getName(), Controller.generateId(0));
+                        player.addGameLogSummary(gameLog);
+                        gameLog.addGameLogSummary();
+                    }
+                    gameLog.updateForDraw(draw, LocalDateTime.now(), new GameLog(player, getEnemies(players, player),
+                            game.getName(), GameLogStates.DRAWN, LocalDateTime.now(), Controller.generateId(0)));
                 }
-                gameLog.updateForDraw(draw, LocalDateTime.now(), new GameLog(player, getEnemies(players, player),
-                        game.getName(), GameLogStates.DRAWN, LocalDateTime.now(),Controller.generateId(0)));
             }
         }
         PlayLog playLog = new PlayLog(game.getName(), players, winner, LocalDateTime.now(),Controller.generateId(0));
@@ -446,121 +450,4 @@ public class Player extends Account {
                 + "money: " + getMoney() + "$\n";
         //   + "registered: " + getDayOfRegister() + " days ago\n";
     }
-
-    public void setRequestAndFriendsList() {
-        this.requests = new ArrayList<Player>();
-        this.gameFriends = new ArrayList<Player>();
-    }
-
-    public void resetRequestAndFriends() {
-        this.requests.clear();
-        this.gameFriends.clear();
-    }
-
-    public int getDraftSoldiers() {
-        return draftSoldiers;
-    }
-
-    public void addDraftSoldier(int draftSoldiers) {
-        this.draftSoldiers += draftSoldiers;
-    }
-
-    public int getNewSoldiers() {
-        return newSoldiers;
-    }
-
-    public void addCard(Card card) {
-        this.cards.add(card);
-    }
-
-    public void removeCard(Card card) {
-        Iterator iterate = this.cards.iterator();
-        while (iterate.hasNext()) {
-            if (iterate.next().equals(card)) {
-                iterate.remove();
-                break;
-            }
-        }
-    }
-
-    public void setPlayerNumber(int playerNumber) {
-        this.playerNumber = playerNumber;
-    }
-
-    public ArrayList<Player> getGameFriends() {
-        return gameFriends;
-    }
-
-    public int getPlayerNumber() {
-        return playerNumber;
-    }
-
-    public ArrayList<Card> getCards() {
-        return cards;
-    }
-
-    public int[] getCardsNumber() {
-        int[] numbers = new int[3];
-        int number1 = 0;
-        int number2 = 0;
-        int number3 = 0;
-        for (Card card : cards) {
-            if (card.equals(Card.CARD_1)) {
-                number1++;
-            }
-            if (card.equals(Card.CARD_2)) {
-                number2++;
-            }
-            if (card.equals(Card.CARD_3)) {
-                number3++;
-            }
-        }
-        numbers[0] = number1;
-        numbers[1] = number2;
-        numbers[2] = number3;
-        return numbers;
-    }
-
-    /*
-        public void setDraws() {
-            this.draws++;
-        }
-
-        public void setWins() {
-            this.wins++;
-        }
-
-        public void setLoses() {
-            this.loses++;
-        }
-    */
-    public void addGameRequest(Player player) {
-        requests.add(player);
-    }
-
-    public void addGameFriend(Player player) {
-        gameFriends.add(player);
-    }
-
-    public void rejectRequest(Player player) {
-        requests.remove(player);
-    }
-
-    public ArrayList<Player> getRequests() {
-        return requests;
-    }
-
-    public boolean checkPlayerHasRequest() {
-        if (requests.size() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void setCard() {
-        this.cards = new ArrayList<Card>();
-    }
-
-
 }

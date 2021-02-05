@@ -1,43 +1,40 @@
 package controller.risk;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 import controller.Controller;
-import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
 import main.Client;
 import main.ClientInfo;
 import model.*;
-
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.URISyntaxException;
-import java.util.*;
-
-import model.Card;
 import org.controlsfx.control.Notifications;
 import view.risk.RiskGameView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 public class RiskGameController extends Controller {
 
 
-    ArrayList<Player> originalPlayers;
+    //ArrayList<Gamer> originalPlayers;
     private final RiskGame riskGameModel;
 
-    public ArrayList<Player> getPlayers() {
+    public ArrayList<Gamer> getPlayers() {
         return riskGameModel.getPlayers();
     }
 
     public RiskGameController(ClientInfo clientInfo) {
         super(Client.getClientInfo());
         this.riskGameModel =RiskGame.getRiskGameById(clientInfo.getAvailableGameId());
-        originalPlayers = new ArrayList<>(riskGameModel.getPlayers());
+        if(riskGameModel == null)
+            System.err.println("Risk Game passed to RiskGameController is null");
+        else {
+            //originalPlayers = new ArrayList<>(riskGameModel.getPlayers());
+        }
     }
 
 
@@ -63,7 +60,7 @@ public class RiskGameController extends Controller {
 
     public void setStartSoldiers() {
         int number = 1;
-        for (Player player : riskGameModel.getPlayers()) {
+        for (Gamer player : riskGameModel.getPlayers()) {
             player.addDraftSoldier(riskGameModel.getStartSoldiers());
             player.setPlayerNumber(number);
             number++;
@@ -174,11 +171,11 @@ public class RiskGameController extends Controller {
                     riskGameModel.setSourceCountryWinner(source);
                 }
             }
-            if (!sourceCountryValid && !errorFound) {
+            if (!sourceCountryValid) {
                 toPrint = "Source country is not valid";
                 errorFound = true;
             }
-            if (sourceCountryValid && (!destinationCountryValid || destination.getBlizzard()) && !errorFound) {
+            if (sourceCountryValid && (!destinationCountryValid || destination.getBlizzard())) {
                 toPrint = "Destination country is not valid";
                 errorFound = true;
             }
@@ -236,7 +233,7 @@ public class RiskGameController extends Controller {
                             if (source.getSoldiers() == 2) {
                                 source.addSoldiers(-1);
                                 destination.addSoldiers(+1);
-                                Player tempPlayer = destination.getOwner();
+                                Gamer tempPlayer = destination.getOwner();
                                 destination.setOwner(riskGameModel.getCurrentPlayer());
                                 boolean playerDone = checkAdditionalPlayers(tempPlayer);
                                 if (playerDone) {
@@ -244,7 +241,7 @@ public class RiskGameController extends Controller {
                                 }
 
                             } else {
-                                Player tempPlayer = destination.getOwner();
+                                Gamer tempPlayer = destination.getOwner();
                                 destination.setOwner(riskGameModel.getCurrentPlayer());
                                 boolean playerDone = checkAdditionalPlayers(tempPlayer);
                                 if (playerDone) {
@@ -278,7 +275,7 @@ public class RiskGameController extends Controller {
         return riskGameModel.getsoldier();
     }*/
 
-    private void addDestinationCardsToSource(Player sourcePlayer, Player destinationPlayer) {
+    private void addDestinationCardsToSource(Gamer sourcePlayer, Gamer destinationPlayer) {
         for (Card card : destinationPlayer.getCards()) {
             sourcePlayer.addCard(card);
             System.out.println("Card of destination player added to current player. Card : " + card);
@@ -424,7 +421,7 @@ public class RiskGameController extends Controller {
 
     public void checkPlacementFinished() {
         boolean toCheck = true;
-        for (Player player : getPlayers()) {
+        for (Gamer player : getPlayers()) {
             if (player.getDraftSoldiers() != 0) {
                 toCheck = false;
                 break;
@@ -463,25 +460,25 @@ public class RiskGameController extends Controller {
     }
 
     public String showMap() {
-        String lineString = "";
+        StringBuilder lineString = new StringBuilder();
         for (List<Country> listCountries : riskGameModel.getGameCountries()) {
             for (Country country : listCountries) {
                 if (!country.equals(listCountries.get(listCountries.size() - 1))) {
-                    lineString = lineString + country.toString() + " | ";
+                    lineString.append(country.toString()).append(" | ");
                 } else {
-                    lineString = lineString + country.toString() + "\n";
+                    lineString.append(country.toString()).append("\n");
                 }
             }
         }
-        return lineString.trim();
+        return lineString.toString().trim();
     }
 
-    public void setCurrentPlayer(Player player) {
+    public void setCurrentPlayer(Gamer player) {
         this.riskGameModel.setCurrentPlayer(player);
     }
 
 
-    public Player getCurrentPlayer() {
+    public Gamer getCurrentPlayer() {
         return riskGameModel.getCurrentPlayer();
     }
 
@@ -510,7 +507,7 @@ public class RiskGameController extends Controller {
         }
         if (getPlacementFinished() == false) {
             boolean allDone = false;
-            for (Player player : riskGameModel.getPlayers()) {
+            for (Gamer player : riskGameModel.getPlayers()) {
                 if (player.getDraftSoldiers() != 3) {
                     allDone = false;
                     break;
@@ -530,7 +527,7 @@ public class RiskGameController extends Controller {
     }
 
     public String leaveTheGame() {
-        Player prevPlayer = riskGameModel.getCurrentPlayer();
+        Gamer prevPlayer = riskGameModel.getCurrentPlayer();
         checkWinner();
         if (riskGameModel.getGameIsPlaying()) {
             mainChangeTurn();
@@ -542,7 +539,7 @@ public class RiskGameController extends Controller {
         }
     }
 
-    public void makeCountryEmpty(Player player) {
+    public void makeCountryEmpty(Gamer player) {
         for (List<Country> countries : riskGameModel.getGameCountries()) {
             for (Country country : countries) {
                 if (country.getOwner() != null) {
@@ -566,7 +563,6 @@ public class RiskGameController extends Controller {
         return riskGameModel.getTurnDone();
     }
 
-
     public void setAttackDone(boolean status) {
         riskGameModel.setAttackDone(status);
     }
@@ -588,7 +584,7 @@ public class RiskGameController extends Controller {
         return toPrint;
     }
 
-    public Player getTurn() {
+    public Gamer getTurn() {
         return riskGameModel.getCurrentPlayer();
     }
 
@@ -607,7 +603,7 @@ public class RiskGameController extends Controller {
     public void autoPlace() {
         do {
             boolean allDone = false;
-            for (Player player : riskGameModel.getPlayers()) {
+            for (Gamer player : riskGameModel.getPlayers()) {
                 if (player.getDraftSoldiers() != 3) {
                     allDone = false;
                     break;
@@ -642,7 +638,7 @@ public class RiskGameController extends Controller {
         riskGameModel.setPlacementFinished(placementFinished);
     }
 
-    public int[][] getFogOfWarMap(Player currentPlayer) {
+    public int[][] getFogOfWarMap(Gamer currentPlayer) {
         int row = riskGameModel.getGameCountries().size();
         int column = riskGameModel.getGameCountries().get(0).size();
         int[][] countryNumbers = new int[row][column];
@@ -656,7 +652,7 @@ public class RiskGameController extends Controller {
             for (int j = 0; j < column; j++) {
                 if (riskGameModel.getGameCountries().get(i).get(j).getOwner() != null) {
                     if (riskGameModel.getGameCountries().get(i).get(j).getOwner().getUsername().equals(currentPlayer.getUsername())
-                            || riskGameModel.getGameCountries().get(i).get(j).getOwner().getFriends().contains(currentPlayer)
+                            || riskGameModel.getGameCountries().get(i).get(j).getOwner().getGameFriends().contains(currentPlayer)
                     ) {
                         countryNumbers[i][j] = 1;
                         changeNumberElement(i - 1, j - 1, countryNumbers, 2);
@@ -680,7 +676,7 @@ public class RiskGameController extends Controller {
             if (inputArray[i][j] != 1) {
                 inputArray[i][j] = number;
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -692,10 +688,10 @@ public class RiskGameController extends Controller {
         countryNumbers = setFogOfWarMap(riskGameModel.getCurrentPlayer());
     */
 
-    public boolean isPath(int CountryNumbers[][], int n, int m) {
+    public boolean isPath(int[][] CountryNumbers, int n, int m) {
         // Defining visited array to keep
         // track of already visited indexes
-        boolean visited[][]
+        boolean[][] visited
                 = new boolean[n][m];
 
         // Flag to indicate whether the
@@ -716,18 +712,13 @@ public class RiskGameController extends Controller {
                     }
             }
         }
-        if (flag)
-            return true;
-        else
-            return false;
+        return flag;
     }
 
-    // Method for checking boundries
-    public boolean isSafe(int i, int j, int CountryNumbers[][]) {
+    // Method for checking boundaries
+    public boolean isSafe(int i, int j, int[][] CountryNumbers) {
 
-        if (i >= 0 && i < CountryNumbers.length && j >= 0 && j < CountryNumbers[0].length)
-            return true;
-        return false;
+        return i >= 0 && i < CountryNumbers.length && j >= 0 && j < CountryNumbers[0].length;
     }
 
     // Returns true if there is a
@@ -735,7 +726,7 @@ public class RiskGameController extends Controller {
     // cell with value 1) to a
     // destination (a cell with
     // value 2)
-    public boolean isPath(int CountryNumbers[][], int i, int j, boolean visited[][]) {
+    public boolean isPath(int[][] CountryNumbers, int i, int j, boolean[][] visited) {
 
         // Checking the boundries, walls and
         // whether the cell is unvisited
@@ -931,39 +922,14 @@ public class RiskGameController extends Controller {
         if (finished) {
             riskGameModel.setWinner(riskGameModel.getCurrentPlayer());
             riskGameModel.setGameIsPlaying(false);
-            for (Player player : riskGameModel.getPlayers()) {
+            for (Gamer player : riskGameModel.getPlayers()) {
                 player.resetRequestAndFriends();
             }
 
-            Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
+            Player.addGameLog(riskGameModel.getPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, riskGameModel.getWinner(),
                     3 + riskGameModel.getEvent().getScore(), 1 + riskGameModel.getEvent().getScore() / 2, 0);
             return true;
-            /*GameLogSummary gameLog = riskGameModel.getCurrentPlayer().getGameHistory("Risk");
-            if (gameLog == null) {
-                gameLog = new GameLogSummary("Risk", generateId());
-                riskGameModel.getCurrentPlayer().addGameLog(gameLog);
-            }
-            gameLog.updateForWin(3, LocalDateTime.now());
-            Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
-                    "Game \"Risk\" @RiskGameController doesn't exist.");
-            PlayLog playLog = new PlayLog("Risk", players, riskGameModel.getCurrentPlayer(), LocalDateTime.now());
-            game.addPlayLog(playLog);
-            for (Player player : players) {
-                if (player.equals(riskGameModel.getCurrentPlayer())) {
-                    continue;
-                }
-                gameLog = player.getGameHistory("Risk");
-                if (gameLog == null) {
-                    gameLog = new GameLog("Risk", generateId());
-                    player.addGameLog(gameLog);
-                }
-                gameLog.updateForLoss(0, LocalDateTime.now());
-
-            }
-            if (finished) {
-                return finished;
-            }*/
         }
         if (!finished) {
             finished = true;
@@ -977,31 +943,20 @@ public class RiskGameController extends Controller {
             }
         }
         if (finished) {
-            for (Player player : riskGameModel.getPlayers()) {
+            for (Gamer player : riskGameModel.getPlayers()) {
                 player.resetRequestAndFriends();
             }
             riskGameModel.setGameIsPlaying(false);
-            Player.addGameLog(originalPlayers, Objects.requireNonNull(Game.getGameByGameName("Risk"),
+            Player.addGameLog(riskGameModel.getPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,
                     3 + riskGameModel.getEvent().getScore(), 1 + riskGameModel.getEvent().getScore() / 2, 0);
-            /*Game game = Objects.requireNonNull(Game.getGameByGameName("Risk"),
-                    "Game \"Risk\" @RiskGameController doesn't exist.");
-            PlayLog playLog = new PlayLog("Risk", players, null, LocalDateTime.now());
-            game.addPlayLog(playLog);
-            for (Player player : players) {
-                GameLog gameLog = player.getGameHistory("Risk");
-                if (gameLog == null) {
-                    gameLog = new GameLog("Risk", generateId());
-                    player.addGameLog(gameLog);
-                }
-                gameLog.updateForWin(1, LocalDateTime.now());
-            }*/
+
         }
         ;
         return finished;
     }
 
-    public boolean checkAdditionalPlayers(Player player) {
+    public boolean checkAdditionalPlayers(Gamer player) {
         boolean toCheck = true;
         outerLoop:
         for (List<Country> countries : riskGameModel.getGameCountries()) {
@@ -1117,7 +1072,7 @@ public class RiskGameController extends Controller {
         return riskGameModel.getCurrentPlayer().checkPlayerHasRequest() && (!riskGameModel.getDraftDone() || !riskGameModel.getBeginDraftDone());
     }
 
-    public String addRequest(Player player) {
+    public String addRequest(Gamer player) {
         if (!player.getRequests().contains(riskGameModel.getCurrentPlayer())) {
             player.addGameRequest(riskGameModel.getCurrentPlayer());
             return "Request sent successfully";
@@ -1126,16 +1081,16 @@ public class RiskGameController extends Controller {
         }
     }
 
-    public void addFriend(Player player) {
+    public void addFriend(Gamer player) {
         player.addGameFriend(player);
     }
 
-    public void rejectRequest(Player player) {
+    public void rejectRequest(Gamer player) {
         player.rejectRequest(player);
     }
 
-    public Player getPlayerByPlayerNumber(int number) {
-        for (Player player : riskGameModel.getPlayers()) {
+    public Gamer getPlayerByPlayerNumber(int number) {
+        for (Gamer player : riskGameModel.getPlayers()) {
             if (player.getPlayerNumber() == number) {
                 return player;
             }

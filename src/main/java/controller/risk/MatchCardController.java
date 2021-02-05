@@ -1,18 +1,14 @@
 package controller.risk;
 
-import model.Player;
+import model.Gamer;
 
 public class MatchCardController {
 
-    private Player player;
-    private int addedSoldiers;
+    public MatchCardController(){
 
-    public MatchCardController(Player player){
-        this.player = player;
-        addedSoldiers = 0;
     }
 
-    public void incPlayerSoldier(Player player, int soldierNumber) {
+    public void incPlayerSoldier(Gamer player, int soldierNumber) {
         player.addDraftSoldier(soldierNumber);
     }
 }

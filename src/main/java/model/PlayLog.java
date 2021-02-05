@@ -16,11 +16,11 @@ public class PlayLog {
     private final LocalDateTime time;
     private final String playLogId;
 
-    public PlayLog(String gameName,ArrayList<Player> players, Player winner, LocalDateTime time,String playLogId)
+    public PlayLog(String gameName,ArrayList<Gamer> players, Player winner, LocalDateTime time,String playLogId)
     {
         this.gameName =gameName;
         this.players = new ArrayList<>();
-        for(Player player :players)
+        for(Gamer player :players)
             this.players.add(player.getUsername());
         this.winner = winner.getUsername();
         this.time = time;

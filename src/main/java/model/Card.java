@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 public enum Card {
     CARD_1, CARD_2, CARD_3;
-    public static String matchCard(List<Card> playerCards , int typical , Player player) {
+    public static String matchCard(List<Card> playerCards , int typical , Gamer player) {
         String toPrint = "";
         int numCard1 = 0;
         int numCard2 = 0;

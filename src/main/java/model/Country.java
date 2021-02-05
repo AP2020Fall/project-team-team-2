@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Country {
     private String name ="";
-    private Player Owner;
+    private Gamer Owner;
     private String continent;
     private int gameCountryNumber;
     private int numberOfContinentCountry = 0;
@@ -24,11 +24,11 @@ public class Country {
         return name;
     }
 
-    public void setOwner(Player owner) {
+    public void setOwner(Gamer owner) {
         Owner = owner;
     }
 
-    public Player getOwner() {
+    public Gamer getOwner() {
         return Owner;
     }
     public void addSoldiers(int soldiers) {
@@ -67,6 +67,7 @@ public class Country {
     public int getGameCountryNumber() {
         return gameCountryNumber;
     }
+
     @Override
     public String toString() {
         String firstPartOfName = continent.substring(0, 2).toUpperCase();

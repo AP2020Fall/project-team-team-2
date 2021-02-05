@@ -50,6 +50,11 @@ public class AvailableGame {
         return result;
     }
 
+    public Map<Player,DataOutputStream> getClientsSocket()
+    {
+        return joinedPlayers;
+    }
+
     public Game getGame() {
         return game;
     }
@@ -136,7 +141,7 @@ public class AvailableGame {
 
     public String startGame() {
         //todo do something if needed
-        new RiskGame(this, 20,event);
+        new RiskGame(this, 20);
         return availableGameId;
     }
 }

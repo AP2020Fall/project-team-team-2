@@ -15,15 +15,14 @@ import java.util.Map;
 import java.util.Random;
 
 public class RiskGame {
-    private static ArrayList<RiskGame> riskGames = new ArrayList<>();
-    private Player turn;
+    private static final ArrayList<RiskGame> riskGames = new ArrayList<>();
     private String status;
-    private ArrayList<Player> originalPlayers;
+
+
     private ProgressBar progressBar;
     private AnimationTimer timer;
     private AudioClip audioClip;
     private java.util.Map<String, Object> primitiveSettings;
-    private ArrayList<Player> players;
     private boolean gameIsPlaying = true;
     private boolean draftDone;
     private boolean attackDone;
@@ -44,34 +43,44 @@ public class RiskGame {
     private String gameID;
     private boolean placementFinished = false;
     private List<List<Country>> gameCountries = new ArrayList<List<Country>>();
-    private Player currentPlayer;
+
     private boolean notifSent = false;
-    private MatchCardController matchCardController = new MatchCardController(currentPlayer);
-    private Player winner;
+    private MatchCardController matchCardController;// = new MatchCardController(currentPlayer);
+
+    private Gamer winner;
+    private ArrayList<Gamer> originalPlayers;
+    private Gamer turn;
+    private Gamer currentPlayer;
+    private  ArrayList<Gamer> allPlayers;
+    private  String playerStatus;
+    private  Gamer playingUser;
+    private ArrayList<Gamer> players;
+
     private boolean soldierPlacedAfterWin = true;
     private Event event;
-    private  List<Player> allPlayers;
-    private  Player playingUser;
     private final String riskGameId;
     /* Status Of player : Drafting - Attacking - Fortifing */
-    private  String playerStatus;
 
-    public RiskGame(AvailableGame availableGame, int soldiers , Event event){
+    public RiskGame(AvailableGame availableGame, int soldiers ){
 
         this.primitiveSettings = availableGame.getPrimitiveSetting();
-        System.out.println(this.primitiveSettings);
-        this.event = event;
-        this.players = availableGame.getJoinedPlayers();
+        System.out.println("--------" + this.primitiveSettings);
+        this.event = availableGame.getEvent();
+
+        PlayingGame playingGame = new PlayingGame(availableGame);
+
+        this.players = playingGame.getPlayers();
         this.riskGameId = availableGame.getAvailableGameId();
 
-        for (Player player : this.players) {
-            player.setCard();
+        for (Gamer gamer : this.players) {
+            gamer.setCard();
         }
         this.fogIsSet = (boolean) primitiveSettings.get("Fog of War");
         this.startSoldiers = soldiers;
         this.duration = (int) Math.round((Double) primitiveSettings.get("Duration"));
-        for (Player player : players) {
-            player.setRequestAndFriendsList();
+
+        for (Gamer gamer : players) {
+            gamer.setRequestAndFriendsList();
         }
         /* Shaping Map*/
         this.shapeMap();
@@ -88,8 +97,8 @@ public class RiskGame {
     }
 
     public void shapeMap() {
-        Integer mapNumber = (int) Math.round((Double) primitiveSettings.get("Map Number"));
-        String mapFileAddress = "src/main/resources/maps/map_" + String.valueOf(mapNumber) + ".txt";
+        int mapNumber = (int) Math.round((Double) primitiveSettings.get("Map Number"));
+        String mapFileAddress = "src/main/resources/maps/map_" + mapNumber + ".txt";
         Gson newGson = new Gson();
         JsonReader reader = null;
         try {
@@ -105,7 +114,7 @@ public class RiskGame {
         int[][] newPath = newGson.fromJson(reader, int[][].class);
         int gameCountryNumber = 0;
         for (int i = 0; i < newPath.length; i++) {
-            gameCountries.add(new ArrayList<Country>());
+            gameCountries.add(new ArrayList<>());
             for (int j = 0; j < newPath[i].length; j++) {
                 Countries countryDetails = Countries.values()[newPath[i][j] - 1];
                 String countryName = countryDetails.getName();
@@ -149,8 +158,6 @@ public class RiskGame {
             gameCountries.get(rndRow).get(rndCol).enableBlizzard();
         }
     }
-    public void main(String[] args) {
-    }
 
     public void createGame() {
     }
@@ -167,24 +174,28 @@ public class RiskGame {
         return status;
     }
 
-    public void setTurn(Player player) {
-        this.turn = player;
+    public void setTurn(Gamer gamer) {
+        this.turn = gamer;
     }
 
-    public Player getTurn() {
+    public Gamer getTurn() {
         return turn;
     }
 
-    public  void addPlayer(Player player) {
-        allPlayers.add(player);
+    public  void addPlayer(Gamer gamer) {
+        allPlayers.add(gamer);
     }
 
-    public Player getCurrentPlayer() {
+    public Gamer getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public ArrayList<Player> getPlayers() {
+    public ArrayList<Gamer> getPlayers() {
         return players;
+    }
+
+    public Gamer getWinner() {
+        return winner;
     }
 
     public int getDuration() {
@@ -205,10 +216,6 @@ public class RiskGame {
 
     public Integer getJ() {
         return j;
-    }
-
-    public Player getWinner() {
-        return winner;
     }
 
     public Map<String, Object> getPrimitiveSettings() {
@@ -247,7 +254,7 @@ public class RiskGame {
         return event;
     }
 
-    public List<Player> getAllPlayers() {
+    public ArrayList<Gamer> getAllPlayers() {
         return allPlayers;
     }
 
@@ -259,7 +266,7 @@ public class RiskGame {
         this.fortifyDone = fortifyDone;
     }
 
-    public void setPlayers(ArrayList<Player> players) {
+    public void setPlayers(ArrayList<Gamer> players) {
         this.players = players;
     }
 
@@ -304,7 +311,7 @@ public class RiskGame {
         return fogIsSet;
     }
     
-    public void setCurrentPlayer(Player currentPlayer) {
+    public void setCurrentPlayer(Gamer currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
@@ -338,7 +345,7 @@ public class RiskGame {
         this.startSoldiers = startSoldiers;
     }
 
-    public void setAllPlayers(List<Player> allPlayers) {
+    public void setAllPlayers(ArrayList<Gamer> allPlayers) {
         this.allPlayers = allPlayers;
     }
 
@@ -350,9 +357,9 @@ public class RiskGame {
         return fogIsSet;
     }
 
-    public void setEvent(Event event) {
+   /* public void setEvent(Event event) {
         this.event = event;
-    }
+    }*/
 
     public void setMatchCardController(MatchCardController matchCardController) {
         this.matchCardController = matchCardController;
@@ -366,10 +373,10 @@ public class RiskGame {
         this.soldierPlacedAfterWin = soldierPlacedAfterWin;
     }
 
-    public void setWinner(Player winner) {
+    public void setWinner(Gamer winner) {
         this.winner = winner;
     }
-    public  Player getPlayingUser() {
+    public  Gamer getPlayingUser() {
         return playingUser;
     }
 
@@ -377,7 +384,7 @@ public class RiskGame {
         this.playerStatus = playerStatus;
     }
 
-    public void setPlayingUser(Player playingUser) {
+    public void setPlayingUser(Gamer playingUser) {
         this.playingUser = playingUser;
     }
 
