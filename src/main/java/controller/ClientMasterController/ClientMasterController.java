@@ -1591,7 +1591,7 @@ public class ClientMasterController {
         Command command = new Command("getPlayers", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        ArrayList<Gamer> players = new Gson().fromJson(answer, new TypeToken<ArrayList<Player>>() {
+        ArrayList<Gamer> players = new Gson().fromJson(answer, new TypeToken<ArrayList<Gamer>>() {
         }.getType());
         ObservableList<Gamer> result = FXCollections.observableArrayList();
         for (Gamer player : players) {

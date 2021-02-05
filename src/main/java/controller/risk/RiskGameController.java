@@ -1173,7 +1173,7 @@ public class RiskGameController extends Controller {
         });
     }
 
-    public List<List<Country>> getCountries()
+    public List<List<Country>> getGameCountries()
     {
         return riskGameModel.getGameCountries();
     }

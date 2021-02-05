@@ -218,16 +218,134 @@ public class RiskGameView implements View, Initializable {
          }
      }*/
     public RiskGameView(String availableGameId) {
+        //System.out.println("-1");
         controller = Client.getConnector().getController();
+        //System.out.println("-2");
         Client.getClientInfo().setAvailableGameId(availableGameId);
+       // System.out.println("-3");
         System.out.println(controller.getPrimitiveSettings());
+       // System.out.println("-4");
         this.mapNum = String.valueOf((int) Math.round( (Double) controller.getPrimitiveSettings().get("Map Number")));
+       // System.out.println("-5");
         this.duration = (int) Math.round((Double) controller.getPrimitiveSettings().get("Duration"));
+        System.out.println("-6");
         if (!(Boolean) controller.getPrimitiveSettings().get("Placement")) {
-            autoPlace();
+            System.out.println("-7");
+            //todo auto place must run only once
+            //autoPlace();
+            System.out.println("-8");
         }
-
+        System.out.println("-9");
     }
+
+    @Override
+    public void show(Stage window) throws IOException {
+        System.out.println("*1");
+        String fileAddress = "/game/maps/map_" + mapNum + ".fxml";
+        System.out.println(fileAddress);
+        System.out.println("*2");
+        FXMLLoader root = new FXMLLoader(getClass().getResource(fileAddress));
+        System.out.println("*4");
+        root.setController(this);
+        gameWindow = window;
+        window.setTitle("Risk Game");
+        System.out.println("*5");
+        window.setScene(new Scene(root.load()));
+        System.out.println("*6");
+        window.setResizable(false);
+        System.out.println("*7");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("*8");
+        try {
+            insertImage(draftCircleImage, "/images/draft.png");
+            insertImage(attackCircleImage, "/images/attack.png");
+            insertImage(fortifyCircleImage, "/images/fortify.png");
+            insertImage(nextTurn, "/images/next.png");
+            insertImage(nextStatus, "/images/next_status.png");
+            insertImage(deselectIcon, "/images/deselect.png");
+            insertImage(loseManual, "/images/exit.png");
+        } catch (URISyntaxException e) {
+            System.out.println("error?!?!?");
+            e.printStackTrace();
+        }
+        System.out.println("*9");
+        rightVBox.setSpacing(5);
+        try {
+            makeRightHBox();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        System.out.println("*10");
+        setColorTurn();
+        System.out.println("*12");
+        setColorMode();
+        System.out.println("*11");
+        allPaths[0][0] = country_1_1;
+        allPaths[0][1] = country_1_2;
+        allPaths[0][2] = country_1_3;
+        allPaths[0][3] = country_1_4;
+        allPaths[0][4] = country_1_5;
+        allPaths[1][0] = country_2_1;
+        allPaths[1][1] = country_2_2;
+        allPaths[1][2] = country_2_3;
+        allPaths[1][3] = country_2_4;
+        allPaths[1][4] = country_2_5;
+        allPaths[2][0] = country_3_1;
+        allPaths[2][1] = country_3_2;
+        allPaths[2][2] = country_3_3;
+        allPaths[2][3] = country_3_4;
+        allPaths[2][4] = country_3_5;
+        allPaths[3][0] = country_4_1;
+        allPaths[3][1] = country_4_2;
+        allPaths[3][2] = country_4_3;
+        allPaths[3][3] = country_4_4;
+        allPaths[3][4] = country_4_5;
+        allPaths[4][0] = country_5_1;
+        allPaths[4][1] = country_5_2;
+        allPaths[4][2] = country_5_3;
+        allPaths[4][3] = country_5_4;
+        allPaths[4][4] = country_5_5;
+        allLabels[0][0] = label_1_1;
+        allLabels[0][1] = label_1_2;
+        allLabels[0][2] = label_1_3;
+        allLabels[0][3] = label_1_4;
+        allLabels[0][4] = label_1_5;
+        allLabels[1][0] = label_2_1;
+        allLabels[1][1] = label_2_2;
+        allLabels[1][2] = label_2_3;
+        allLabels[1][3] = label_2_4;
+        allLabels[1][4] = label_2_5;
+        allLabels[2][0] = label_3_1;
+        allLabels[2][1] = label_3_2;
+        allLabels[2][2] = label_3_3;
+        allLabels[2][3] = label_3_4;
+        allLabels[2][4] = label_3_5;
+        allLabels[3][0] = label_4_1;
+        allLabels[3][1] = label_4_2;
+        allLabels[3][2] = label_4_3;
+        allLabels[3][3] = label_4_4;
+        allLabels[3][4] = label_4_5;
+        allLabels[4][0] = label_5_1;
+        allLabels[4][1] = label_5_2;
+        allLabels[4][2] = label_5_3;
+        allLabels[4][3] = label_5_4;
+        allLabels[4][4] = label_5_5;
+        System.out.println("*13");
+        putCountryName();
+        System.out.println("*14");
+        colorizeCountry();
+        System.out.println("*15");
+        labelSetMouserTransparent();
+        System.out.println("*16");
+        sendProgressBar();
+        System.out.println("*17");
+        progress();
+        System.out.println("*18");
+    }
+
 
     @FXML
     private void loseManually(MouseEvent e) throws URISyntaxException {
@@ -497,83 +615,6 @@ public class RiskGameView implements View, Initializable {
         return toPrint;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-            insertImage(draftCircleImage, "/images/draft.png");
-            insertImage(attackCircleImage, "/images/attack.png");
-            insertImage(fortifyCircleImage, "/images/fortify.png");
-            insertImage(nextTurn, "/images/next.png");
-            insertImage(nextStatus, "/images/next_status.png");
-            insertImage(deselectIcon, "/images/deselect.png");
-            insertImage(loseManual, "/images/exit.png");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        rightVBox.setSpacing(5);
-        try {
-            makeRightHBox();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        setColorTurn();
-        setColorMode();
-        allPaths[0][0] = country_1_1;
-        allPaths[0][1] = country_1_2;
-        allPaths[0][2] = country_1_3;
-        allPaths[0][3] = country_1_4;
-        allPaths[0][4] = country_1_5;
-        allPaths[1][0] = country_2_1;
-        allPaths[1][1] = country_2_2;
-        allPaths[1][2] = country_2_3;
-        allPaths[1][3] = country_2_4;
-        allPaths[1][4] = country_2_5;
-        allPaths[2][0] = country_3_1;
-        allPaths[2][1] = country_3_2;
-        allPaths[2][2] = country_3_3;
-        allPaths[2][3] = country_3_4;
-        allPaths[2][4] = country_3_5;
-        allPaths[3][0] = country_4_1;
-        allPaths[3][1] = country_4_2;
-        allPaths[3][2] = country_4_3;
-        allPaths[3][3] = country_4_4;
-        allPaths[3][4] = country_4_5;
-        allPaths[4][0] = country_5_1;
-        allPaths[4][1] = country_5_2;
-        allPaths[4][2] = country_5_3;
-        allPaths[4][3] = country_5_4;
-        allPaths[4][4] = country_5_5;
-        allLabels[0][0] = label_1_1;
-        allLabels[0][1] = label_1_2;
-        allLabels[0][2] = label_1_3;
-        allLabels[0][3] = label_1_4;
-        allLabels[0][4] = label_1_5;
-        allLabels[1][0] = label_2_1;
-        allLabels[1][1] = label_2_2;
-        allLabels[1][2] = label_2_3;
-        allLabels[1][3] = label_2_4;
-        allLabels[1][4] = label_2_5;
-        allLabels[2][0] = label_3_1;
-        allLabels[2][1] = label_3_2;
-        allLabels[2][2] = label_3_3;
-        allLabels[2][3] = label_3_4;
-        allLabels[2][4] = label_3_5;
-        allLabels[3][0] = label_4_1;
-        allLabels[3][1] = label_4_2;
-        allLabels[3][2] = label_4_3;
-        allLabels[3][3] = label_4_4;
-        allLabels[3][4] = label_4_5;
-        allLabels[4][0] = label_5_1;
-        allLabels[4][1] = label_5_2;
-        allLabels[4][2] = label_5_3;
-        allLabels[4][3] = label_5_4;
-        allLabels[4][4] = label_5_5;
-        putCountryName();
-        colorizeCountry();
-        labelSetMouserTransparent();
-        sendProgressBar();
-        progress();
-    }
 
     public void putCountryName() {
         List<List<Country>> countries = controller.getGameCountries();
@@ -813,8 +854,8 @@ public class RiskGameView implements View, Initializable {
         };
 
 
-        String playerImageAddress = "/images/player_";
-        int bigCircleSize = 0;
+        //String playerImageAddress = "/images/player_";
+        int bigCircleSize;
         if (controller.getRiskPlayers().size() <= 3) {
             bigCircleSize = 100;
         } else {
@@ -823,6 +864,7 @@ public class RiskGameView implements View, Initializable {
         rightVBox.getChildren().clear();
         playerLabels.clear();
         playersCircles.clear();
+        System.out.println("1");
         for (Gamer player : controller.getRiskPlayers()) {
             Image friendImage = new Image(String.valueOf(getClass().getResource("/images/friend.png")));
             Circle friendCircle = new Circle(20);
@@ -831,8 +873,10 @@ public class RiskGameView implements View, Initializable {
             friendCircle.setId("friend_" + player.getPlayerNumber());
 
             System.out.println(player.getPlayerNumber());
-            Image image = new Image(String.valueOf(getClass().getResource(playerImageAddress + player.getPlayerNumber() + ".png").toURI()));
+            System.out.println(player.getImageURL());
+            Image image = new Image(player.getImageURL());
             Circle littleCircle = new Circle(10);
+
             littleCircle.getStyleClass().add("none_active");
             playersCircles.put(player.getPlayerNumber(), littleCircle);
             System.out.println("2");
@@ -880,16 +924,6 @@ public class RiskGameView implements View, Initializable {
         shape.setEffect(new DropShadow(+25d, 0d, +2d, Color.DARKSEAGREEN));
     }
 
-    @Override
-    public void show(Stage window) throws IOException {
-        String fileAddress = "/game/maps/map_" + mapNum + ".fxml";
-        FXMLLoader root = new FXMLLoader(getClass().getResource(fileAddress));
-        root.setController(this);
-        gameWindow = window;
-        window.setTitle("Risk Game");
-        window.setScene(new Scene(root.load()));
-        window.setResizable(false);
-    }
 
     public void progress() {
         timer = new AnimationTimer() {
