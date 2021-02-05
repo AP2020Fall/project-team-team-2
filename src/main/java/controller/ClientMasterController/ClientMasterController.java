@@ -1557,7 +1557,7 @@ public class ClientMasterController {
 
     public int[][] getFogOfWarMap(Gamer currentPlayer) {
         ArrayList<Object> params = new ArrayList<>();
-        params.add(currentPlayer);
+        params.add(new Gson().toJson( currentPlayer));
         Command command = new Command("getFogOfWarMap", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
@@ -1657,11 +1657,11 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, String.class);
     }
 
-    public String beginDraft(int i, int j, int soldiers) {
+    public String beginDraft(Integer i, Integer j, Integer soldiers) {
         ArrayList<Object> params = new ArrayList<>();
-        params.add(i);
-        params.add(j);
-        params.add(soldiers);
+        params.add(new Gson().toJson(i));
+        params.add(new Gson().toJson(j));
+        params.add(new Gson().toJson(soldiers));
         Command command = new Command("beginDraft", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());

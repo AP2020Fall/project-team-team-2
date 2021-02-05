@@ -1,5 +1,6 @@
 package controller.risk;
 
+import com.google.gson.Gson;
 import controller.Controller;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -92,7 +93,11 @@ public class RiskGameController extends Controller {
         return toPrint;
     }
 
-    public String beginDraft(int i, int j, int soldiers) {
+    public String beginDraft(String iS, String jS, String soldiersS) {
+        int i = new Gson().fromJson(iS,Integer.class);
+        int j = new Gson().fromJson(jS,Integer.class);
+        int soldiers = new Gson().fromJson(soldiersS,Integer.class);
+
         String toPrint = "";
         if (!riskGameModel.getBeginDraftDone()) {
             Country destination = getCountryByDetails(i, j);
@@ -638,7 +643,8 @@ public class RiskGameController extends Controller {
         riskGameModel.setPlacementFinished(placementFinished);
     }
 
-    public int[][] getFogOfWarMap(Gamer currentPlayer) {
+    public int[][] getFogOfWarMap(String JSONPlayer) {
+        Gamer currentPlayer = new Gson().fromJson(JSONPlayer,Gamer.class);
         int row = riskGameModel.getGameCountries().size();
         int column = riskGameModel.getGameCountries().get(0).size();
         int[][] countryNumbers = new int[row][column];
@@ -906,9 +912,11 @@ public class RiskGameController extends Controller {
         if (riskGameModel.getPlayers().size() == 1) {
             toCheck = true;
         }
+        System.out.println("---1");
         if (!getPlacementFinished() && !toCheck) {
             return false;
         }
+        System.out.println("---2");
         for (List<Country> countries : riskGameModel.getGameCountries()) {
             for (Country country : countries) {
                 if (country.getOwner() != null) {
@@ -919,6 +927,7 @@ public class RiskGameController extends Controller {
                 }
             }
         }
+        System.out.println("---3");
         if (finished) {
             riskGameModel.setWinner(riskGameModel.getCurrentPlayer());
             riskGameModel.setGameIsPlaying(false);
@@ -931,6 +940,7 @@ public class RiskGameController extends Controller {
                     3 + riskGameModel.getEvent().getScore(), 1 + riskGameModel.getEvent().getScore() / 2, 0);
             return true;
         }
+
         if (!finished) {
             finished = true;
             for (List<Country> countries : riskGameModel.getGameCountries()) {
