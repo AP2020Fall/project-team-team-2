@@ -621,6 +621,7 @@ public class RiskGameView implements View, Initializable {
         int row = countries.size();
         int columns = countries.get(0).size();
         int[][] toShowFog = new int[row][columns];
+        System.out.println(controller.getCurrentPlayer());
         toShowFog = controller.getFogOfWarMap(controller.getCurrentPlayer());
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {

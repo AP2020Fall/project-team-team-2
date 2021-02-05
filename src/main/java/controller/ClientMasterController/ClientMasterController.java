@@ -1557,6 +1557,7 @@ public class ClientMasterController {
 
     public int[][] getFogOfWarMap(Gamer currentPlayer) {
         ArrayList<Object> params = new ArrayList<>();
+        params.add(currentPlayer);
         Command command = new Command("getFogOfWarMap", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
@@ -2108,10 +2109,10 @@ public class ClientMasterController {
 
     public void getProgressBar(ProgressBar progressBar) {
         ArrayList<Object> params = new ArrayList<>();
-        params.add(progressBar);
+        /*params.add(progressBar);
         Command command = new Command("getProgressBar", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
-        Client.getConnector().serverQuery(command.toJson());
+        Client.getConnector().serverQuery(command.toJson());*/
     }
 
 

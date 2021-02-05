@@ -129,5 +129,11 @@ public class Gamer {
         this.cards = new ArrayList<>();
     }
 
-
+    @Override
+    public String toString() {
+        return "Gamer{" +
+                "username='" + username + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
+    }
 }
