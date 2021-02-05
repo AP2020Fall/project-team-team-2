@@ -134,6 +134,6 @@ public class Gamer {
         return "Gamer{" +
                 "username='" + username + '\'' +
                 ", avatar='" + avatar + '\'' +
-                '}';
+                ']';
     }
 }
