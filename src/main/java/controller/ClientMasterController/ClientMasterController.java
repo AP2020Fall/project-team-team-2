@@ -1555,7 +1555,7 @@ public class ClientMasterController {
         return result;
     }
 
-    public int[][] getFogOfWarMap(Player currentPlayer) {
+    public int[][] getFogOfWarMap(Gamer currentPlayer) {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getFogOfWarMap", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
@@ -1586,15 +1586,15 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, boolean.class);
     }
 
-    public ObservableList<Player> getRiskPlayers() {
+    public ObservableList<Gamer> getRiskPlayers() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getPlayers", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        ArrayList<Player> players = new Gson().fromJson(answer, new TypeToken<ArrayList<Player>>() {
+        ArrayList<Gamer> players = new Gson().fromJson(answer, new TypeToken<ArrayList<Player>>() {
         }.getType());
-        ObservableList<Player> result = FXCollections.observableArrayList();
-        for (Player player : players) {
+        ObservableList<Gamer> result = FXCollections.observableArrayList();
+        for (Gamer player : players) {
             result.add(player);
         }
         return result;
@@ -1794,12 +1794,12 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
-    public Player getCurrentPlayer() {
+    public Gamer getCurrentPlayer() {
         ArrayList<Object> params = new ArrayList<>();
         Command command = new Command("getCurrentPlayer", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer, Player.class);
+        return new Gson().fromJson(answer, Gamer.class);
     }
 
     public String placeSoldier(int i, int j, int soldiers) {
@@ -2048,7 +2048,7 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, boolean.class);
     }
 
-    public String addRequest(Player player) {
+    public String addRequest(Gamer player) {
         ArrayList<Object> params = new ArrayList<>();
         params.add(player);
         Command command = new Command("addRequest", "controller.risk.RiskGameController"
@@ -2073,13 +2073,13 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
-    public Player getPlayerByPlayerNumber(int number) {
+    public Gamer getPlayerByPlayerNumber(int number) {
         ArrayList<Object> params = new ArrayList<>();
         params.add(number);
         Command command = new Command("getPlayerByPlayerNumber", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
-        return new Gson().fromJson(answer, Player.class);
+        return new Gson().fromJson(answer, Gamer.class);
     }
 
     public boolean checkCountryIsAlliance(Country destination) {

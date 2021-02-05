@@ -1,17 +1,10 @@
 package view.risk;
 
-import com.google.gson.internal.LinkedHashTreeMap;
 import com.jfoenix.controls.JFXHamburger;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import controller.ClientMasterController.ClientMasterController;
-import controller.risk.RiskGameController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.scene.control.ProgressBar;
-import main.Client;
-import model.Event;
-import org.controlsfx.control.Notifications;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -33,16 +27,19 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.Client;
 import model.Country;
-import model.Player;
+import model.Gamer;
+import org.controlsfx.control.Notifications;
 import view.View;
 import view.ViewHandler;
 
-//import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
+
+//import javax.xml.bind.SchemaOutputResolver;
 
 public class RiskGameView implements View, Initializable {
     public static long currentTimeStamp = System.currentTimeMillis() / 1000L;
@@ -618,7 +615,7 @@ public class RiskGameView implements View, Initializable {
         boolean fogStatus = controller.getFogStatus();
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
-                Player owner = countries.get(i).get(j).getOwner();
+                Gamer owner = countries.get(i).get(j).getOwner();
                 allPaths[i][j].setMouseTransparent(false);
                 if (owner != null) {
                     if (fogStatus) {
@@ -687,7 +684,7 @@ public class RiskGameView implements View, Initializable {
             int turnIndex = controller.getCurrentPlayerIndex();
             playersCircles.get(turnIndex).getStyleClass().clear();
             playersCircles.get(turnIndex).getStyleClass().add("status_on");
-            for (Player player : controller.getCurrentPlayer().getFriends()) {
+            for (Gamer player : controller.getCurrentPlayer().getGameFriends()) {
                 int playerNumber = player.getPlayerNumber();
                 playersCircles.get(playerNumber - 1).getStyleClass().clear();
                 playersCircles.get(playerNumber - 1).getStyleClass().add("friend");
@@ -728,7 +725,7 @@ public class RiskGameView implements View, Initializable {
             @Override
             public void handle(MouseEvent event) {
                 int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
-                Player player = controller.getPlayerByPlayerNumber(playerNumber);
+                Gamer player = controller.getPlayerByPlayerNumber(playerNumber);
                 if (player != null) {
                     notification("Accepted!", "You accepted this player as friend");
                     controller.getCurrentPlayer().getRequests().remove(player);
@@ -743,7 +740,7 @@ public class RiskGameView implements View, Initializable {
             @Override
             public void handle(MouseEvent event) {
                 int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
-                Player player = controller.getPlayerByPlayerNumber(playerNumber);
+                Gamer player = controller.getPlayerByPlayerNumber(playerNumber);
                 if (player != null) {
                     notification("Declined!", "You declined this friend");
                     controller.getCurrentPlayer().getRequests().remove(player);
@@ -752,7 +749,7 @@ public class RiskGameView implements View, Initializable {
                 event.consume();
             }
         };
-        for (Player player : controller.getCurrentPlayer().getRequests()) {
+        for (Gamer player : controller.getCurrentPlayer().getRequests()) {
             String characterAddress = "/images/player_" + player.getPlayerNumber() + ".png";
             Circle requestedCharacter = new Circle(60);
             try {
@@ -803,7 +800,7 @@ public class RiskGameView implements View, Initializable {
             @Override
             public void handle(MouseEvent event) {
                 int playerNumber = Integer.parseInt(event.getPickResult().getIntersectedNode().getId().split("\\_")[1]);
-                Player player = controller.getPlayerByPlayerNumber(playerNumber);
+                Gamer player = controller.getPlayerByPlayerNumber(playerNumber);
                 if (player != null) {
                     if (!player.equals(controller.getCurrentPlayer())) {
                         changeNotifText(controller.addRequest(player));
@@ -826,7 +823,7 @@ public class RiskGameView implements View, Initializable {
         rightVBox.getChildren().clear();
         playerLabels.clear();
         playersCircles.clear();
-        for (Player player : controller.getRiskPlayers()) {
+        for (Gamer player : controller.getRiskPlayers()) {
             Image friendImage = new Image(String.valueOf(getClass().getResource("/images/friend.png")));
             Circle friendCircle = new Circle(20);
             friendCircle.setFill(new ImagePattern(friendImage));
