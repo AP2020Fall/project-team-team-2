@@ -1968,6 +1968,7 @@ public class ClientMasterController {
         Command command = new Command("checkWinner", "controller.risk.RiskGameController"
                 , params, Client.getClientInfo());
         String answer = Client.getConnector().serverQuery(command.toJson());
+        System.out.println(answer);
         return new Gson().fromJson(answer, boolean.class);
     }
 

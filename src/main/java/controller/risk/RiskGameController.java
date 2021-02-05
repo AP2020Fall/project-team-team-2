@@ -358,24 +358,7 @@ public class RiskGameController extends Controller {
     }
 
     public void mainChangeTurn() {
-        int currentTurnIndex = riskGameModel.getPlayers().indexOf(this.riskGameModel.getCurrentPlayer());
-        if (currentTurnIndex != riskGameModel.getPlayers().size() - 1) {
-            this.riskGameModel.setCurrentPlayer(riskGameModel.getPlayers().get(currentTurnIndex + 1));
-        } else {
-            this.riskGameModel.setCurrentPlayer(riskGameModel.getPlayers().get(0));
-        }
-        if (!getPlacementFinished()) {
-            checkPlacementFinished();
-        }
-        RiskGameView.currentTimeStamp = System.currentTimeMillis() / 1000L;
-        riskGameModel.setCurrentTimeStamp(System.currentTimeMillis() / 1000L);
-        setDraftDone(false);
-        setAttackDone(false);
-        setFortifyDone(false);
-        riskGameModel.setAttackDestination(null);
-        riskGameModel.setAttackWon(false);
-        resetNotif();
-        riskGameModel.setBeginDraftDone(false);
+
     }
 
     public String changeTurn() {
@@ -604,7 +587,6 @@ public class RiskGameController extends Controller {
         }
         return toPrint;
     }
-
     public void autoPlace() {
         do {
             boolean allDone = false;

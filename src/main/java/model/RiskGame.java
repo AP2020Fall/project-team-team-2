@@ -6,6 +6,7 @@ import controller.risk.MatchCardController;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.media.AudioClip;
+import view.risk.RiskGameView;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -51,9 +52,9 @@ public class RiskGame {
     private ArrayList<Gamer> originalPlayers;
     private Gamer turn;
     private Gamer currentPlayer;
-    private  ArrayList<Gamer> allPlayers;
-    private  String playerStatus;
-    private  Gamer playingUser;
+    private ArrayList<Gamer> allPlayers;
+    private String playerStatus;
+    private Gamer playingUser;
     private ArrayList<Gamer> players;
 
     private boolean soldierPlacedAfterWin = true;
@@ -77,6 +78,8 @@ public class RiskGame {
         }
         this.fogIsSet = (boolean) primitiveSettings.get("Fog of War");
         this.startSoldiers = soldiers;
+        this.setBeginSoldiers();
+        this.setPlayerNumber();
         this.duration = (int) Math.round((Double) primitiveSettings.get("Duration"));
 
         for (Gamer gamer : players) {
@@ -87,6 +90,9 @@ public class RiskGame {
         currentPlayer = players.get(0);
         /* Show Turn*/
         riskGames.add(this);
+        if (!(boolean) this.getPrimitiveSettings().get("Placement")) {
+            autoPlace();
+        }
     }
 
     public static RiskGame getRiskGameById(String availableGameId) {
@@ -95,7 +101,72 @@ public class RiskGame {
                 return riskGame;
             return null;
     }
+    public void autoPlace() {
+        do {
+            boolean allDone = false;
+            for (Gamer player : getPlayers()) {
+                if (player.getDraftSoldiers() != 3) {
+                    allDone = false;
+                    break;
+                } else {
+                    allDone = true;
+                }
+            }
+            System.out.println(getCurrentPlayer().getDraftSoldiers());
 
+            if (allDone) {
+                break;
+            }
+
+            if (getCurrentPlayer().getDraftSoldiers() == 3) {
+                continue;
+            }
+            int rows = getGameCountries().size() - 1;
+            int columns = getGameCountries().get(0).size() - 1;
+            int randomRow = (int) (Math.random() * (rows - 0 + 1) + 0);
+            int randomColumn = (int) (Math.random() * (columns + 1));
+            Country getRandomCountry = getGameCountries().get(randomRow).get(randomColumn);
+            if ((getRandomCountry.getOwner() == null || getRandomCountry.getOwner().equals(getCurrentPlayer())) && !getRandomCountry.getBlizzard()) {
+                getRandomCountry.setOwner(getCurrentPlayer());
+                getRandomCountry.addSoldiers(1);
+                getCurrentPlayer().addDraftSoldier(-1);
+                mainChangeTurn();
+            }
+        } while (true);
+        setPlacementFinished(true);
+    }
+    public void mainChangeTurn(){
+        int currentTurnIndex = getPlayers().indexOf(this.getCurrentPlayer());
+        if (currentTurnIndex != getPlayers().size() - 1) {
+            this.setCurrentPlayer(getPlayers().get(currentTurnIndex + 1));
+        } else {
+            this.setCurrentPlayer(getPlayers().get(0));
+        }
+        if (!getPlacementFinished()) {
+            checkPlacementFinished();
+        }
+        RiskGameView.currentTimeStamp = System.currentTimeMillis() / 1000L;
+        setCurrentTimeStamp(System.currentTimeMillis() / 1000L);
+        setDraftDone(false);
+        setAttackDone(false);
+        setFortifyDone(false);
+        setAttackDestination(null);
+        setAttackWon(false);
+//        resetNotif();
+        setBeginDraftDone(false);
+    }
+    public void checkPlacementFinished() {
+        boolean toCheck = true;
+        for (Gamer player : getPlayers()) {
+            if (player.getDraftSoldiers() != 0) {
+                toCheck = false;
+                break;
+            }
+        }
+        if (toCheck) {
+            setPlacementFinished(true);
+        }
+    }
     public void shapeMap() {
         int mapNumber = (int) Math.round((Double) primitiveSettings.get("Map Number"));
         String mapFileAddress = "src/main/resources/maps/map_" + mapNumber + ".txt";
@@ -430,5 +501,17 @@ public class RiskGame {
 
     public boolean getNotifSent() {
         return notifSent;
+    }
+    public void setPlayerNumber(){
+        int i = 1;
+        for(Gamer gamer:getPlayers()){
+            gamer.setPlayerNumber(i);
+            i++;
+        }
+    }
+    public void setBeginSoldiers(){
+        for(Gamer gamer : getPlayers()){
+            gamer.addDraftSoldier(startSoldiers);
+        }
     }
 }

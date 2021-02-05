@@ -213,9 +213,7 @@ public class RiskGameView implements View, Initializable {
         // this.riskGameController = new RiskGameController(primitiveSettings, soldiers, event);
          this.mapNum = String.valueOf((int) primitiveSettings.get("Map Number"));
          this.duration = (int) primitiveSettings.get("Duration");
-         if (!(boolean) controller.getPrimitiveSettings().get("Placement")) {
-             autoPlace();
-         }
+
      }*/
     public RiskGameView(String availableGameId) {
         //System.out.println("-1");
@@ -554,7 +552,6 @@ public class RiskGameView implements View, Initializable {
                 path.getStyleClass().add("country");
                 break;
         }
-
     }
 
 
@@ -657,6 +654,7 @@ public class RiskGameView implements View, Initializable {
         boolean fogStatus = controller.getFogStatus();
         for (int i = 0; i < countries.size(); i++) {
             for (int j = 0; j < countries.get(i).size(); j++) {
+                System.out.println("j");
                 Gamer owner = countries.get(i).get(j).getOwner();
                 allPaths[i][j].setMouseTransparent(false);
                 if (owner != null) {
@@ -673,11 +671,13 @@ public class RiskGameView implements View, Initializable {
                             allPaths[i][j].setMouseTransparent(true);
                         }
                     } else {
+                        System.out.println(owner.getPlayerNumber());
                         String toClass = "country_player_" + owner.getPlayerNumber();
                         allPaths[i][j].getStyleClass().clear();
                         allPaths[i][j].getStyleClass().add(toClass);
                     }
                 } else {
+                    System.out.println("owner null");
                     allPaths[i][j].getStyleClass().clear();
                     allPaths[i][j].getStyleClass().add("country_no_player");
                 }
