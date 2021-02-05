@@ -40,4 +40,8 @@ public class PlayingGame {
     public String getPlayingGameId() {
         return playingGameId;
     }
+
+    public Map<String, DataOutputStream> socketMap() {
+        return clients;
+    }
 }

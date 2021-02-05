@@ -2,6 +2,7 @@ package view;
 
 import javafx.stage.Stage;
 import main.Main;
+import model.RiskGame;
 import view.login.LoginMenu;
 import view.login.WelcomeMenu;
 import view.risk.RiskGameView;
@@ -87,5 +88,11 @@ public class ViewHandler {
             if (viewStack.isEmpty()) break;
         }
         showView();
+    }
+    public void updateMapView(){
+        if(viewStack.peek() instanceof RiskGameView){
+            RiskGameView newView =(RiskGameView) viewStack.peek();
+            newView.updateMap();
+        }
     }
 }

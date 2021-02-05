@@ -30,10 +30,12 @@ import javafx.stage.Stage;
 import main.Client;
 import model.Country;
 import model.Gamer;
+import model.Player;
 import org.controlsfx.control.Notifications;
 import view.View;
 import view.ViewHandler;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -343,8 +345,6 @@ public class RiskGameView implements View, Initializable {
         progress();
         System.out.println("*18");
     }
-
-
     @FXML
     private void loseManually(MouseEvent e) throws URISyntaxException {
         changeNotifText(controller.leaveTheGame());
@@ -580,7 +580,13 @@ public class RiskGameView implements View, Initializable {
     }
 
     public String next() {
-        String toPrint = controller.next();
+        String toPrint = "";
+        if(Client.getClientInfo().getLoggedInUsername().equals(controller.getCurrentPlayer().getUsername())) {
+            toPrint = controller.next();
+        }else{
+            toPrint = "Get the fuck out of here";
+        }
+
         return toPrint;
     }
 
@@ -957,6 +963,12 @@ public class RiskGameView implements View, Initializable {
             allPaths[i - 1][j - 1].getStyleClass().clear();
             allPaths[i - 1][j - 1].getStyleClass().add("country_selected_source");
         }
+    }
+    public void updateMap(){
+        colorizeCountry();
+        setColorMode();
+        putCountryName();
+        updatePlayerLabels();
     }
 
 }

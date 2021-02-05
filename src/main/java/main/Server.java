@@ -33,6 +33,15 @@ public class Server extends Application {
         launch(args);
     }
 
+    public static void updateMap(DataOutputStream value) {
+        try {
+            Pair<String, String> answer = new Pair<>("updateMap", "discard");
+            value.writeUTF(new Gson().toJson(answer));
+            value.flush();
+        } catch (Exception e) {
+            System.err.println("[SERVER]: couldn't refresh the client " + e);
+        }
+    }
 
 
     private void run() throws IOException {

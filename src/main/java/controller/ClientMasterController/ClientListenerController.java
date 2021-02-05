@@ -8,6 +8,7 @@ import main.ClientConnector;
 import org.javatuples.Pair;
 import view.AlertMaker;
 import view.TabHandler;
+import view.ViewHandler;
 
 public class ClientListenerController {
 
@@ -27,6 +28,10 @@ public class ClientListenerController {
                     TabHandler.getTabHandler().getStackRoot().getChildren().get(0),"Okay",
                     alertContent[0],alertContent[1]));
             return "Notify Successful.";
+        }
+        else if(instruction.getValue0().equals("updateMap")){
+            Platform.runLater(()-> ViewHandler.getViewHandler().updateMapView());
+            return "Map Updated";
         }
         return "";
     }

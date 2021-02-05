@@ -327,34 +327,8 @@ public class RiskGameController extends Controller {
 
     /* Draf-Attck-forfeit */
     public String next() {
-        String toPrint = "";
-        /*Todo*/
-//        audioClip.stop();
-        if (getPlacementFinished()) {
-            if (riskGameModel.getSoldierPlacedAfterWin()) {
-                if (!riskGameModel.getDraftDone()) {
-                    toPrint = "Next part, Start Attacking";
-                    riskGameModel.setDraftDone(true);
-                } else if (!riskGameModel.getAttackDone()) {
-                    toPrint = "Next part, Start Fortifying";
-                    riskGameModel.setDraftDone(true);
-                } else if (!riskGameModel.getFortifyDone()) {
-                    riskGameModel.setDraftDone(true);
-                    toPrint = "Next part, Please try `turn over` to go to next turn";
-                } else {
-                    toPrint = "Try `turn over`";
-                }
-            } else {
-                toPrint = "Please First try to draft in destination country";
-            }
-        } else {
-            if (riskGameModel.getBeginDraftDone()) {
-                toPrint = "Draft done, please try next turn icon";
-            } else {
-                toPrint = "You didnt draft any soldier please try draft some";
-            }
-        }
-        return toPrint;
+
+        return riskGameModel.next();
     }
 
     public void mainChangeTurn() {

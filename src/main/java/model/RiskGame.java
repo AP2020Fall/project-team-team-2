@@ -6,8 +6,10 @@ import controller.risk.MatchCardController;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.media.AudioClip;
+import main.Server;
 import view.risk.RiskGameView;
 
+import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -60,6 +62,7 @@ public class RiskGame {
     private boolean soldierPlacedAfterWin = true;
     private Event event;
     private final String riskGameId;
+    private PlayingGame playingGame;
     /* Status Of player : Drafting - Attacking - Fortifing */
 
     public RiskGame(AvailableGame availableGame, int soldiers ){
@@ -68,7 +71,7 @@ public class RiskGame {
         System.out.println("--------" + this.primitiveSettings);
         this.event = availableGame.getEvent();
 
-        PlayingGame playingGame = new PlayingGame(availableGame);
+        this.playingGame = new PlayingGame(availableGame);
 
         this.players = playingGame.getPlayers();
         this.riskGameId = availableGame.getAvailableGameId();
@@ -85,6 +88,7 @@ public class RiskGame {
         for (Gamer gamer : players) {
             gamer.setRequestAndFriendsList();
         }
+
         /* Shaping Map*/
         this.shapeMap();
         currentPlayer = players.get(0);
@@ -236,7 +240,41 @@ public class RiskGame {
     public void endGame() {
     }
 
-
+    public String next(){
+        String toPrint = "";
+        /*Todo*/
+//        audioClip.stop();
+        if (getPlacementFinished()) {
+            if (getSoldierPlacedAfterWin()) {
+                if (!getDraftDone()) {
+                    toPrint = "Next part, Start Attacking";
+                    setDraftDone(true);
+                } else if (!getAttackDone()) {
+                    toPrint = "Next part, Start Fortifying";
+                    setDraftDone(true);
+                } else if (!getFortifyDone()) {
+                    setDraftDone(true);
+                    toPrint = "Next part, Please try `turn over` to go to next turn";
+                } else {
+                    toPrint = "Try `turn over`";
+                }
+            } else {
+                toPrint = "Please First try to draft in destination country";
+            }
+        } else {
+            if (getBeginDraftDone()) {
+                toPrint = "Draft done, please try next turn icon";
+            } else {
+                toPrint = "You didnt draft any soldier please try draft some";
+            }
+        }
+        for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
+            if(!client.getKey().equals(getCurrentPlayer().getUsername())) {
+                Server.updateMap(client.getValue());
+            }
+        }
+        return toPrint;
+    }
     public void setStatus(String status) {
         this.status = status;
     }
