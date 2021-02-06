@@ -63,7 +63,6 @@ public class AdminGamesMenu implements Tab, Initializable {
             new AddGamePopup(true, gameEntry.getName()).openWindow();
             TabHandler.getTabHandler().refresh();
         } else {
-            System.out.println("it is working");
             AlertMaker.showMaterialDialog(TabHandler.getTabHandler().getStackRoot(),
                     TabHandler.getTabHandler().getStackRoot().getChildren().get(0), "Okay", "Invalid Request"
                     , "Cannot edit more one event at a time.");

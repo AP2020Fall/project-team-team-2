@@ -72,7 +72,6 @@ public class PlayerAvailableGameView implements Tab, Initializable {
             hBoxContainer.getChildren().add(playerVBox);
             if(controller.arePlayerReady())
             {
-                System.out.println("Game is about to be played ");
                 ViewHandler.getViewHandler().push(new RiskGameView(controller.createRiskGame()));
             }
 

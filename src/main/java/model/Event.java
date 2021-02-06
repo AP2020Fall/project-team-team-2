@@ -166,7 +166,7 @@ public class Event {
                 if (imageFile.exists())
                     imageFile.delete();
             } catch (Exception ignored) {
-                System.out.println("event image not found!");
+                System.out.println("[MODEL]: event image not found!");
             }
         }
         else{
@@ -183,7 +183,7 @@ public class Event {
                 if (imageFile.exists())
                     imageFile.delete();
             } catch (Exception ignored) {
-                System.out.println("event image not found!");
+                System.out.println("[MODEL]: event image not found!");
             }
         }
         else{

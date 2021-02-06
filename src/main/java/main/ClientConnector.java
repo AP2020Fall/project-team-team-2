@@ -73,15 +73,6 @@ public class ClientConnector {
         return controller;
     }
 
-    public static void refresh()
-    {
-        TabHandler.getTabHandler().refresh();
-    }
-
-    public static void notify(String header,String body)
-    {
-
-    }
 
     static class ServerListener extends Thread {
         Socket clientSocket;
@@ -105,8 +96,8 @@ public class ClientConnector {
                     input = dataInputStream.readUTF();
                     answer = controller.takeAction(input);
 
-                    System.out.println("[LISTENER]: Command: " + input + " was sent.");
-                    System.out.println("[LISTENER]: result: " + answer + " is sent.");
+                   // System.out.println("[LISTENER]: Command: " + input + " was sent.");
+                  //  System.out.println("[LISTENER]: result: " + answer + " is sent.");
                     if (answer.equals("Terminate")) {
                         System.out.println("[LISTENER]: Connection closed!");
                         Thread.currentThread().interrupt();

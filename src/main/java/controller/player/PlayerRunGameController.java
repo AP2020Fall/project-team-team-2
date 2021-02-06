@@ -74,17 +74,6 @@ public class PlayerRunGameController extends Controller {
         return Player.getPlayerByUsername(username).getImage();
     }
 
-    public void runGame(ArrayList<String> usernames) {
-        ArrayList<Player> players = new ArrayList<>();
-        System.out.println("Players ready to play are:");
-        for (String username : usernames) {
-            System.out.println(username);
-            players.add(Objects.requireNonNull(Player.getPlayerByUsername(username),
-                    "Username passed to runGame doesn't exist."));
-        }
-        System.out.println("lets go play");
-        // ViewHandler.getViewHandler().push(new StartGameView(players,event));
-    }
 
     public ArrayList<AvailableGame> getAvailableGames() {
         return AvailableGame.getAvailableGames();

@@ -103,20 +103,20 @@ public class StartGameView implements View, Initializable {
     public void changePlayersNumber(String strNumber) {
         int playerNumber = Integer.parseInt(strNumber);
         String callback = clientMasterController.setPlayerNumber(playerNumber);
-        System.out.println(callback);
+       // System.out.println(callback);
 
     }
 
     public void chooseMapNumber(String strNumber) {
         int mapNumber = Integer.parseInt(strNumber);
         String callback = clientMasterController.setMapNumber(mapNumber);
-        System.out.println(callback);
+       // System.out.println(callback);
     }
 
     public void changeDurationTime(String strNumber) {
         int number = Integer.parseInt(strNumber);
         String callback = clientMasterController.setDurationTime(number);
-        System.out.println(callback);
+        //System.out.println(callback);
     }
 
     public void placementType(boolean type) {

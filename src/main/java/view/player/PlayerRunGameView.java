@@ -237,20 +237,20 @@ public class PlayerRunGameView implements Tab, Initializable {
     public void changePlayersNumber(String strNumber) {
         int playerNumber = Integer.parseInt(strNumber);
         String callback = setPlayerNumber(playerNumber);
-        System.out.println(callback);
+       // System.out.println(callback);
 
     }
 
     public void chooseMapNumber(String strNumber) {
         int mapNumber = Integer.parseInt(strNumber);
         String callback = setMapNumber(mapNumber);
-        System.out.println(callback);
+       // System.out.println(callback);
     }
 
     public void changeDurationTime(String strNumber) {
         int number = Integer.parseInt(strNumber);
         String callback = setDurationTime(number);
-        System.out.println(callback);
+      //  System.out.println(callback);
     }
 
     public void placementType(boolean type) {

@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
-
 //import javax.xml.bind.SchemaOutputResolver;
 
 public class RiskGameView implements View, Initializable {
