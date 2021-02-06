@@ -971,11 +971,13 @@ public class RiskGameView implements View, Initializable {
                 if (progressed >= 1) {
                     if (controller.getCurrentPlayer().getUsername().equals(Client.getClientInfo().getLoggedInUsername())) {
                         controller.mainChangeTurn();
+                        controller.updateCurrentTime();
                         changeNotifText("Your time has been finished");
+                        System.out.println(currentTimeStamp);
                         System.out.println(controller.getCurrentPlayer().getUsername());
+                        System.out.println("------------------------------------");
                     }
-
-                    currentTimeStamp = System.currentTimeMillis() / 1000L;
+                    currentTimeStamp = System.currentTimeMillis()/1000L;
                     progressBar.setProgress(0);
                     controller.updateCurrentTime();
                     controller.updateRiskGameModel();
@@ -1004,6 +1006,6 @@ public class RiskGameView implements View, Initializable {
 
     public void updateCurrentTimestamp() {
         this.currentTimeStamp = System.currentTimeMillis()/1000L;
-        System.out.println("Player " + Client.getClientInfo().getPlayerUsername() + " Time Updated");
+        System.out.println("Player " + Client.getClientInfo().getPlayerUsername().toLowerCase() + " Time Updated");
     }
 }
