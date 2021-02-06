@@ -384,7 +384,7 @@ public class RiskGameController extends Controller {
                 if (riskGameModel.getAttackDone()) {
                     if (riskGameModel.getFortifyDone()) {
                         riskGameModel.setTurnDone(false);
-                        mainChangeTurn();
+                        riskGameModel.mainChangeTurn();
                         toPrint = "Next Turn done successfully, It's " + riskGameModel.getCurrentPlayer().getUsername() + " turn";
                         setDraftDone(false);
                         setAttackDone(false);

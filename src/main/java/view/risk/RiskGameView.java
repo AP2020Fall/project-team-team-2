@@ -966,9 +966,11 @@ public class RiskGameView implements View, Initializable {
                 progressBar.setProgress(progressed);
                 if (progressed >= 1) {
                     if (controller.getCurrentPlayer().getUsername().equals(Client.getClientInfo().getLoggedInUsername())) {
+//                        System.out.println("Before : " + controller.getCurrentPlayer().getUsername());
                         controller.mainChangeTurn();
                         changeNotifText("Your time has been finished");
-
+//                        System.out.println("After : " + controller.getCurrentPlayer().getUsername());
+                        System.out.println(controller.getCurrentPlayer().getUsername());
                     }
 
                     currentTimeStamp = System.currentTimeMillis() / 1000L;

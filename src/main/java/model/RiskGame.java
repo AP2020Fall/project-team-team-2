@@ -141,6 +141,7 @@ public class RiskGame {
     }
     public void mainChangeTurn(){
         int currentTurnIndex = getPlayers().indexOf(this.getCurrentPlayer());
+        currentTimeStamp = System.currentTimeMillis() / 1000L;
         updateClientTimestamp();
         if (currentTurnIndex != getPlayers().size() - 1) {
             this.setCurrentPlayer(getPlayers().get(currentTurnIndex + 1));
@@ -151,9 +152,6 @@ public class RiskGame {
             checkPlacementFinished();
         }
 
-        currentTimeStamp = System.currentTimeMillis() / 1000L;
-
-        setCurrentTimeStamp(System.currentTimeMillis() / 1000L);
         setDraftDone(false);
         setAttackDone(false);
         setFortifyDone(false);
@@ -256,9 +254,9 @@ public class RiskGame {
                     setDraftDone(true);
                 } else if (!getAttackDone()) {
                     toPrint = "Next part, Start Fortifying";
-                    setDraftDone(true);
+                    setAttackDone(true);
                 } else if (!getFortifyDone()) {
-                    setDraftDone(true);
+                    setFortifyDone(true);
                     toPrint = "Next part, Please try `turn over` to go to next turn";
                 } else {
                     toPrint = "Try `turn over`";
@@ -557,7 +555,6 @@ public class RiskGame {
         setNotifSent(false);
     }
     public void updateUI(){
-
         for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
             if(!client.getKey().equals(getCurrentPlayer().getUsername())) {
                 Server.updateMap(client.getValue());
