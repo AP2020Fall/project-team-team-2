@@ -172,20 +172,30 @@
 
 
 .messageTable {
-    -fx-background-color: #ff55a0;
+    -fx-background-color: #546e7a;
     -fx-background-radius: 20;
 }
 .tab{
-    -fx-pref-width: 330;
-    -fx-background-color: #ff55a0;
+    -fx-alignment: CENTER;
+    -fx-pref-width: 336;
+    -fx-background-color:#26a69a;
+    -fx-background-radius: 5;
 }
 .tab-header-background{
-    -fx-background-color:transparent
+    -fx-background-color:transparent;
+    -fx-effect:  dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);;
 }
 
-.gameTabPage{
-    -fx-background-color: #ff55a0;
+.tab:selected {
+    -fx-background-color: #15556c;
 }
+
+.jfx-tab-pane{
+    -fx-alignment: CENTER;
+    -fx-background-color:#00897b;
+
+}
+
 
 /* Game Part */
 .country {

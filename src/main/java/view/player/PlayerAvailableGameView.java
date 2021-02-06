@@ -34,10 +34,10 @@ public class PlayerAvailableGameView implements Tab, Initializable {
     private Button back;
 
     private final ClientMasterController controller;
-
+    private final String availableGameId;
     public PlayerAvailableGameView(String availableGameId){
+        this.availableGameId = availableGameId;
         controller = Client.getConnector().getController();
-        Client.getClientInfo().setAvailableGameId(availableGameId);
     }
 
     @Override
@@ -49,6 +49,7 @@ public class PlayerAvailableGameView implements Tab, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Client.getClientInfo().setAvailableGameId(availableGameId);
         updateVBox();
     }
     public void updateVBox(){

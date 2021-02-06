@@ -18,7 +18,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1020.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1020.0" styleClass="gameTabPage">
+      <JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1020.0" styleClass="jfx-tab-pane" stylesheets="@../../css/styles.css">
          <tabs>
             <Tab styleClass="gameTabs" text="Old Page">
                <content>
@@ -113,7 +113,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab styleClass="gameTabs" text="Current Games">
+            <Tab onSelectionChanged="#updateCurrentGameTable" styleClass="gameTabs" text="Current Games">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="riskBackground">
                      <children>

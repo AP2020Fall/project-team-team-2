@@ -58,14 +58,15 @@ public class PlayerProfileView implements Tab, Initializable {
     private JFXButton addButton;
     @FXML
     private JFXButton removeButton;
-
+    private final String playerUsername;
     public PlayerProfileView(String playerUsername) {
-        Client.getClientInfo().setPlayerUsername(playerUsername);
+        this.playerUsername = playerUsername;
         controller = Client.getConnector().getController();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Client.getClientInfo().setPlayerUsername(playerUsername);
         initializedPlayerInfo();
         initializedFriendButtons();
         initializedTableGameLog();

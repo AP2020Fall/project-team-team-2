@@ -360,7 +360,6 @@ public class PlayerRunGameView implements Tab, Initializable {
     }
 
 
-
     private void initializeCurrentGamesTable()
     {
         TableColumn<AvailableGameEntry, ImageView> gameNameColumn = new TableColumn<>("Game Name");
@@ -369,6 +368,13 @@ public class PlayerRunGameView implements Tab, Initializable {
 
         currentGames.setPlaceholder(new Label("No game has been created."));
         currentGames.getColumns().addAll(gameNameColumn);
+        currentGames.getItems().addAll(controller.getAvailableGames());
+    }
+
+    @FXML
+    private void updateCurrentGameTable()
+    {
+        currentGames.getItems().clear();
         currentGames.getItems().addAll(controller.getAvailableGames());
     }
     @FXML

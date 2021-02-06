@@ -48,14 +48,15 @@ public class AdminProfileView implements Tab, Initializable {
     @FXML
     private TableView<GameLogSummaryEntry> gameHistoryList;
     private final ClientMasterController controller;
-
+    private final String playerUsername;
     public AdminProfileView(String playerUsername) {
-        Client.getClientInfo().setPlayerUsername(playerUsername);
+        this.playerUsername = playerUsername;
         controller = Client.getConnector().getController();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Client.getClientInfo().setPlayerUsername(playerUsername);
         initializedPlayerInfo();
         initializedTableGameLog();
     }
