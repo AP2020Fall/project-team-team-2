@@ -369,7 +369,7 @@ public class RiskGameController extends Controller {
         }
         if (!getPlacementFinished()) {
             if (riskGameModel.getBeginDraftDone()) {
-                mainChangeTurn();
+                riskGameModel.mainChangeTurn();
                 toPrint = "Next Turn done successfully, It's " + riskGameModel.getCurrentPlayer().getUsername() + " turn";
                 setDraftDone(false);
                 setAttackDone(false);

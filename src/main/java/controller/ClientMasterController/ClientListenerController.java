@@ -33,6 +33,10 @@ public class ClientListenerController {
             Platform.runLater(()-> ViewHandler.getViewHandler().updateMapView());
             return "Map Updated";
         }
+        else if(instruction.getValue0().equals("updateCurrentTimestamp")){
+            Platform.runLater(()-> ViewHandler.getViewHandler().updateTimeView());
+            return "Time Updated";
+        }
         return "";
     }
 }

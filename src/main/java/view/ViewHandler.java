@@ -95,4 +95,10 @@ public class ViewHandler {
             newView.updateMap();
         }
     }
+    public void updateTimeView(){
+        if(viewStack.peek() instanceof RiskGameView){
+            RiskGameView newView =(RiskGameView) viewStack.peek();
+            newView.updateCurrentTimestamp();
+        }
+    }
 }

@@ -43,7 +43,7 @@ public class Server extends Application {
         }
     }
 
-    public static void updateTimestamp(DataOutputStream value) {
+    public static void updateCurrentTimestamp(DataOutputStream value) {
         try {
             Pair<String, String> answer = new Pair<>("updateCurrentTimestamp", "discard");
             value.writeUTF(new Gson().toJson(answer));

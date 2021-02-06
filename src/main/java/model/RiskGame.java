@@ -556,16 +556,12 @@ public class RiskGame {
     }
     public void updateUI(){
         for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
-            if(!client.getKey().equals(getCurrentPlayer().getUsername())) {
-                Server.updateMap(client.getValue());
-            }
+            Server.updateMap(client.getValue());
         }
     }
     public void updateClientTimestamp(){
         for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
-            if(!client.getKey().equals(getCurrentPlayer().getUsername())) {
-                Server.updateTimestamp(client.getValue());
-            }
+            Server.updateCurrentTimestamp(client.getValue());
         }
     }
 }

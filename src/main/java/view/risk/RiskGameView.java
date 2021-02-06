@@ -602,7 +602,7 @@ public class RiskGameView implements View, Initializable {
         if (checkCurrentPlayer()) {
             toPrint = controller.next();
         } else {
-            toPrint = "Get the fuck out of here";
+            toPrint = "It's not your Turn";
         }
 
         return toPrint;
@@ -946,7 +946,11 @@ public class RiskGameView implements View, Initializable {
     public void updatePlayerLabels() {
         int i = 0;
         for (Label label : playerLabels) {
-            label.setText(String.valueOf(controller.getRiskPlayers().get(i).getDraftSoldiers()));
+            try {
+                label.setText(String.valueOf(controller.getRiskPlayers().get(i).getDraftSoldiers()));
+            }catch (Exception e){
+                System.out.println("No player with id : " + i);
+            }
             i++;
         }
     }
@@ -966,10 +970,8 @@ public class RiskGameView implements View, Initializable {
                 progressBar.setProgress(progressed);
                 if (progressed >= 1) {
                     if (controller.getCurrentPlayer().getUsername().equals(Client.getClientInfo().getLoggedInUsername())) {
-//                        System.out.println("Before : " + controller.getCurrentPlayer().getUsername());
                         controller.mainChangeTurn();
                         changeNotifText("Your time has been finished");
-//                        System.out.println("After : " + controller.getCurrentPlayer().getUsername());
                         System.out.println(controller.getCurrentPlayer().getUsername());
                     }
 
@@ -997,11 +999,11 @@ public class RiskGameView implements View, Initializable {
         setColorMode();
         putCountryName();
         updatePlayerLabels();
-        updateCurrentTimestamp();
         setColorTurn();
     }
 
     public void updateCurrentTimestamp() {
-        this.currentTimeStamp = controller.getCurrentTimestamp();
+        this.currentTimeStamp = System.currentTimeMillis()/1000L;
+        System.out.println("Player " + Client.getClientInfo().getPlayerUsername() + " Time Updated");
     }
 }
