@@ -40,15 +40,14 @@ public class PlayerGameMenu implements Tab, Initializable {
     private TableView<ScoreboardEntry> scoreboard;
     @FXML
     private FontAwesomeIconView favorite = new FontAwesomeIconView();
-
+    private final String gameName;
     public PlayerGameMenu(String gameName) {
-        Client.getClientInfo().setGameName(gameName);
+        this.gameName = gameName;
         controller = Client.getConnector().getController();
     }
 
     @Override
     public Parent show() throws IOException {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerGameMenu.fxml"));
         loader.setController(this);
         return loader.load();
@@ -56,6 +55,7 @@ public class PlayerGameMenu implements Tab, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Client.getClientInfo().setGameName(gameName);
         if (controller.isFavorite())
             fillYellow();
         else

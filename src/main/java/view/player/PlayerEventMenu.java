@@ -33,15 +33,14 @@ public class PlayerEventMenu implements Tab, Initializable {
     @FXML
     private ImageView eventImage;
     private final ClientMasterController controller;
-
+    private final String eventId;
     public PlayerEventMenu(String eventId) {
-        Client.getClientInfo().setEventId(eventId);
+        this.eventId = eventId;
         controller = Client.getConnector().getController();
     }
 
     @Override
     public Parent show() throws IOException {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/plato/player/playerEventMenu.fxml"));
         loader.setController(this);
         return loader.load();
@@ -49,6 +48,7 @@ public class PlayerEventMenu implements Tab, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Client.getClientInfo().setEventId(eventId);
         initializeInfo();
     }
 
