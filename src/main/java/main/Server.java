@@ -122,8 +122,8 @@ public class Server extends Application {
                         dataOutputStream.writeUTF(new Gson().toJson(answer));
                         dataOutputStream.flush();
                     }
-                    System.out.println("[SERVER]: Command: " + input + " was sent.");
-                    System.out.println("[SERVER]: result: " + answer + " is sent.");
+//                    System.out.println("[SERVER]: Command: " + input + " was sent.");
+//                    System.out.println("[SERVER]: result: " + answer + " is sent.");
                     if (answer.equals("Connection is terminated.")) {
                         System.out.println("[SERVER]: Connection closed!");
                         Thread.currentThread().interrupt();

@@ -2261,6 +2261,14 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
+    public long getCurrentTimestamp() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getCurrentTimestamp", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Long.class);
+    }
+
 /*
     public String getRiskGameMapNumber() {
     }

@@ -149,15 +149,16 @@ public class RiskGame {
         if (!getPlacementFinished()) {
             checkPlacementFinished();
         }
-        RiskGameView.currentTimeStamp = System.currentTimeMillis() / 1000L;
+        currentTimeStamp = System.currentTimeMillis() / 1000L;
         setCurrentTimeStamp(System.currentTimeMillis() / 1000L);
         setDraftDone(false);
         setAttackDone(false);
         setFortifyDone(false);
         setAttackDestination(null);
         setAttackWon(false);
-//        resetNotif();
+        resetNotif();
         setBeginDraftDone(false);
+        updateUI();
     }
     public void checkPlacementFinished() {
         boolean toCheck = true;
@@ -235,6 +236,7 @@ public class RiskGame {
     }
 
     public void createGame() {
+
     }
 
     public void endGame() {
@@ -268,11 +270,7 @@ public class RiskGame {
                 toPrint = "You didnt draft any soldier please try draft some";
             }
         }
-        for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
-            if(!client.getKey().equals(getCurrentPlayer().getUsername())) {
-                Server.updateMap(client.getValue());
-            }
-        }
+        updateUI();
         return toPrint;
     }
     public void setStatus(String status) {
@@ -534,7 +532,7 @@ public class RiskGame {
     }
 
     public boolean getAttackWon() {
-        return attackDone;
+        return attackWon;
     }
 
     public boolean getNotifSent() {
@@ -550,6 +548,16 @@ public class RiskGame {
     public void setBeginSoldiers(){
         for(Gamer gamer : getPlayers()){
             gamer.addDraftSoldier(startSoldiers);
+        }
+    }
+    public void resetNotif() {
+        setNotifSent(false);
+    }
+    public void updateUI(){
+        for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
+            if(!client.getKey().equals(getCurrentPlayer().getUsername())) {
+                Server.updateMap(client.getValue());
+            }
         }
     }
 }

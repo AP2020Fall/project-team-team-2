@@ -56,8 +56,8 @@ public class ClientConnector {
                 String response = dataInputStream.readUTF();
                 Triplet<String, String, String> query = new Gson().fromJson(response, new TypeToken<Triplet<String, String, String>>() {
                 }.getType());
-                System.out.println("[CLIENT]: Server responded : " + query.getValue1() + "\n to: " + userInput + "\n with token: "
-                        ); //query.getValue2()
+//                System.out.println("[CLIENT]: Server responded : " + query.getValue1() + "\n to: " + userInput + "\n with token: "
+//                        ); //query.getValue2()
                 Client.updateClientInfo(new Gson().fromJson(query.getValue1(), ClientInfo.class));
                 Client.updateToken(query.getValue2());
                 return query.getValue0();

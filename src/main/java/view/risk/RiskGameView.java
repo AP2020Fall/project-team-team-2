@@ -44,7 +44,7 @@ import java.util.*;
 //import javax.xml.bind.SchemaOutputResolver;
 
 public class RiskGameView implements View, Initializable {
-    public static long currentTimeStamp = System.currentTimeMillis() / 1000L;
+    public long currentTimeStamp = System.currentTimeMillis() / 1000L;
     private final ClientMasterController controller;
     private final String mapNum;
     private final SVGPath[][] allPaths = new SVGPath[5][5];
@@ -222,11 +222,11 @@ public class RiskGameView implements View, Initializable {
         controller = Client.getConnector().getController();
         //System.out.println("-2");
         Client.getClientInfo().setAvailableGameId(availableGameId);
-       // System.out.println("-3");
+        // System.out.println("-3");
         System.out.println(controller.getPrimitiveSettings());
-       // System.out.println("-4");
-        this.mapNum = String.valueOf((int) Math.round( (Double) controller.getPrimitiveSettings().get("Map Number")));
-       // System.out.println("-5");
+        // System.out.println("-4");
+        this.mapNum = String.valueOf((int) Math.round((Double) controller.getPrimitiveSettings().get("Map Number")));
+        // System.out.println("-5");
         this.duration = (int) Math.round((Double) controller.getPrimitiveSettings().get("Duration"));
         System.out.println("-6");
         if (!(Boolean) controller.getPrimitiveSettings().get("Placement")) {
@@ -345,6 +345,7 @@ public class RiskGameView implements View, Initializable {
         progress();
         System.out.println("*18");
     }
+
     @FXML
     private void loseManually(MouseEvent e) throws URISyntaxException {
         changeNotifText(controller.leaveTheGame());
@@ -387,20 +388,25 @@ public class RiskGameView implements View, Initializable {
 
     @FXML
     private void cardsMenuHandler(MouseEvent e) throws IOException, URISyntaxException {
-        Stage aboutStage = new Stage();
-        this.aboutStage = aboutStage;
-        FXMLLoader aboutRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
-        aboutRoot.setController(this);
-        aboutStage.setScene(new Scene(aboutRoot.load()));
-        aboutStage.setResizable(false);
-        aboutStage.initModality(Modality.WINDOW_MODAL);
-        aboutStage.initOwner(gameWindow);
-        insertImage(aHeart, "/images/A_heart.png");
-        insertImage(aClub, "/images/A_clubs.png");
-        insertImage(aDiamond, "/images/A_diamond.png");
-        setMyCardsLabels();
-        aboutStage.show();
+        if(checkCurrentPlayer()) {
+            Stage aboutStage = new Stage();
+            this.aboutStage = aboutStage;
+            FXMLLoader aboutRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
+            aboutRoot.setController(this);
+            aboutStage.setScene(new Scene(aboutRoot.load()));
+            aboutStage.setResizable(false);
+            aboutStage.initModality(Modality.WINDOW_MODAL);
+            aboutStage.initOwner(gameWindow);
+            insertImage(aHeart, "/images/A_heart.png");
+            insertImage(aClub, "/images/A_clubs.png");
+            insertImage(aDiamond, "/images/A_diamond.png");
+            setMyCardsLabels();
+            aboutStage.show();
+        }else {
+            changeNotifText("It's not your turn");
+        }
     }
+
     @FXML
     private void backToAbout(MouseEvent e) throws IOException, URISyntaxException {
         FXMLLoader requestRoot = new FXMLLoader(getClass().getResource("/game/cardsMenu.fxml"));
@@ -424,25 +430,32 @@ public class RiskGameView implements View, Initializable {
 
     @FXML
     private void countryClick(MouseEvent e) {
-        if (controller.checkTime()) {
+        if (checkCurrentPlayer()) {
             int[] indices = getCountryIndices(e.getPickResult().getIntersectedNode().getId());
             int i = indices[0];
             int j = indices[1];
             int soliders = 0;
             try {
                 soliders = Integer.parseInt(inputNumber.getText());
+                System.out.println("0*11");
                 if (controller.getPlacementFinished()) {
                     switch (showWhatToDo()) {
                         case "Draft":
+                            System.out.println("1*11");
                             if (!inputNumber.getText().isEmpty()) {
+                                System.out.println("12*11");
                                 if (!controller.getAttackWon()) {
+                                    System.out.println("123*11");
                                     changeNotifText(draft(i, j, soliders));
                                 } else {
+                                    System.out.println("we are fucking here");
                                     changeNotifText(draftAfterWin(i, j, soliders));
                                 }
                             }
                             break;
                         case "Attack":
+                            System.out.println("2*11");
+
                             if (controller.getI() == null || controller.getJ() == null) {
                                 if (controller.checkCountryIsYours(i, j)) {
                                     controller.setI(i);
@@ -451,6 +464,7 @@ public class RiskGameView implements View, Initializable {
                                     changeNotifText("This Country Is Not Yours");
                                 }
                             } else {
+
                                 if (!inputNumber.getText().isEmpty()) {
                                     changeNotifText(attack(controller.getI(), controller.getJ(),
                                             i, j, soliders));
@@ -463,6 +477,8 @@ public class RiskGameView implements View, Initializable {
                             }
                             break;
                         case "Fortify":
+                            System.out.println("3*11");
+
                             if (controller.getI() == null || controller.getJ() == null) {
                                 if (controller.checkCountryIsYours(i, j)) {
                                     controller.setI(i);
@@ -479,24 +495,29 @@ public class RiskGameView implements View, Initializable {
                             break;
                     }
                 } else {
+                    System.out.println("4*11");
+
                     if (controller.getAllPlayersAdded()) {
                         controller.beginDraft(i, j, soliders);
+                        System.out.println("5*11");
+
                     } else {
                         controller.beginDraft(i, j, 1);
+                        System.out.println("6*11");
+
                     }
                 }
             } catch (NumberFormatException ex) {
                 changeNotifText("please insert a number");
             }
         } else {
-            changeNotifText("Your time has been finished");
-            setColorTurn();
+            changeNotifText("It's not your turn");
         }
+        setColorTurn();
         colorizeCountry();
         setColorMode();
         putCountryName();
         updatePlayerLabels();
-
     }
 
     @FXML
@@ -581,15 +602,17 @@ public class RiskGameView implements View, Initializable {
 
     public String next() {
         String toPrint = "";
-        if(Client.getClientInfo().getLoggedInUsername().equals(controller.getCurrentPlayer().getUsername())) {
+        if (checkCurrentPlayer()) {
             toPrint = controller.next();
-        }else{
+        } else {
             toPrint = "Get the fuck out of here";
         }
 
         return toPrint;
     }
-
+    public boolean checkCurrentPlayer(){
+        return Client.getClientInfo().getLoggedInUsername().equals(controller.getCurrentPlayer().getUsername());
+    }
     public void autoPlace() {
         controller.autoPlace();
     }
@@ -933,27 +956,31 @@ public class RiskGameView implements View, Initializable {
 
 
     public void progress() {
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                double progressed = Double.valueOf((double) System.currentTimeMillis() / 1000 - currentTimeStamp) / Double.valueOf(duration);
-                progressBar.setProgress(progressed);
-                if (progressed >= 1) {
-                    changeNotifText("Your time has been finished");
-                    currentTimeStamp = System.currentTimeMillis() / 1000L;
-                    controller.mainChangeTurn();
-                    progressBar.setProgress(0);
-                    controller.updateCurrentTime();
-                    colorizeCountry();
-                    setColorTurn();
-                    setColorMode();
-                    updatePlayerLabels();
-                    putCountryName();
-                }
+        new Thread() {
+            public void run() {
+                timer = new AnimationTimer() {
+                    @Override
+                    public void handle(long now) {
+                        double progressed = Double.valueOf((double) System.currentTimeMillis() / 1000 - currentTimeStamp) / Double.valueOf(duration);
+                        progressBar.setProgress(progressed);
+                        if (progressed >= 1) {
+                            controller.mainChangeTurn();
+                            changeNotifText("Your time has been finished");
+                            currentTimeStamp = System.currentTimeMillis() / 1000L;
+                            controller.mainChangeTurn();
+                            progressBar.setProgress(0);
+                            controller.updateCurrentTime();
+                            colorizeCountry();
+                            setColorTurn();
+                            setColorMode();
+                            updatePlayerLabels();
+                            putCountryName();
+                        }
+                    }
+                };
+                timer.start();
             }
-
-        };
-        timer.start();
+        }.start();
     }
 
     public void addColorToSelected() {
@@ -964,11 +991,16 @@ public class RiskGameView implements View, Initializable {
             allPaths[i - 1][j - 1].getStyleClass().add("country_selected_source");
         }
     }
-    public void updateMap(){
+
+    public void updateMap() {
         colorizeCountry();
         setColorMode();
         putCountryName();
         updatePlayerLabels();
+        updateCurrentTimestamp();
+        setColorTurn();
     }
-
+    public void updateCurrentTimestamp(){
+        this.currentTimeStamp = controller.getCurrentTimestamp();
+    }
 }
