@@ -2269,6 +2269,13 @@ public class ClientMasterController {
         return new Gson().fromJson(answer, Long.class);
     }
 
+    public void updateRiskGameModel() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("updateRiskGameModel", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        Client.getConnector().serverQuery(command.toJson());
+    }
+
 /*
     public String getRiskGameMapNumber() {
     }

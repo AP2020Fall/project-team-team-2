@@ -68,7 +68,7 @@ public class RiskGame {
     public RiskGame(AvailableGame availableGame, int soldiers ){
 
         this.primitiveSettings = availableGame.getPrimitiveSetting();
-        System.out.println("--------" + this.primitiveSettings);
+
         this.event = availableGame.getEvent();
 
         this.playingGame = new PlayingGame(availableGame);
@@ -116,7 +116,7 @@ public class RiskGame {
                     allDone = true;
                 }
             }
-            System.out.println(getCurrentPlayer().getDraftSoldiers());
+
 
             if (allDone) {
                 break;
@@ -141,6 +141,7 @@ public class RiskGame {
     }
     public void mainChangeTurn(){
         int currentTurnIndex = getPlayers().indexOf(this.getCurrentPlayer());
+        updateClientTimestamp();
         if (currentTurnIndex != getPlayers().size() - 1) {
             this.setCurrentPlayer(getPlayers().get(currentTurnIndex + 1));
         } else {
@@ -149,7 +150,9 @@ public class RiskGame {
         if (!getPlacementFinished()) {
             checkPlacementFinished();
         }
+
         currentTimeStamp = System.currentTimeMillis() / 1000L;
+
         setCurrentTimeStamp(System.currentTimeMillis() / 1000L);
         setDraftDone(false);
         setAttackDone(false);
@@ -554,9 +557,17 @@ public class RiskGame {
         setNotifSent(false);
     }
     public void updateUI(){
+
         for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
             if(!client.getKey().equals(getCurrentPlayer().getUsername())) {
                 Server.updateMap(client.getValue());
+            }
+        }
+    }
+    public void updateClientTimestamp(){
+        for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
+            if(!client.getKey().equals(getCurrentPlayer().getUsername())) {
+                Server.updateTimestamp(client.getValue());
             }
         }
     }
