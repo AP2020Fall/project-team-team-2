@@ -824,8 +824,6 @@ public class RiskGameView implements View, Initializable {
                 notify.showInformation();
             }
         });
-
-
     }
 
     public void updateRequestsBox() {
@@ -903,7 +901,6 @@ public class RiskGameView implements View, Initializable {
             controller.notifSent();
         }
     }
-
     public void makeRightHBox() throws URISyntaxException {
         EventHandler<MouseEvent> addFriendHandler = new EventHandler<MouseEvent>() {
             @Override
@@ -1007,11 +1004,7 @@ public class RiskGameView implements View, Initializable {
                         controller.updateCurrentTime();
                         controller.mainChangeTurn();
                         changeNotifText("Your time has been finished");
-                        //System.out.println(currentTimeStamp);
-                        //System.out.println(controller.getCurrentPlayer().getUsername());
-                        //System.out.println("------------------------------------");
                     }
-                    //System.out.println("Inside Of View");
                     currentTimeStamp = System.currentTimeMillis()/1000L;
                     progressBar.setProgress(0);
                     controller.updateCurrentTime();
@@ -1040,7 +1033,6 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void updateCurrentTimestamp() {
-        //System.out.println("Update Timeeeeee");
         this.currentTimeStamp = System.currentTimeMillis()/1000L;
     }
 }

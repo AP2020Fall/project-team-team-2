@@ -12,10 +12,8 @@ import view.risk.RiskGameView;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
-import java.util.Random;
 
 public class RiskGame {
     private static final ArrayList<RiskGame> riskGames = new ArrayList<>();
@@ -568,5 +566,136 @@ public class RiskGame {
 
     public ArrayList<Gamer> getOriginalPlayers() {
         return originalPlayers;
+    }
+
+    public boolean checkWinner() {
+        boolean finished = true;
+        boolean toCheck = false;
+        if (getPlayers().size() == 1) {
+            toCheck = true;
+        }
+
+        if (!getPlacementFinished() && !toCheck) {
+            return false;
+        }
+
+        for (List<Country> countries : getGameCountries()) {
+            for (Country country : countries) {
+                if (country.getOwner() != null) {
+                    if (!country.getOwner().equals(getCurrentPlayer()) && !toCheck) {
+                        finished = false;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (finished) {
+            setWinner(getCurrentPlayer());
+            setGameIsPlaying(false);
+            for (Gamer player : getPlayers()) {
+                player.resetRequestAndFriends();
+            }
+
+            Player.addGameLog(getPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, getWinner(),
+                    3 + getEvent().getScore(), 1 + getEvent().getScore() / 2, 0);
+            return true;
+        }
+
+        if (!finished) {
+            finished = true;
+            for (List<Country> countries : getGameCountries()) {
+                for (Country country : countries) {
+                    if (country.getSoldiers() != 1 && country.getSoldiers() != 0) {
+                        finished = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (finished) {
+            for (Gamer player : getPlayers()) {
+                player.resetRequestAndFriends();
+            }
+            setGameIsPlaying(false);
+            Player.addGameLog(getPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
+                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,
+                    3 + getEvent().getScore(), 1 + getEvent().getScore() / 2, 0);
+
+        }
+        ;
+        return finished;
+    }
+
+    public String leaveTheGame() {
+        Gamer prevPlayer = getCurrentPlayer();
+        checkWinner();
+        if (getGameIsPlaying()) {
+            mainChangeTurn();
+            getPlayers().remove(prevPlayer);
+            makeCountryEmpty(prevPlayer);
+            return "Player " + prevPlayer.getUsername() + " Exit The Game";
+        } else {
+            return "Player " + prevPlayer.getUsername() + " Won";
+        }
+    }
+    public void makeCountryEmpty(Gamer player) {
+        for (List<Country> countries : getGameCountries()) {
+            for (Country country : countries) {
+                if (country.getOwner() != null) {
+                    if (country.getOwner().equals(player)) {
+                        country.emptyCountry();
+                    }
+                }
+            }
+        }
+    }
+
+    public String changeTurn() {
+        String toPrint;
+        boolean checkWinner = checkWinner();
+        if (checkWinner) {
+            if (getWinner() != null) {
+                toPrint = "Game has been finished." + " " + getCurrentPlayer().getUsername() + " is this winner";
+            } else {
+                toPrint = "Game has been finished in draw.";
+            }
+            return toPrint;
+        }
+        if (!getPlacementFinished()) {
+            if (getBeginDraftDone()) {
+                mainChangeTurn();
+                toPrint = "Next Turn done successfully, It's " + getCurrentPlayer().getUsername() + " turn";
+                setDraftDone(false);
+                setAttackDone(false);
+                setFortifyDone(false);
+                setGotCards(false);
+            } else {
+                toPrint = "You didn't place any soldier, please first try to place a soldier in remain countries.";
+            }
+        } else {
+            if (getDraftDone()) {
+                /*Todo: attack doesn't need to be checked(?)*/
+                if (getAttackDone()) {
+                    if (getFortifyDone()) {
+                        setTurnDone(false);
+                        mainChangeTurn();
+                        toPrint = "Next Turn done successfully, It's " + getCurrentPlayer().getUsername() + " turn";
+                        setDraftDone(false);
+                        setAttackDone(false);
+                        setFortifyDone(false);
+                        setGotCards(false);
+                    } else {
+                        toPrint = "You didn't fortify yet.";
+                    }
+                } else {
+                    toPrint = "You didn't attack yet.";
+                }
+            } else {
+                toPrint = "You didn't place any soldier, please first try to place a soldier in your countries.";
+            }
+        }
+        return toPrint;
     }
 }

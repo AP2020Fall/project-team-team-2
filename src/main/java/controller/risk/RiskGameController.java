@@ -357,50 +357,7 @@ public class RiskGameController extends Controller {
     }
 
     public String changeTurn() {
-        String toPrint;
-        boolean checkWinner = checkWinner();
-        if (checkWinner) {
-            if (riskGameModel.getWinner() != null) {
-                toPrint = "Game has been finished." + " " + riskGameModel.getCurrentPlayer().getUsername() + " is this winner";
-            } else {
-                toPrint = "Game has been finished in draw.";
-            }
-            return toPrint;
-        }
-        if (!getPlacementFinished()) {
-            if (riskGameModel.getBeginDraftDone()) {
-                riskGameModel.mainChangeTurn();
-                toPrint = "Next Turn done successfully, It's " + riskGameModel.getCurrentPlayer().getUsername() + " turn";
-                setDraftDone(false);
-                setAttackDone(false);
-                setFortifyDone(false);
-                riskGameModel.setGotCards(false);
-            } else {
-                toPrint = "You didn't place any soldier, please first try to place a soldier in remain countries.";
-            }
-        } else {
-            if (riskGameModel.getDraftDone()) {
-                /*Todo: attack doesn't need to be checked(?)*/
-                if (riskGameModel.getAttackDone()) {
-                    if (riskGameModel.getFortifyDone()) {
-                        riskGameModel.setTurnDone(false);
-                        riskGameModel.mainChangeTurn();
-                        toPrint = "Next Turn done successfully, It's " + riskGameModel.getCurrentPlayer().getUsername() + " turn";
-                        setDraftDone(false);
-                        setAttackDone(false);
-                        setFortifyDone(false);
-                        riskGameModel.setGotCards(false);
-                    } else {
-                        toPrint = "You didn't fortify yet.";
-                    }
-                } else {
-                    toPrint = "You didn't attack yet.";
-                }
-            } else {
-                toPrint = "You didn't place any soldier, please first try to place a soldier in your countries.";
-            }
-        }
-        return toPrint;
+        return riskGameModel.changeTurn();
     }
 
     public void checkPlacementFinished() {
@@ -512,29 +469,10 @@ public class RiskGameController extends Controller {
     }
 
     public String leaveTheGame() {
-        Gamer prevPlayer = riskGameModel.getCurrentPlayer();
-        checkWinner();
-        if (riskGameModel.getGameIsPlaying()) {
-            mainChangeTurn();
-            riskGameModel.getPlayers().remove(prevPlayer);
-            makeCountryEmpty(prevPlayer);
-            return "Player " + prevPlayer.getUsername() + " Exit The Game";
-        } else {
-            return "Player " + prevPlayer.getUsername() + " Won";
-        }
+        return riskGameModel.leaveTheGame();
     }
 
-    public void makeCountryEmpty(Gamer player) {
-        for (List<Country> countries : riskGameModel.getGameCountries()) {
-            for (Country country : countries) {
-                if (country.getOwner() != null) {
-                    if (country.getOwner().equals(player)) {
-                        country.emptyCountry();
-                    }
-                }
-            }
-        }
-    }
+
 
     public boolean getDraftDone() {
         return riskGameModel.getDraftDone();
@@ -886,63 +824,7 @@ public class RiskGameController extends Controller {
     }
 
     public boolean checkWinner() {
-        boolean finished = true;
-        boolean toCheck = false;
-        if (riskGameModel.getPlayers().size() == 1) {
-            toCheck = true;
-        }
-
-        if (!getPlacementFinished() && !toCheck) {
-            return false;
-        }
-
-        for (List<Country> countries : riskGameModel.getGameCountries()) {
-            for (Country country : countries) {
-                if (country.getOwner() != null) {
-                    if (!country.getOwner().equals(riskGameModel.getCurrentPlayer()) && !toCheck) {
-                        finished = false;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (finished) {
-            riskGameModel.setWinner(riskGameModel.getCurrentPlayer());
-            riskGameModel.setGameIsPlaying(false);
-            for (Gamer player : riskGameModel.getPlayers()) {
-                player.resetRequestAndFriends();
-            }
-
-            Player.addGameLog(riskGameModel.getPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
-                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, riskGameModel.getWinner(),
-                    3 + riskGameModel.getEvent().getScore(), 1 + riskGameModel.getEvent().getScore() / 2, 0);
-            return true;
-        }
-
-        if (!finished) {
-            finished = true;
-            for (List<Country> countries : riskGameModel.getGameCountries()) {
-                for (Country country : countries) {
-                    if (country.getSoldiers() != 1 && country.getSoldiers() != 0) {
-                        finished = false;
-                        break;
-                    }
-                }
-            }
-        }
-        if (finished) {
-            for (Gamer player : riskGameModel.getPlayers()) {
-                player.resetRequestAndFriends();
-            }
-            riskGameModel.setGameIsPlaying(false);
-            Player.addGameLog(riskGameModel.getPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
-                    "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,
-                    3 + riskGameModel.getEvent().getScore(), 1 + riskGameModel.getEvent().getScore() / 2, 0);
-
-        }
-        ;
-        return finished;
+        return riskGameModel.checkWinner();
     }
 
     public boolean checkAdditionalPlayers(Gamer player) {
@@ -1183,4 +1065,5 @@ public class RiskGameController extends Controller {
     public void updateRiskGameModel(){
         riskGameModel.updateUI();
     }
+
 }
