@@ -2276,6 +2276,38 @@ public class ClientMasterController {
         Client.getConnector().serverQuery(command.toJson());
     }
 
+    public Gamer getWinner() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getWinner", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Gamer.class);
+    }
+
+    public boolean getBeginDraftDone() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getBeginDraftDone", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
+    }
+
+    public boolean getAttackDone() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getAttackDone", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
+    }
+
+    public boolean getFortifyDone() {
+        ArrayList<Object> params = new ArrayList<>();
+        Command command = new Command("getFortifyDone", "controller.risk.RiskGameController"
+                , params, Client.getClientInfo());
+        String answer = Client.getConnector().serverQuery(command.toJson());
+        return new Gson().fromJson(answer, Boolean.class);
+    }
+
 /*
     public String getRiskGameMapNumber() {
     }

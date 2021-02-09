@@ -3,8 +3,6 @@ package main;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import model.*;
-import view.View;
 import view.ViewHandler;
 import view.login.WelcomeMenu;
 
