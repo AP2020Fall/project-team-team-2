@@ -25,6 +25,7 @@ public class GameLogSummary {
         this.wins = 0;
         this.frequency = 0;
         this.score = 0;
+        lastPlay = LocalDateTime.now();
         gameLogs = new ArrayList<>();
     }
 
@@ -90,7 +91,7 @@ public class GameLogSummary {
         resultMap.put("frequency", frequency);
         resultMap.put("wins", wins);
         resultMap.put("score",score);
-        resultMap.put("last_player", lastPlay.toString());
+        resultMap.put("last_play", lastPlay.toString());
         resultMap.put("game_name", gameName);
         resultMap.put("game_logs",new Gson().toJson(gameLogs));
         resultMap.put("game_log_summary_id", gameLogSummaryId);
@@ -126,7 +127,7 @@ public class GameLogSummary {
         this.lastPlay = lastPlay;
         gameLog.addGameLog();
         gameLogs.add(gameLog.getGameLogId());
-        editField("game_logs",new Gson().toJson(gameLog));
+        editField("game_logs",new Gson().toJson(gameLogs));
     }
 
     public void updateForLoss(int score, LocalDateTime lastPlay, GameLog gameLog) {
@@ -135,7 +136,7 @@ public class GameLogSummary {
         this.lastPlay = lastPlay;
         gameLog.addGameLog();
         gameLogs.add(gameLog.getGameLogId());
-        editField("game_logs",new Gson().toJson(gameLog));
+        editField("game_logs",new Gson().toJson(gameLogs));
     }
 
     public void updateForDraw(int score, LocalDateTime lastPlay, GameLog gameLog) {
@@ -144,7 +145,7 @@ public class GameLogSummary {
         this.lastPlay = lastPlay;
         gameLog.addGameLog();
         gameLogs.add(gameLog.getGameLogId());
-        editField("game_logs",new Gson().toJson(gameLog));
+        editField("game_logs",new Gson().toJson(gameLogs));
     }
 
     @Override
