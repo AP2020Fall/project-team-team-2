@@ -130,8 +130,9 @@ public class Player extends Account {
 
     public ArrayList<GameLogSummary> getGameLogSummaries() {
         ArrayList<GameLogSummary> result = new ArrayList<>();
-        for (String gameLogSummaryId : gameLogSummaries)
+        for (String gameLogSummaryId : gameLogSummaries) {
             result.add(GameLogSummary.getGameLogSummaryById(gameLogSummaryId));
+        }
         return result;
     }
 
@@ -276,8 +277,7 @@ public class Player extends Account {
 
     public static void addGameLog(ArrayList<Gamer> players, Game game, GameStates gameState, Gamer gWinner,
                                   int win, int draw, int lose) {
-        System.out.println("MODEL"+gameState);
-        System.out.println(players);
+
         Player winner = Player.getPlayerByUsername(gWinner.getUsername());
         if (winner != null) {
             GameLogSummary gameLog = winner.getGameHistory(game.getName());
@@ -288,7 +288,6 @@ public class Player extends Account {
             }
             gameLog.updateForWin(win, LocalDateTime.now(), new GameLog(winner, getEnemies(players, winner),
                     game.getName(), GameLogStates.WON, LocalDateTime.now(),Controller.generateId(0)));
-
 
             for (Gamer gamer : players) {
                 Player player = Player.getPlayerByUsername(gamer.getUsername());

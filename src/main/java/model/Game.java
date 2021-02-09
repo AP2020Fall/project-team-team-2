@@ -98,7 +98,7 @@ public class Game {
     public void addPlayLog(PlayLog playLog) {
         playLogs.add(playLog.getPlayLogId());
         scoreboard.updateScoreboard(playLog);
-        editField("play_log_id", new Gson().toJson(playLog));
+        editField("play_log_id", new Gson().toJson(playLogs));
         editField("scoreboard", new Gson().toJson(scoreboard));
     }
 
