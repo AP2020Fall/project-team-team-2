@@ -72,8 +72,10 @@ public class RiskGame {
         this.event = availableGame.getEvent();
 
         this.playingGame = new PlayingGame(availableGame);
-
         this.players = playingGame.getPlayers();
+        this.originalPlayers = new ArrayList<>();
+        for(Gamer gamer:players)
+            originalPlayers.add(gamer);
         this.riskGameId = availableGame.getAvailableGameId();
 
         for (Gamer gamer : this.players) {
@@ -151,7 +153,6 @@ public class RiskGame {
         if (!getPlacementFinished()) {
             checkPlacementFinished();
         }
-
         setDraftDone(false);
         setAttackDone(false);
         setFortifyDone(false);
@@ -563,5 +564,9 @@ public class RiskGame {
         for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
             Server.updateCurrentTimestamp(client.getValue());
         }
+    }
+
+    public ArrayList<Gamer> getOriginalPlayers() {
+        return originalPlayers;
     }
 }

@@ -301,10 +301,11 @@ public class RiskGameController extends Controller {
     }
 
 
-
-    public String fortify(int sourceI_1, int sourceJ_1, int destI_1, int destJ_1, int soldiers_1) {
+    public boolean getBeginDraftDone(){
+        return riskGameModel.getBeginDraftDone();
+    }
+    public String fortify(Double sourceI_1, Double sourceJ_1, Double destI_1, Double destJ_1, Double soldiers_1) {
         int sourceI = (int) Math.round(sourceI_1);
-
         int sourceJ = (int) Math.round(sourceJ_1);
         int destI = (int) Math.round(destI_1);
         int destJ = (int) Math.round(destJ_1);
@@ -352,57 +353,23 @@ public class RiskGameController extends Controller {
     }
 
     public void mainChangeTurn() {
-        updateCurrentTime();
         riskGameModel.mainChangeTurn();
     }
 
-    public String changeTurn() {
-        String toPrint;
-        boolean checkWinner = checkWinner();
-        if (checkWinner) {
-            if (riskGameModel.getWinner() != null) {
-                toPrint = "Game has been finished." + " " + riskGameModel.getCurrentPlayer().getUsername() + " is this winner";
-            } else {
-                toPrint = "Game has been finished in draw.";
-            }
-            return toPrint;
-        }
-        if (!getPlacementFinished()) {
-            if (riskGameModel.getBeginDraftDone()) {
-                riskGameModel.mainChangeTurn();
-                toPrint = "Next Turn done successfully, It's " + riskGameModel.getCurrentPlayer().getUsername() + " turn";
-                setDraftDone(false);
-                setAttackDone(false);
-                setFortifyDone(false);
-                riskGameModel.setGotCards(false);
-            } else {
-                toPrint = "You didn't place any soldier, please first try to place a soldier in remain countries.";
-            }
-        } else {
-            if (riskGameModel.getDraftDone()) {
-                /*Todo: attack doesn't need to be checked(?)*/
-                if (riskGameModel.getAttackDone()) {
-                    if (riskGameModel.getFortifyDone()) {
-                        riskGameModel.setTurnDone(false);
-                        riskGameModel.mainChangeTurn();
-                        toPrint = "Next Turn done successfully, It's " + riskGameModel.getCurrentPlayer().getUsername() + " turn";
-                        setDraftDone(false);
-                        setAttackDone(false);
-                        setFortifyDone(false);
-                        riskGameModel.setGotCards(false);
-                    } else {
-                        toPrint = "You didn't fortify yet.";
-                    }
-                } else {
-                    toPrint = "You didn't attack yet.";
-                }
-            } else {
-                toPrint = "You didn't place any soldier, please first try to place a soldier in your countries.";
-            }
-        }
-        return toPrint;
+    public void changeTurn() {
+        riskGameModel.setTurnDone(false);
+        riskGameModel.mainChangeTurn();
+        setDraftDone(false);
+        setAttackDone(false);
+        setFortifyDone(false);
+        riskGameModel.setGotCards(false);
     }
-
+    public void setGotCards(Boolean b){
+        riskGameModel.setGotCards(b);
+    }
+    public Gamer getWinner(){
+        return riskGameModel.getWinner();
+    }
     public void checkPlacementFinished() {
         boolean toCheck = true;
         for (Gamer player : getPlayers()) {
@@ -424,8 +391,9 @@ public class RiskGameController extends Controller {
         return riskGameModel.getPlacementFinished();
     }
 
-    public String matchCards(int type) {
+    public String matchCards(Double type1) {
         String toPrint = "";
+        int type = (int) Math.round(type1);
         switch (type) {
             case 1:
                 toPrint = Card.matchCard(riskGameModel.getCurrentPlayer().getCards(), 1, riskGameModel.getCurrentPlayer());
@@ -513,7 +481,9 @@ public class RiskGameController extends Controller {
 
     public String leaveTheGame() {
         Gamer prevPlayer = riskGameModel.getCurrentPlayer();
+        System.out.println("here");
         checkWinner();
+        System.out.println("here2");
         if (riskGameModel.getGameIsPlaying()) {
             mainChangeTurn();
             riskGameModel.getPlayers().remove(prevPlayer);
@@ -914,10 +884,9 @@ public class RiskGameController extends Controller {
                 player.resetRequestAndFriends();
             }
 
-            Player.addGameLog(riskGameModel.getPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
+            Player.addGameLog(riskGameModel.getOriginalPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, riskGameModel.getWinner(),
                     3 + riskGameModel.getEvent().getScore(), 1 + riskGameModel.getEvent().getScore() / 2, 0);
-            return true;
         }
 
         if (!finished) {
@@ -936,12 +905,12 @@ public class RiskGameController extends Controller {
                 player.resetRequestAndFriends();
             }
             riskGameModel.setGameIsPlaying(false);
-            Player.addGameLog(riskGameModel.getPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
+            Player.addGameLog(riskGameModel.getOriginalPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,
                     3 + riskGameModel.getEvent().getScore(), 1 + riskGameModel.getEvent().getScore() / 2, 0);
 
         }
-        ;
+
         return finished;
     }
 
@@ -963,7 +932,9 @@ public class RiskGameController extends Controller {
         }
         return toCheck;
     }
-
+    public boolean getFortifyDone(){
+        return riskGameModel.getFortifyDone();
+    }
     public boolean getAttackWon() {
 
         return riskGameModel.getAttackWon();
@@ -1043,7 +1014,9 @@ public class RiskGameController extends Controller {
         }
         return toPrint;
     }
-
+    public boolean getAttackDone(){
+        return riskGameModel.getAttackDone();
+    }
     public Integer getI() {
         return riskGameModel.getI();
     }
