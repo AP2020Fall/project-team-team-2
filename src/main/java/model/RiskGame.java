@@ -71,7 +71,9 @@ public class RiskGame {
         this.event = availableGame.getEvent();
 
         this.playingGame = new PlayingGame(availableGame);
-        this.players = playingGame.getPlayers();
+        this.players = new ArrayList<>();
+        for(Gamer gamer:playingGame.getPlayers())
+            players.add(gamer);
         this.originalPlayers = new ArrayList<>();
         for(Gamer gamer:players)
             originalPlayers.add(gamer);
@@ -702,6 +704,7 @@ public class RiskGame {
     }
     public void exitRiskGame(){
         for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
+            Player.getPlayerByUsername(client.getKey()).setStatus("Online");
             Server.exitTheGame(client.getValue());
         }
     }

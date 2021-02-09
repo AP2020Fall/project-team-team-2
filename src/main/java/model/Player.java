@@ -374,12 +374,12 @@ public class Player extends Account {
 
     public void addSuggestion(Suggestion suggestion) {
         this.suggestions.add(suggestion.getSuggestionId());
-        editField("suggestions",new Gson().toJson(suggestion));
+        editField("suggestions",new Gson().toJson(suggestions));
     }
 
     public void removeSuggestion(Suggestion suggestion) {
         suggestions.remove(suggestion.getSuggestionId());
-        editField("suggestions",new Gson().toJson(suggestion));
+        editField("suggestions",new Gson().toJson(suggestions));
     }
 
 
@@ -427,9 +427,9 @@ public class Player extends Account {
 
         suggestions.clear();
 
-        Map<String, Object> event = new HashMap<>();
-        event.put("player_id", getAccountId());
-        if (SQLConnector.deleteFromTable(event, "events")) {
+        Map<String, Object> player = new HashMap<>();
+        player.put("player_id", getAccountId());
+        if (SQLConnector.deleteFromTable(player, "players")) {
             File imageFile = new File("database\\account\\images\\" + getAccountId() + ".jpg");
             try {
                 if (imageFile.exists())

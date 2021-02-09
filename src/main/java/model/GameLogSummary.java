@@ -41,7 +41,7 @@ public class GameLogSummary {
                 }.getType());
     }
 
-    public void editField(String field, String value) {
+    public void editField(String field, Object value) {
         Map<String, Object> conditionMap = new HashMap<>();
         conditionMap.put("game_log_summary_id", this.gameLogSummaryId);
         Map<String, Object> newValueMap = new HashMap<>();
@@ -127,6 +127,10 @@ public class GameLogSummary {
         this.lastPlay = lastPlay;
         gameLog.addGameLog();
         gameLogs.add(gameLog.getGameLogId());
+        editField("frequency",frequency);
+        editField("wins",wins);
+        editField("score",score);
+        editField("last_play",lastPlay.toString());
         editField("game_logs",new Gson().toJson(gameLogs));
     }
 
@@ -136,6 +140,10 @@ public class GameLogSummary {
         this.lastPlay = lastPlay;
         gameLog.addGameLog();
         gameLogs.add(gameLog.getGameLogId());
+        editField("frequency",frequency);
+        editField("wins",wins);
+        editField("score",score);
+        editField("last_play",lastPlay.toString());
         editField("game_logs",new Gson().toJson(gameLogs));
     }
 
@@ -145,6 +153,10 @@ public class GameLogSummary {
         this.lastPlay = lastPlay;
         gameLog.addGameLog();
         gameLogs.add(gameLog.getGameLogId());
+        editField("frequency",frequency);
+        editField("wins",wins);
+        editField("score",score);
+        editField("last_play",lastPlay.toString());
         editField("game_logs",new Gson().toJson(gameLogs));
     }
 

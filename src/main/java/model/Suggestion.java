@@ -111,6 +111,11 @@ public class Suggestion {
         {
            player.removeSuggestion(this);
         }
+        Map<String, Object> suggestion = new HashMap<>();
+        suggestion.put("suggestion_id", suggestionId);
+        if (!SQLConnector.deleteFromTable(suggestion, "suggestions")) {
+            System.out.println("[MODEL]: Account with event ID = " + suggestionId + " couldn't be deleted");
+        }
 
     }
 

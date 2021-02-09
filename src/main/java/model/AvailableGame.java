@@ -140,7 +140,8 @@ public class AvailableGame {
     }
 
     public String startGame() {
-        //todo do something if needed
+       for (Player player: readyPlayers)
+           player.setStatus("playing Risk");
         new RiskGame(this, 20);
         return availableGameId;
     }
