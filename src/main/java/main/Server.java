@@ -53,6 +53,16 @@ public class Server extends Application {
         }
     }
 
+    public static void exitTheGame(DataOutputStream value) {
+        try {
+            Pair<String, String> answer = new Pair<>("exitTheGame", "discard");
+            value.writeUTF(new Gson().toJson(answer));
+            value.flush();
+        } catch (Exception e) {
+            System.err.println("[SERVER]: couldn't refresh the client " + e);
+        }
+    }
+
 
     private void run() throws IOException {
         ServerSocket serverSocket = new ServerSocket(PORT_NUMBER);

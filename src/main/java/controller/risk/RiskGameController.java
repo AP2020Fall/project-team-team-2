@@ -925,7 +925,12 @@ public class RiskGameController extends Controller {
         }
         return toPrint;
     }
-
+    public boolean getAttackDone(){
+        return riskGameModel.getAttackDone();
+    }
+    public boolean getFortifyDone(){
+        return riskGameModel.getFortifyDone();
+    }
     public Integer getI() {
         return riskGameModel.getI();
     }
@@ -965,7 +970,12 @@ public class RiskGameController extends Controller {
     public void addFriend(Gamer player) {
         player.addGameFriend(player);
     }
-
+    public boolean getBeginDraftDone(){
+        return riskGameModel.getBeginDraftDone();
+    }
+    public Gamer getWinner(){
+        return riskGameModel.getWinner();
+    }
     public void rejectRequest(Gamer player) {
         player.rejectRequest(player);
     }

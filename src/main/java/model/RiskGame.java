@@ -7,6 +7,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.media.AudioClip;
 import main.Server;
+import view.ViewHandler;
 import view.risk.RiskGameView;
 
 import java.io.DataOutputStream;
@@ -574,7 +575,6 @@ public class RiskGame {
         if (getPlayers().size() == 1) {
             toCheck = true;
         }
-
         if (!getPlacementFinished() && !toCheck) {
             return false;
         }
@@ -597,9 +597,10 @@ public class RiskGame {
                 player.resetRequestAndFriends();
             }
 
-            Player.addGameLog(getPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
+            Player.addGameLog(getOriginalPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.WON, getWinner(),
                     3 + getEvent().getScore(), 1 + getEvent().getScore() / 2, 0);
+            exitRiskGame();
             return true;
         }
 
@@ -619,10 +620,10 @@ public class RiskGame {
                 player.resetRequestAndFriends();
             }
             setGameIsPlaying(false);
-            Player.addGameLog(getPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
+            Player.addGameLog(getOriginalPlayers(), Objects.requireNonNull(Game.getGameByGameName("Risk"),
                     "Game \"Risk\" @RiskGameController doesn't exist."), GameStates.DRAWN, null,
                     3 + getEvent().getScore(), 1 + getEvent().getScore() / 2, 0);
-
+            exitRiskGame();
         }
         ;
         return finished;
@@ -637,6 +638,7 @@ public class RiskGame {
             makeCountryEmpty(prevPlayer);
             return "Player " + prevPlayer.getUsername() + " Exit The Game";
         } else {
+            exitRiskGame();
             return "Player " + prevPlayer.getUsername() + " Won";
         }
     }
@@ -697,5 +699,10 @@ public class RiskGame {
             }
         }
         return toPrint;
+    }
+    public void exitRiskGame(){
+        for(Map.Entry<String, DataOutputStream> client: playingGame.socketMap().entrySet()) {
+            Server.exitTheGame(client.getValue());
+        }
     }
 }
