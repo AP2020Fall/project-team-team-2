@@ -151,7 +151,6 @@ public class RiskGame {
         if (!getPlacementFinished()) {
             checkPlacementFinished();
         }
-
         setDraftDone(false);
         setAttackDone(false);
         setFortifyDone(false);

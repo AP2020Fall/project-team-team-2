@@ -48,6 +48,7 @@ public class Server extends Application {
             Pair<String, String> answer = new Pair<>("updateCurrentTimestamp", "discard");
             value.writeUTF(new Gson().toJson(answer));
             value.flush();
+            System.out.println("Donew");
         } catch (Exception e) {
             System.err.println("[SERVER]: couldn't refresh the client " + e);
         }

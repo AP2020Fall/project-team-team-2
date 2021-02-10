@@ -617,7 +617,42 @@ public class RiskGameView implements View, Initializable {
     }
 
     public String nextTurn() {
-        String toPrint = controller.changeTurn();
+        String toPrint = "";
+        boolean checkWinner = controller.checkWinner();
+        if (checkWinner) {
+            if (controller.getWinner() != null) {
+                toPrint = "Game has been finished." + " " + controller.getCurrentPlayer().getUsername() + " is this winner";
+            } else {
+                toPrint = "Game has been finished in draw.";
+            }
+            return toPrint;
+        }
+        if (!controller.getPlacementFinished()) {
+            if (controller.getBeginDraftDone()) {
+                controller.changeTurn();
+                updateCurrentTimestamp();
+                toPrint = "Next Turn done successfully, It's " + controller.getCurrentPlayer().getUsername() + " turn";
+            } else {
+                toPrint = "You didn't place any soldier, please first try to place a soldier in remain countries.";
+            }
+        } else {
+            if (controller.getDraftDone()) {
+                /*Todo: attack doesn't need to be checked(?)*/
+                if (controller.getAttackDone()) {
+                    if (controller.getFortifyDone()) {
+                        toPrint = "Next Turn done successfully, It's " + controller.getCurrentPlayer().getUsername() + " turn";
+                        controller.changeTurn();
+                        updateCurrentTimestamp();
+                    } else {
+                        toPrint = "You didn't fortify yet.";
+                    }
+                } else {
+                    toPrint = "You didn't attack yet.";
+                }
+            } else {
+                toPrint = "You didn't place any soldier, please first try to place a soldier in your countries.";
+            }
+        }
         sendNotif();
         return toPrint;
     }
@@ -949,7 +984,6 @@ public class RiskGameView implements View, Initializable {
             try {
                 label.setText(String.valueOf(controller.getRiskPlayers().get(i).getDraftSoldiers()));
             }catch (Exception e){
-                System.out.println("No player with id : " + i);
             }
             i++;
         }
@@ -966,17 +1000,18 @@ public class RiskGameView implements View, Initializable {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                double progressed = Double.valueOf((double) System.currentTimeMillis() / 1000 - currentTimeStamp) / Double.valueOf(duration);
+                double progressed = Double.valueOf((double) System.currentTimeMillis() / 1000 - controller.getCurrentTimestamp()) / Double.valueOf(duration);
                 progressBar.setProgress(progressed);
                 if (progressed >= 1) {
                     if (controller.getCurrentPlayer().getUsername().equals(Client.getClientInfo().getLoggedInUsername())) {
-                        controller.mainChangeTurn();
                         controller.updateCurrentTime();
+                        controller.mainChangeTurn();
                         changeNotifText("Your time has been finished");
                         System.out.println(currentTimeStamp);
                         System.out.println(controller.getCurrentPlayer().getUsername());
                         System.out.println("------------------------------------");
                     }
+                    System.out.println("Inside Of View");
                     currentTimeStamp = System.currentTimeMillis()/1000L;
                     progressBar.setProgress(0);
                     controller.updateCurrentTime();
@@ -1005,7 +1040,7 @@ public class RiskGameView implements View, Initializable {
     }
 
     public void updateCurrentTimestamp() {
+        System.out.println("Update Timeeeeee");
         this.currentTimeStamp = System.currentTimeMillis()/1000L;
-        System.out.println("Player " + Client.getClientInfo().getPlayerUsername().toLowerCase() + " Time Updated");
     }
 }
